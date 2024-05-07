@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdjacencyGraphUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">AdjacencyGraphUtil.java</span></div><h1>AdjacencyGraphUtil.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Contains hard coded adjacency graphs for different keyboard types.
+ *
+ * @author Adam Brusselback
+ */
+<span class="nc" id="L13">public class AdjacencyGraphUtil</span>
+{
+
+    /**
+     * Adjacency graph for the qwerty keyboard
+     */
+    public static final HashMap&lt;Character, String[]&gt; qwerty;
+    /**
+     * Adjacency graph for the dvorak keyboard
+     */
+    public static final HashMap&lt;Character, String[]&gt; dvorak;
+    /**
+     * Adjacency graph for the keypad
+     */
+    public static final HashMap&lt;Character, String[]&gt; standardKeypad;
+    /**
+     * Adjacency graph for the macKeypad
+     */
+    public static final HashMap&lt;Character, String[]&gt; macKeypad;
+
+    static
+    {
+<span class="fc" id="L35">        qwerty = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L36">        qwerty.put('0', new String[]{&quot;9(&quot;, null, null, &quot;-_&quot;, &quot;pP&quot;, &quot;oO&quot;});</span>
+<span class="fc" id="L37">        qwerty.put('1', new String[]{&quot;`~&quot;, null, null, &quot;2@&quot;, &quot;qQ&quot;, null});</span>
+<span class="fc" id="L38">        qwerty.put('2', new String[]{&quot;1!&quot;, null, null, &quot;3#&quot;, &quot;wW&quot;, &quot;qQ&quot;});</span>
+<span class="fc" id="L39">        qwerty.put('3', new String[]{&quot;2@&quot;, null, null, &quot;4$&quot;, &quot;eE&quot;, &quot;wW&quot;});</span>
+<span class="fc" id="L40">        qwerty.put('4', new String[]{&quot;3#&quot;, null, null, &quot;5%&quot;, &quot;rR&quot;, &quot;eE&quot;});</span>
+<span class="fc" id="L41">        qwerty.put('5', new String[]{&quot;4$&quot;, null, null, &quot;6^&quot;, &quot;tT&quot;, &quot;rR&quot;});</span>
+<span class="fc" id="L42">        qwerty.put('6', new String[]{&quot;5%&quot;, null, null, &quot;7&amp;&quot;, &quot;yY&quot;, &quot;tT&quot;});</span>
+<span class="fc" id="L43">        qwerty.put('7', new String[]{&quot;6^&quot;, null, null, &quot;8*&quot;, &quot;uU&quot;, &quot;yY&quot;});</span>
+<span class="fc" id="L44">        qwerty.put('8', new String[]{&quot;7&amp;&quot;, null, null, &quot;9(&quot;, &quot;iI&quot;, &quot;uU&quot;});</span>
+<span class="fc" id="L45">        qwerty.put('9', new String[]{&quot;8*&quot;, null, null, &quot;0)&quot;, &quot;oO&quot;, &quot;iI&quot;});</span>
+<span class="fc" id="L46">        qwerty.put('!', new String[]{&quot;`~&quot;, null, null, &quot;2@&quot;, &quot;qQ&quot;, null});</span>
+<span class="fc" id="L47">        qwerty.put('&quot;', new String[]{&quot;;:&quot;, &quot;[{&quot;, &quot;]}&quot;, null, null, &quot;/?&quot;});</span>
+<span class="fc" id="L48">        qwerty.put('#', new String[]{&quot;2@&quot;, null, null, &quot;4$&quot;, &quot;eE&quot;, &quot;wW&quot;});</span>
+<span class="fc" id="L49">        qwerty.put('$', new String[]{&quot;3#&quot;, null, null, &quot;5%&quot;, &quot;rR&quot;, &quot;eE&quot;});</span>
+<span class="fc" id="L50">        qwerty.put('%', new String[]{&quot;4$&quot;, null, null, &quot;6^&quot;, &quot;tT&quot;, &quot;rR&quot;});</span>
+<span class="fc" id="L51">        qwerty.put('&amp;', new String[]{&quot;6^&quot;, null, null, &quot;8*&quot;, &quot;uU&quot;, &quot;yY&quot;});</span>
+<span class="fc" id="L52">        qwerty.put('\'', new String[]{&quot;;:&quot;, &quot;[{&quot;, &quot;]}&quot;, null, null, &quot;/?&quot;});</span>
+<span class="fc" id="L53">        qwerty.put('(', new String[]{&quot;8*&quot;, null, null, &quot;0)&quot;, &quot;oO&quot;, &quot;iI&quot;});</span>
+<span class="fc" id="L54">        qwerty.put(')', new String[]{&quot;9(&quot;, null, null, &quot;-_&quot;, &quot;pP&quot;, &quot;oO&quot;});</span>
+<span class="fc" id="L55">        qwerty.put('*', new String[]{&quot;7&amp;&quot;, null, null, &quot;9(&quot;, &quot;iI&quot;, &quot;uU&quot;});</span>
+<span class="fc" id="L56">        qwerty.put('+', new String[]{&quot;-_&quot;, null, null, null, &quot;]}&quot;, &quot;[{&quot;});</span>
+<span class="fc" id="L57">        qwerty.put(',', new String[]{&quot;mM&quot;, &quot;kK&quot;, &quot;lL&quot;, &quot;.&gt;&quot;, null, null});</span>
+<span class="fc" id="L58">        qwerty.put('-', new String[]{&quot;0)&quot;, null, null, &quot;=+&quot;, &quot;[{&quot;, &quot;pP&quot;});</span>
+<span class="fc" id="L59">        qwerty.put('.', new String[]{&quot;,&lt;&quot;, &quot;lL&quot;, &quot;;:&quot;, &quot;/?&quot;, null, null});</span>
+<span class="fc" id="L60">        qwerty.put('/', new String[]{&quot;.&gt;&quot;, &quot;;:&quot;, &quot;'\&quot;&quot;, null, null, null});</span>
+<span class="fc" id="L61">        qwerty.put(':', new String[]{&quot;lL&quot;, &quot;pP&quot;, &quot;[{&quot;, &quot;'\&quot;&quot;, &quot;/?&quot;, &quot;.&gt;&quot;});</span>
+<span class="fc" id="L62">        qwerty.put(';', new String[]{&quot;lL&quot;, &quot;pP&quot;, &quot;[{&quot;, &quot;'\&quot;&quot;, &quot;/?&quot;, &quot;.&gt;&quot;});</span>
+<span class="fc" id="L63">        qwerty.put('&lt;', new String[]{&quot;mM&quot;, &quot;kK&quot;, &quot;lL&quot;, &quot;.&gt;&quot;, null, null});</span>
+<span class="fc" id="L64">        qwerty.put('=', new String[]{&quot;-_&quot;, null, null, null, &quot;]}&quot;, &quot;[{&quot;});</span>
+<span class="fc" id="L65">        qwerty.put('&gt;', new String[]{&quot;,&lt;&quot;, &quot;lL&quot;, &quot;;:&quot;, &quot;/?&quot;, null, null});</span>
+<span class="fc" id="L66">        qwerty.put('?', new String[]{&quot;.&gt;&quot;, &quot;;:&quot;, &quot;'\&quot;&quot;, null, null, null});</span>
+<span class="fc" id="L67">        qwerty.put('@', new String[]{&quot;1!&quot;, null, null, &quot;3#&quot;, &quot;wW&quot;, &quot;qQ&quot;});</span>
+<span class="fc" id="L68">        qwerty.put('A', new String[]{null, &quot;qQ&quot;, &quot;wW&quot;, &quot;sS&quot;, &quot;zZ&quot;, null});</span>
+<span class="fc" id="L69">        qwerty.put('B', new String[]{&quot;vV&quot;, &quot;gG&quot;, &quot;hH&quot;, &quot;nN&quot;, null, null});</span>
+<span class="fc" id="L70">        qwerty.put('C', new String[]{&quot;xX&quot;, &quot;dD&quot;, &quot;fF&quot;, &quot;vV&quot;, null, null});</span>
+<span class="fc" id="L71">        qwerty.put('D', new String[]{&quot;sS&quot;, &quot;eE&quot;, &quot;rR&quot;, &quot;fF&quot;, &quot;cC&quot;, &quot;xX&quot;});</span>
+<span class="fc" id="L72">        qwerty.put('E', new String[]{&quot;wW&quot;, &quot;3#&quot;, &quot;4$&quot;, &quot;rR&quot;, &quot;dD&quot;, &quot;sS&quot;});</span>
+<span class="fc" id="L73">        qwerty.put('F', new String[]{&quot;dD&quot;, &quot;rR&quot;, &quot;tT&quot;, &quot;gG&quot;, &quot;vV&quot;, &quot;cC&quot;});</span>
+<span class="fc" id="L74">        qwerty.put('G', new String[]{&quot;fF&quot;, &quot;tT&quot;, &quot;yY&quot;, &quot;hH&quot;, &quot;bB&quot;, &quot;vV&quot;});</span>
+<span class="fc" id="L75">        qwerty.put('H', new String[]{&quot;gG&quot;, &quot;yY&quot;, &quot;uU&quot;, &quot;jJ&quot;, &quot;nN&quot;, &quot;bB&quot;});</span>
+<span class="fc" id="L76">        qwerty.put('I', new String[]{&quot;uU&quot;, &quot;8*&quot;, &quot;9(&quot;, &quot;oO&quot;, &quot;kK&quot;, &quot;jJ&quot;});</span>
+<span class="fc" id="L77">        qwerty.put('J', new String[]{&quot;hH&quot;, &quot;uU&quot;, &quot;iI&quot;, &quot;kK&quot;, &quot;mM&quot;, &quot;nN&quot;});</span>
+<span class="fc" id="L78">        qwerty.put('K', new String[]{&quot;jJ&quot;, &quot;iI&quot;, &quot;oO&quot;, &quot;lL&quot;, &quot;,&lt;&quot;, &quot;mM&quot;});</span>
+<span class="fc" id="L79">        qwerty.put('L', new String[]{&quot;kK&quot;, &quot;oO&quot;, &quot;pP&quot;, &quot;;:&quot;, &quot;.&gt;&quot;, &quot;,&lt;&quot;});</span>
+<span class="fc" id="L80">        qwerty.put('M', new String[]{&quot;nN&quot;, &quot;jJ&quot;, &quot;kK&quot;, &quot;,&lt;&quot;, null, null});</span>
+<span class="fc" id="L81">        qwerty.put('N', new String[]{&quot;bB&quot;, &quot;hH&quot;, &quot;jJ&quot;, &quot;mM&quot;, null, null});</span>
+<span class="fc" id="L82">        qwerty.put('O', new String[]{&quot;iI&quot;, &quot;9(&quot;, &quot;0)&quot;, &quot;pP&quot;, &quot;lL&quot;, &quot;kK&quot;});</span>
+<span class="fc" id="L83">        qwerty.put('P', new String[]{&quot;oO&quot;, &quot;0)&quot;, &quot;-_&quot;, &quot;[{&quot;, &quot;;:&quot;, &quot;lL&quot;});</span>
+<span class="fc" id="L84">        qwerty.put('Q', new String[]{null, &quot;1!&quot;, &quot;2@&quot;, &quot;wW&quot;, &quot;aA&quot;, null});</span>
+<span class="fc" id="L85">        qwerty.put('R', new String[]{&quot;eE&quot;, &quot;4$&quot;, &quot;5%&quot;, &quot;tT&quot;, &quot;fF&quot;, &quot;dD&quot;});</span>
+<span class="fc" id="L86">        qwerty.put('S', new String[]{&quot;aA&quot;, &quot;wW&quot;, &quot;eE&quot;, &quot;dD&quot;, &quot;xX&quot;, &quot;zZ&quot;});</span>
+<span class="fc" id="L87">        qwerty.put('T', new String[]{&quot;rR&quot;, &quot;5%&quot;, &quot;6^&quot;, &quot;yY&quot;, &quot;gG&quot;, &quot;fF&quot;});</span>
+<span class="fc" id="L88">        qwerty.put('U', new String[]{&quot;yY&quot;, &quot;7&amp;&quot;, &quot;8*&quot;, &quot;iI&quot;, &quot;jJ&quot;, &quot;hH&quot;});</span>
+<span class="fc" id="L89">        qwerty.put('V', new String[]{&quot;cC&quot;, &quot;fF&quot;, &quot;gG&quot;, &quot;bB&quot;, null, null});</span>
+<span class="fc" id="L90">        qwerty.put('W', new String[]{&quot;qQ&quot;, &quot;2@&quot;, &quot;3#&quot;, &quot;eE&quot;, &quot;sS&quot;, &quot;aA&quot;});</span>
+<span class="fc" id="L91">        qwerty.put('X', new String[]{&quot;zZ&quot;, &quot;sS&quot;, &quot;dD&quot;, &quot;cC&quot;, null, null});</span>
+<span class="fc" id="L92">        qwerty.put('Y', new String[]{&quot;tT&quot;, &quot;6^&quot;, &quot;7&amp;&quot;, &quot;uU&quot;, &quot;hH&quot;, &quot;gG&quot;});</span>
+<span class="fc" id="L93">        qwerty.put('Z', new String[]{null, &quot;aA&quot;, &quot;sS&quot;, &quot;xX&quot;, null, null});</span>
+<span class="fc" id="L94">        qwerty.put('[', new String[]{&quot;pP&quot;, &quot;-_&quot;, &quot;=+&quot;, &quot;]}&quot;, &quot;'\&quot;&quot;, &quot;;:&quot;});</span>
+<span class="fc" id="L95">        qwerty.put('\\', new String[]{&quot;]}&quot;, null, null, null, null, null});</span>
+<span class="fc" id="L96">        qwerty.put(']', new String[]{&quot;[{&quot;, &quot;=+&quot;, null, &quot;\\|&quot;, null, &quot;'\&quot;&quot;});</span>
+<span class="fc" id="L97">        qwerty.put('^', new String[]{&quot;5%&quot;, null, null, &quot;7&amp;&quot;, &quot;yY&quot;, &quot;tT&quot;});</span>
+<span class="fc" id="L98">        qwerty.put('_', new String[]{&quot;0)&quot;, null, null, &quot;=+&quot;, &quot;[{&quot;, &quot;pP&quot;});</span>
+<span class="fc" id="L99">        qwerty.put('`', new String[]{null, null, null, &quot;1!&quot;, null, null});</span>
+<span class="fc" id="L100">        qwerty.put('a', new String[]{null, &quot;qQ&quot;, &quot;wW&quot;, &quot;sS&quot;, &quot;zZ&quot;, null});</span>
+<span class="fc" id="L101">        qwerty.put('b', new String[]{&quot;vV&quot;, &quot;gG&quot;, &quot;hH&quot;, &quot;nN&quot;, null, null});</span>
+<span class="fc" id="L102">        qwerty.put('c', new String[]{&quot;xX&quot;, &quot;dD&quot;, &quot;fF&quot;, &quot;vV&quot;, null, null});</span>
+<span class="fc" id="L103">        qwerty.put('d', new String[]{&quot;sS&quot;, &quot;eE&quot;, &quot;rR&quot;, &quot;fF&quot;, &quot;cC&quot;, &quot;xX&quot;});</span>
+<span class="fc" id="L104">        qwerty.put('e', new String[]{&quot;wW&quot;, &quot;3#&quot;, &quot;4$&quot;, &quot;rR&quot;, &quot;dD&quot;, &quot;sS&quot;});</span>
+<span class="fc" id="L105">        qwerty.put('f', new String[]{&quot;dD&quot;, &quot;rR&quot;, &quot;tT&quot;, &quot;gG&quot;, &quot;vV&quot;, &quot;cC&quot;});</span>
+<span class="fc" id="L106">        qwerty.put('g', new String[]{&quot;fF&quot;, &quot;tT&quot;, &quot;yY&quot;, &quot;hH&quot;, &quot;bB&quot;, &quot;vV&quot;});</span>
+<span class="fc" id="L107">        qwerty.put('h', new String[]{&quot;gG&quot;, &quot;yY&quot;, &quot;uU&quot;, &quot;jJ&quot;, &quot;nN&quot;, &quot;bB&quot;});</span>
+<span class="fc" id="L108">        qwerty.put('i', new String[]{&quot;uU&quot;, &quot;8*&quot;, &quot;9(&quot;, &quot;oO&quot;, &quot;kK&quot;, &quot;jJ&quot;});</span>
+<span class="fc" id="L109">        qwerty.put('j', new String[]{&quot;hH&quot;, &quot;uU&quot;, &quot;iI&quot;, &quot;kK&quot;, &quot;mM&quot;, &quot;nN&quot;});</span>
+<span class="fc" id="L110">        qwerty.put('k', new String[]{&quot;jJ&quot;, &quot;iI&quot;, &quot;oO&quot;, &quot;lL&quot;, &quot;,&lt;&quot;, &quot;mM&quot;});</span>
+<span class="fc" id="L111">        qwerty.put('l', new String[]{&quot;kK&quot;, &quot;oO&quot;, &quot;pP&quot;, &quot;;:&quot;, &quot;.&gt;&quot;, &quot;,&lt;&quot;});</span>
+<span class="fc" id="L112">        qwerty.put('m', new String[]{&quot;nN&quot;, &quot;jJ&quot;, &quot;kK&quot;, &quot;,&lt;&quot;, null, null});</span>
+<span class="fc" id="L113">        qwerty.put('n', new String[]{&quot;bB&quot;, &quot;hH&quot;, &quot;jJ&quot;, &quot;mM&quot;, null, null});</span>
+<span class="fc" id="L114">        qwerty.put('o', new String[]{&quot;iI&quot;, &quot;9(&quot;, &quot;0)&quot;, &quot;pP&quot;, &quot;lL&quot;, &quot;kK&quot;});</span>
+<span class="fc" id="L115">        qwerty.put('p', new String[]{&quot;oO&quot;, &quot;0)&quot;, &quot;-_&quot;, &quot;[{&quot;, &quot;;:&quot;, &quot;lL&quot;});</span>
+<span class="fc" id="L116">        qwerty.put('q', new String[]{null, &quot;1!&quot;, &quot;2@&quot;, &quot;wW&quot;, &quot;aA&quot;, null});</span>
+<span class="fc" id="L117">        qwerty.put('r', new String[]{&quot;eE&quot;, &quot;4$&quot;, &quot;5%&quot;, &quot;tT&quot;, &quot;fF&quot;, &quot;dD&quot;});</span>
+<span class="fc" id="L118">        qwerty.put('s', new String[]{&quot;aA&quot;, &quot;wW&quot;, &quot;eE&quot;, &quot;dD&quot;, &quot;xX&quot;, &quot;zZ&quot;});</span>
+<span class="fc" id="L119">        qwerty.put('t', new String[]{&quot;rR&quot;, &quot;5%&quot;, &quot;6^&quot;, &quot;yY&quot;, &quot;gG&quot;, &quot;fF&quot;});</span>
+<span class="fc" id="L120">        qwerty.put('u', new String[]{&quot;yY&quot;, &quot;7&amp;&quot;, &quot;8*&quot;, &quot;iI&quot;, &quot;jJ&quot;, &quot;hH&quot;});</span>
+<span class="fc" id="L121">        qwerty.put('v', new String[]{&quot;cC&quot;, &quot;fF&quot;, &quot;gG&quot;, &quot;bB&quot;, null, null});</span>
+<span class="fc" id="L122">        qwerty.put('w', new String[]{&quot;qQ&quot;, &quot;2@&quot;, &quot;3#&quot;, &quot;eE&quot;, &quot;sS&quot;, &quot;aA&quot;});</span>
+<span class="fc" id="L123">        qwerty.put('x', new String[]{&quot;zZ&quot;, &quot;sS&quot;, &quot;dD&quot;, &quot;cC&quot;, null, null});</span>
+<span class="fc" id="L124">        qwerty.put('y', new String[]{&quot;tT&quot;, &quot;6^&quot;, &quot;7&amp;&quot;, &quot;uU&quot;, &quot;hH&quot;, &quot;gG&quot;});</span>
+<span class="fc" id="L125">        qwerty.put('z', new String[]{null, &quot;aA&quot;, &quot;sS&quot;, &quot;xX&quot;, null, null});</span>
+<span class="fc" id="L126">        qwerty.put('{', new String[]{&quot;pP&quot;, &quot;-_&quot;, &quot;=+&quot;, &quot;]}&quot;, &quot;'\&quot;&quot;, &quot;;:&quot;});</span>
+<span class="fc" id="L127">        qwerty.put('|', new String[]{&quot;]}&quot;, null, null, null, null, null});</span>
+<span class="fc" id="L128">        qwerty.put('}', new String[]{&quot;[{&quot;, &quot;=+&quot;, null, &quot;\\|&quot;, null, &quot;'\&quot;&quot;});</span>
+<span class="fc" id="L129">        qwerty.put('~', new String[]{null, null, null, &quot;1!&quot;, null, null});</span>
+    }
+
+    static
+    {
+<span class="fc" id="L134">        dvorak = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L135">        dvorak.put('0', new String[]{&quot;9(&quot;, null, null, &quot;[{&quot;, &quot;lL&quot;, &quot;rR&quot;});</span>
+<span class="fc" id="L136">        dvorak.put('1', new String[]{&quot;`~&quot;, null, null, &quot;2@&quot;, &quot;'\&quot;&quot;, null});</span>
+<span class="fc" id="L137">        dvorak.put('2', new String[]{&quot;1!&quot;, null, null, &quot;3#&quot;, &quot;,&lt;&quot;, &quot;'\&quot;&quot;});</span>
+<span class="fc" id="L138">        dvorak.put('3', new String[]{&quot;2@&quot;, null, null, &quot;4$&quot;, &quot;.&gt;&quot;, &quot;,&lt;&quot;});</span>
+<span class="fc" id="L139">        dvorak.put('4', new String[]{&quot;3#&quot;, null, null, &quot;5%&quot;, &quot;pP&quot;, &quot;.&gt;&quot;});</span>
+<span class="fc" id="L140">        dvorak.put('5', new String[]{&quot;4$&quot;, null, null, &quot;6^&quot;, &quot;yY&quot;, &quot;pP&quot;});</span>
+<span class="fc" id="L141">        dvorak.put('6', new String[]{&quot;5%&quot;, null, null, &quot;7&amp;&quot;, &quot;fF&quot;, &quot;yY&quot;});</span>
+<span class="fc" id="L142">        dvorak.put('7', new String[]{&quot;6^&quot;, null, null, &quot;8*&quot;, &quot;gG&quot;, &quot;fF&quot;});</span>
+<span class="fc" id="L143">        dvorak.put('8', new String[]{&quot;7&amp;&quot;, null, null, &quot;9(&quot;, &quot;cC&quot;, &quot;gG&quot;});</span>
+<span class="fc" id="L144">        dvorak.put('9', new String[]{&quot;8*&quot;, null, null, &quot;0)&quot;, &quot;rR&quot;, &quot;cC&quot;});</span>
+<span class="fc" id="L145">        dvorak.put('!', new String[]{&quot;`~&quot;, null, null, &quot;2@&quot;, &quot;'\&quot;&quot;, null});</span>
+<span class="fc" id="L146">        dvorak.put('&quot;', new String[]{null, &quot;1!&quot;, &quot;2@&quot;, &quot;,&lt;&quot;, &quot;aA&quot;, null});</span>
+<span class="fc" id="L147">        dvorak.put('#', new String[]{&quot;2@&quot;, null, null, &quot;4$&quot;, &quot;.&gt;&quot;, &quot;,&lt;&quot;});</span>
+<span class="fc" id="L148">        dvorak.put('$', new String[]{&quot;3#&quot;, null, null, &quot;5%&quot;, &quot;pP&quot;, &quot;.&gt;&quot;});</span>
+<span class="fc" id="L149">        dvorak.put('%', new String[]{&quot;4$&quot;, null, null, &quot;6^&quot;, &quot;yY&quot;, &quot;pP&quot;});</span>
+<span class="fc" id="L150">        dvorak.put('&amp;', new String[]{&quot;6^&quot;, null, null, &quot;8*&quot;, &quot;gG&quot;, &quot;fF&quot;});</span>
+<span class="fc" id="L151">        dvorak.put('\'', new String[]{null, &quot;1!&quot;, &quot;2@&quot;, &quot;,&lt;&quot;, &quot;aA&quot;, null});</span>
+<span class="fc" id="L152">        dvorak.put('(', new String[]{&quot;8*&quot;, null, null, &quot;0)&quot;, &quot;rR&quot;, &quot;cC&quot;});</span>
+<span class="fc" id="L153">        dvorak.put(')', new String[]{&quot;9(&quot;, null, null, &quot;[{&quot;, &quot;lL&quot;, &quot;rR&quot;});</span>
+<span class="fc" id="L154">        dvorak.put('*', new String[]{&quot;7&amp;&quot;, null, null, &quot;9(&quot;, &quot;cC&quot;, &quot;gG&quot;});</span>
+<span class="fc" id="L155">        dvorak.put('+', new String[]{&quot;/?&quot;, &quot;]}&quot;, null, &quot;\\|&quot;, null, &quot;-_&quot;});</span>
+<span class="fc" id="L156">        dvorak.put(',', new String[]{&quot;'\&quot;&quot;, &quot;2@&quot;, &quot;3#&quot;, &quot;.&gt;&quot;, &quot;oO&quot;, &quot;aA&quot;});</span>
+<span class="fc" id="L157">        dvorak.put('-', new String[]{&quot;sS&quot;, &quot;/?&quot;, &quot;=+&quot;, null, null, &quot;zZ&quot;});</span>
+<span class="fc" id="L158">        dvorak.put('.', new String[]{&quot;,&lt;&quot;, &quot;3#&quot;, &quot;4$&quot;, &quot;pP&quot;, &quot;eE&quot;, &quot;oO&quot;});</span>
+<span class="fc" id="L159">        dvorak.put('/', new String[]{&quot;lL&quot;, &quot;[{&quot;, &quot;]}&quot;, &quot;=+&quot;, &quot;-_&quot;, &quot;sS&quot;});</span>
+<span class="fc" id="L160">        dvorak.put(':', new String[]{null, &quot;aA&quot;, &quot;oO&quot;, &quot;qQ&quot;, null, null});</span>
+<span class="fc" id="L161">        dvorak.put(';', new String[]{null, &quot;aA&quot;, &quot;oO&quot;, &quot;qQ&quot;, null, null});</span>
+<span class="fc" id="L162">        dvorak.put('&lt;', new String[]{&quot;'\&quot;&quot;, &quot;2@&quot;, &quot;3#&quot;, &quot;.&gt;&quot;, &quot;oO&quot;, &quot;aA&quot;});</span>
+<span class="fc" id="L163">        dvorak.put('=', new String[]{&quot;/?&quot;, &quot;]}&quot;, null, &quot;\\|&quot;, null, &quot;-_&quot;});</span>
+<span class="fc" id="L164">        dvorak.put('&gt;', new String[]{&quot;,&lt;&quot;, &quot;3#&quot;, &quot;4$&quot;, &quot;pP&quot;, &quot;eE&quot;, &quot;oO&quot;});</span>
+<span class="fc" id="L165">        dvorak.put('?', new String[]{&quot;lL&quot;, &quot;[{&quot;, &quot;]}&quot;, &quot;=+&quot;, &quot;-_&quot;, &quot;sS&quot;});</span>
+<span class="fc" id="L166">        dvorak.put('@', new String[]{&quot;1!&quot;, null, null, &quot;3#&quot;, &quot;,&lt;&quot;, &quot;'\&quot;&quot;});</span>
+<span class="fc" id="L167">        dvorak.put('A', new String[]{null, &quot;'\&quot;&quot;, &quot;,&lt;&quot;, &quot;oO&quot;, &quot;;:&quot;, null});</span>
+<span class="fc" id="L168">        dvorak.put('B', new String[]{&quot;xX&quot;, &quot;dD&quot;, &quot;hH&quot;, &quot;mM&quot;, null, null});</span>
+<span class="fc" id="L169">        dvorak.put('C', new String[]{&quot;gG&quot;, &quot;8*&quot;, &quot;9(&quot;, &quot;rR&quot;, &quot;tT&quot;, &quot;hH&quot;});</span>
+<span class="fc" id="L170">        dvorak.put('D', new String[]{&quot;iI&quot;, &quot;fF&quot;, &quot;gG&quot;, &quot;hH&quot;, &quot;bB&quot;, &quot;xX&quot;});</span>
+<span class="fc" id="L171">        dvorak.put('E', new String[]{&quot;oO&quot;, &quot;.&gt;&quot;, &quot;pP&quot;, &quot;uU&quot;, &quot;jJ&quot;, &quot;qQ&quot;});</span>
+<span class="fc" id="L172">        dvorak.put('F', new String[]{&quot;yY&quot;, &quot;6^&quot;, &quot;7&amp;&quot;, &quot;gG&quot;, &quot;dD&quot;, &quot;iI&quot;});</span>
+<span class="fc" id="L173">        dvorak.put('G', new String[]{&quot;fF&quot;, &quot;7&amp;&quot;, &quot;8*&quot;, &quot;cC&quot;, &quot;hH&quot;, &quot;dD&quot;});</span>
+<span class="fc" id="L174">        dvorak.put('H', new String[]{&quot;dD&quot;, &quot;gG&quot;, &quot;cC&quot;, &quot;tT&quot;, &quot;mM&quot;, &quot;bB&quot;});</span>
+<span class="fc" id="L175">        dvorak.put('I', new String[]{&quot;uU&quot;, &quot;yY&quot;, &quot;fF&quot;, &quot;dD&quot;, &quot;xX&quot;, &quot;kK&quot;});</span>
+<span class="fc" id="L176">        dvorak.put('J', new String[]{&quot;qQ&quot;, &quot;eE&quot;, &quot;uU&quot;, &quot;kK&quot;, null, null});</span>
+<span class="fc" id="L177">        dvorak.put('K', new String[]{&quot;jJ&quot;, &quot;uU&quot;, &quot;iI&quot;, &quot;xX&quot;, null, null});</span>
+<span class="fc" id="L178">        dvorak.put('L', new String[]{&quot;rR&quot;, &quot;0)&quot;, &quot;[{&quot;, &quot;/?&quot;, &quot;sS&quot;, &quot;nN&quot;});</span>
+<span class="fc" id="L179">        dvorak.put('M', new String[]{&quot;bB&quot;, &quot;hH&quot;, &quot;tT&quot;, &quot;wW&quot;, null, null});</span>
+<span class="fc" id="L180">        dvorak.put('N', new String[]{&quot;tT&quot;, &quot;rR&quot;, &quot;lL&quot;, &quot;sS&quot;, &quot;vV&quot;, &quot;wW&quot;});</span>
+<span class="fc" id="L181">        dvorak.put('O', new String[]{&quot;aA&quot;, &quot;,&lt;&quot;, &quot;.&gt;&quot;, &quot;eE&quot;, &quot;qQ&quot;, &quot;;:&quot;});</span>
+<span class="fc" id="L182">        dvorak.put('P', new String[]{&quot;.&gt;&quot;, &quot;4$&quot;, &quot;5%&quot;, &quot;yY&quot;, &quot;uU&quot;, &quot;eE&quot;});</span>
+<span class="fc" id="L183">        dvorak.put('Q', new String[]{&quot;;:&quot;, &quot;oO&quot;, &quot;eE&quot;, &quot;jJ&quot;, null, null});</span>
+<span class="fc" id="L184">        dvorak.put('R', new String[]{&quot;cC&quot;, &quot;9(&quot;, &quot;0)&quot;, &quot;lL&quot;, &quot;nN&quot;, &quot;tT&quot;});</span>
+<span class="fc" id="L185">        dvorak.put('S', new String[]{&quot;nN&quot;, &quot;lL&quot;, &quot;/?&quot;, &quot;-_&quot;, &quot;zZ&quot;, &quot;vV&quot;});</span>
+<span class="fc" id="L186">        dvorak.put('T', new String[]{&quot;hH&quot;, &quot;cC&quot;, &quot;rR&quot;, &quot;nN&quot;, &quot;wW&quot;, &quot;mM&quot;});</span>
+<span class="fc" id="L187">        dvorak.put('U', new String[]{&quot;eE&quot;, &quot;pP&quot;, &quot;yY&quot;, &quot;iI&quot;, &quot;kK&quot;, &quot;jJ&quot;});</span>
+<span class="fc" id="L188">        dvorak.put('V', new String[]{&quot;wW&quot;, &quot;nN&quot;, &quot;sS&quot;, &quot;zZ&quot;, null, null});</span>
+<span class="fc" id="L189">        dvorak.put('W', new String[]{&quot;mM&quot;, &quot;tT&quot;, &quot;nN&quot;, &quot;vV&quot;, null, null});</span>
+<span class="fc" id="L190">        dvorak.put('X', new String[]{&quot;kK&quot;, &quot;iI&quot;, &quot;dD&quot;, &quot;bB&quot;, null, null});</span>
+<span class="fc" id="L191">        dvorak.put('Y', new String[]{&quot;pP&quot;, &quot;5%&quot;, &quot;6^&quot;, &quot;fF&quot;, &quot;iI&quot;, &quot;uU&quot;});</span>
+<span class="fc" id="L192">        dvorak.put('Z', new String[]{&quot;vV&quot;, &quot;sS&quot;, &quot;-_&quot;, null, null, null});</span>
+<span class="fc" id="L193">        dvorak.put('[', new String[]{&quot;0)&quot;, null, null, &quot;]}&quot;, &quot;/?&quot;, &quot;lL&quot;});</span>
+<span class="fc" id="L194">        dvorak.put('\\', new String[]{&quot;=+&quot;, null, null, null, null, null});</span>
+<span class="fc" id="L195">        dvorak.put(']', new String[]{&quot;[{&quot;, null, null, null, &quot;=+&quot;, &quot;/?&quot;});</span>
+<span class="fc" id="L196">        dvorak.put('^', new String[]{&quot;5%&quot;, null, null, &quot;7&amp;&quot;, &quot;fF&quot;, &quot;yY&quot;});</span>
+<span class="fc" id="L197">        dvorak.put('_', new String[]{&quot;sS&quot;, &quot;/?&quot;, &quot;=+&quot;, null, null, &quot;zZ&quot;});</span>
+<span class="fc" id="L198">        dvorak.put('`', new String[]{null, null, null, &quot;1!&quot;, null, null});</span>
+<span class="fc" id="L199">        dvorak.put('a', new String[]{null, &quot;'\&quot;&quot;, &quot;,&lt;&quot;, &quot;oO&quot;, &quot;;:&quot;, null});</span>
+<span class="fc" id="L200">        dvorak.put('b', new String[]{&quot;xX&quot;, &quot;dD&quot;, &quot;hH&quot;, &quot;mM&quot;, null, null});</span>
+<span class="fc" id="L201">        dvorak.put('c', new String[]{&quot;gG&quot;, &quot;8*&quot;, &quot;9(&quot;, &quot;rR&quot;, &quot;tT&quot;, &quot;hH&quot;});</span>
+<span class="fc" id="L202">        dvorak.put('d', new String[]{&quot;iI&quot;, &quot;fF&quot;, &quot;gG&quot;, &quot;hH&quot;, &quot;bB&quot;, &quot;xX&quot;});</span>
+<span class="fc" id="L203">        dvorak.put('e', new String[]{&quot;oO&quot;, &quot;.&gt;&quot;, &quot;pP&quot;, &quot;uU&quot;, &quot;jJ&quot;, &quot;qQ&quot;});</span>
+<span class="fc" id="L204">        dvorak.put('f', new String[]{&quot;yY&quot;, &quot;6^&quot;, &quot;7&amp;&quot;, &quot;gG&quot;, &quot;dD&quot;, &quot;iI&quot;});</span>
+<span class="fc" id="L205">        dvorak.put('g', new String[]{&quot;fF&quot;, &quot;7&amp;&quot;, &quot;8*&quot;, &quot;cC&quot;, &quot;hH&quot;, &quot;dD&quot;});</span>
+<span class="fc" id="L206">        dvorak.put('h', new String[]{&quot;dD&quot;, &quot;gG&quot;, &quot;cC&quot;, &quot;tT&quot;, &quot;mM&quot;, &quot;bB&quot;});</span>
+<span class="fc" id="L207">        dvorak.put('i', new String[]{&quot;uU&quot;, &quot;yY&quot;, &quot;fF&quot;, &quot;dD&quot;, &quot;xX&quot;, &quot;kK&quot;});</span>
+<span class="fc" id="L208">        dvorak.put('j', new String[]{&quot;qQ&quot;, &quot;eE&quot;, &quot;uU&quot;, &quot;kK&quot;, null, null});</span>
+<span class="fc" id="L209">        dvorak.put('k', new String[]{&quot;jJ&quot;, &quot;uU&quot;, &quot;iI&quot;, &quot;xX&quot;, null, null});</span>
+<span class="fc" id="L210">        dvorak.put('l', new String[]{&quot;rR&quot;, &quot;0)&quot;, &quot;[{&quot;, &quot;/?&quot;, &quot;sS&quot;, &quot;nN&quot;});</span>
+<span class="fc" id="L211">        dvorak.put('m', new String[]{&quot;bB&quot;, &quot;hH&quot;, &quot;tT&quot;, &quot;wW&quot;, null, null});</span>
+<span class="fc" id="L212">        dvorak.put('n', new String[]{&quot;tT&quot;, &quot;rR&quot;, &quot;lL&quot;, &quot;sS&quot;, &quot;vV&quot;, &quot;wW&quot;});</span>
+<span class="fc" id="L213">        dvorak.put('o', new String[]{&quot;aA&quot;, &quot;,&lt;&quot;, &quot;.&gt;&quot;, &quot;eE&quot;, &quot;qQ&quot;, &quot;;:&quot;});</span>
+<span class="fc" id="L214">        dvorak.put('p', new String[]{&quot;.&gt;&quot;, &quot;4$&quot;, &quot;5%&quot;, &quot;yY&quot;, &quot;uU&quot;, &quot;eE&quot;});</span>
+<span class="fc" id="L215">        dvorak.put('q', new String[]{&quot;;:&quot;, &quot;oO&quot;, &quot;eE&quot;, &quot;jJ&quot;, null, null});</span>
+<span class="fc" id="L216">        dvorak.put('r', new String[]{&quot;cC&quot;, &quot;9(&quot;, &quot;0)&quot;, &quot;lL&quot;, &quot;nN&quot;, &quot;tT&quot;});</span>
+<span class="fc" id="L217">        dvorak.put('s', new String[]{&quot;nN&quot;, &quot;lL&quot;, &quot;/?&quot;, &quot;-_&quot;, &quot;zZ&quot;, &quot;vV&quot;});</span>
+<span class="fc" id="L218">        dvorak.put('t', new String[]{&quot;hH&quot;, &quot;cC&quot;, &quot;rR&quot;, &quot;nN&quot;, &quot;wW&quot;, &quot;mM&quot;});</span>
+<span class="fc" id="L219">        dvorak.put('u', new String[]{&quot;eE&quot;, &quot;pP&quot;, &quot;yY&quot;, &quot;iI&quot;, &quot;kK&quot;, &quot;jJ&quot;});</span>
+<span class="fc" id="L220">        dvorak.put('v', new String[]{&quot;wW&quot;, &quot;nN&quot;, &quot;sS&quot;, &quot;zZ&quot;, null, null});</span>
+<span class="fc" id="L221">        dvorak.put('w', new String[]{&quot;mM&quot;, &quot;tT&quot;, &quot;nN&quot;, &quot;vV&quot;, null, null});</span>
+<span class="fc" id="L222">        dvorak.put('x', new String[]{&quot;kK&quot;, &quot;iI&quot;, &quot;dD&quot;, &quot;bB&quot;, null, null});</span>
+<span class="fc" id="L223">        dvorak.put('y', new String[]{&quot;pP&quot;, &quot;5%&quot;, &quot;6^&quot;, &quot;fF&quot;, &quot;iI&quot;, &quot;uU&quot;});</span>
+<span class="fc" id="L224">        dvorak.put('z', new String[]{&quot;vV&quot;, &quot;sS&quot;, &quot;-_&quot;, null, null, null});</span>
+<span class="fc" id="L225">        dvorak.put('{', new String[]{&quot;0)&quot;, null, null, &quot;]}&quot;, &quot;/?&quot;, &quot;lL&quot;});</span>
+<span class="fc" id="L226">        dvorak.put('|', new String[]{&quot;=+&quot;, null, null, null, null, null});</span>
+<span class="fc" id="L227">        dvorak.put('}', new String[]{&quot;[{&quot;, null, null, null, &quot;=+&quot;, &quot;/?&quot;});</span>
+<span class="fc" id="L228">        dvorak.put('~', new String[]{null, null, null, &quot;1!&quot;, null, null});</span>
+    }
+
+    static
+    {
+<span class="fc" id="L233">        standardKeypad = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L234">        standardKeypad.put('0', new String[]{null, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;.&quot;, null, null, null});</span>
+<span class="fc" id="L235">        standardKeypad.put('1', new String[]{null, null, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;0&quot;, null, null});</span>
+<span class="fc" id="L236">        standardKeypad.put('2', new String[]{&quot;1&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;3&quot;, &quot;.&quot;, &quot;0&quot;, null});</span>
+<span class="fc" id="L237">        standardKeypad.put('3', new String[]{&quot;2&quot;, &quot;5&quot;, &quot;6&quot;, null, null, null, &quot;.&quot;, &quot;0&quot;});</span>
+<span class="fc" id="L238">        standardKeypad.put('4', new String[]{null, null, &quot;7&quot;, &quot;8&quot;, &quot;5&quot;, &quot;2&quot;, &quot;1&quot;, null});</span>
+<span class="fc" id="L239">        standardKeypad.put('5', new String[]{&quot;4&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;6&quot;, &quot;3&quot;, &quot;2&quot;, &quot;1&quot;});</span>
+<span class="fc" id="L240">        standardKeypad.put('6', new String[]{&quot;5&quot;, &quot;8&quot;, &quot;9&quot;, &quot;+&quot;, null, null, &quot;3&quot;, &quot;2&quot;});</span>
+<span class="fc" id="L241">        standardKeypad.put('7', new String[]{null, null, null, &quot;/&quot;, &quot;8&quot;, &quot;5&quot;, &quot;4&quot;, null});</span>
+<span class="fc" id="L242">        standardKeypad.put('8', new String[]{&quot;7&quot;, null, &quot;/&quot;, &quot;*&quot;, &quot;9&quot;, &quot;6&quot;, &quot;5&quot;, &quot;4&quot;});</span>
+<span class="fc" id="L243">        standardKeypad.put('9', new String[]{&quot;8&quot;, &quot;/&quot;, &quot;*&quot;, &quot;-&quot;, &quot;+&quot;, null, &quot;6&quot;, &quot;5&quot;});</span>
+<span class="fc" id="L244">        standardKeypad.put('*', new String[]{&quot;/&quot;, null, null, null, &quot;-&quot;, &quot;+&quot;, &quot;9&quot;, &quot;8&quot;});</span>
+<span class="fc" id="L245">        standardKeypad.put('+', new String[]{&quot;9&quot;, &quot;*&quot;, &quot;-&quot;, null, null, null, null, &quot;6&quot;});</span>
+<span class="fc" id="L246">        standardKeypad.put('-', new String[]{&quot;*&quot;, null, null, null, null, null, &quot;+&quot;, &quot;9&quot;});</span>
+<span class="fc" id="L247">        standardKeypad.put('.', new String[]{&quot;0&quot;, &quot;2&quot;, &quot;3&quot;, null, null, null, null, null});</span>
+<span class="fc" id="L248">        standardKeypad.put('/', new String[]{null, null, null, null, &quot;*&quot;, &quot;9&quot;, &quot;8&quot;, &quot;7&quot;});</span>
+    }
+
+    static
+    {
+<span class="fc" id="L253">        macKeypad = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L254">        macKeypad.put('0', new String[]{null, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;.&quot;, null, null, null});</span>
+<span class="fc" id="L255">        macKeypad.put('1', new String[]{null, null, &quot;4&quot;, &quot;5&quot;, &quot;2&quot;, &quot;0&quot;, null, null});</span>
+<span class="fc" id="L256">        macKeypad.put('2', new String[]{&quot;1&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;3&quot;, &quot;.&quot;, &quot;0&quot;, null});</span>
+<span class="fc" id="L257">        macKeypad.put('3', new String[]{&quot;2&quot;, &quot;5&quot;, &quot;6&quot;, &quot;+&quot;, null, null, &quot;.&quot;, &quot;0&quot;});</span>
+<span class="fc" id="L258">        macKeypad.put('4', new String[]{null, null, &quot;7&quot;, &quot;8&quot;, &quot;5&quot;, &quot;2&quot;, &quot;1&quot;, null});</span>
+<span class="fc" id="L259">        macKeypad.put('5', new String[]{&quot;4&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;6&quot;, &quot;3&quot;, &quot;2&quot;, &quot;1&quot;});</span>
+<span class="fc" id="L260">        macKeypad.put('6', new String[]{&quot;5&quot;, &quot;8&quot;, &quot;9&quot;, &quot;-&quot;, &quot;+&quot;, null, &quot;3&quot;, &quot;2&quot;});</span>
+<span class="fc" id="L261">        macKeypad.put('7', new String[]{null, null, null, &quot;=&quot;, &quot;8&quot;, &quot;5&quot;, &quot;4&quot;, null});</span>
+<span class="fc" id="L262">        macKeypad.put('8', new String[]{&quot;7&quot;, null, &quot;=&quot;, &quot;/&quot;, &quot;9&quot;, &quot;6&quot;, &quot;5&quot;, &quot;4&quot;});</span>
+<span class="fc" id="L263">        macKeypad.put('9', new String[]{&quot;8&quot;, &quot;=&quot;, &quot;/&quot;, &quot;*&quot;, &quot;-&quot;, &quot;+&quot;, &quot;6&quot;, &quot;5&quot;});</span>
+<span class="fc" id="L264">        macKeypad.put('*', new String[]{&quot;/&quot;, null, null, null, null, null, &quot;-&quot;, &quot;9&quot;});</span>
+<span class="fc" id="L265">        macKeypad.put('+', new String[]{&quot;6&quot;, &quot;9&quot;, &quot;-&quot;, null, null, null, null, &quot;3&quot;});</span>
+<span class="fc" id="L266">        macKeypad.put('-', new String[]{&quot;9&quot;, &quot;/&quot;, &quot;*&quot;, null, null, null, &quot;+&quot;, &quot;6&quot;});</span>
+<span class="fc" id="L267">        macKeypad.put('.', new String[]{&quot;0&quot;, &quot;2&quot;, &quot;3&quot;, null, null, null, null, null});</span>
+<span class="fc" id="L268">        macKeypad.put('/', new String[]{&quot;=&quot;, null, null, null, &quot;*&quot;, &quot;-&quot;, &quot;9&quot;, &quot;8&quot;});</span>
+<span class="fc" id="L269">        macKeypad.put('=', new String[]{null, null, null, null, &quot;/&quot;, &quot;9&quot;, &quot;8&quot;, &quot;7&quot;});</span>
+<span class="fc" id="L270">    }</span>
+
+
+    /**
+     * Calculates the average &quot;degree&quot; of a keyboard or keypad. On the qwerty
+     * keyboard, 'g' has degree 6, being adjacent to 'ftyhbv' and '\' has degree
+     * 1.
+     *
+     * @param keys a keyboard or keypad
+     * @return the average degree for this keyboard or keypad
+     */
+    public static double calcAverageDegree(HashMap&lt;Character, String[]&gt; keys)
+    {
+<span class="nc" id="L283">        double average = 0d;</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">        for (Map.Entry&lt;Character, String[]&gt; entry : keys.entrySet())</span>
+        {
+<span class="nc" id="L286">            average += neighborsNumber(entry.getValue());</span>
+<span class="nc" id="L287">        }</span>
+<span class="nc" id="L288">        return average / (double) keys.size();</span>
+    }
+
+
+    /**
+     * Count how many neighbors a key has
+     *
+     * @param neighbors the neighbors
+     * @return the number of neighbors
+     */
+    public static int neighborsNumber(String[] neighbors)
+    {
+<span class="nc" id="L300">        int sum = 0;</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">        for (String s : neighbors)</span>
+        {
+<span class="nc bnc" id="L303" title="All 2 branches missed.">            if (s != null)</span>
+            {
+<span class="nc" id="L305">                sum++;</span>
+            }
+        }
+<span class="nc" id="L308">        return sum;</span>
+    }
+
+    /**
+     * Returns a set of neighbors for a specific character.
+     *
+     * @param adjacencyGraph the graph you are using to get the neighbors.
+     * @param key            the character you are getting neighbors for.
+     * @return A set of characters which are neighbors to the passed in character.
+     */
+    public static Set&lt;Character&gt; getNeighbors(final AdjacencyGraph adjacencyGraph, final Character key)
+    {
+<span class="nc" id="L320">        final Set&lt;Character&gt; neighbors = new HashSet&lt;&gt;();</span>
+
+<span class="nc bnc" id="L322" title="All 2 branches missed.">        if (adjacencyGraph.getKeyMap().containsKey(key))</span>
+        {
+<span class="nc" id="L324">            String[] tmp_neighbors = adjacencyGraph.getKeyMap().get(key);</span>
+<span class="nc bnc" id="L325" title="All 2 branches missed.">            for (final String tmp_neighbor : tmp_neighbors)</span>
+            {
+<span class="nc bnc" id="L327" title="All 2 branches missed.">                if (null == tmp_neighbor)</span>
+                {
+<span class="nc" id="L329">                    continue;</span>
+                }
+<span class="nc bnc" id="L331" title="All 2 branches missed.">                for (Character character : tmp_neighbor.toCharArray())</span>
+                {
+<span class="nc" id="L333">                    neighbors.add(character);</span>
+                }
+            }
+        }
+<span class="nc" id="L337">        return neighbors;</span>
+    }
+
+    /**
+     * Returns the number of turns in the part passed in based on the adjacency graph.
+     *
+     * @param adjacencyGraph the graph you are using to get the neighbors.
+     * @param part           the string you are getting turns for.
+     * @return the number of turns in this string for the {@code AdjacencyGraph}
+     */
+    public static int getTurns(final AdjacencyGraph adjacencyGraph, final String part)
+    {
+<span class="nc" id="L349">        int direction = 0;</span>
+<span class="nc" id="L350">        int turns = 1;</span>
+<span class="nc" id="L351">        char[] parts = part.toCharArray();</span>
+
+<span class="nc bnc" id="L353" title="All 2 branches missed.">        for (int i1 = 0; i1 &lt; parts.length; i1++)</span>
+        {
+<span class="nc" id="L355">            Character character = parts[i1];</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">            if (i1 + 1 &gt;= parts.length)</span>
+            {
+<span class="nc" id="L358">                continue;</span>
+            }
+
+<span class="nc" id="L361">            Character next_character = parts[i1 + 1];</span>
+<span class="nc bnc" id="L362" title="All 2 branches missed.">            if (adjacencyGraph.getKeyMap().containsKey(character))</span>
+            {
+<span class="nc" id="L364">                String[] tmp_neighbors = adjacencyGraph.getKeyMap().get(character);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">                for (int i2 = 0; i2 &lt; tmp_neighbors.length; i2++)</span>
+                {
+<span class="nc bnc" id="L367" title="All 2 branches missed.">                    if (tmp_neighbors[i2] == null)</span>
+                    {
+<span class="nc" id="L369">                        continue;</span>
+                    }
+<span class="nc bnc" id="L371" title="All 2 branches missed.">                    for (Character neighbor_char : tmp_neighbors[i2].toCharArray())</span>
+                    {
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                        if (next_character.equals(neighbor_char))</span>
+                        {
+<span class="nc bnc" id="L375" title="All 2 branches missed.">                            if (direction == 0)</span>
+                            {
+<span class="nc" id="L377">                                direction = i2;</span>
+                            }
+<span class="nc bnc" id="L379" title="All 2 branches missed.">                            else if (direction != i2)</span>
+                            {
+<span class="nc" id="L381">                                turns++;</span>
+<span class="nc" id="L382">                                direction = i2;</span>
+                            }
+                        }
+                    }
+                }
+            }
+        }
+<span class="nc" id="L389">        return turns;</span>
+    }
+
+    /**
+     * Returns the number of shifts in case in the part passed in.
+     *
+     * @param adjacencyGraph the graph you are using to get the neighbors
+     * @param part           the string you are getting shifts for.
+     * @return the number of shifts in this string for the {@code AdjacencyGraph}
+     */
+    public static int getShifts(final AdjacencyGraph adjacencyGraph, final String part)
+    {
+<span class="nc" id="L401">        int current_shift = -1;</span>
+<span class="nc" id="L402">        int shifts = 0;</span>
+<span class="nc" id="L403">        char[] parts = part.toCharArray();</span>
+
+<span class="nc bnc" id="L405" title="All 2 branches missed.">        for (int i1 = 0; i1 &lt; parts.length; i1++)</span>
+        {
+<span class="nc" id="L407">            Character character = parts[i1];</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">            if (i1 + 1 &gt;= parts.length)</span>
+            {
+<span class="nc" id="L410">                continue;</span>
+            }
+
+<span class="nc" id="L413">            Character next_character = parts[i1 + 1];</span>
+
+<span class="nc bnc" id="L415" title="All 2 branches missed.">            if (adjacencyGraph.getKeyMap().containsKey(character))</span>
+            {
+<span class="nc" id="L417">                String[] tmp_neighbors = adjacencyGraph.getKeyMap().get(character);</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">                for (final String tmp_neighbor : tmp_neighbors)</span>
+                {
+<span class="nc bnc" id="L420" title="All 2 branches missed.">                    if (tmp_neighbor == null)</span>
+                    {
+<span class="nc" id="L422">                        continue;</span>
+                    }
+<span class="nc" id="L424">                    int i = 0;</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">                    for (Character neighbor_char : tmp_neighbor.toCharArray())</span>
+                    {
+<span class="nc bnc" id="L427" title="All 2 branches missed.">                        if (next_character.equals(neighbor_char))</span>
+                        {
+<span class="nc bnc" id="L429" title="All 2 branches missed.">                            if (current_shift == -1)</span>
+                            {
+<span class="nc" id="L431">                                current_shift = i;</span>
+                            }
+<span class="nc bnc" id="L433" title="All 2 branches missed.">                            else if (current_shift != i)</span>
+                            {
+<span class="nc" id="L435">                                shifts++;</span>
+<span class="nc" id="L436">                                current_shift = i;</span>
+                            }
+                        }
+<span class="nc" id="L439">                        i++;</span>
+                    }
+                }
+            }
+        }
+<span class="nc" id="L444">        return shifts;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

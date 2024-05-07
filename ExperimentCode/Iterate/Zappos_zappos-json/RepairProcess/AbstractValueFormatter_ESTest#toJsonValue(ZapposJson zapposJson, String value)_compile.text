@@ -1,0 +1,81 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#toJsonValue(ZapposJson zapposJson, String value).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[9,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[9,1] static import only from classes and interfaces
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[34,33] cannot find symbol
+  symbol:   method mock(java.lang.Class<com.zappos.json.ZapposJson>)
+  location: class com.zappos.json.format.AbstractValueFormatter_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[36,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#toJsonValue(ZapposJson zapposJson, String value).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[7,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[12,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[12,1] static import only from classes and interfaces
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[38,33] cannot find symbol
+  symbol:   method mock(java.lang.Class<com.zappos.json.ZapposJson>)
+  location: class com.zappos.json.format.AbstractValueFormatter_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[42,78] cannot find symbol
+  symbol: class StringWriter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[40,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[41,13] method does not override or implement a method from a supertype
+[INFO] 7 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#toJsonValue(ZapposJson zapposJson, String value).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[8,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[13,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[13,1] static import only from classes and interfaces
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[40,33] cannot find symbol
+  symbol:   method mock(java.lang.Class<com.zappos.json.ZapposJson>)
+  location: class com.zappos.json.format.AbstractValueFormatter_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[44,78] cannot find symbol
+  symbol: class StringWriter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[42,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[43,13] method does not override or implement a method from a supertype
+[INFO] 7 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#toJsonValue(ZapposJson zapposJson, String value).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[9,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[14,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[14,1] static import only from classes and interfaces
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[42,33] cannot find symbol
+  symbol:   method mock(java.lang.Class<com.zappos.json.ZapposJson>)
+  location: class com.zappos.json.format.AbstractValueFormatter_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[46,78] cannot find symbol
+  symbol: class StringWriter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[44,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[45,13] method does not override or implement a method from a supertype
+[INFO] 7 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#toJsonValue(ZapposJson zapposJson, String value).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[10,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[15,26] package org.mockito does not exist
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[15,1] static import only from classes and interfaces
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[44,33] cannot find symbol
+  symbol:   method mock(java.lang.Class<com.zappos.json.ZapposJson>)
+  location: class com.zappos.json.format.AbstractValueFormatter_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[48,72] cannot find symbol
+  symbol: class StringWriter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[46,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[47,13] method does not override or implement a method from a supertype
+[INFO] 7 errors 
+####################
+

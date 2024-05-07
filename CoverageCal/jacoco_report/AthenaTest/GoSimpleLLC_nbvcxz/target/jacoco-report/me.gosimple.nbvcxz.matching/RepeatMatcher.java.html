@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RepeatMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching</a> &gt; <span class="el_source">RepeatMatcher.java</span></div><h1>RepeatMatcher.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching;
+
+import me.gosimple.nbvcxz.matching.match.Match;
+import me.gosimple.nbvcxz.matching.match.RepeatMatch;
+import me.gosimple.nbvcxz.resources.Configuration;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Look for every part of the password that is a repeat of the previous character.
+ *
+ * @author Adam Brusselback
+ */
+<span class="fc" id="L19">public final class RepeatMatcher implements PasswordMatcher</span>
+{
+    public List&lt;Match&gt; match(final Configuration configuration, final String password)
+    {
+<span class="nc" id="L23">        List&lt;Match&gt; matches = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L25">        Pattern greedy = Pattern.compile(&quot;(.+)\\1+&quot;);</span>
+<span class="nc" id="L26">        Pattern lazy = Pattern.compile(&quot;(.+?)\\1+&quot;);</span>
+<span class="nc" id="L27">        Pattern lazyAnchored = Pattern.compile(&quot;^(.+?)\\1+$&quot;);</span>
+<span class="nc" id="L28">        int lastIndex = 0;</span>
+<span class="nc" id="L29">        Matcher greedyMatch = greedy.matcher(password);</span>
+<span class="nc" id="L30">        Matcher lazyMatch = lazy.matcher(password);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        while (lastIndex &lt; password.length())</span>
+        {
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            if (!greedyMatch.find())</span>
+            {
+<span class="nc" id="L35">                break;</span>
+            }
+            Matcher match;
+            String baseToken;
+            String repeatCharacters;
+<span class="nc bnc" id="L40" title="All 4 branches missed.">            if (greedyMatch.group(0).length() &gt; (lazyMatch.find() ? lazyMatch.group(0).length() : 0))</span>
+            {
+<span class="nc" id="L42">                match = greedyMatch;</span>
+<span class="nc" id="L43">                Matcher matcher = lazyAnchored.matcher(match.group(0));</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">                baseToken = matcher.find() ? matcher.group(0) : match.group(0);</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                repeatCharacters = matcher.find() ? matcher.group(1) : match.group(1);</span>
+<span class="nc" id="L46">            }</span>
+            else
+            {
+<span class="nc" id="L49">                match = lazyMatch;</span>
+<span class="nc" id="L50">                baseToken = match.group(0);</span>
+<span class="nc" id="L51">                repeatCharacters = match.group(1);</span>
+            }
+<span class="nc" id="L53">            int startIndex = match.start(0);</span>
+<span class="nc" id="L54">            int endIndex = match.end(0) - 1;</span>
+
+<span class="nc" id="L56">            Set&lt;Character&gt; character_set = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            for (char character : repeatCharacters.toCharArray())</span>
+            {
+<span class="nc" id="L59">                character_set.add(character);</span>
+            }
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            if (character_set.size() &lt;= 4)</span>
+            {
+<span class="nc" id="L63">                matches.add(new RepeatMatch(baseToken, configuration, repeatCharacters, startIndex, endIndex));</span>
+            }
+<span class="nc" id="L65">            lastIndex = endIndex + 1;</span>
+<span class="nc" id="L66">        }</span>
+<span class="nc" id="L67">        return matches;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

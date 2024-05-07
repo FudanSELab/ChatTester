@@ -1,0 +1,100 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getEnumValue().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[9,23] cannot find symbol
+  symbol:   class EnumValue
+  location: package com.zappos.json
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[29,9] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[29,43] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[34,9] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getEnumValue().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[11,23] cannot find symbol
+  symbol:   class EnumValue
+  location: package com.zappos.json
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[32,9] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[32,31] cannot find symbol
+  symbol:   variable EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getEnumValue().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[12,23] cannot find symbol
+  symbol:   class EnumValue
+  location: package com.zappos.json
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[34,9] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[34,31] cannot find symbol
+  symbol:   variable EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getEnumValue().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[13,23] cannot find symbol
+  symbol:   class EnumValue
+  location: package com.zappos.json
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[36,9] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[36,39] cannot find symbol
+  symbol:   variable EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[43,47] enumValue has private access in com.zappos.json.JsonBeanAttribute
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getEnumValue().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[14,23] cannot find symbol
+  symbol:   class EnumValue
+  location: package com.zappos.json
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[38,9] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[38,35] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getEnumValue().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[15,23] cannot find symbol
+  symbol:   class EnumValue
+  location: package com.zappos.json
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[40,9] cannot find symbol
+  symbol:   class EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[40,31] cannot find symbol
+  symbol:   variable EnumValue
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 3 errors 
+####################
+

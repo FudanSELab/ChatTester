@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SequenceMatch.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching.match</a> &gt; <span class="el_source">SequenceMatch.java</span></div><h1>SequenceMatch.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching.match;
+
+import me.gosimple.nbvcxz.resources.Configuration;
+
+import java.util.ResourceBundle;
+
+/**
+ * @author Adam Brusselback
+ */
+public final class SequenceMatch extends BaseMatch
+{
+    private final char firstCharacter;
+
+
+    /**
+     * Create a new {@code SequenceMatch}
+     *
+     * @param match         the {@code String} we are creating the {@code SequenceMatch} from.
+     * @param configuration the {@link Configuration} object.
+     * @param start_index   the start index in the password for this match.
+     * @param end_index     the end index in the password for this match.
+     */
+    public SequenceMatch(String match, Configuration configuration, int start_index, int end_index)
+    {
+<span class="fc" id="L25">        super(match, configuration, start_index, end_index);</span>
+<span class="fc" id="L26">        this.firstCharacter = match.charAt(0);</span>
+
+<span class="fc" id="L28">        super.setEntropy(this.getEntropy());</span>
+<span class="fc" id="L29">    }</span>
+
+
+    private double getEntropy()
+    {
+<span class="fc" id="L34">        char firstChar = getFirstCharacter();</span>
+        double baseEntropy;
+
+        // A sequence that starts with a 'a' or a '1' is very weak
+<span class="pc bpc" id="L38" title="2 of 4 branches missed.">        if (firstChar == 'a' || firstChar == '1')</span>
+        {
+<span class="nc" id="L40">            baseEntropy = 1d;</span>
+        }
+        // Digit sequence don't have a lot of entropy
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        else if (Character.isDigit(firstChar))</span>
+        {
+<span class="nc" id="L45">            baseEntropy = LOG_10;</span>
+        }
+        // Alpha sequence have more entropy
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        else if (Character.isLowerCase(firstChar))</span>
+        {
+<span class="fc" id="L50">            baseEntropy = LOG_26;</span>
+        }
+        // We give an extra bit of entropy for upper case sequence
+        else
+        {
+<span class="fc" id="L55">            baseEntropy = LOG_26 + 1d;</span>
+        }
+
+<span class="fc" id="L58">        return baseEntropy + log2(getLength());</span>
+    }
+
+
+    /**
+     * @return the first {@code char} of the sequence.
+     */
+    public char getFirstCharacter()
+    {
+<span class="fc" id="L67">        return firstCharacter;</span>
+    }
+
+    public String getDetails()
+    {
+<span class="nc" id="L72">        ResourceBundle mainResource = configuration.getMainResource();</span>
+<span class="nc" id="L73">        StringBuilder detailBuilder = new StringBuilder();</span>
+<span class="nc" id="L74">        detailBuilder.append(super.getDetails());</span>
+<span class="nc" id="L75">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L76">        detailBuilder.append(mainResource.getString(&quot;main.match.firstCharacter&quot;)).append(&quot; &quot;).append(getFirstCharacter());</span>
+<span class="nc" id="L77">        return detailBuilder.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

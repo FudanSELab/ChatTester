@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Rectangle.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">Rectangle.java</span></div><h1>Rectangle.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class Rectangle extends Rectangle2D.Float {
+
+	/**
+	 * Ill-defined comparator, from when Rectangle was Comparable.
+	 * 
+	 * @see &lt;a href=&quot;https://github.com/tabulapdf/tabula-java/issues/116&quot;&gt;PR 116&lt;/a&gt;
+	 * @deprecated with no replacement
+	 */
+	@Deprecated
+<span class="fc" id="L19">	public static final Comparator&lt;Rectangle&gt; ILL_DEFINED_ORDER = new Comparator&lt;Rectangle&gt;() {</span>
+		@Override public int compare(Rectangle o1, Rectangle o2) {
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">			if (o1.equals(o2)) return 0;</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">			if (o1.verticalOverlap(o2) &gt; VERTICAL_COMPARISON_THRESHOLD) {</span>
+<span class="pc bpc" id="L23" title="3 of 4 branches missed.">				return o1.isLtrDominant() == -1 &amp;&amp; o2.isLtrDominant() == -1</span>
+<span class="pc" id="L24">				     ? - java.lang.Double.compare(o1.getX(), o2.getX())</span>
+<span class="fc" id="L25">				     : java.lang.Double.compare(o1.getX(), o2.getX());</span>
+			} else {
+<span class="fc" id="L27">				return java.lang.Float.compare(o1.getBottom(), o2.getBottom());</span>
+			}
+		}
+	};
+	
+	protected static final float VERTICAL_COMPARISON_THRESHOLD = 0.4f;
+
+	public Rectangle() {
+<span class="fc" id="L35">		super();</span>
+<span class="fc" id="L36">	}</span>
+
+	public Rectangle(float top, float left, float width, float height) {
+<span class="fc" id="L39">		super();</span>
+<span class="fc" id="L40">		this.setRect(left, top, width, height);</span>
+<span class="fc" id="L41">	}</span>
+
+	public int compareTo(Rectangle other) {
+<span class="fc" id="L44">		return ILL_DEFINED_ORDER.compare(this, other);</span>
+	}
+
+	// I'm bad at Java and need this for fancy sorting in
+	// technology.tabula.TextChunk.
+	public int isLtrDominant() {
+<span class="fc" id="L50">		return 0;</span>
+	}
+
+	public float getArea() {
+<span class="fc" id="L54">		return this.width * this.height;</span>
+	}
+
+	public float verticalOverlap(Rectangle other) {
+<span class="fc" id="L58">		return Math.max(0, Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));</span>
+	}
+
+	public boolean verticallyOverlaps(Rectangle other) {
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		return verticalOverlap(other) &gt; 0;</span>
+	}
+
+	public float horizontalOverlap(Rectangle other) {
+<span class="fc" id="L66">		return Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));</span>
+	}
+
+	public boolean horizontallyOverlaps(Rectangle other) {
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">		return horizontalOverlap(other) &gt; 0;</span>
+	}
+
+	public float verticalOverlapRatio(Rectangle other) {
+<span class="fc" id="L74">		float rv = 0, delta = Math.min(this.getBottom() - this.getTop(), other.getBottom() - other.getTop());</span>
+
+<span class="pc bpc" id="L76" title="3 of 4 branches missed.">		if (other.getTop() &lt;= this.getTop() &amp;&amp; this.getTop() &lt;= other.getBottom()</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">				&amp;&amp; other.getBottom() &lt;= this.getBottom()) {</span>
+<span class="nc" id="L78">			rv = (other.getBottom() - this.getTop()) / delta;</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">		} else if (this.getTop() &lt;= other.getTop() &amp;&amp; other.getTop() &lt;= this.getBottom()</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">				&amp;&amp; this.getBottom() &lt;= other.getBottom()) {</span>
+<span class="fc" id="L81">			rv = (this.getBottom() - other.getTop()) / delta;</span>
+<span class="nc bnc" id="L82" title="All 4 branches missed.">		} else if (this.getTop() &lt;= other.getTop() &amp;&amp; other.getTop() &lt;= other.getBottom()</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">				&amp;&amp; other.getBottom() &lt;= this.getBottom()) {</span>
+<span class="nc" id="L84">			rv = (other.getBottom() - other.getTop()) / delta;</span>
+<span class="nc bnc" id="L85" title="All 4 branches missed.">		} else if (other.getTop() &lt;= this.getTop() &amp;&amp; this.getTop() &lt;= this.getBottom()</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				&amp;&amp; this.getBottom() &lt;= other.getBottom()) {</span>
+<span class="nc" id="L87">			rv = (this.getBottom() - this.getTop()) / delta;</span>
+		}
+
+<span class="fc" id="L90">		return rv;</span>
+
+	}
+
+	public float overlapRatio(Rectangle other) {
+<span class="nc" id="L95">		double intersectionWidth = Math.max(0,</span>
+<span class="nc" id="L96">				Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));</span>
+<span class="nc" id="L97">		double intersectionHeight = Math.max(0,</span>
+<span class="nc" id="L98">				Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));</span>
+<span class="nc" id="L99">		double intersectionArea = Math.max(0, intersectionWidth * intersectionHeight);</span>
+<span class="nc" id="L100">		double unionArea = this.getArea() + other.getArea() - intersectionArea;</span>
+
+<span class="nc" id="L102">		return (float) (intersectionArea / unionArea);</span>
+	}
+
+	public Rectangle merge(Rectangle other) {
+<span class="fc" id="L106">		this.setRect(this.createUnion(other));</span>
+<span class="fc" id="L107">		return this;</span>
+	}
+
+	public float getTop() {
+<span class="fc" id="L111">		return (float) this.getMinY();</span>
+	}
+
+	public void setTop(float top) {
+<span class="fc" id="L115">		float deltaHeight = top - this.y;</span>
+<span class="fc" id="L116">		this.setRect(this.x, top, this.width, this.height - deltaHeight);</span>
+<span class="fc" id="L117">	}</span>
+
+	public float getRight() {
+<span class="fc" id="L120">		return (float) this.getMaxX();</span>
+	}
+
+	public void setRight(float right) {
+<span class="fc" id="L124">		this.setRect(this.x, this.y, right - this.x, this.height);</span>
+<span class="fc" id="L125">	}</span>
+
+	public float getLeft() {
+<span class="fc" id="L128">		return (float) this.getMinX();</span>
+	}
+
+	public void setLeft(float left) {
+<span class="fc" id="L132">		float deltaWidth = left - this.x;</span>
+<span class="fc" id="L133">		this.setRect(left, this.y, this.width - deltaWidth, this.height);</span>
+<span class="fc" id="L134">	}</span>
+
+	public float getBottom() {
+<span class="fc" id="L137">		return (float) this.getMaxY();</span>
+	}
+
+	public void setBottom(float bottom) {
+<span class="fc" id="L141">		this.setRect(this.x, this.y, this.width, bottom - this.y);</span>
+<span class="fc" id="L142">	}</span>
+
+	public Point2D[] getPoints() {
+<span class="fc" id="L145">		return new Point2D[] { new Point2D.Float(this.getLeft(), this.getTop()),</span>
+<span class="fc" id="L146">				new Point2D.Float(this.getRight(), this.getTop()), new Point2D.Float(this.getRight(), this.getBottom()),</span>
+<span class="fc" id="L147">				new Point2D.Float(this.getLeft(), this.getBottom()) };</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L152">		StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L153">		String s = super.toString();</span>
+<span class="nc" id="L154">		sb.append(s.substring(0, s.length() - 1));</span>
+<span class="nc" id="L155">		sb.append(String.format(Locale.US, &quot;,bottom=%f,right=%f]&quot;, this.getBottom(), this.getRight()));</span>
+<span class="nc" id="L156">		return sb.toString();</span>
+	}
+
+	/**
+	 * @param rectangles
+	 * @return minimum bounding box that contains all the rectangles
+	 */
+	public static Rectangle boundingBoxOf(List&lt;? extends Rectangle&gt; rectangles) {
+<span class="fc" id="L164">		float minx = java.lang.Float.MAX_VALUE;</span>
+<span class="fc" id="L165">		float miny = java.lang.Float.MAX_VALUE;</span>
+<span class="fc" id="L166">		float maxx = java.lang.Float.MIN_VALUE;</span>
+<span class="fc" id="L167">		float maxy = java.lang.Float.MIN_VALUE;</span>
+
+<span class="fc bfc" id="L169" title="All 2 branches covered.">		for (Rectangle r : rectangles) {</span>
+<span class="fc" id="L170">			minx = (float) Math.min(r.getMinX(), minx);</span>
+<span class="fc" id="L171">			miny = (float) Math.min(r.getMinY(), miny);</span>
+<span class="fc" id="L172">			maxx = (float) Math.max(r.getMaxX(), maxx);</span>
+<span class="fc" id="L173">			maxy = (float) Math.max(r.getMaxY(), maxy);</span>
+<span class="fc" id="L174">		}</span>
+<span class="fc" id="L175">		return new Rectangle(miny, minx, maxx - minx, maxy - miny);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

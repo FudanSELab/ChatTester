@@ -1,0 +1,63 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetTagList() {
+        TagSearchFeed tagSearchFeed = new TagSearchFeed();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<TagInfoData> newTagList = new LinkedList<>();
+
+        newTagList.add(new TagInfoData("tag1"));
+        newTagList.add(new TagInfoData("tag2"));
+        tagSearchFeed.setTagList(newTagList);
+        List<TagInfoData> updatedTagList = tagSearchFeed.getTagList();
+        assertEquals(newTagList, updatedTagList);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# TagInfoData class
+package org.jinstagram.entity.tags;
+public class TagInfoData {
+public long getMediaCount();
+public void setMediaCount(long mediaCount);
+public String getTagName();
+public void setTagName(String tagName);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testSetTagList() {
+    TagSearchFeed tagSearchFeed = new TagSearchFeed();
+    List<TagInfoData> newTagList = new LinkedList<TagInfoData>();
+
+   <Buggy Line>: constructor TagInfoData in class org.jinstagram.entity.tags.TagInfoData cannot be applied to given types;
+    newTagList.add(new TagInfoData("tag1"));
+
+    newTagList.add(new TagInfoData("tag2"));
+    tagSearchFeed.setTagList(newTagList);
+    List<TagInfoData> updatedTagList = tagSearchFeed.getTagList();
+    assertEquals(newTagList, updatedTagList);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "TagInfoData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "TagInfoData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

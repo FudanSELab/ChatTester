@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Response.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.http</a> &gt; <span class="el_source">Response.java</span></div><h1>Response.java</h1><pre class="source lang-java linenums">package org.jinstagram.http;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.net.HttpURLConnection;
+import java.net.UnknownHostException;
+
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+/**
+ * Represents an HTTP Response.
+ */
+public class Response {
+	private static final String EMPTY_RESPONSE = &quot;&quot;;
+
+	private String body;
+
+	private int code;
+
+	private Map&lt;String, String&gt; headers;
+
+	private InputStream stream;
+	
+	private String url;
+
+<span class="nc" id="L29">    Response(HttpURLConnection connection) throws IOException {</span>
+        try {
+<span class="nc" id="L31">            connection.connect();</span>
+
+<span class="nc" id="L33">            url = connection.getURL().toString();</span>
+<span class="nc" id="L34">            code = connection.getResponseCode();</span>
+<span class="nc" id="L35">            headers = parseHeaders(connection);</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            stream = wasSuccessful() ? connection.getInputStream() : connection.getErrorStream();</span>
+<span class="nc" id="L37">        } catch (UnknownHostException e) {</span>
+<span class="nc" id="L38">            code = HttpStatus.NOT_FOUND.value();</span>
+<span class="nc" id="L39">            body = EMPTY_RESPONSE;</span>
+<span class="nc" id="L40">        }</span>
+<span class="nc" id="L41">    }</span>
+
+    public String getURL() {
+<span class="nc" id="L44">		return url;</span>
+	}
+
+	private String parseBodyContents() {
+<span class="nc" id="L48">		return StreamUtils.getStreamContents(getStream());</span>
+	}
+
+	private Map&lt;String, String&gt; parseHeaders(HttpURLConnection conn) {
+<span class="nc" id="L52">		Map&lt;String, String&gt; headers = new TreeMap&lt;String, String&gt;(String.CASE_INSENSITIVE_ORDER);</span>
+
+<span class="nc bnc" id="L54" title="All 2 branches missed.">		for (java.util.Map.Entry&lt;String,List&lt;String&gt;&gt; entry : conn.getHeaderFields().entrySet()) {</span>
+<span class="nc" id="L55">			String key= entry.getKey();</span>
+<span class="nc" id="L56">			List&lt;String&gt; valueList= entry.getValue();</span>
+<span class="nc bnc" id="L57" title="All 6 branches missed.">			if (key!=null &amp;&amp; valueList!=null &amp;&amp; valueList.size()&gt;0) {</span>
+<span class="nc" id="L58">				String value= valueList.get(0);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">				if (value!=null) {</span>
+<span class="nc" id="L60">					headers.put(key, value);</span>
+				}
+			}
+<span class="nc" id="L63">		}</span>
+<span class="nc" id="L64">		return headers;</span>
+	}
+
+	private boolean wasSuccessful() {
+<span class="nc bnc" id="L68" title="All 4 branches missed.">		return (getCode() &gt;= 200) &amp;&amp; (getCode() &lt; 400);</span>
+	}
+
+	/**
+	 * Obtains the HTTP Response body
+	 * 
+	 * @return response body
+	 */
+	public String getBody() {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (body == null) {</span>
+<span class="nc" id="L78">			body = parseBodyContents();</span>
+		}
+<span class="nc" id="L80">		return body;</span>
+	}
+
+	/**
+	 * Obtains the meaningful stream of the HttpUrlConnection, either
+	 * inputStream or errorInputStream, depending on the status code
+	 * 
+	 * @return input stream / error stream
+	 */
+	public InputStream getStream() {
+<span class="nc" id="L90">		return stream;</span>
+	}
+
+	/**
+	 * Obtains the HTTP status code
+	 * 
+	 * @return the status code
+	 */
+	public int getCode() {
+<span class="nc" id="L99">		return code;</span>
+	}
+
+	/**
+	 * Obtains a {@link Map} containing the HTTP Response Headers
+	 * 
+	 * @return headers
+	 */
+	public Map&lt;String, String&gt; getHeaders() {
+<span class="nc" id="L108">		return headers;</span>
+	}
+
+	/**
+	 * Obtains a single HTTP Header value, or null if undefined
+	 * 
+	 * @param headerName name of the header
+	 * 
+	 * @return header value or null
+	 */
+	public String getHeader(String headerName) {
+<span class="nc" id="L119">		return headers.get(headerName);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

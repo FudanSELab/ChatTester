@@ -1,0 +1,150 @@
+0-->1-->0-->compileRepair
+
+
+# Focal Method
+public class OAuthRequest {
+private Map<String, String> oauthParameters;
+public OAuthRequest(Verbs verb, String url) {
+    super(verb, url);
+    this.oauthParameters = new HashMap<String, String>();
+}
+# Focal method
+public void addOAuthParameter(String key, String value) {
+    oauthParameters.put(checkKey(key), value);
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Focal Method
+public class OAuthRequest {
+private Map<String, String> oauthParameters;
+public OAuthRequest(Verbs verb, String url) {
+    super(verb, url);
+    this.oauthParameters = new HashMap<String, String>();
+}
+# Focal method
+public void addOAuthParameter(String key, String value) {
+    oauthParameters.put(checkKey(key), value);
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class OAuthRequest {
+private Map<String, String> oauthParameters;
+public OAuthRequest(Verbs verb, String url) {
+    super(verb, url);
+    this.oauthParameters = new HashMap<String, String>();
+}
+# Focal method
+public void addOAuthParameter(String key, String value) {
+    oauthParameters.put(checkKey(key), value);
+}
+}
+
+# Method Intention
+The addOAuthParameter(String key, String value) method is intended to add a key-value pair to the oauthParameters map after ensuring that the key is valid by invoking the checkKey method.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->1-->compileRepair
+
+
+# Focal Method
+public class OAuthRequest {
+private Map<String, String> oauthParameters;
+public OAuthRequest(Verbs verb, String url) {
+    super(verb, url);
+    this.oauthParameters = new HashMap<String, String>();
+}
+# Focal method
+public void addOAuthParameter(String key, String value) {
+    oauthParameters.put(checkKey(key), value);
+}
+}
+
+# Method Intention
+The addOAuthParameter(String key, String value) method is intended to add a key-value pair to the oauthParameters map after ensuring that the key is valid by invoking the checkKey method.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->2-->compileRepair
+
+
+# Focal Method
+public class OAuthRequest {
+private Map<String, String> oauthParameters;
+public OAuthRequest(Verbs verb, String url) {
+    super(verb, url);
+    this.oauthParameters = new HashMap<String, String>();
+}
+# Focal method
+public void addOAuthParameter(String key, String value) {
+    oauthParameters.put(checkKey(key), value);
+}
+}
+
+# Method Intention
+The addOAuthParameter(String key, String value) method in the OAuthRequest class is intended to add a key-value pair to the oauthParameters map after ensuring that the key is valid by invoking the checkKey method.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+5-->6-->3-->compileRepair
+
+
+# Focal Method
+public class OAuthRequest {
+private Map<String, String> oauthParameters;
+public OAuthRequest(Verbs verb, String url) {
+    super(verb, url);
+    this.oauthParameters = new HashMap<String, String>();
+}
+# Focal method
+public void addOAuthParameter(String key, String value) {
+    oauthParameters.put(checkKey(key), value);
+}
+}
+
+# Method Intention
+The addOAuthParameter(String key, String value) method is intended to add a key-value pair to the oauthParameters map after ensuring that the key is valid by invoking the checkKey method.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

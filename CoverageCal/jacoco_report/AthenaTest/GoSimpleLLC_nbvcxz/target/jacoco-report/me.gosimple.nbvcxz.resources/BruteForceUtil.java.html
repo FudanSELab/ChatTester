@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BruteForceUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">BruteForceUtil.java</span></div><h1>BruteForceUtil.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+/**
+ * Util class for brute force calculations.
+ *
+ * @author Adam Brusselback
+ */
+<span class="nc" id="L8">public class BruteForceUtil</span>
+{
+    /**
+     * Calculates the brute force cardinality of a given password.
+     * The brute force cardinality is the estimated range of character a brute
+     * force method would use to crack the password.
+     *
+     * @param password the password we are estimating the brute force cardinality
+     * @return the brute force cardinality
+     */
+    public static int getBruteForceCardinality(final String password)
+    {
+
+<span class="nc" id="L21">        boolean lower = false,</span>
+<span class="nc" id="L22">                upper = false,</span>
+<span class="nc" id="L23">                digits = false,</span>
+<span class="nc" id="L24">                symbols = false,</span>
+<span class="nc" id="L25">                unicode = false;</span>
+
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        for (char c : password.toCharArray())</span>
+        {
+<span class="nc bnc" id="L29" title="All 4 branches missed.">            if (0x30 &lt;= c &amp;&amp; c &lt;= 0x39)</span>
+            {
+<span class="nc" id="L31">                digits = true;</span>
+            }
+<span class="nc bnc" id="L33" title="All 4 branches missed.">            else if (0x41 &lt;= c &amp;&amp; c &lt;= 0x5a)</span>
+            {
+<span class="nc" id="L35">                upper = true;</span>
+            }
+<span class="nc bnc" id="L37" title="All 4 branches missed.">            else if (0x61 &lt;= c &amp;&amp; c &lt;= 0x7a)</span>
+            {
+<span class="nc" id="L39">                lower = true;</span>
+            }
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            else if (c &lt;= 0x7f)</span>
+            {
+<span class="nc" id="L43">                symbols = true;</span>
+            }
+            else
+            {
+<span class="nc" id="L47">                unicode = true;</span>
+            }
+        }
+
+<span class="nc" id="L51">        int cardinality = 0;</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (digits)</span>
+        {
+<span class="nc" id="L54">            cardinality += 10;</span>
+        }
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (upper)</span>
+        {
+<span class="nc" id="L58">            cardinality += 26;</span>
+        }
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (lower)</span>
+        {
+<span class="nc" id="L62">            cardinality += 26;</span>
+        }
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (symbols)</span>
+        {
+<span class="nc" id="L66">            cardinality += 33;</span>
+        }
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (unicode)</span>
+        {
+<span class="nc" id="L70">            cardinality += 100;</span>
+        }
+
+<span class="nc" id="L73">        return cardinality;</span>
+    }
+
+    /**
+     * Calculates the brute force cardinality of a given password.
+     * The brute force cardinality is the estimated range of character a brute
+     * force method would use to crack the password.
+     *
+     * @param character the password we are estimating the brute force cardinality
+     * @return the brute force cardinality
+     */
+    public static int getBruteForceCardinality(final char character)
+    {
+
+<span class="nc" id="L87">        boolean lower = false,</span>
+<span class="nc" id="L88">                upper = false,</span>
+<span class="nc" id="L89">                digits = false,</span>
+<span class="nc" id="L90">                symbols = false,</span>
+<span class="nc" id="L91">                unicode = false;</span>
+
+<span class="nc bnc" id="L93" title="All 4 branches missed.">        if (0x30 &lt;= character &amp;&amp; character &lt;= 0x39)</span>
+        {
+<span class="nc" id="L95">            digits = true;</span>
+        }
+<span class="nc bnc" id="L97" title="All 4 branches missed.">        else if (0x41 &lt;= character &amp;&amp; character &lt;= 0x5a)</span>
+        {
+<span class="nc" id="L99">            upper = true;</span>
+        }
+<span class="nc bnc" id="L101" title="All 4 branches missed.">        else if (0x61 &lt;= character &amp;&amp; character &lt;= 0x7a)</span>
+        {
+<span class="nc" id="L103">            lower = true;</span>
+        }
+<span class="nc bnc" id="L105" title="All 2 branches missed.">        else if (character &lt;= 0x7f)</span>
+        {
+<span class="nc" id="L107">            symbols = true;</span>
+        }
+        else
+        {
+<span class="nc" id="L111">            unicode = true;</span>
+        }
+
+<span class="nc" id="L114">        int cardinality = 0;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (digits)</span>
+        {
+<span class="nc" id="L117">            cardinality += 10;</span>
+        }
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (upper)</span>
+        {
+<span class="nc" id="L121">            cardinality += 26;</span>
+        }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (lower)</span>
+        {
+<span class="nc" id="L125">            cardinality += 26;</span>
+        }
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (symbols)</span>
+        {
+<span class="nc" id="L129">            cardinality += 33;</span>
+        }
+<span class="nc bnc" id="L131" title="All 2 branches missed.">        if (unicode)</span>
+        {
+<span class="nc" id="L133">            cardinality += 100;</span>
+        }
+
+<span class="nc" id="L136">        return cardinality;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

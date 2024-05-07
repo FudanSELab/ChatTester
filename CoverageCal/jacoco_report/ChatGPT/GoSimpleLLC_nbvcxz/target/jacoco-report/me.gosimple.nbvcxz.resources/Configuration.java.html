@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Configuration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">Configuration.java</span></div><h1>Configuration.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import me.gosimple.nbvcxz.matching.DictionaryMatcher;
+import me.gosimple.nbvcxz.matching.PasswordMatcher;
+import me.gosimple.nbvcxz.matching.SpacialMatcher;
+import me.gosimple.nbvcxz.matching.YearMatcher;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
+
+/**
+ * Used to set any configurable parameters when estimating password strength.
+ *
+ * @author Adam Brusselback.
+ */
+public class Configuration
+{
+    private final List&lt;PasswordMatcher&gt; passwordMatchers;
+    private final Map&lt;String, Long&gt; guessTypes;
+    private final List&lt;Dictionary&gt; dictionaries;
+    private final List&lt;AdjacencyGraph&gt; adjacencyGraphs;
+    private final Map&lt;Character, Character[]&gt; leetTable;
+    private final Pattern yearPattern;
+    private final Double minimumEntropy;
+    private final Integer maxLength;
+    private final Locale locale;
+    private final boolean distanceCalc;
+    private final ResourceBundle mainResource;
+    private final ResourceBundle feedbackResource;
+    private final long combinationAlgorithmTimeout;
+
+    /**
+     * @param passwordMatchers            The list of {@link PasswordMatcher}s which will be used for matching
+     * @param guessTypes                  Map of types of guesses, and associated guesses/sec
+     * @param dictionaries                List of {@link Dictionary} to use for the {@link DictionaryMatcher}
+     * @param adjacencyGraphs             List of adjacency graphs to be used by the {@link SpacialMatcher}
+     * @param leetTable                   Leet table for use with {@link DictionaryMatcher}
+     * @param yearPattern                 Regex {@link Pattern} for use with {@link YearMatcher}
+     * @param minimumEntropy              Minimum entropy value passwords should meet
+     * @param locale                      Locale for localized text and feedback
+     * @param distanceCalc                Enable or disable levenshtein distance calculation for dictionary matches
+     * @param combinationAlgorithmTimeout Timeout for the findBestMatches algorithm
+     */
+    public Configuration(List&lt;PasswordMatcher&gt; passwordMatchers, Map&lt;String, Long&gt; guessTypes, List&lt;Dictionary&gt; dictionaries, List&lt;AdjacencyGraph&gt; adjacencyGraphs, Map&lt;Character, Character[]&gt; leetTable, Pattern yearPattern, Double minimumEntropy, Integer maxLength, Locale locale, boolean distanceCalc, long combinationAlgorithmTimeout)
+<span class="fc" id="L48">    {</span>
+<span class="fc" id="L49">        this.passwordMatchers = passwordMatchers;</span>
+<span class="fc" id="L50">        this.guessTypes = guessTypes;</span>
+<span class="fc" id="L51">        this.dictionaries = dictionaries;</span>
+<span class="fc" id="L52">        this.adjacencyGraphs = adjacencyGraphs;</span>
+<span class="fc" id="L53">        this.leetTable = leetTable;</span>
+<span class="fc" id="L54">        this.yearPattern = yearPattern;</span>
+<span class="fc" id="L55">        this.minimumEntropy = minimumEntropy;</span>
+<span class="fc" id="L56">        this.maxLength = maxLength;</span>
+<span class="fc" id="L57">        this.locale = locale;</span>
+<span class="fc" id="L58">        this.distanceCalc = distanceCalc;</span>
+<span class="fc" id="L59">        this.mainResource = ResourceBundle.getBundle(&quot;main&quot;, locale);</span>
+<span class="fc" id="L60">        this.feedbackResource = ResourceBundle.getBundle(&quot;feedback&quot;, locale);</span>
+<span class="fc" id="L61">        this.combinationAlgorithmTimeout = combinationAlgorithmTimeout;</span>
+<span class="fc" id="L62">    }</span>
+
+    /**
+     * @return List of {@link PasswordMatcher}s which will be used for matching
+     */
+    public List&lt;PasswordMatcher&gt; getPasswordMatchers()
+    {
+<span class="fc" id="L69">        return passwordMatchers;</span>
+    }
+
+    /**
+     * @return Map of types of guesses, and associated guesses/sec
+     */
+    public Map&lt;String, Long&gt; getGuessTypes()
+    {
+<span class="fc" id="L77">        return guessTypes;</span>
+    }
+
+    /**
+     * @return List of {@link Dictionary} to use for the {@link DictionaryMatcher}
+     */
+    public List&lt;Dictionary&gt; getDictionaries()
+    {
+<span class="fc" id="L85">        return dictionaries;</span>
+    }
+
+    /**
+     * @return List of adjacency graphs to be used by the {@link SpacialMatcher}
+     */
+    public List&lt;AdjacencyGraph&gt; getAdjacencyGraphs()
+    {
+<span class="fc" id="L93">        return adjacencyGraphs;</span>
+    }
+
+    /**
+     * @return Leet table for use with {@link DictionaryMatcher}
+     */
+    public Map&lt;Character, Character[]&gt; getLeetTable()
+    {
+<span class="fc" id="L101">        return leetTable;</span>
+    }
+
+    /**
+     * @return Regex {@link Pattern} for use with {@link YearMatcher}
+     */
+    public Pattern getYearPattern()
+    {
+<span class="fc" id="L109">        return yearPattern;</span>
+    }
+
+    /**
+     * @return Minimum entropy value passwords should meet
+     */
+    public Double getMinimumEntropy()
+    {
+<span class="fc" id="L117">        return minimumEntropy;</span>
+    }
+
+    /**
+     * @return Maximum length to estimate for password, anything longer will be truncated
+     */
+    public Integer getMaxLength() {
+<span class="fc" id="L124">        return maxLength;</span>
+    }
+
+    /**
+     * @return Locale for localized text and feedback
+     */
+    public Locale getLocale()
+    {
+<span class="fc" id="L132">        return locale;</span>
+    }
+
+    /**
+     * @return If dictionary distance calculations are enabled or not
+     */
+    public boolean isDistanceCalc()
+    {
+<span class="fc" id="L140">        return distanceCalc;</span>
+    }
+
+    /**
+     * @return Return the timeout for the findBestMatches algorithm
+     */
+    public long getCombinationAlgorithmTimeout()
+    {
+<span class="fc" id="L148">        return combinationAlgorithmTimeout;</span>
+    }
+
+    /**
+     * @return Return the resource bundle which contains the text for everything but feedback
+     */
+    public ResourceBundle getMainResource()
+    {
+<span class="fc" id="L156">        return mainResource;</span>
+    }
+
+    /**
+     * @return Return the resource bundle which contains the text for feedback
+     */
+    public ResourceBundle getFeedbackResource()
+    {
+<span class="fc" id="L164">        return feedbackResource;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dictionary.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">Dictionary.java</span></div><h1>Dictionary.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import java.util.*;
+
+/**
+ * Object used for dictionary matching.  This allows users to implement custom dictionaries for different languages
+ * or specialized vocabulary.
+ * &lt;p&gt;
+ * Dictionaries need to use all lower case keys for the words they contain for the algorithm to work correctly.
+ *
+ * @author Adam Brusselback.
+ */
+public class Dictionary
+{
+    private final String dictionary_name;
+    private final Map&lt;String, Integer&gt; dictonary;
+    private final ArrayList&lt;String&gt; sorted_dictionary;
+    private final Map&lt;Integer, Integer&gt; sorted_dictionary_length_lookup;
+    private final boolean exclusion;
+    private final int max_length;
+
+
+    /**
+     * Object used for dictionary matching.
+     *
+     * @param dictionary_name unique name of dictionary.
+     * @param dictonary       {@code Map} with the word and it's rank.  The key must be lowercase for the matching to work properly.
+     * @param exclusion       {@code true} when desiring to disallow any password contained in this dictionary; {@code false} otherwise.
+     */
+    public Dictionary(final String dictionary_name, final Map&lt;String, Integer&gt; dictonary, final boolean exclusion)
+<span class="fc" id="L31">    {</span>
+<span class="fc" id="L32">        this.dictionary_name = dictionary_name;</span>
+<span class="fc" id="L33">        this.dictonary = dictonary;</span>
+<span class="fc" id="L34">        this.exclusion = exclusion;</span>
+
+        // This is to optimize the distance calculation stuff
+<span class="fc" id="L37">        this.sorted_dictionary = new ArrayList&lt;&gt;(this.dictonary.keySet());</span>
+<span class="fc" id="L38">        Collections.sort(this.sorted_dictionary, new Comparator&lt;String&gt;() {</span>
+            @Override
+            public int compare(String s, String t1) {
+<span class="fc" id="L41">                int c = Integer.compare(s.length(), t1.length());</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                if (c != 0)</span>
+<span class="fc" id="L43">                    return c;</span>
+
+<span class="fc" id="L45">                return s.compareTo(t1);</span>
+            }
+        });
+<span class="fc" id="L48">        this.sorted_dictionary_length_lookup = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        for (int i = 0; i &lt; sorted_dictionary.size(); i++)</span>
+        {
+<span class="fc" id="L51">            String key = sorted_dictionary.get(i);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (sorted_dictionary_length_lookup.containsKey(key.length()))</span>
+            {
+<span class="fc" id="L54">                continue;</span>
+            }
+            else
+            {
+<span class="fc" id="L58">                sorted_dictionary_length_lookup.put(key.length(), i);</span>
+            }
+        }
+<span class="fc" id="L61">        int i_max_length = 0;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (int i = 0; i &lt; sorted_dictionary_length_lookup.size(); i++)</span>
+        {
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            if (!sorted_dictionary_length_lookup.containsKey(i))</span>
+            {
+<span class="fc" id="L66">                int next_key = i;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">                while (!sorted_dictionary_length_lookup.containsKey(next_key))</span>
+                {
+<span class="fc" id="L69">                    next_key++;</span>
+                }
+<span class="fc" id="L71">                sorted_dictionary_length_lookup.put(i, sorted_dictionary_length_lookup.get(next_key));</span>
+            }
+<span class="fc" id="L73">            i_max_length = i;</span>
+        }
+<span class="fc" id="L75">        max_length = i_max_length;</span>
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * The values within this dictionary.
+     *
+     * @return key = values in the dictionary; value = rank
+     */
+    public Map&lt;String, Integer&gt; getDictonary()
+    {
+<span class="fc" id="L85">        return dictonary;</span>
+    }
+
+    /**
+     * This contains the same values as in getDictionary, but is sorted for optimizing the speed
+     * of the distance calculation
+     *
+     * @return A list of dictionary values sorted by length then alphabetical
+     */
+    public List&lt;String&gt; getSortedDictionary()
+    {
+<span class="fc" id="L96">        return sorted_dictionary;</span>
+    }
+
+    /**
+     * A map containing different lengths, and the first index they appear in the sorted dictionary.
+     *
+     * @return key = length; value = first index that length appears
+     */
+    public Map&lt;Integer, Integer&gt; getSortedDictionaryLengthLookup()
+    {
+<span class="fc" id="L106">        return sorted_dictionary_length_lookup;</span>
+    }
+
+    /**
+     * Returns if this dictionary is used for password exclusion or not. &lt;br&gt; &lt;br&gt;
+     * If true, a password which matches to one of the values in the dictionary will always return 0 entropy for the portion which matches.
+     *
+     * @return true if excluded
+     */
+    public boolean isExclusion()
+    {
+<span class="fc" id="L117">        return exclusion;</span>
+    }
+
+    /**
+     * A description of the values contained in the dictionary.
+     *
+     * @return The dictionary name
+     */
+    public String getDictionaryName()
+    {
+<span class="fc" id="L127">        return this.dictionary_name;</span>
+    }
+
+    /**
+     * The longest length of an entry we should check with this dictionary
+     * @return the longest value this dictionary contains
+     */
+    public int getMaxLength() {
+<span class="fc" id="L135">        return max_length;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

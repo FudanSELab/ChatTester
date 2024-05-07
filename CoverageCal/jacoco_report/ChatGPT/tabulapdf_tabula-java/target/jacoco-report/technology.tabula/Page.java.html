@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Page.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">Page.java</span></div><h1>Page.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+
+import static java.lang.Float.compare;
+import static java.util.Collections.min;
+
+@SuppressWarnings(&quot;serial&quot;)
+// TODO: this class should probably be called &quot;PageArea&quot; or something like that
+public class Page extends Rectangle {
+
+    private int number;
+    private Integer rotation;
+    private float minCharWidth;
+    private float minCharHeight;
+
+    private List&lt;TextElement&gt; textElements;
+
+    // TODO: Create a class for 'List &lt;Ruling&gt;' that encapsulates all of these lists and their behaviors?
+<span class="nc" id="L27">    private List&lt;Ruling&gt; rulings,</span>
+            cleanRulings = null,
+            verticalRulingLines = null,
+            horizontalRulingLines = null;
+
+    private PDPage pdPage;
+    private PDDocument pdDoc;
+
+    private RectangleSpatialIndex&lt;TextElement&gt; spatialIndex;
+
+    private static final float DEFAULT_MIN_CHAR_LENGTH = 7;
+
+    private Page(
+            PageDims pageDims,
+            int rotation,
+            int number,
+            PDPage pdPage,
+            PDDocument doc,
+            List&lt;TextElement&gt; characters,
+            List&lt;Ruling&gt; rulings,
+            float minCharWidth,
+            float minCharHeight,
+            RectangleSpatialIndex&lt;TextElement&gt; index
+    ) {
+<span class="nc" id="L51">        super(pageDims.getTop(), pageDims.getLeft(), pageDims.getWidth(), pageDims.getHeight());</span>
+<span class="nc" id="L52">        this.rotation = rotation;</span>
+<span class="nc" id="L53">        this.number = number;</span>
+<span class="nc" id="L54">        this.pdPage = pdPage;</span>
+<span class="nc" id="L55">        this.pdDoc = doc;</span>
+<span class="nc" id="L56">        this.textElements = characters;</span>
+<span class="nc" id="L57">        this.rulings = rulings;</span>
+<span class="nc" id="L58">        this.minCharWidth = minCharWidth;</span>
+<span class="nc" id="L59">        this.minCharHeight = minCharHeight;</span>
+<span class="nc" id="L60">        this.spatialIndex = index;</span>
+<span class="nc" id="L61">    }</span>
+
+  /**
+   *
+   * @deprecated use {@link Builder} instead
+   */
+    @Deprecated
+    public Page(float top, float left, float width, float height, int rotation, int number, PDPage pdPage, PDDocument doc) {
+<span class="nc" id="L69">      super(top, left, width, height);</span>
+<span class="nc" id="L70">      this.rotation = rotation;</span>
+<span class="nc" id="L71">      this.number = number;</span>
+<span class="nc" id="L72">      this.pdPage = pdPage;</span>
+<span class="nc" id="L73">      this.pdDoc = doc;</span>
+<span class="nc" id="L74">    }</span>
+
+   /**
+    *
+    * @deprecated use {@link Builder} instead
+    */
+    public Page(float top, float left, float width, float height, int rotation, int number, PDPage pdPage, PDDocument doc,
+                List&lt;TextElement&gt; characters, List&lt;Ruling&gt; rulings) {
+<span class="nc" id="L82">      this(top, left, width, height, rotation, number, pdPage, doc);</span>
+<span class="nc" id="L83">      this.textElements = characters;</span>
+<span class="nc" id="L84">      this.rulings = rulings;</span>
+<span class="nc" id="L85">    }</span>
+
+   /**
+    *
+    * @deprecated use {@link Builder} instead
+    */
+    public Page(float top, float left, float width, float height, int rotation, int number, PDPage pdPage, PDDocument doc,
+                ObjectExtractorStreamEngine streamEngine, TextStripper textStripper) {
+<span class="nc" id="L93">      this(top, left, width, height, rotation, number, pdPage, doc, textStripper.getTextElements(), streamEngine.rulings);</span>
+<span class="nc" id="L94">      this.minCharWidth = textStripper.getMinCharWidth();</span>
+<span class="nc" id="L95">      this.minCharHeight = textStripper.getMinCharHeight();</span>
+<span class="nc" id="L96">      this.spatialIndex = textStripper.getSpatialIndex();</span>
+<span class="nc" id="L97">    }</span>
+
+
+
+   /**
+    *
+    * @deprecated use {@link Builder} instead
+    */
+    public Page(float top, float left, float width, float height, int rotation, int number, PDPage pdPage, PDDocument doc,
+                List&lt;TextElement&gt; characters, List&lt;Ruling&gt; rulings,
+                float minCharWidth, float minCharHeight, RectangleSpatialIndex&lt;TextElement&gt; index) {
+<span class="nc" id="L108">      this(top, left, width, height, rotation, number, pdPage, doc, characters, rulings);</span>
+<span class="nc" id="L109">      this.minCharHeight = minCharHeight;</span>
+<span class="nc" id="L110">      this.minCharWidth = minCharWidth;</span>
+<span class="nc" id="L111">      this.spatialIndex = index;</span>
+<span class="nc" id="L112">    }</span>
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    public Page getArea(Rectangle area) {
+<span class="nc" id="L116">        List&lt;TextElement&gt; areaTextElements = getText(area);</span>
+
+<span class="nc" id="L118">        float minimumCharWidth = getMinimumCharWidthFrom(areaTextElements);</span>
+<span class="nc" id="L119">        float minimumCharHeight = getMinimumCharHeightFrom(areaTextElements);</span>
+
+<span class="nc" id="L121">        final Page page = Page.Builder.newInstance()</span>
+<span class="nc" id="L122">                .withPageDims(PageDims.of(area.getTop(), area.getLeft(), (float) area.getWidth(), (float) area.getHeight()))</span>
+<span class="nc" id="L123">                .withRotation(rotation)</span>
+<span class="nc" id="L124">                .withNumber(number)</span>
+<span class="nc" id="L125">                .withPdPage(pdPage)</span>
+<span class="nc" id="L126">                .withPdDocument(pdDoc)</span>
+<span class="nc" id="L127">                .withTextElements(areaTextElements)</span>
+<span class="nc" id="L128">                .withRulings(Ruling.cropRulingsToArea(getRulings(), area))</span>
+<span class="nc" id="L129">                .withMinCharWidth(minimumCharWidth)</span>
+<span class="nc" id="L130">                .withMinCharHeight(minimumCharHeight)</span>
+<span class="nc" id="L131">                .withIndex(spatialIndex)</span>
+<span class="nc" id="L132">                .build();</span>
+
+<span class="nc" id="L134">        addBorderRulingsTo(page);</span>
+
+<span class="nc" id="L136">        return page;</span>
+    }
+
+    private float getMinimumCharWidthFrom(List&lt;TextElement&gt; areaTextElements) {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        if (!areaTextElements.isEmpty()) {</span>
+<span class="nc" id="L141">            return min(areaTextElements, (te1, te2) -&gt; compare(te1.width, te2.width)).width;</span>
+        }
+<span class="nc" id="L143">        return DEFAULT_MIN_CHAR_LENGTH;</span>
+    }
+
+    private float getMinimumCharHeightFrom(List&lt;TextElement&gt; areaTextElements) {
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (!areaTextElements.isEmpty()) {</span>
+<span class="nc" id="L148">            return min(areaTextElements, (te1, te2) -&gt; compare(te1.height, te2.height)).height;</span>
+        }
+<span class="nc" id="L150">        return DEFAULT_MIN_CHAR_LENGTH;</span>
+    }
+
+    private void addBorderRulingsTo(Page page) {
+<span class="nc" id="L154">        Point2D.Double leftTop = new Point2D.Double(page.getLeft(), page.getTop()),</span>
+<span class="nc" id="L155">                rightTop = new Point2D.Double(page.getRight(), page.getTop()),</span>
+<span class="nc" id="L156">                rightBottom = new Point2D.Double(page.getRight(), page.getBottom()),</span>
+<span class="nc" id="L157">                leftBottom = new Point2D.Double(page.getLeft(), page.getBottom());</span>
+<span class="nc" id="L158">        page.addRuling(new Ruling(leftTop, rightTop));</span>
+<span class="nc" id="L159">        page.addRuling(new Ruling(rightTop, rightBottom));</span>
+<span class="nc" id="L160">        page.addRuling(new Ruling(rightBottom, leftBottom));</span>
+<span class="nc" id="L161">        page.addRuling(new Ruling(leftBottom, leftTop));</span>
+<span class="nc" id="L162">    }</span>
+
+    public Page getArea(float top, float left, float bottom, float right) {
+<span class="nc" id="L165">        Rectangle area = new Rectangle(top, left, right - left, bottom - top);</span>
+<span class="nc" id="L166">        return getArea(area);</span>
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    public Integer getRotation() {
+<span class="nc" id="L171">        return rotation;</span>
+    }
+
+    public int getPageNumber() {
+<span class="nc" id="L175">        return number;</span>
+    }
+
+    /**
+     * @deprecated with no replacement
+     */
+    @Deprecated
+    public float getMinCharWidth() {
+<span class="nc" id="L183">        return minCharWidth;</span>
+    }
+
+    /**
+     * @deprecated with no replacement
+     */
+    @Deprecated
+    public float getMinCharHeight() {
+<span class="nc" id="L191">        return minCharHeight;</span>
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    public List&lt;TextElement&gt; getText() {
+<span class="nc" id="L196">        return textElements;</span>
+    }
+
+    public List&lt;TextElement&gt; getText(Rectangle area) {
+<span class="nc" id="L200">        return spatialIndex.contains(area);</span>
+    }
+
+    /**
+     * @deprecated use {@linkplain #getText(Rectangle)} instead
+     */
+    @Deprecated
+    public List&lt;TextElement&gt; getText(float top, float left, float bottom, float right) {
+<span class="nc" id="L208">        return getText(new Rectangle(top, left, right - left, bottom - top));</span>
+    }
+
+    /**
+     * @deprecated use {@linkplain #getText()} instead
+     */
+    @Deprecated
+    public List&lt;TextElement&gt; getTexts() {
+<span class="nc" id="L216">        return textElements;</span>
+    }
+
+    /**
+     * Returns the minimum bounding box that contains all the TextElements on this Page
+     */
+    public Rectangle getTextBounds() {
+<span class="nc" id="L223">        List&lt;TextElement&gt; texts = this.getText();</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if (!texts.isEmpty()) {</span>
+<span class="nc" id="L225">            return Utils.bounds(texts);</span>
+        } else {
+<span class="nc" id="L227">            return new Rectangle();</span>
+        }
+    }
+
+    /**
+     * @deprecated with no replacement
+     */
+    @Deprecated
+    public boolean hasText() {
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        return textElements.size() &gt; 0;</span>
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    public List&lt;Ruling&gt; getRulings() {
+<span class="nc bnc" id="L241" title="All 2 branches missed.">        if (cleanRulings != null) {</span>
+<span class="nc" id="L242">            return cleanRulings;</span>
+        }
+
+<span class="nc bnc" id="L245" title="All 4 branches missed.">        if (rulings == null || rulings.isEmpty()) {</span>
+<span class="nc" id="L246">            verticalRulingLines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L247">            horizontalRulingLines = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L248">            return new ArrayList&lt;&gt;();</span>
+        }
+
+        // TODO: Move as a static method to the Ruling class?
+<span class="nc" id="L252">        Utils.snapPoints(rulings, minCharWidth, minCharHeight);</span>
+
+<span class="nc" id="L254">        verticalRulingLines = getCollapsedVerticalRulings();</span>
+<span class="nc" id="L255">        horizontalRulingLines = getCollapsedHorizontalRulings();</span>
+
+<span class="nc" id="L257">        cleanRulings = new ArrayList&lt;&gt;(verticalRulingLines);</span>
+<span class="nc" id="L258">        cleanRulings.addAll(horizontalRulingLines);</span>
+
+<span class="nc" id="L260">        return cleanRulings;</span>
+    }
+
+    // TODO: Create a class for 'List &lt;Ruling&gt;' and encapsulate these behaviors within it?
+    private List&lt;Ruling&gt; getCollapsedVerticalRulings() {
+<span class="nc" id="L265">        List&lt;Ruling&gt; verticalRulings = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">        for (Ruling ruling : rulings) {</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">            if (ruling.vertical()) {</span>
+<span class="nc" id="L268">                verticalRulings.add(ruling);</span>
+            }
+<span class="nc" id="L270">        }</span>
+<span class="nc" id="L271">        return Ruling.collapseOrientedRulings(verticalRulings);</span>
+    }
+
+    private List&lt;Ruling&gt; getCollapsedHorizontalRulings() {
+<span class="nc" id="L275">        List&lt;Ruling&gt; horizontalRulings = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">        for (Ruling ruling : rulings) {</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">            if (ruling.horizontal()) {</span>
+<span class="nc" id="L278">                horizontalRulings.add(ruling);</span>
+            }
+<span class="nc" id="L280">        }</span>
+<span class="nc" id="L281">        return Ruling.collapseOrientedRulings(horizontalRulings);</span>
+    }
+
+    public List&lt;Ruling&gt; getVerticalRulings() {
+<span class="nc bnc" id="L285" title="All 2 branches missed.">        if (verticalRulingLines != null) {</span>
+<span class="nc" id="L286">            return verticalRulingLines;</span>
+        }
+<span class="nc" id="L288">        getRulings();</span>
+<span class="nc" id="L289">        return verticalRulingLines;</span>
+    }
+
+    public List&lt;Ruling&gt; getHorizontalRulings() {
+<span class="nc bnc" id="L293" title="All 2 branches missed.">        if (horizontalRulingLines != null) {</span>
+<span class="nc" id="L294">            return horizontalRulingLines;</span>
+        }
+<span class="nc" id="L296">        getRulings();</span>
+<span class="nc" id="L297">        return horizontalRulingLines;</span>
+    }
+
+    public void addRuling(Ruling ruling) {
+<span class="nc bnc" id="L301" title="All 2 branches missed.">        if (ruling.oblique()) {</span>
+<span class="nc" id="L302">            throw new UnsupportedOperationException(&quot;Can't add an oblique ruling.&quot;);</span>
+        }
+<span class="nc" id="L304">        rulings.add(ruling);</span>
+        // Clear caches:
+<span class="nc" id="L306">        verticalRulingLines = null;</span>
+<span class="nc" id="L307">        horizontalRulingLines = null;</span>
+<span class="nc" id="L308">        cleanRulings = null;</span>
+<span class="nc" id="L309">    }</span>
+
+    public List&lt;Ruling&gt; getUnprocessedRulings() {
+<span class="nc" id="L312">        return rulings;</span>
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    public PDPage getPDPage() {
+<span class="nc" id="L317">        return pdPage;</span>
+    }
+
+    public PDDocument getPDDoc() {
+<span class="nc" id="L321">        return pdDoc;</span>
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+
+    /**
+     * @deprecated with no replacement
+     */
+    @Deprecated
+    public RectangleSpatialIndex&lt;TextElement&gt; getSpatialIndex() {
+<span class="nc" id="L331">        return spatialIndex;</span>
+    }
+
+    public static class Builder {
+        private PageDims pageDims;
+        private int rotation;
+        private int number;
+        private PDPage pdPage;
+        private PDDocument pdDocument;
+        private List&lt;TextElement&gt; textElements;
+        private List&lt;Ruling&gt; rulings;
+        private float minCharWidth;
+        private float minCharHeight;
+        private RectangleSpatialIndex&lt;TextElement&gt; index;
+
+        private Builder() {}
+
+        public static Builder newInstance() {
+<span class="nc" id="L349">            return new Builder();</span>
+        }
+
+        public Builder withPageDims(PageDims pageDims) {
+<span class="nc" id="L353">            this.pageDims = pageDims;</span>
+
+<span class="nc" id="L355">            return this;</span>
+        }
+
+        public Builder withRotation(int rotation) {
+<span class="nc" id="L359">            this.rotation = rotation;</span>
+
+<span class="nc" id="L361">            return this;</span>
+        }
+
+        public Builder withNumber(int number) {
+<span class="nc" id="L365">            this.number = number;</span>
+
+<span class="nc" id="L367">            return this;</span>
+        }
+
+        public Builder withPdPage(PDPage pdPage) {
+<span class="nc" id="L371">            this.pdPage = pdPage;</span>
+
+<span class="nc" id="L373">            return this;</span>
+        }
+
+        public Builder withPdDocument(PDDocument pdDocument) {
+<span class="nc" id="L377">            this.pdDocument = pdDocument;</span>
+
+<span class="nc" id="L379">            return this;</span>
+        }
+
+        public Builder withTextElements(List&lt;TextElement&gt; textElements) {
+<span class="nc" id="L383">            this.textElements = textElements;</span>
+
+<span class="nc" id="L385">            return this;</span>
+        }
+
+        public Builder withRulings(List&lt;Ruling&gt; rulings) {
+<span class="nc" id="L389">            this.rulings = rulings;</span>
+
+<span class="nc" id="L391">            return this;</span>
+        }
+
+        public Builder withMinCharWidth(float minCharWidth) {
+<span class="nc" id="L395">            this.minCharWidth = minCharWidth;</span>
+
+<span class="nc" id="L397">            return this;</span>
+        }
+
+        public Builder withMinCharHeight(float minCharHeight) {
+<span class="nc" id="L401">            this.minCharHeight = minCharHeight;</span>
+
+<span class="nc" id="L403">            return this;</span>
+        }
+
+        public Builder withIndex(RectangleSpatialIndex&lt;TextElement&gt; index) {
+<span class="nc" id="L407">            this.index = index;</span>
+
+<span class="nc" id="L409">            return this;</span>
+        }
+
+        public Page build() {
+<span class="nc" id="L413">            return new Page(pageDims, rotation, number, pdPage, pdDocument, textElements, rulings, minCharWidth, minCharHeight, index);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

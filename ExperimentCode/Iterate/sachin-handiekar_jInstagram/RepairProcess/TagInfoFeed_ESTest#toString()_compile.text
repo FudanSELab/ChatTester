@@ -1,0 +1,13 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagInfoFeed_ESTest.java
+[GENERATED PATH] TagInfoFeed_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagInfoFeed_ESTest.java:[24,13] cannot find symbol
+  symbol:   method setSomeValue(java.lang.String)
+  location: variable meta of type org.jinstagram.entity.common.Meta
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagInfoFeed_ESTest.java:[28,20] cannot find symbol
+  symbol:   method setSomeData(java.lang.String)
+  location: variable tagInfoData of type org.jinstagram.entity.tags.TagInfoData
+[INFO] 2 errors 
+####################
+

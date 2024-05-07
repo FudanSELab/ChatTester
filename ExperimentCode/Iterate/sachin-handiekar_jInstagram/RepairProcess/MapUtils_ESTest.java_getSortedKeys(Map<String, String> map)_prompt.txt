@@ -1,0 +1,118 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetSortedKeys() {
+
+           <Buggy Line>: diamond operator is not supported in -source 1.6
+        Map<String, String> map = new HashMap<>();
+
+        map.put("key3", "value3");
+        map.put("key1", "value1");
+        map.put("key2", "value2");
+        List<String> sortedKeys = MapUtils.getSortedKeys(map);
+        List<String> expectedKeys = Arrays.asList("key1", "key2", "key3");
+        assertEquals(expectedKeys, sortedKeys);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testGetSortedKeys() {
+
+       <Buggy Line>: wrong number of type arguments; required 2
+    Map<String, String> map = new HashMap<String>();
+
+    map.put("key3", "value3");
+    map.put("key1", "value1");
+    map.put("key2", "value2");
+    List<String> sortedKeys = MapUtils.getSortedKeys(map);
+    List<String> expectedKeys = Arrays.asList("key1", "key2", "key3");
+    assertEquals(expectedKeys, sortedKeys);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class MapUtils {
+# Focal method
+static List<String> getSortedKeys(Map<String, String> map) {
+    List<String> keys = new ArrayList<String>(map.keySet());
+    Collections.sort(keys);
+    return keys;
+}
+}
+
+# Method Intention
+The getSortedKeys method aims to return a list of keys from the input map in sorted order, providing a way to access and iterate over the keys in a predictable and organized manner.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+public class MapUtils {
+# Focal method
+static List<String> getSortedKeys(Map<String, String> map) {
+    List<String> keys = new ArrayList<String>(map.keySet());
+    Collections.sort(keys);
+    return keys;
+}
+}
+
+# Method Intention
+The getSortedKeys method aims to return a list of keys from the input map in sorted order, providing a way to access the keys in a predictable and organized manner.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+
+# Focal Method
+public class MapUtils {
+# Focal method
+static List<String> getSortedKeys(Map<String, String> map) {
+    List<String> keys = new ArrayList<String>(map.keySet());
+    Collections.sort(keys);
+    return keys;
+}
+}
+
+# Method Intention
+The getSortedKeys method is intended to take a Map of String keys and values, extract and sort the keys in ascending order, and return them as a List of Strings.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,119 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testAddBody() throws IOException {
+
+          <Buggy Line>: cannot find symbol class "MockHttpURLConnection"
+        HttpURLConnection mockConnection = new MockHttpURLConnection();
+
+        byte[] content = "Test Content".getBytes();
+        Request request = new Request(Verbs.POST, "http://example.com");
+        request.addBody(mockConnection, content);
+        assertEquals(String.valueOf(content.length), mockConnection.getRequestProperty("Content-Length"));
+        assertTrue(mockConnection.getDoOutput());
+        assertArrayEquals(content, ((MockHttpURLConnection) mockConnection).getWrittenContent());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testAddBody() throws IOException {
+
+       <Buggy Line>: constructor HttpURLConnection in class java.net.HttpURLConnection cannot be applied to given types;
+    HttpURLConnection mockConnection = new HttpURLConnection() {
+
+        private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        @Override
+        public OutputStream getOutputStream() {
+            return outputStream;
+        }
+        @Override
+        public String getRequestProperty(String key) {
+            if ("Content-Length".equals(key)) {
+                return String.valueOf(outputStream.size());
+            }
+            return null;
+        }
+        @Override
+        public boolean getDoOutput() {
+            return true;
+        }
+        public byte[] getWrittenContent() {
+            return outputStream.toByteArray();
+        }
+    };
+    byte[] content = "Test Content".getBytes();
+    Request request = new Request(Verbs.POST, "http://example.com");
+    request.addBody(mockConnection, content);
+    assertEquals(String.valueOf(content.length), mockConnection.getRequestProperty("Content-Length"));
+    assertTrue(mockConnection.getDoOutput());
+    assertArrayEquals(content, ((HttpURLConnection) mockConnection).getWrittenContent());
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "HttpURLConnection" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "HttpURLConnection" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testAddBody() throws IOException {
+    HttpURLConnection mockConnection = new HttpURLConnection(null) {
+
+           <Buggy Line>: cannot find symbol class "ByteArrayOutputStream"
+        private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        @Override
+        public OutputStream getOutputStream() {
+            return outputStream;
+        }
+        @Override
+        public String getRequestProperty(String key) {
+            if ("Content-Length".equals(key)) {
+                return String.valueOf(outputStream.size());
+            }
+            return null;
+        }
+        @Override
+        public boolean getDoOutput() {
+            return true;
+        }
+        public byte[] getWrittenContent() {
+            return outputStream.toByteArray();
+        }
+    };
+    byte[] content = "Test Content".getBytes();
+    Request request = new Request(Verbs.POST, "http://example.com");
+    request.addBody(mockConnection, content);
+    assertEquals(String.valueOf(content.length), mockConnection.getRequestProperty("Content-Length"));
+    assertTrue(mockConnection.getDoOutput());
+    assertArrayEquals(content, ((HttpURLConnection) mockConnection).getWrittenContent());
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

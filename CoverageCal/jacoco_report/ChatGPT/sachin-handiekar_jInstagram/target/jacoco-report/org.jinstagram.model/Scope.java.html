@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Scope.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.model</a> &gt; <span class="el_source">Scope.java</span></div><h1>Scope.java</h1><pre class="source lang-java linenums">package org.jinstagram.model;
+
+<span class="nc" id="L3">public enum Scope {</span>
+
+	/**
+	 * A field to denote the scope 'basic'
+	 *
+	 * basic - Be able to read all data related to a user: Following/Followed-By
+	 * Lists, Photos, etc. (granted by default)
+	 */
+<span class="nc" id="L11">	BASIC,</span>
+
+	/**
+	 * A field to denote the scope 'comments'
+	 *
+	 * comments - Be able to create or delete comments on a user's behalf
+	 */
+<span class="nc" id="L18">	COMMENTS,</span>
+
+	/**
+	 * A field to denote the scope 'likes'
+	 *
+	 * likes - Be able to like and unlike items on a user's behalf
+	 */
+<span class="nc" id="L25">	LIKES,</span>
+
+	/**
+	 * A field to denote the scope 'relationships'
+	 *
+	 * relationships - Be able to follow and unfollow users on a user's behalf
+	 */
+<span class="nc" id="L32">	RELATIONSHIPS;</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L36">		return super.toString().toLowerCase();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

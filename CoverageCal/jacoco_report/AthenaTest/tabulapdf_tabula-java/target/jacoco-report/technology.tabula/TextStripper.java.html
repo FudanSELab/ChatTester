@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextStripper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">TextStripper.java</span></div><h1>TextStripper.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import org.apache.fontbox.util.BoundingBox;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDFontDescriptor;
+import org.apache.pdfbox.pdmodel.font.PDType3Font;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.TextPosition;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TextStripper extends PDFTextStripper {
+
+    private static final String NBSP = &quot;\u00A0&quot;;
+    private static final float AVG_HEIGHT_MULT_THRESHOLD = 6.0f;
+    private static final float MAX_BLANK_FONT_SIZE = 40.0f;
+    private static final float MIN_BLANK_FONT_SIZE = 2.0f;
+    private final PDDocument document;
+    private final ArrayList&lt;TextElement&gt; textElements;
+    private final RectangleSpatialIndex&lt;TextElement&gt; spatialIndex;
+<span class="nc" id="L24">    private float minCharWidth = Float.MAX_VALUE;</span>
+<span class="nc" id="L25">    private float minCharHeight = Float.MAX_VALUE;</span>
+<span class="nc" id="L26">    private float totalHeight = 0.0f;</span>
+<span class="nc" id="L27">    private int countHeight = 0;</span>
+
+    public TextStripper(PDDocument document, int pageNumber) throws IOException {
+<span class="nc" id="L30">        super();</span>
+<span class="nc" id="L31">        this.document = document;</span>
+<span class="nc" id="L32">        this.setStartPage(pageNumber);</span>
+<span class="nc" id="L33">        this.setEndPage(pageNumber);</span>
+<span class="nc" id="L34">        this.textElements = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L35">        this.spatialIndex = new RectangleSpatialIndex&lt;&gt;();</span>
+<span class="nc" id="L36">    }</span>
+
+    public void process() throws IOException {
+<span class="nc" id="L39">        this.getText(this.document);</span>
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    protected void writeString(String string, List&lt;TextPosition&gt; textPositions) throws IOException
+    {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        for (TextPosition textPosition: textPositions)</span>
+        {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">            if (textPosition == null) {</span>
+<span class="nc" id="L48">                continue;</span>
+            }
+
+<span class="nc" id="L51">            String c = textPosition.getUnicode();</span>
+
+            // if c not printable, return
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (!isPrintable(c)) {</span>
+<span class="nc" id="L55">                continue;</span>
+            }
+
+<span class="nc" id="L58">            Float h = textPosition.getHeightDir();</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            if (c.equals(NBSP)) { // replace non-breaking space for space</span>
+<span class="nc" id="L61">                c = &quot; &quot;;</span>
+            }
+
+<span class="nc" id="L64">            float wos = textPosition.getWidthOfSpace();</span>
+
+<span class="nc" id="L66">            TextElement te = new TextElement(Utils.round(textPosition.getYDirAdj() - h, 2),</span>
+<span class="nc" id="L67">                    Utils.round(textPosition.getXDirAdj(), 2), Utils.round(textPosition.getWidthDirAdj(), 2),</span>
+<span class="nc" id="L68">                    Utils.round(textPosition.getHeightDir(), 2), textPosition.getFont(), textPosition.getFontSizeInPt(), c,</span>
+                    // workaround a possible bug in PDFBox:
+                    // https://issues.apache.org/jira/browse/PDFBOX-1755
+<span class="nc" id="L71">                    wos, textPosition.getDir());</span>
+
+<span class="nc" id="L73">            this.minCharWidth = (float) Math.min(this.minCharWidth, te.getWidth());</span>
+<span class="nc" id="L74">            this.minCharHeight = (float) Math.min(this.minCharHeight, te.getHeight());</span>
+
+<span class="nc" id="L76">            countHeight++;</span>
+<span class="nc" id="L77">            totalHeight += te.getHeight();</span>
+<span class="nc" id="L78">            float avgHeight = totalHeight / countHeight;</span>
+            
+            //We have an issue where tall blank cells throw off the row height calculation
+            //Introspect a blank cell a bit here to see if it should be thrown away
+<span class="nc bnc" id="L82" title="All 4 branches missed.">            if ((te.getText() == null || te.getText().trim().equals(&quot;&quot;))) {</span>
+                //if the cell height is more than AVG_HEIGHT_MULT_THRESHOLDxaverage, throw it away
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                if (avgHeight &gt; 0</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                        &amp;&amp; te.getHeight() &gt;= (avgHeight * AVG_HEIGHT_MULT_THRESHOLD)) {</span>
+<span class="nc" id="L86">                    continue;</span>
+                }
+                
+                //if the font size is outside of reasonable ranges, throw it away
+<span class="nc bnc" id="L90" title="All 4 branches missed.">                if (textPosition.getFontSizeInPt() &gt; MAX_BLANK_FONT_SIZE || textPosition.getFontSizeInPt() &lt; MIN_BLANK_FONT_SIZE) {</span>
+<span class="nc" id="L91">                    continue;</span>
+                }
+            }
+            
+<span class="nc" id="L95">            this.spatialIndex.add(te);</span>
+<span class="nc" id="L96">            this.textElements.add(te);</span>
+<span class="nc" id="L97">        }</span>
+<span class="nc" id="L98">    }</span>
+
+  @Override
+  protected float computeFontHeight(PDFont font) throws IOException
+  {
+<span class="nc" id="L103">    BoundingBox bbox = font.getBoundingBox();</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">    if (bbox.getLowerLeftY() &lt; Short.MIN_VALUE)</span>
+    {
+      // PDFBOX-2158 and PDFBOX-3130
+      // files by Salmat eSolutions / ClibPDF Library
+<span class="nc" id="L108">      bbox.setLowerLeftY(- (bbox.getLowerLeftY() + 65536));</span>
+    }
+    // 1/2 the bbox is used as the height todo: why?
+<span class="nc" id="L111">    float glyphHeight = bbox.getHeight() / 2;</span>
+
+    // sometimes the bbox has very high values, but CapHeight is OK
+<span class="nc" id="L114">    PDFontDescriptor fontDescriptor = font.getFontDescriptor();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">    if (fontDescriptor != null)</span>
+    {
+<span class="nc" id="L117">      float capHeight = fontDescriptor.getCapHeight();</span>
+<span class="nc bnc" id="L118" title="All 4 branches missed.">      if (Float.compare(capHeight, 0) != 0 &amp;&amp;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        (capHeight &lt; glyphHeight || Float.compare(glyphHeight, 0) == 0))</span>
+      {
+<span class="nc" id="L121">        glyphHeight = capHeight;</span>
+      }
+      // PDFBOX-3464, PDFBOX-448:
+      // sometimes even CapHeight has very high value, but Ascent and Descent are ok
+<span class="nc" id="L125">      float ascent = fontDescriptor.getAscent();</span>
+<span class="nc" id="L126">      float descent = fontDescriptor.getDescent();</span>
+<span class="nc bnc" id="L127" title="All 6 branches missed.">      if (ascent &gt; 0 &amp;&amp; descent &lt; 0 &amp;&amp;</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        ((ascent - descent) / 2 &lt; glyphHeight || Float.compare(glyphHeight, 0) == 0))</span>
+      {
+<span class="nc" id="L130">        glyphHeight = (ascent - descent) / 2;</span>
+      }
+    }
+
+    // transformPoint from glyph space -&gt; text space
+    float height;
+<span class="nc bnc" id="L136" title="All 2 branches missed.">    if (font instanceof PDType3Font)</span>
+    {
+<span class="nc" id="L138">      height = font.getFontMatrix().transformPoint(0, glyphHeight).y;</span>
+    }
+    else
+    {
+<span class="nc" id="L142">      height = glyphHeight / 1000;</span>
+    }
+
+<span class="nc" id="L145">    return height;</span>
+  }
+
+    private boolean isPrintable(String s) {
+        Character c;
+        Character.UnicodeBlock block;
+<span class="nc" id="L151">        boolean printable = false;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc" id="L153">            c = s.charAt(i);</span>
+<span class="nc" id="L154">            block = Character.UnicodeBlock.of(c);</span>
+<span class="nc bnc" id="L155" title="All 6 branches missed.">            printable |= !Character.isISOControl(c) &amp;&amp; block != null &amp;&amp; block != Character.UnicodeBlock.SPECIALS;</span>
+        }
+<span class="nc" id="L157">        return printable;</span>
+    }
+
+    public List&lt;TextElement&gt; getTextElements() {
+<span class="nc" id="L161">        return this.textElements;</span>
+    }
+
+    public RectangleSpatialIndex&lt;TextElement&gt; getSpatialIndex() {
+<span class="nc" id="L165">        return spatialIndex;</span>
+    }
+
+    public float getMinCharWidth() {
+<span class="nc" id="L169">        return minCharWidth;</span>
+    }
+
+    public float getMinCharHeight() {
+<span class="nc" id="L173">        return minCharHeight;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

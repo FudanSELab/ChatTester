@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.jinstagram.entity.users.basicinfo.UserInfoData_ESTest
+-------------------------------------------------------------------------------
+Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in org.jinstagram.entity.users.basicinfo.UserInfoData_ESTest

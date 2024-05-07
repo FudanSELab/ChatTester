@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json</a> &gt; <span class="el_source">JsonWriter.java</span></div><h1>JsonWriter.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.xml.bind.DatatypeConverter;
+
+import com.zappos.json.util.JsonUtils;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+public class JsonWriter {
+
+  /*
+   * Static will not be copied. So they are fine to be here.
+   */
+  public static final String CONST_NULL = &quot;null&quot;;
+  public static final char CONST_DOUBLE_QUOTE = '&quot;';
+  public static final char CONST_COMMA = ',';
+  public static final char CONST_COLON = ':';
+  public static final char CONST_OPEN_OBJECT = '{';
+  public static final char CONST_CLOSE_OBJECT = '}';
+  public static final char CONST_OPEN_ARRAY = '[';
+  public static final char CONST_CLOSE_ARRAY = ']';
+  
+  
+  protected ZapposJson zapposJson;
+
+<span class="nc" id="L49">  public JsonWriter(ZapposJson jacinda) {</span>
+<span class="nc" id="L50">    this.zapposJson = jacinda;</span>
+<span class="nc" id="L51">  }</span>
+  
+  public static void writeString(ZapposJson zapposJson, String value, Writer writer) throws IOException {
+<span class="fc" id="L54">    writer.write(JsonWriter.CONST_DOUBLE_QUOTE);</span>
+<span class="fc" id="L55">    JsonUtils.escape(zapposJson, value, writer);</span>
+<span class="fc" id="L56">    writer.write(JsonWriter.CONST_DOUBLE_QUOTE);</span>
+<span class="fc" id="L57">  }</span>
+  
+  public static void writeBoolean(ZapposJson zapposJson, Boolean value, Writer writer) throws IOException {
+<span class="nc" id="L60">    writer.append(value.toString());</span>
+<span class="nc" id="L61">  }</span>
+  
+  public static void writeNumber(ZapposJson zapposJson, Number value, Writer writer) throws IOException {
+<span class="nc" id="L64">    writer.append(zapposJson.format(value));</span>
+<span class="nc" id="L65">  }</span>
+  
+  public static void writeEnum(ZapposJson zapposJson, Enum&lt;?&gt; value, Writer writer) throws IOException {
+<span class="nc" id="L68">    writeString(zapposJson, value.name(), writer);</span>
+<span class="nc" id="L69">  }</span>
+  
+  public static void writeIterable(ZapposJson zapposJson, Iterable&lt;?&gt; iterable, Writer writer) throws IOException {
+<span class="nc" id="L72">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L73">    Iterator&lt;?&gt; iterator = iterable.iterator();</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    if(iterator.hasNext()){</span>
+<span class="nc" id="L75">      zapposJson.toJson(iterator.next(), writer);</span>
+    }
+<span class="nc bnc" id="L77" title="All 2 branches missed.">    while(iterator.hasNext()){</span>
+<span class="nc" id="L78">      writer.append(JsonWriter.CONST_COMMA);</span>
+<span class="nc" id="L79">      zapposJson.toJson(iterator.next(), writer);</span>
+    }
+<span class="nc" id="L81">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L82">  }</span>
+  
+  public static void writeMap(ZapposJson zapposJson, Map&lt;?, ?&gt; map, Writer writer) throws IOException {
+<span class="nc" id="L85">    writer.append(JsonWriter.CONST_OPEN_OBJECT);</span>
+<span class="nc" id="L86">    boolean second = false;</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">    for (Map.Entry&lt;?, ?&gt; entry : map.entrySet()) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">      if(second){</span>
+<span class="nc" id="L89">        writer.append(JsonWriter.CONST_COMMA);</span>
+      }else{
+<span class="nc" id="L91">        second = true;</span>
+      }
+<span class="nc" id="L93">      JsonWriter.writeString(zapposJson, (String)entry.getKey(), writer);</span>
+<span class="nc" id="L94">      writer.append(JsonWriter.CONST_COLON);</span>
+<span class="nc" id="L95">      zapposJson.toJson(entry.getValue(), writer);</span>
+<span class="nc" id="L96">    }</span>
+<span class="nc" id="L97">    writer.append(JsonWriter.CONST_CLOSE_OBJECT);</span>
+<span class="nc" id="L98">  }</span>
+  
+  public static void writeArray(ZapposJson zapposJson, Object[] values, Writer writer) throws IOException {
+<span class="nc" id="L101">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L102">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L104">      zapposJson.toJson(values[i], writer);</span>
+<span class="nc" id="L105">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L107" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+<span class="nc" id="L108">      zapposJson.toJson(values[j], writer);</span>
+    }
+<span class="nc" id="L110">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L111">  }</span>
+  
+  public static void writeBase64String(ZapposJson zapposJson, byte value[], Writer writer) throws IOException {
+<span class="nc" id="L114">    writer.write(JsonWriter.CONST_DOUBLE_QUOTE);</span>
+<span class="nc" id="L115">    writer.write(DatatypeConverter.printBase64Binary(value));</span>
+<span class="nc" id="L116">    writer.write(JsonWriter.CONST_DOUBLE_QUOTE);</span>
+<span class="nc" id="L117">  }</span>
+  
+  /*
+   * =========================== writeArray for native type ===================================
+   * TODO: How can we avoid duplicate code for array of native type?
+   * writeArray(byte[]) is not defined in a favor of writeString(byte[], writer) 
+   */
+  
+  
+  /**
+   * 
+   * @param values the array of char
+   * @param writer the writer object
+   * @throws IOException the exception that might throw when I/O operation performs
+   */
+  public static void writeArray(char[] values, Writer writer) throws IOException {
+<span class="nc" id="L133">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L134">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+      //TODO: figure out whether we should have ZapposJson in parameters
+<span class="nc" id="L137">      writeString(ZapposJson.getInstance(), String.valueOf(values[i]), writer);</span>
+<span class="nc" id="L138">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+      //TODO: figure out whether we should have ZapposJson in parameters
+<span class="nc" id="L142">      writeString(ZapposJson.getInstance(), String.valueOf(values[j]), writer);</span>
+    }
+<span class="nc" id="L144">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L145">  }</span>
+  
+  /**
+   * 
+   * @param values the array of boolean
+   * @param writer the writer object
+   * @throws IOException the exception that might throw when I/O operation performs
+   */
+  public static void writeArray(boolean[] values, Writer writer) throws IOException {
+<span class="nc" id="L154">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L155">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L157">      writer.append(String.valueOf(values[i]));</span>
+<span class="nc" id="L158">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L160" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+<span class="nc" id="L161">      writer.append(String.valueOf(values[j]));</span>
+    }
+<span class="nc" id="L163">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L164">  }</span>
+  
+  /**
+   * 
+   * @param values the array of short
+   * @param writer the writer object
+   * @throws IOException the exception that might throw when I/O operation performs
+   */
+  public static void writeArray(short[] values, Writer writer) throws IOException {
+<span class="nc" id="L173">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L174">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L176">      writer.append(String.valueOf(values[i]));</span>
+<span class="nc" id="L177">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L179" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+<span class="nc" id="L180">      writer.append(String.valueOf(values[j]));</span>
+    }
+<span class="nc" id="L182">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L183">  }</span>
+  
+  /**
+   * 
+   * @param values the array of int
+   * @param writer the writer object
+   * @throws IOException the exception that might throw when I/O operation performs
+   */
+  public static void writeArray(int[] values, Writer writer) throws IOException {
+<span class="nc" id="L192">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L193">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L195">      writer.append(String.valueOf(values[i]));</span>
+<span class="nc" id="L196">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L198" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+<span class="nc" id="L199">      writer.append(String.valueOf(values[j]));</span>
+    }
+<span class="nc" id="L201">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L202">  }</span>
+  
+  /**
+   * 
+   * @param values the array of long
+   * @param writer the writer object
+   * @throws IOException the exception that might throw when I/O operation performs
+   */
+  public static void writeArray(long[] values, Writer writer) throws IOException {
+<span class="nc" id="L211">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L212">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L214">      writer.append(String.valueOf(values[i]));</span>
+<span class="nc" id="L215">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L217" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+<span class="nc" id="L218">      writer.append(String.valueOf(values[j]));</span>
+    }
+<span class="nc" id="L220">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L221">  }</span>
+  
+  /**
+   * 
+   * @param values the array of float
+   * @param writer the writer object
+   * @throws IOException the exception that might throw when I/O operation performs
+   */
+  public static void writeArray(float[] values, Writer writer) throws IOException {
+<span class="nc" id="L230">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L231">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L233">      writer.append(String.valueOf(values[i]));</span>
+<span class="nc" id="L234">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L236" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+<span class="nc" id="L237">      writer.append(String.valueOf(values[j]));</span>
+    }
+<span class="nc" id="L239">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L240">  }</span>
+  
+  /**
+   * 
+   * @param values the array of double
+   * @param writer the writer object
+   * @throws IOException the exception that might throw when I/O operation performs
+   */
+  public static void writeArray(double[] values, Writer writer) throws IOException {
+<span class="nc" id="L249">    writer.append(JsonWriter.CONST_OPEN_ARRAY);</span>
+<span class="nc" id="L250">    int j = values.length - 1;</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">    for (int i = 0; i &lt; j; i++) {</span>
+<span class="nc" id="L252">      writer.append(String.valueOf(values[i]));</span>
+<span class="nc" id="L253">      writer.append(JsonWriter.CONST_COMMA);</span>
+    }
+<span class="nc bnc" id="L255" title="All 2 branches missed.">    if (j &gt; -1) {</span>
+<span class="nc" id="L256">      writer.append(String.valueOf(values[j]));</span>
+    }
+<span class="nc" id="L258">    writer.append(JsonWriter.CONST_CLOSE_ARRAY);</span>
+<span class="nc" id="L259">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

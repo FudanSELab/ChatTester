@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.common</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.common;
+
+import com.google.gson.annotations.SerializedName;
+
+<span class="fc" id="L5">public class User {</span>
+	@SerializedName(&quot;bio&quot;)
+	private String bio;
+
+	@SerializedName(&quot;full_name&quot;)
+	private String fullName;
+
+	@SerializedName(&quot;id&quot;)
+	private String id;
+
+	@SerializedName(&quot;profile_picture&quot;)
+	private String profilePictureUrl;
+
+	@SerializedName(&quot;username&quot;)
+	private String userName;
+
+	@SerializedName(&quot;website&quot;)
+	private String websiteUrl;
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+<span class="nc" id="L28">		return userName;</span>
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+<span class="nc" id="L35">		this.userName = userName;</span>
+<span class="nc" id="L36">	}</span>
+
+	/**
+	 * @return the fullName
+	 */
+	public String getFullName() {
+<span class="nc" id="L42">		return fullName;</span>
+	}
+
+	/**
+	 * @param fullName the fullName to set
+	 */
+	public void setFullName(String fullName) {
+<span class="nc" id="L49">		this.fullName = fullName;</span>
+<span class="nc" id="L50">	}</span>
+
+	/**
+	 * @return the profilePictureUrl
+	 */
+	public String getProfilePictureUrl() {
+<span class="nc" id="L56">		return profilePictureUrl;</span>
+	}
+
+	/**
+	 * @param profilePictureUrl the profilePictureUrl to set
+	 */
+	public void setProfilePictureUrl(String profilePictureUrl) {
+<span class="nc" id="L63">		this.profilePictureUrl = profilePictureUrl;</span>
+<span class="nc" id="L64">	}</span>
+
+	/**
+	 * @return the bio
+	 */
+	public String getBio() {
+<span class="nc" id="L70">		return bio;</span>
+	}
+
+	/**
+	 * @param bio the bio to set
+	 */
+	public void setBio(String bio) {
+<span class="nc" id="L77">		this.bio = bio;</span>
+<span class="nc" id="L78">	}</span>
+
+	/**
+	 * @return the websiteUrl
+	 */
+	public String getWebsiteUrl() {
+<span class="nc" id="L84">		return websiteUrl;</span>
+	}
+
+	/**
+	 * @param websiteUrl the websiteUrl to set
+	 */
+	public void setWebsiteUrl(String websiteUrl) {
+<span class="nc" id="L91">		this.websiteUrl = websiteUrl;</span>
+<span class="nc" id="L92">	}</span>
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+<span class="fc" id="L98">		return id;</span>
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+<span class="fc" id="L105">		this.id = id;</span>
+<span class="fc" id="L106">	}</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L110">        return String.format(&quot;User [bio=%s, fullName=%s, id=%s, profilePictureUrl=%s, userName=%s, websiteUrl=%s]&quot;,</span>
+                bio, fullName, id, profilePictureUrl, userName, websiteUrl);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

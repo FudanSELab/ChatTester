@@ -1,0 +1,120 @@
+0-->1-->0-->compileRepair
+
+
+# Focal Method
+public class JavaTimeLocalDateFormatter {
+private DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+# Focal method
+@Override
+public ValueFormatter<LocalDate> setPattern(String pattern) {
+    super.setPattern(pattern);
+    formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+    return this;
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Focal Method
+public class JavaTimeLocalDateFormatter {
+private DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+# Focal method
+@Override
+public ValueFormatter<LocalDate> setPattern(String pattern) {
+    super.setPattern(pattern);
+    formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+    return this;
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class JavaTimeLocalDateFormatter {
+private DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+# Focal method
+@Override
+public ValueFormatter<LocalDate> setPattern(String pattern) {
+    super.setPattern(pattern);
+    formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+    return this;
+}
+}
+
+# Method Intention
+The setPattern(String pattern) method in the JavaTimeLocalDateFormatter class is intended to update the formatter used for formatting LocalDate objects to a new DateTimeFormatter with a specified pattern and system default time zone.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+public class JavaTimeLocalDateFormatter {
+private DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+# Focal method
+@Override
+public ValueFormatter<LocalDate> setPattern(String pattern) {
+    super.setPattern(pattern);
+    formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+    return this;
+}
+}
+
+# Method Intention
+The setPattern(String pattern) method in the JavaTimeLocalDateFormatter class is intended to update the formatter used for formatting LocalDate objects by setting a new pattern and adjusting the time zone accordingly.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+
+# Focal Method
+public class JavaTimeLocalDateFormatter {
+private DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+# Focal method
+@Override
+public ValueFormatter<LocalDate> setPattern(String pattern) {
+    super.setPattern(pattern);
+    formatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+    return this;
+}
+}
+
+# Method Intention
+The setPattern(String pattern) method in the JavaTimeLocalDateFormatter class is intended to update the formatter used for formatting LocalDate objects by setting a new pattern and adjusting the time zone accordingly.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

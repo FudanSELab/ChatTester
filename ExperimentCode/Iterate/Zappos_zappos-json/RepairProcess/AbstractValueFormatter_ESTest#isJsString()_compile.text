@@ -1,0 +1,56 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#isJsString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[40,35] cannot find symbol
+  symbol: class T
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[32,78] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#isJsString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[35,74] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[40,9] method does not override or implement a method from a supertype
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#isJsString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[38,74] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[44,9] method does not override or implement a method from a supertype
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#isJsString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[39,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[42,29] pattern has private access in com.zappos.json.format.AbstractValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[46,40] pattern has private access in com.zappos.json.format.AbstractValueFormatter
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#isJsString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[42,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[49,40] pattern has private access in com.zappos.json.format.AbstractValueFormatter
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java
+[GENERATED PATH] AbstractValueFormatter_ESTest#isJsString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[45,73] <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/AbstractValueFormatter_ESTest.java:[51,40] pattern has private access in com.zappos.json.format.AbstractValueFormatter
+[INFO] 2 errors 
+####################
+

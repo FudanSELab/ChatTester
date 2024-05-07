@@ -1,0 +1,15 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/BigDecimalFormatter_ESTest.java
+[GENERATED PATH] BigDecimalFormatter_ESTest#parse(ZapposJson zapposJson, String string).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/BigDecimalFormatter_ESTest.java:[27,33] constructor ZapposJson in class com.zappos.json.ZapposJson cannot be applied to given types;
+  required: boolean
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/BigDecimalFormatter_ESTest.java:[32,42] method parse in class com.zappos.json.format.BigDecimalFormatter cannot be applied to given types;
+  required: com.zappos.json.ZapposJson,java.lang.String
+  found: com.zappos.json.ZapposJson,java.lang.String,java.lang.String
+  reason: actual and formal argument lists differ in length
+[INFO] 2 errors 
+####################
+

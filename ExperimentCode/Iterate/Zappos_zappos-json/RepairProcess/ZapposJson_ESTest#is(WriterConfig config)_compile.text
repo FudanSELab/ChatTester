@@ -1,0 +1,95 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#is(WriterConfig config).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[43,30] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[44,34] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[47,30] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[48,35] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#is(WriterConfig config).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[45,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[47,44] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[48,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[49,45] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#is(WriterConfig config).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[47,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[49,44] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[50,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[51,45] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#is(WriterConfig config).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[49,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[51,44] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[52,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[53,45] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#is(WriterConfig config).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[51,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[53,44] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[54,40] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[55,45] cannot find symbol
+  symbol:   variable WriterConfig
+  location: class com.zappos.json.ZapposJson
+[INFO] 4 errors 
+####################
+

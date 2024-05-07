@@ -1,0 +1,36 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java
+[GENERATED PATH] Reflections_ESTest#getFirstGenericParameterType(Method method).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[29,25] cannot find symbol
+  symbol:   class YourClass
+  location: class com.zappos.json.util.Reflections_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[30,23] cannot find symbol
+  symbol:   method getFirstGenericParameterType(java.lang.reflect.Method)
+  location: class com.zappos.json.util.Reflections_ESTest
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java
+[GENERATED PATH] Reflections_ESTest#getFirstGenericParameterType(Method method).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[37,42] cannot find symbol
+  symbol:   method getFirstGenericParameterType(java.lang.reflect.Method)
+  location: class com.zappos.json.util.Reflections_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java
+[GENERATED PATH] Reflections_ESTest#getFirstGenericParameterType(Method method).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[31,25] cannot find symbol
+  symbol:   class YourClass
+  location: class com.zappos.json.util.Reflections_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[32,23] cannot find symbol
+  symbol:   method getFirstGenericParameterType(java.lang.reflect.Method)
+  location: class com.zappos.json.util.Reflections_ESTest
+[INFO] 2 errors 
+####################
+

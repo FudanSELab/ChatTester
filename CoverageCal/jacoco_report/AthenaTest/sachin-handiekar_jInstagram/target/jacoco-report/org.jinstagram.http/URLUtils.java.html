@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>URLUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.http</a> &gt; <span class="el_source">URLUtils.java</span></div><h1>URLUtils.java</h1><pre class="source lang-java linenums">package org.jinstagram.http;
+
+import org.jinstagram.utils.Preconditions;
+
+import java.io.UnsupportedEncodingException;
+
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Utils to deal with URL and url-encodings
+ * 
+ */
+<span class="nc" id="L20">public class URLUtils {</span>
+    private static final String EMPTY_STRING = &quot;&quot;;
+
+    private static final String PAIR_SEPARATOR = &quot;=&quot;;
+
+    private static final String PARAM_SEPARATOR = &quot;&amp;&quot;;
+
+    private static final char QUERY_STRING_SEPARATOR = '?';
+
+    private static final String UTF_8 = &quot;UTF-8&quot;;
+
+<span class="nc" id="L31">    private static final String ERROR_MSG = String.format(&quot;Cannot find specified encoding: %s&quot;, UTF_8);</span>
+
+    private static final Set&lt;EncodingRule&gt; ENCODING_RULES;
+
+    static {
+<span class="nc" id="L36">        Set&lt;EncodingRule&gt; rules = new HashSet&lt;EncodingRule&gt;();</span>
+
+<span class="nc" id="L38">        rules.add(new EncodingRule(&quot;*&quot;, &quot;%2A&quot;));</span>
+<span class="nc" id="L39">        rules.add(new EncodingRule(&quot;+&quot;, &quot;%20&quot;));</span>
+<span class="nc" id="L40">        rules.add(new EncodingRule(&quot;%7E&quot;, &quot;~&quot;));</span>
+
+<span class="nc" id="L42">        ENCODING_RULES = Collections.unmodifiableSet(rules);</span>
+<span class="nc" id="L43">    }</span>
+
+    /**
+     * Encodes the passed String as UTF-8 using an algorithm that's compatible
+     * with JavaScript's &lt;code&gt;encodeURIComponent&lt;/code&gt; function. Returns
+     * &lt;code&gt;null&lt;/code&gt; if the String is &lt;code&gt;null&lt;/code&gt;.
+     *
+     * @param s The String to be encoded
+     * @return the encoded String
+     *
+     * (from: http://stackoverflow.com/questions/607176/java-equivalent-to-javascripts-encodeuricomponent-that-produces-identical-outpu)
+     */
+    public static String encodeURIComponent(String s)
+    {
+<span class="nc" id="L57">        String result = null;</span>
+
+        try
+        {
+<span class="nc" id="L61">            result = URLEncoder.encode(s, &quot;UTF-8&quot;)</span>
+<span class="nc" id="L62">                    .replaceAll(&quot;\\+&quot;, &quot;%20&quot;)</span>
+<span class="nc" id="L63">                    .replaceAll(&quot;\\%21&quot;, &quot;!&quot;)</span>
+<span class="nc" id="L64">                    .replaceAll(&quot;\\%27&quot;, &quot;'&quot;)</span>
+<span class="nc" id="L65">                    .replaceAll(&quot;\\%28&quot;, &quot;(&quot;)</span>
+<span class="nc" id="L66">                    .replaceAll(&quot;\\%29&quot;, &quot;)&quot;)</span>
+<span class="nc" id="L67">                    .replaceAll(&quot;\\%7E&quot;, &quot;~&quot;);</span>
+        }
+
+        // This exception should never occur.
+<span class="nc" id="L71">        catch (UnsupportedEncodingException e)</span>
+        {
+<span class="nc" id="L73">            result = s;</span>
+<span class="nc" id="L74">        }</span>
+
+<span class="nc" id="L76">        return result;</span>
+    }
+
+    /**
+     * Decodes the passed-in String as UTF-8 using an algorithm that's compatible
+     * with JavaScript's &lt;code&gt;decodeURIComponent&lt;/code&gt; function. Returns
+     * &lt;code&gt;null&lt;/code&gt; if the String is &lt;code&gt;null&lt;/code&gt;.
+     *
+     * @param s The String to be decoded
+     * @return the decoded String
+     *
+     * (from: http://stackoverflow.com/questions/607176/java-equivalent-to-javascripts-encodeuricomponent-that-produces-identical-outpu)
+     */
+    public static  String decodeURIComponent(String s) {
+<span class="nc" id="L90">        String result = null;</span>
+
+        try {
+<span class="nc" id="L93">          result = URLDecoder.decode(s, &quot;UTF-8&quot;);</span>
+        }
+
+        // This exception should never occur.
+<span class="nc" id="L97">        catch (UnsupportedEncodingException e) {</span>
+<span class="nc" id="L98">          result = s;</span>
+<span class="nc" id="L99">        }</span>
+
+<span class="nc" id="L101">        return result;</span>
+    }
+
+    /**
+     * Turns a map into a form-urlencoded string
+     * 
+     * @param map any map
+     * @return form-url-encoded string
+     */
+    public static String formURLEncodeMap(Map&lt;String, String&gt; map) {
+<span class="nc" id="L111">        Preconditions.checkNotNull(map, &quot;Cannot url-encode a null object&quot;);</span>
+
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        return (map.size() &lt;= 0) ? EMPTY_STRING : doFormUrlEncode(map);</span>
+    }
+
+    private static String doFormUrlEncode(Map&lt;String, String&gt; map) {
+<span class="nc" id="L117">        StringBuffer encodedString = new StringBuffer(map.size() * 20);</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (Map.Entry&lt;String, String&gt; entry : map.entrySet()) {</span>
+<span class="nc" id="L120">            encodedString.append(PARAM_SEPARATOR).append(formURLEncode(entry.getKey()));</span>
+
+<span class="nc bnc" id="L122" title="All 2 branches missed.">            if (entry.getValue() != null) {</span>
+<span class="nc" id="L123">                encodedString.append(PAIR_SEPARATOR).append(formURLEncode(entry.getValue()));</span>
+            }
+<span class="nc" id="L125">        }</span>
+
+<span class="nc" id="L127">        return encodedString.toString().substring(1);</span>
+    }
+
+    /**
+     * Percent encodes a string
+     * 
+     * @param string plain string
+     * @return percent encoded string
+     */
+    public static String percentEncode(String string) {
+<span class="nc" id="L137">        String encoded = formURLEncode(string);</span>
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        for (EncodingRule rule : ENCODING_RULES) {</span>
+<span class="nc" id="L140">            encoded = rule.apply(encoded);</span>
+<span class="nc" id="L141">        }</span>
+
+<span class="nc" id="L143">        return encoded;</span>
+    }
+
+    /**
+     * Translates a string into application/x-www-form-urlencoded format
+     * 
+     * @param plain
+     * @return form-urlencoded string
+     */
+    public static String formURLEncode(String string) {
+<span class="nc" id="L153">        Preconditions.checkNotNull(string, &quot;Cannot encode null string&quot;);</span>
+
+        try {
+<span class="nc" id="L156">            return URLEncoder.encode(string, UTF_8);</span>
+<span class="nc" id="L157">        } catch (UnsupportedEncodingException uee) {</span>
+<span class="nc" id="L158">            throw new IllegalStateException(ERROR_MSG, uee);</span>
+        }
+    }
+
+    /**
+     * Decodes a application/x-www-form-urlencoded string
+     * 
+     * @param string form-urlencoded string
+     * @return plain string
+     */
+    public static String formURLDecode(String string) {
+<span class="nc" id="L169">        Preconditions.checkNotNull(string, &quot;Cannot decode null string&quot;);</span>
+
+        try {
+<span class="nc" id="L172">            return URLDecoder.decode(string, UTF_8);</span>
+<span class="nc" id="L173">        } catch (UnsupportedEncodingException uee) {</span>
+<span class="nc" id="L174">            throw new IllegalStateException(ERROR_MSG, uee);</span>
+        }
+    }
+
+    /**
+     * Append given parameters to the query string of the url
+     * 
+     * @param url the url to append parameters to
+     * @param params any map
+     * @return new url with parameters on query string
+     */
+    public static String appendParametersToQueryString(String url, Map&lt;String, String&gt; params) {
+<span class="nc" id="L186">        Preconditions.checkNotNull(url, &quot;Cannot append to null URL&quot;);</span>
+
+<span class="nc" id="L188">        String queryString = URLUtils.formURLEncodeMap(params);</span>
+
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        if (queryString.equals(EMPTY_STRING)) {</span>
+<span class="nc" id="L191">            return url;</span>
+        } else {
+<span class="nc bnc" id="L193" title="All 2 branches missed.">            url += (url.indexOf(QUERY_STRING_SEPARATOR) != -1) ? PARAM_SEPARATOR : QUERY_STRING_SEPARATOR;</span>
+<span class="nc" id="L194">            url += queryString;</span>
+
+<span class="nc" id="L196">            return url;</span>
+        }
+    }
+
+    /**
+     * Concats a key-value map into a querystring-like String
+     * 
+     * @param params key-value map
+     * @return querystring-like String
+     */
+    public static String concatSortedPercentEncodedParams(Map&lt;String, String&gt; params) {
+<span class="nc" id="L207">        StringBuilder result = new StringBuilder();</span>
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        for (Map.Entry&lt;String, String&gt; entry : params.entrySet()) {</span>
+<span class="nc" id="L210">            result.append(entry.getKey()).append(PAIR_SEPARATOR);</span>
+<span class="nc" id="L211">            result.append(entry.getValue()).append(PARAM_SEPARATOR);</span>
+<span class="nc" id="L212">        }</span>
+
+<span class="nc" id="L214">        return result.toString().substring(0, result.length() - 1);</span>
+    }
+
+    /**
+     * Parses and form-urldecodes a querystring-like string into a map
+     * 
+     * @param queryString querystring-like String
+     * @return a map with the form-urldecoded parameters
+     */
+    public static Map&lt;String, String&gt; queryStringToMap(String queryString) {
+<span class="nc" id="L224">        Map&lt;String, String&gt; result = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L226" title="All 4 branches missed.">        if ((queryString != null) &amp;&amp; (queryString.length() &gt; 0)) {</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            for (String param : queryString.split(PARAM_SEPARATOR)) {</span>
+<span class="nc" id="L228">                String pair[] = param.split(PAIR_SEPARATOR);</span>
+<span class="nc" id="L229">                String key = formURLDecode(pair[0]);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">                String value = (pair.length &gt; 1) ? formURLDecode(pair[1]) : EMPTY_STRING;</span>
+
+<span class="nc" id="L232">                result.put(key, value);</span>
+            }
+        }
+
+<span class="nc" id="L236">        return result;</span>
+    }
+
+    private static final class EncodingRule {
+        private final String ch;
+
+        private final String toCh;
+
+<span class="nc" id="L244">        EncodingRule(String ch, String toCh) {</span>
+<span class="nc" id="L245">            this.ch = ch;</span>
+<span class="nc" id="L246">            this.toCh = toCh;</span>
+<span class="nc" id="L247">        }</span>
+
+        String apply(String string) {
+<span class="nc" id="L250">            return string.replace(ch, toCh);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,1800 @@
+{
+  "count": 1,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#isInTheSameRegionAs(Point otherPoint).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 8
+},
+{
+  "count": 1,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#isInTheSameRegionAs(Point otherPoint).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 8
+},
+{
+  "count": 1,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#isInTheSameRegionAs(Point otherPoint).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 1,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#isInTheSameRegionAs(Point otherPoint).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 1,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#isInTheSameRegionAs(Point otherPoint).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 1,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#isInTheSameRegionAs(Point otherPoint).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 2,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setClip(Rectangle2D clipWindow).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 2,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setClip(Rectangle2D clipWindow).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 2,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setClip(Rectangle2D clipWindow).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 2,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setClip(Rectangle2D clipWindow).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 2,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setClip(Rectangle2D clipWindow).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 3,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setPositionAndRegion(double x, double y).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 3,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setPositionAndRegion(double x, double y).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 3,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setPositionAndRegion(double x, double y).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 3,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setPositionAndRegion(double x, double y).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 3,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/CohenSutherlandClipping_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/CohenSutherlandClipping_ESTest#setPositionAndRegion(double x, double y).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 4,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#isSpanning().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 5,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 5,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 5,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 5,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 5,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 6,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#getText().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 6,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#getText().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 0,
+  "CompileError_number": 0
+},
+{
+  "count": 7,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java###test04",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Cell_ESTest#isPlaceholder().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 6
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 6
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:7-->IterCompile:7-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 8,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#add(List<TextElement> elements).java",
+  "Compile": "TotalIter:8-->IterCompile:8-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 10,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#hashCode().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 10,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#hashCode().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 10,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#hashCode().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 10,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#hashCode().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 10,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#hashCode().java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 10,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#hashCode().java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 10,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#hashCode().java",
+  "Compile": "TotalIter:7-->IterCompile:7-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 7
+},
+{
+  "count": 11,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#splitAt(int i).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 11,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#splitAt(int i).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 11,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#splitAt(int i).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 11,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#splitAt(int i).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 11,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#splitAt(int i).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 12,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test04",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#merge(TextChunk other).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 12,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test04",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#merge(TextChunk other).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 12,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test04",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#merge(TextChunk other).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 12,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test04",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#merge(TextChunk other).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 12,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test04",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#merge(TextChunk other).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 13,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#isSameChar(Character() c).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 13,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#isSameChar(Character() c).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 13,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#isSameChar(Character() c).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 14,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#isLtrDominant().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 0,
+  "CompileError_number": 0
+},
+{
+  "count": 15,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#groupByDirectionality(Boolean isLtrDominant).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 15,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#groupByDirectionality(Boolean isLtrDominant).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 15,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#groupByDirectionality(Boolean isLtrDominant).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 16,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test11",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#squeeze(Character c, int minRunLength).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 16,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test11",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#squeeze(Character c, int minRunLength).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 16,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test11",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#squeeze(Character c, int minRunLength).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 16,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test11",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#squeeze(Character c, int minRunLength).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 16,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test11",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#squeeze(Character c, int minRunLength).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 16,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test11",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#squeeze(Character c, int minRunLength).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 5
+},
+{
+  "count": 17,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test13",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#allSameChar(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 17,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test13",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#allSameChar(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 17,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test13",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#allSameChar(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 17,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test13",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#allSameChar(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 17,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test13",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#allSameChar(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 17,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test13",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#allSameChar(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 17,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test13",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#allSameChar(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:7-->IterCompile:7-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 18,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test17",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#equals(Object obj).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 18,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test17",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#equals(Object obj).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 18,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test17",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#equals(Object obj).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 18,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test17",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#equals(Object obj).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 18,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test17",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#equals(Object obj).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 7
+},
+{
+  "count": 18,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test17",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#equals(Object obj).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 18,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test17",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#equals(Object obj).java",
+  "Compile": "TotalIter:7-->IterCompile:7-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 19,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test20",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#getText().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 0,
+  "CompileError_number": 0
+},
+{
+  "count": 20,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test32",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 20,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test32",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 20,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test32",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 20,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test32",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 20,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test32",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 20,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/TextChunk_ESTest.java###test32",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/TextChunk_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 21,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getPageNumber().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 21,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getPageNumber().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 21,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getPageNumber().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 21,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getPageNumber().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 22,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#setPageNumber(int pageNumber).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 22,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#setPageNumber(int pageNumber).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 22,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#setPageNumber(int pageNumber).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 22,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#setPageNumber(int pageNumber).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 24,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getColCount().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 24,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getColCount().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 24,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getColCount().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 24,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getColCount().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 24,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getColCount().java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 24,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getColCount().java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 24,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test02",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getColCount().java",
+  "Compile": "TotalIter:7-->IterCompile:7-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 25,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getCell(int i, int j).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 25,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getCell(int i, int j).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 25,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getCell(int i, int j).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 25,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getCell(int i, int j).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 25,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getCell(int i, int j).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 26,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#add(RectangularTextContainer chunk, int row, int col).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 26,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#add(RectangularTextContainer chunk, int row, int col).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 26,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#add(RectangularTextContainer chunk, int row, int col).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 26,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#add(RectangularTextContainer chunk, int row, int col).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 26,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#add(RectangularTextContainer chunk, int row, int col).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 27,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getRows().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 27,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getRows().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 27,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getRows().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 27,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getRows().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 27,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getRows().java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 27,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Table_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Table_ESTest#getRows().java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 28,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#setTextElements(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 28,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#setTextElements(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 28,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#setTextElements(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 28,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#setTextElements(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 28,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#setTextElements(List<TextChunk> textChunks).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 29,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#addTextChunk(TextChunk textChunk).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 29,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#addTextChunk(TextChunk textChunk).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 29,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#addTextChunk(TextChunk textChunk).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 29,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#addTextChunk(TextChunk textChunk).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 29,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#addTextChunk(TextChunk textChunk).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 29,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#addTextChunk(TextChunk textChunk).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 30,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#addTextChunk(int i, TextChunk textChunk).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 31,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 31,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 31,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 31,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 31,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test01",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 5
+},
+{
+  "count": 32,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test05",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#getTextElements().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 32,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test05",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#getTextElements().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 32,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test05",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#getTextElements().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 32,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test05",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#getTextElements().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 32,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test05",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#getTextElements().java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 33,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#toString().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 33,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#toString().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 33,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#toString().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 33,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#toString().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 33,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java###test07",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/Line_ESTest#toString().java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 39,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#merge(RectangularTextContainer<T> other).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 39,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#merge(RectangularTextContainer<T> other).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 39,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#merge(RectangularTextContainer<T> other).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 39,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#merge(RectangularTextContainer<T> other).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 6
+},
+{
+  "count": 39,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test00",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#merge(RectangularTextContainer<T> other).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 6
+},
+{
+  "count": 40,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#setTextElements(List<T> textElements).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 40,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#setTextElements(List<T> textElements).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 40,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#setTextElements(List<T> textElements).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 1,
+  "CompileError_number": 0
+},
+{
+  "count": 41,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#getTextElements().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 41,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#getTextElements().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 41,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#getTextElements().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 41,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#getTextElements().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 41,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test03",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#getTextElements().java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 42,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test05",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#getText(boolean useLineReturns).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 0,
+  "CompileError_number": 0
+},
+{
+  "count": 43,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java###test11",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/RectangularTextContainer_ESTest#toString().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 0,
+  "CompileError_number": 0
+},
+{
+  "count": 51,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test0",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#isTabular(Page page).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 51,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test0",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#isTabular(Page page).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 51,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test0",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#isTabular(Page page).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 51,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test0",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#isTabular(Page page).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 51,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test0",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#isTabular(Page page).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 53,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test3",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#findCells(List<Ruling> horizontalRulingLines, List<Ruling> verticalRulingLines).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 0,
+  "CompileError_number": 0
+},
+{
+  "count": 54,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test5",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#extract(Page page, List<Ruling> rulings).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 54,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test5",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#extract(Page page, List<Ruling> rulings).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 54,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test5",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#extract(Page page, List<Ruling> rulings).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 54,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test5",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#extract(Page page, List<Ruling> rulings).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 54,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test5",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#extract(Page page, List<Ruling> rulings).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 54,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test5",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#extract(Page page, List<Ruling> rulings).java",
+  "Compile": "TotalIter:6-->IterCompile:6-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 2
+},
+{
+  "count": 55,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test7",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#toString().java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 55,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test7",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#toString().java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 55,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test7",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#toString().java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 4
+},
+{
+  "count": 55,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test7",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#toString().java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 5
+},
+{
+  "count": 55,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/SpreadsheetExtractionAlgorithm_ESTest.java###test7",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/SpreadsheetExtractionAlgorithm_ESTest#toString().java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 6
+},
+{
+  "count": 56,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/BasicExtractionAlgorithm_ESTest.java###test0",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/BasicExtractionAlgorithm_ESTest#columnPositions(List<Line> lines).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 1,
+  "Test_result": 0,
+  "CompileError_number": 0
+},
+{
+  "count": 57,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/BasicExtractionAlgorithm_ESTest.java###test3",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/BasicExtractionAlgorithm_ESTest#extract(Page page, List<Float> verticalRulingPositions).java",
+  "Compile": "TotalIter:1-->IterCompile:1-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 57,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/BasicExtractionAlgorithm_ESTest.java###test3",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/BasicExtractionAlgorithm_ESTest#extract(Page page, List<Float> verticalRulingPositions).java",
+  "Compile": "TotalIter:2-->IterCompile:2-->Non_iter:0",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 57,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/BasicExtractionAlgorithm_ESTest.java###test3",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/BasicExtractionAlgorithm_ESTest#extract(Page page, List<Float> verticalRulingPositions).java",
+  "Compile": "TotalIter:3-->IterCompile:3-->Non_iter:1",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 1
+},
+{
+  "count": 57,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/BasicExtractionAlgorithm_ESTest.java###test3",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/BasicExtractionAlgorithm_ESTest#extract(Page page, List<Float> verticalRulingPositions).java",
+  "Compile": "TotalIter:4-->IterCompile:4-->Non_iter:2",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},
+{
+  "count": 57,
+  "original_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/extractors/BasicExtractionAlgorithm_ESTest.java###test3",
+  "generated_path": "/Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/chatGPT_experiment_for_javaProject/PipLine/InitialPharse_Experiment/Iterate/tabulapdf_tabula-java/GeneratedTest/BasicExtractionAlgorithm_ESTest#extract(Page page, List<Float> verticalRulingPositions).java",
+  "Compile": "TotalIter:5-->IterCompile:5-->Non_iter:3",
+  "repairTag": "compileRepair",
+  "Compile_result": 0,
+  "Test_result": 0,
+  "CompileError_number": 3
+},

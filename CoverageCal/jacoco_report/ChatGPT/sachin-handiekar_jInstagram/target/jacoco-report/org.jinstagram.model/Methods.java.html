@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Methods.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.model</a> &gt; <span class="el_source">Methods.java</span></div><h1>Methods.java</h1><pre class="source lang-java linenums">package org.jinstagram.model;
+
+<span class="nc" id="L3">public final class Methods {</span>
+
+	/**
+	 * Remove a comment either on the authenticated user's media or authored by
+	 * the authenticated user.
+	 *
+	 * Required scope: comments
+	 *
+	 * DELETE /media/{id}/comments/{id}
+	 */
+	public static final String DELETE_MEDIA_COMMENTS = &quot;/media/%s/comments/%s&quot;;
+
+	/**
+	 * Get most recent media from a geography subscription that you created.
+	 * Note: you can only access Geographies that were explicitly created by
+	 * your OAuth client.
+	 */
+    @Deprecated
+	public static final String GEOGRAPHIES_RECENT_MEDIA_BY_ID = &quot;/geographies/%s/media/recent&quot;;
+
+	/**
+	 * Get a list of users who have liked this media.
+	 *
+	 * Required scope : likes
+	 */
+	public static final String LIKES_BY_MEDIA_ID = &quot;/media/%s/likes&quot;;
+
+	/**
+	 * Get information about a location.
+	 */
+	public static final String LOCATIONS_BY_ID = &quot;/locations/%s&quot;;
+
+	/**
+	 * Get a list of recent media objects from a given location.
+	 */
+	public static final String LOCATIONS_RECENT_MEDIA_BY_ID = &quot;/locations/%s/media/recent&quot;;
+
+	/**
+	 * Search for a location by geographic coordinate.
+	 */
+	public static final String LOCATIONS_SEARCH = &quot;/locations/search&quot;;
+
+	/**
+	 * Get information about a media object.
+	 */
+	public static final String MEDIA_BY_ID = &quot;/media/%s&quot;;
+
+    /**
+     * Get information about a media object.
+     */
+    public static final String MEDIA_BY_SHORTCODE = &quot;/media/shortcode/%s&quot;;
+
+	/**
+	 * Get a full list of comments on a media.
+	 *
+	 * Required scope: comments
+	 */
+	public static final String MEDIA_COMMENTS = &quot;/media/%s/comments&quot;;
+
+	/**
+	 * Get a list of what media is most popular at the moment.
+	 */
+    @Deprecated
+	public static final String MEDIA_POPULAR = &quot;/media/popular&quot;;
+
+	/**
+	 * Search for media in a given area.
+	 */
+	public static final String MEDIA_SEARCH = &quot;/media/search&quot;;
+
+
+	/**
+	 * Get information about a tag object.
+	 */
+	public static final String TAGS_BY_NAME = &quot;/tags/%s&quot;;
+
+	/**
+	 * Get a list of recently tagged media. Note that this media is ordered by
+	 * when the media was tagged with this tag, rather than the order it was
+	 * posted. Use the max_tag_id and min_tag_id parameters in the pagination
+	 * response to paginate through these objects.
+	 */
+	public static final String TAGS_RECENT_MEDIA = &quot;/tags/%s/media/recent&quot;;
+
+	/**
+	 * Search for tags by name - results are ordered first as an exact match,
+	 * then by popularity.
+	 */
+	public static final String TAGS_SEARCH = &quot;/tags/search&quot;;
+
+	/**
+	 * Get the list of users this user is followed by.
+	 *
+	 * Required scope: relationships
+	 */
+	public static final String USERS_ID_FOLLOWED_BY = &quot;/users/%s/followed-by&quot;;
+
+	/**
+	 * Get the list of users this user follows.
+	 *
+	 * Required scope: relationships
+	 */
+	public static final String USERS_ID_FOLLOWS = &quot;/users/%s/follows&quot;;
+
+	/**
+	 * Get information about the current user's relationship
+	 * (follow/following/etc) to another user.
+	 *
+	 * Required scope: relationships
+	 */
+	public static final String USERS_ID_RELATIONSHIP = &quot;/users/%s/relationship&quot;;
+
+	/**
+	 * Get the most recent media published by a user.
+	 */
+	public static final String USERS_RECENT_MEDIA = &quot;/users/%s/media/recent&quot;;
+
+	/**
+	 * Search for a user by name.
+	 */
+	public static final String USERS_SEARCH = &quot;/users/search&quot;;
+
+	/**
+	 * Get basic information about a user (self).
+	 */
+	public static final String USERS_SELF = &quot;/users/self&quot;;
+
+	/**
+	 * See the authenticated user's feed.
+	 */
+    @Deprecated
+	public static final String USERS_SELF_FEED = &quot;/users/self/feed&quot;;
+
+    /*
+     * Get the most recent media published by the owner of the access_token.
+     */
+    public static final String USERS_SELF_RECENT_MEDIA = &quot;/users/self/media/recent&quot;;
+
+	/**
+	 * See the authenticated user's list of media they've liked. Note that this
+	 * list is ordered by the order in which the user liked the media. Private
+	 * media is returned as long as the authenticated user has permission to
+	 * view that media. Liked media lists are only available for the currently
+	 * authenticated user.
+	 */
+	public static final String USERS_SELF_LIKED_MEDIA = &quot;/users/self/media/liked&quot;;
+
+	/**
+	 * List the users who have requested this user's permission to follow
+	 *
+	 * Required scope: relationships
+	 */
+	public static final String USERS_SELF_REQUESTED_BY = &quot;/users/self/requested-by&quot;;
+
+	/**
+	 * Get basic information about a user.
+	 */
+	public static final String USERS_WITH_ID = &quot;/users/%s&quot;;
+
+    /**
+     * Given a short link, returns information about the media associated with
+     * that link.
+     */
+    public static final String OEMBED_INFORMATION = &quot;/oembed?url=%s&quot;;
+    
+    /**
+     * CRUD Real-time  subscriptions
+     */
+    public static final String SUBSCRIPTIONS = &quot;/subscriptions&quot;;
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

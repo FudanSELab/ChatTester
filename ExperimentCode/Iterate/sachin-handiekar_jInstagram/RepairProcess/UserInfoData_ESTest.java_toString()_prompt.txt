@@ -1,0 +1,61 @@
+0-->1-->0-->compileRepair
+
+# UserInfoData class
+package org.jinstagram.entity.users.basicinfo;
+public class UserInfoData {
+public String getUsername();
+public void setUsername(String username);
+public String getId();
+public void setId(String id);
+public String getLastName();
+public void setLast_name(String last_name);
+public String getFirstName();
+public void setFirstName(String firstName);
+public String getProfilePicture();
+public void setProfilePicture(String profilePicture);
+public String getBio();
+public void setBio(String bio);
+public String getWebsite();
+public void setWebsite(String website);
+public Counts getCounts();
+public void setCounts(Counts counts);
+public String getFullName();
+public void setFullName(String fullName);
+public boolean isBusiness();
+public void setBusiness(boolean isBusiness);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        UserInfoData userInfoData = new UserInfoData();
+        userInfoData.setBio("Sample Bio");
+        Counts counts = new Counts();
+        userInfoData.setCounts(counts);
+        userInfoData.setFirstName("John");
+        userInfoData.setId("12345");
+
+      <Buggy Line>: cannot find symbol method "setLastName(java.lang.String)" in UserInfoData
+        userInfoData.setLastName("Doe");
+
+        userInfoData.setProfilePicture("profile.jpg");
+        userInfoData.setUsername("johndoe");
+        userInfoData.setFullName("John Doe");
+        userInfoData.setWebsite("www.example.com");
+        userInfoData.setBusiness(true);
+        String expected = "UserInfoData [bio=Sample Bio, counts=" + counts.toString() + ", first_name=John, id=12345, last_name=Doe, profile_picture=profile.jpg, username=johndoe, fullName=John Doe, website=www.example.com, isBusiness=true]";
+        String actual = userInfoData.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "UserInfoData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "UserInfoData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

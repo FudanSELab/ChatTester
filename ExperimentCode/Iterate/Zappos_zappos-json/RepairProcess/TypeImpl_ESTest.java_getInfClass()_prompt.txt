@@ -1,0 +1,34 @@
+0-->1-->0-->compileRepair
+
+# TypeImpl class
+package com.zappos.json.util;
+public class TypeImpl {
+public Class<?> getInfClass();
+public Class<?> getImplClass();
+public static TypeImpl getMapImpl(Class<?> mapClass);
+public static TypeImpl getIterableImpl(Class<?> iterClass);
+}
+
+
+# Test Method
+    @Test
+    public void testGetInfClass() {
+        Class<?> infClass = String.class;
+        Class<?> implClass = Integer.class;
+
+           <Buggy Line>: TypeImpl(java.lang.Class<?>,java.lang.Class<?>) has private access in com.zappos.json.util.TypeImpl
+        TypeImpl typeImpl = new TypeImpl(infClass, implClass);
+
+        Class<?> retrievedInfClass = typeImpl.getInfClass();
+        assertEquals(infClass, retrievedInfClass);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "TypeImpl" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "TypeImpl" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

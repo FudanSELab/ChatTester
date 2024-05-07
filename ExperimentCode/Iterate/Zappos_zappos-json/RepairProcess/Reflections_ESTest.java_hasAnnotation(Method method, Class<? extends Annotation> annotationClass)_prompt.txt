@@ -1,0 +1,174 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public static boolean hasAnnotation(Method method, Class<? extends Annotation> annotationClass) {
+    if (method != null) {
+        return method.isAnnotationPresent(annotationClass);
+    }
+    return false;
+}
+
+# Method Intention
+The overall intention of the hasAnnotation method is to determine whether a given method has a specific annotation of a specified class type present on it.
+
+# Test Method
+    @Test
+    public void testHasAnnotation() throws NoSuchMethodException {
+        Method methodWithAnnotation = Reflections.class.getMethod("hasAnnotation", Method.class, Class.class);
+        Method methodWithoutAnnotation = Reflections.class.getMethod("classPresent", String.class);
+        boolean hasAnnotationTrue = Reflections.hasAnnotation(methodWithAnnotation, Test.class);
+        boolean hasAnnotationFalse = Reflections.hasAnnotation(methodWithoutAnnotation, Test.class);
+      [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public static boolean hasAnnotation(Method method, Class<? extends Annotation> annotationClass) {
+    if (method != null) {
+        return method.isAnnotationPresent(annotationClass);
+    }
+    return false;
+}
+
+# Method Intention
+The overall intention of the hasAnnotation method is to determine whether a given method has a specific annotation of a specified class type present on it.
+
+# Test Method
+@Test
+public void testHasAnnotation() throws NoSuchMethodException {
+    Method methodWithAnnotation = Reflections.class.getMethod("hasAnnotation", Method.class, Class.class);
+    Method methodWithoutAnnotation = Reflections.class.getMethod("classPresent", String.class);
+    boolean hasAnnotationTrue = Reflections.hasAnnotation(methodWithAnnotation, Test.class);
+    boolean hasAnnotationFalse = Reflections.hasAnnotation(methodWithoutAnnotation, Test.class);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public static boolean hasAnnotation(Method method, Class<? extends Annotation> annotationClass) {
+    if (method != null) {
+        return method.isAnnotationPresent(annotationClass);
+    }
+    return false;
+}
+
+# Method Intention
+The overall intention of the hasAnnotation method in the Reflections class is to determine whether a given method has a specific annotation of the provided annotation class type.
+
+# Test Method
+@Test
+public void testHasAnnotation() throws NoSuchMethodException {
+    Method methodWithAnnotation = Reflections.class.getMethod("hasAnnotation", Method.class, Class.class);
+    Method methodWithoutAnnotation = Reflections.class.getMethod("classPresent", String.class);
+    boolean hasAnnotationTrue = Reflections.hasAnnotation(methodWithAnnotation, Test.class);
+    boolean hasAnnotationFalse = Reflections.hasAnnotation(methodWithoutAnnotation, Test.class);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public static boolean hasAnnotation(Method method, Class<? extends Annotation> annotationClass) {
+    if (method != null) {
+        return method.isAnnotationPresent(annotationClass);
+    }
+    return false;
+}
+
+# Method Intention
+The overall intention of the hasAnnotation(Method method, Class<? extends Annotation> annotationClass) method is to determine whether a specific method has a particular annotation present by checking if the provided method object is annotated with the specified annotation class.
+
+# Test Method
+@Test
+public void testHasAnnotation() throws NoSuchMethodException {
+    Method methodWithAnnotation = Reflections.class.getMethod("hasAnnotation", Method.class, Class.class);
+    Method methodWithoutAnnotation = Reflections.class.getMethod("classPresent", String.class);
+    boolean hasAnnotationTrue = Reflections.hasAnnotation(methodWithAnnotation, Test.class);
+    boolean hasAnnotationFalse = Reflections.hasAnnotation(methodWithoutAnnotation, Test.class);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public static boolean hasAnnotation(Method method, Class<? extends Annotation> annotationClass) {
+    if (method != null) {
+        return method.isAnnotationPresent(annotationClass);
+    }
+    return false;
+}
+
+# Method Intention
+The overall intention of the hasAnnotation method is to determine whether a given method has a specific annotation of a specified class type present on it.
+
+# Test Method
+@Test
+public void testHasAnnotation() throws NoSuchMethodException {
+    Method methodWithAnnotation = Reflections.class.getMethod("hasAnnotation", Method.class, Class.class);
+    Method methodWithoutAnnotation = Reflections.class.getMethod("classPresent", String.class);
+    boolean hasAnnotationTrue = Reflections.hasAnnotation(methodWithAnnotation, Test.class);
+    boolean hasAnnotationFalse = Reflections.hasAnnotation(methodWithoutAnnotation, Test.class);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+5-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public static boolean hasAnnotation(Method method, Class<? extends Annotation> annotationClass) {
+    if (method != null) {
+        return method.isAnnotationPresent(annotationClass);
+    }
+    return false;
+}
+
+# Method Intention
+The overall intention of the hasAnnotation method is to determine whether a given method has a specific annotation of a specified class associated with it.
+
+# Test Method
+@Test
+public void testHasAnnotation() throws NoSuchMethodException {
+    Method methodWithAnnotation = Reflections.class.getMethod("hasAnnotation", Method.class, Class.class);
+    Method methodWithoutAnnotation = Reflections.class.getMethod("classPresent", String.class);
+    boolean hasAnnotationTrue = Reflections.hasAnnotation(methodWithAnnotation, Test.class);
+    boolean hasAnnotationFalse = Reflections.hasAnnotation(methodWithoutAnnotation, Test.class);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

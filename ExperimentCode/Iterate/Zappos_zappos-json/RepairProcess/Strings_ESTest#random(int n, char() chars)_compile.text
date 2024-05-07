@@ -1,0 +1,27 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Strings_ESTest.java
+[GENERATED PATH] Strings_ESTest#random(int n, char() chars).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Strings_ESTest.java:[33,46] lambda expressions are not supported in -source 1.7
+  (use -source 8 or higher to enable lambda expressions)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Strings_ESTest.java
+[GENERATED PATH] Strings_ESTest#random(int n, char() chars).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Strings_ESTest.java:[33,42] lambda expressions are not supported in -source 1.7
+  (use -source 8 or higher to enable lambda expressions)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Strings_ESTest.java
+[GENERATED PATH] Strings_ESTest#random(int n, char() chars).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Strings_ESTest.java:[34,42] lambda expressions are not supported in -source 1.7
+  (use -source 8 or higher to enable lambda expressions)
+[INFO] 1 error
+####################
+

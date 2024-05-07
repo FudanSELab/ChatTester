@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ruling.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">Ruling.java</span></div><h1>Ruling.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Formatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+
+<span class="pc bpc" id="L15" title="1 of 2 branches missed.">@SuppressWarnings(&quot;serial&quot;)</span>
+public class Ruling extends Line2D.Float {
+    
+<span class="fc" id="L18">    private static int PERPENDICULAR_PIXEL_EXPAND_AMOUNT = 2;</span>
+<span class="fc" id="L19">    private static int COLINEAR_OR_PARALLEL_PIXEL_EXPAND_AMOUNT = 1;</span>
+<span class="nc" id="L20">    private enum SOType { VERTICAL, HRIGHT, HLEFT }</span>
+
+    public Ruling(float top, float left, float width, float height) {
+<span class="nc" id="L23">        this(new Point2D.Float(left, top), new Point2D.Float(left+width, top+height));</span>
+<span class="nc" id="L24">    }</span>
+    
+    public Ruling(Point2D p1, Point2D p2) {
+<span class="nc" id="L27">        super(p1, p2);</span>
+<span class="nc" id="L28">        this.normalize();</span>
+<span class="nc" id="L29">    }</span>
+
+    /**
+     * Normalize almost horizontal or almost vertical lines
+     */
+    public void normalize() {
+
+<span class="nc" id="L36">        double angle = this.getAngle();</span>
+<span class="nc bnc" id="L37" title="All 4 branches missed.">        if (Utils.within(angle, 0, 1) || Utils.within(angle, 180, 1)) { // almost horizontal</span>
+<span class="nc" id="L38">            this.setLine(this.x1, this.y1, this.x2, this.y1);</span>
+        }
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        else if (Utils.within(angle, 90, 1) || Utils.within(angle, 270, 1)) { // almost vertical</span>
+<span class="nc" id="L41">            this.setLine(this.x1, this.y1, this.x1, this.y2);</span>
+        }
+<span class="nc" id="L43">    }</span>
+
+    public boolean vertical() {
+<span class="nc bnc" id="L46" title="All 4 branches missed.">        return this.length() &gt; 0 &amp;&amp; Utils.feq(this.x1, this.x2); //diff &lt; ORIENTATION_CHECK_THRESHOLD;</span>
+    }
+    
+    public boolean horizontal() {
+<span class="nc bnc" id="L50" title="All 4 branches missed.">        return this.length() &gt; 0 &amp;&amp; Utils.feq(this.y1, this.y2); //diff &lt; ORIENTATION_CHECK_THRESHOLD;</span>
+    }
+    
+    public boolean oblique() {
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        return !(this.vertical() || this.horizontal());</span>
+    }
+    
+    // attributes that make sense only for non-oblique lines
+    // these are used to have a single collapse method (in page, currently)
+    
+    public float getPosition() {
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        if (this.oblique()) {</span>
+<span class="nc" id="L62">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        return this.vertical() ? this.getLeft() : this.getTop();</span>
+    }
+    
+    public void setPosition(float v) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (this.oblique()) {</span>
+<span class="nc" id="L69">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (this.vertical()) {</span>
+<span class="nc" id="L72">            this.setLeft(v);</span>
+<span class="nc" id="L73">            this.setRight(v);</span>
+        }
+        else {
+<span class="nc" id="L76">            this.setTop(v);</span>
+<span class="nc" id="L77">            this.setBottom(v);</span>
+        }
+<span class="nc" id="L79">    }</span>
+    
+    public float getStart() {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (this.oblique()) {</span>
+<span class="nc" id="L83">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        return this.vertical() ? this.getTop() : this.getLeft();</span>
+    }
+    
+    public void setStart(float v) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (this.oblique()) {</span>
+<span class="nc" id="L90">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (this.vertical()) {</span>
+<span class="nc" id="L93">            this.setTop(v);</span>
+        }
+        else {
+<span class="nc" id="L96">            this.setLeft(v);</span>
+        }
+<span class="nc" id="L98">    }</span>
+    
+    public float getEnd() {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (this.oblique()) {</span>
+<span class="nc" id="L102">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        return this.vertical() ? this.getBottom() : this.getRight();</span>
+    }
+    
+    public void setEnd(float v) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (this.oblique()) {</span>
+<span class="nc" id="L109">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (this.vertical()) {</span>
+<span class="nc" id="L112">            this.setBottom(v);</span>
+        }
+        else {
+<span class="nc" id="L115">            this.setRight(v);</span>
+        }
+<span class="nc" id="L117">    }</span>
+
+    private void setStartEnd(float start, float end) {
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (this.oblique()) {</span>
+<span class="nc" id="L121">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (this.vertical()) {</span>
+<span class="nc" id="L124">            this.setTop(start);</span>
+<span class="nc" id="L125">            this.setBottom(end);</span>
+        }
+        else {
+<span class="nc" id="L128">            this.setLeft(start);</span>
+<span class="nc" id="L129">            this.setRight(end);</span>
+        }
+<span class="nc" id="L131">    }</span>
+    
+    // -----
+        
+    public boolean perpendicularTo(Ruling other) {
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        return this.vertical() == other.horizontal();</span>
+    }
+    
+    public boolean colinear(Point2D point) {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        return point.getX() &gt;= this.x1</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                &amp;&amp; point.getX() &lt;= this.x2</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">                &amp;&amp; point.getY() &gt;= this.y1</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                &amp;&amp; point.getY() &lt;= this.y2;</span>
+    }
+    
+    // if the lines we're comparing are colinear or parallel, we expand them by a only 1 pixel,
+    // because the expansions are additive
+    // (e.g. two vertical lines, at x = 100, with one having y2 of 98 and the other having y1 of 102 would
+    // erroneously be said to nearlyIntersect if they were each expanded by 2 (since they'd both terminate at 100).
+    // By default the COLINEAR_OR_PARALLEL_PIXEL_EXPAND_AMOUNT is only 1 so the total expansion is 2.
+    // A total expansion amount of 2 is empirically verified to work sometimes. It's not a magic number from any
+    // source other than a little bit of experience.)
+    public boolean nearlyIntersects(Ruling another) {
+<span class="nc" id="L154">        return this.nearlyIntersects(another, COLINEAR_OR_PARALLEL_PIXEL_EXPAND_AMOUNT);</span>
+    }
+
+    public boolean nearlyIntersects(Ruling another, int colinearOrParallelExpandAmount) {
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        if (this.intersectsLine(another)) {</span>
+<span class="nc" id="L159">            return true;</span>
+        }
+        
+<span class="nc" id="L162">        boolean rv = false;</span>
+        
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        if (this.perpendicularTo(another)) {</span>
+<span class="nc" id="L165">            rv = this.expand(PERPENDICULAR_PIXEL_EXPAND_AMOUNT).intersectsLine(another);</span>
+        }
+        else {
+<span class="nc" id="L168">            rv = this.expand(colinearOrParallelExpandAmount)</span>
+<span class="nc" id="L169">                    .intersectsLine(another.expand(colinearOrParallelExpandAmount));</span>
+        }
+        
+<span class="nc" id="L172">        return rv;</span>
+    }
+    
+    public double length() {
+<span class="nc" id="L176">        return Math.sqrt(Math.pow(this.x1 - this.x2, 2) + Math.pow(this.y1 - this.y2, 2));</span>
+    }
+    
+    public Ruling intersect(Rectangle2D clip) {
+<span class="nc" id="L180">        Line2D.Float clipee = (Line2D.Float) this.clone();</span>
+<span class="nc" id="L181">        boolean clipped = new CohenSutherlandClipping(clip).clip(clipee);</span>
+
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        if (clipped) {</span>
+<span class="nc" id="L184">            return new Ruling(clipee.getP1(), clipee.getP2());</span>
+        }
+        else {
+<span class="nc" id="L187">            return this;</span>
+        }
+    }
+    
+    public Ruling expand(float amount) {
+<span class="nc" id="L192">        Ruling r = (Ruling) this.clone();</span>
+<span class="nc" id="L193">        r.setStart(this.getStart() - amount);</span>
+<span class="nc" id="L194">        r.setEnd(this.getEnd() + amount);</span>
+<span class="nc" id="L195">        return r;</span>
+    }
+    
+    public Point2D intersectionPoint(Ruling other) {
+<span class="nc" id="L199">        Ruling this_l = this.expand(PERPENDICULAR_PIXEL_EXPAND_AMOUNT);</span>
+<span class="nc" id="L200">        Ruling other_l = other.expand(PERPENDICULAR_PIXEL_EXPAND_AMOUNT);</span>
+        Ruling horizontal, vertical;
+        
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (!this_l.intersectsLine(other_l)) {</span>
+<span class="nc" id="L204">            return null;</span>
+        }
+        
+<span class="nc bnc" id="L207" title="All 4 branches missed.">        if (this_l.horizontal() &amp;&amp; other_l.vertical()) {</span>
+<span class="nc" id="L208">            horizontal = this_l; vertical = other_l;</span>
+        }
+<span class="nc bnc" id="L210" title="All 4 branches missed.">        else if (this_l.vertical() &amp;&amp; other_l.horizontal()) {</span>
+<span class="nc" id="L211">            vertical = this_l; horizontal = other_l;</span>
+        }
+        else {
+<span class="nc" id="L214">            throw new IllegalArgumentException(&quot;lines must be orthogonal, vertical and horizontal&quot;);</span>
+        }
+<span class="nc" id="L216">        return new Point2D.Float(vertical.getLeft(), horizontal.getTop());        </span>
+    }
+    
+    @Override
+    public boolean equals(Object other) {
+<span class="nc bnc" id="L221" title="All 2 branches missed.">        if (this == other) </span>
+<span class="nc" id="L222">            return true;</span>
+        
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if (!(other instanceof Ruling))</span>
+<span class="nc" id="L225">            return false;</span>
+        
+<span class="nc" id="L227">        Ruling o = (Ruling) other;</span>
+<span class="nc bnc" id="L228" title="All 4 branches missed.">        return this.getP1().equals(o.getP1()) &amp;&amp; this.getP2().equals(o.getP2());</span>
+    }
+    
+    public float getTop() {
+<span class="nc" id="L232">        return this.y1;</span>
+    }
+    
+    public void setTop(float v) {
+<span class="nc" id="L236">        setLine(this.getLeft(), v, this.getRight(), this.getBottom());</span>
+<span class="nc" id="L237">    }</span>
+    
+    public float getLeft() {
+<span class="nc" id="L240">        return this.x1;</span>
+    }
+    
+    public void setLeft(float v) {
+<span class="nc" id="L244">        setLine(v, this.getTop(), this.getRight(), this.getBottom());</span>
+<span class="nc" id="L245">    }</span>
+    
+    public float getBottom() {
+<span class="nc" id="L248">        return this.y2;</span>
+    }
+    
+    public void setBottom(float v) {
+<span class="nc" id="L252">        setLine(this.getLeft(), this.getTop(), this.getRight(), v);</span>
+<span class="nc" id="L253">    }</span>
+
+    public float getRight() {
+<span class="nc" id="L256">        return this.x2;</span>
+    }
+    
+    public void setRight(float v) {
+<span class="nc" id="L260">        setLine(this.getLeft(), this.getTop(), v, this.getBottom());</span>
+<span class="nc" id="L261">    }</span>
+    
+    public float getWidth() {
+<span class="nc" id="L264">        return this.getRight() - this.getLeft();</span>
+    }
+    
+    public float getHeight() {
+<span class="nc" id="L268">        return this.getBottom() - this.getTop();</span>
+    }
+    
+    public double getAngle() {
+<span class="nc" id="L272">        double angle = Math.toDegrees(Math.atan2(this.getP2().getY() - this.getP1().getY(),</span>
+<span class="nc" id="L273">                this.getP2().getX() - this.getP1().getX()));</span>
+
+<span class="nc bnc" id="L275" title="All 2 branches missed.">        if (angle &lt; 0) {</span>
+<span class="nc" id="L276">            angle += 360;</span>
+        }
+<span class="nc" id="L278">        return angle;</span>
+    }
+    
+    
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L285">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L286">        Formatter formatter = new Formatter(sb);</span>
+<span class="nc" id="L287">        String rv = formatter.format(Locale.US, &quot;%s[x1=%f y1=%f x2=%f y2=%f]&quot;, this.getClass().toString(), this.x1, this.y1, this.x2, this.y2).toString();</span>
+<span class="nc" id="L288">        formatter.close();</span>
+<span class="nc" id="L289">        return rv;</span>
+    }
+    
+    public static List&lt;Ruling&gt; cropRulingsToArea(List&lt;Ruling&gt; rulings, Rectangle2D area) {
+<span class="nc" id="L293">        ArrayList&lt;Ruling&gt; rv = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">        for (Ruling r : rulings) {</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">            if (r.intersects(area)) {</span>
+<span class="nc" id="L296">                rv.add(r.intersect(area));</span>
+            }
+<span class="nc" id="L298">        }</span>
+<span class="nc" id="L299">        return rv;</span>
+    }
+    
+    // log(n) implementation of find_intersections
+    // based on http://people.csail.mit.edu/indyk/6.838-old/handouts/lec2.pdf
+    public static Map&lt;Point2D, Ruling[]&gt; findIntersections(List&lt;Ruling&gt; horizontals, List&lt;Ruling&gt; verticals) {
+        
+        class SortObject {
+            protected SOType type;
+            protected float position;
+            protected Ruling ruling;
+            
+<span class="nc" id="L311">            public SortObject(SOType type, float position, Ruling ruling) {</span>
+<span class="nc" id="L312">                this.type = type;</span>
+<span class="nc" id="L313">                this.position = position;</span>
+<span class="nc" id="L314">                this.ruling = ruling;</span>
+<span class="nc" id="L315">            }</span>
+        }
+        
+<span class="nc" id="L318">        List&lt;SortObject&gt; sos = new ArrayList&lt;&gt;();</span>
+        
+<span class="nc" id="L320">        TreeMap&lt;Ruling, Boolean&gt; tree = new TreeMap&lt;&gt;(new Comparator&lt;Ruling&gt;() {</span>
+            @Override
+            public int compare(Ruling o1, Ruling o2) {
+<span class="nc" id="L323">                return java.lang.Double.compare(o1.getTop(), o2.getTop());</span>
+            }});
+        
+<span class="nc" id="L326">        TreeMap&lt;Point2D, Ruling[]&gt; rv = new TreeMap&lt;&gt;(new Comparator&lt;Point2D&gt;() {</span>
+            @Override
+            public int compare(Point2D o1, Point2D o2) {
+<span class="nc bnc" id="L329" title="All 2 branches missed.">                if (o1.getY() &gt; o2.getY()) return  1;</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">                if (o1.getY() &lt; o2.getY()) return -1;</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">                if (o1.getX() &gt; o2.getX()) return  1;</span>
+<span class="nc bnc" id="L332" title="All 2 branches missed.">                if (o1.getX() &lt; o2.getX()) return -1;</span>
+<span class="nc" id="L333">                return 0;</span>
+            }
+        });
+        
+<span class="nc bnc" id="L337" title="All 2 branches missed.">        for (Ruling h : horizontals) {</span>
+<span class="nc" id="L338">            sos.add(new SortObject(SOType.HLEFT, h.getLeft() - PERPENDICULAR_PIXEL_EXPAND_AMOUNT, h));</span>
+<span class="nc" id="L339">            sos.add(new SortObject(SOType.HRIGHT, h.getRight() + PERPENDICULAR_PIXEL_EXPAND_AMOUNT, h));</span>
+<span class="nc" id="L340">        }</span>
+
+<span class="nc bnc" id="L342" title="All 2 branches missed.">        for (Ruling v : verticals) {</span>
+<span class="nc" id="L343">            sos.add(new SortObject(SOType.VERTICAL, v.getLeft(), v));</span>
+<span class="nc" id="L344">        }</span>
+        
+<span class="nc" id="L346">        Collections.sort(sos, new Comparator&lt;SortObject&gt;() {</span>
+            @Override
+            public int compare(SortObject a, SortObject b) {
+                int rv;
+<span class="nc bnc" id="L350" title="All 2 branches missed.">                if (Utils.feq(a.position, b.position)) {</span>
+<span class="nc bnc" id="L351" title="All 4 branches missed.">                    if (a.type == SOType.VERTICAL &amp;&amp; b.type == SOType.HLEFT) {</span>
+<span class="nc" id="L352">                       rv = 1;     </span>
+                    }
+<span class="nc bnc" id="L354" title="All 4 branches missed.">                    else if (a.type == SOType.VERTICAL &amp;&amp; b.type == SOType.HRIGHT) {</span>
+<span class="nc" id="L355">                       rv = -1;</span>
+                    }
+<span class="nc bnc" id="L357" title="All 4 branches missed.">                    else if (a.type == SOType.HLEFT &amp;&amp; b.type == SOType.VERTICAL) {</span>
+<span class="nc" id="L358">                       rv = -1;</span>
+                    }
+<span class="nc bnc" id="L360" title="All 4 branches missed.">                    else if (a.type == SOType.HRIGHT &amp;&amp; b.type == SOType.VERTICAL) {</span>
+<span class="nc" id="L361">                       rv = 1;</span>
+                     }
+                    else {
+<span class="nc" id="L364">                       rv = java.lang.Double.compare(a.position, b.position);</span>
+                    }
+                }
+                else {
+<span class="nc" id="L368">                    return java.lang.Double.compare(a.position, b.position);</span>
+                }
+<span class="nc" id="L370">                return rv;</span>
+            }
+        });
+        
+<span class="nc bnc" id="L374" title="All 2 branches missed.">        for (SortObject so : sos) {</span>
+<span class="nc bnc" id="L375" title="All 4 branches missed.">            switch(so.type) {</span>
+            case VERTICAL:
+<span class="nc bnc" id="L377" title="All 2 branches missed.">                for (Map.Entry&lt;Ruling, Boolean&gt; h : tree.entrySet()) {</span>
+<span class="nc" id="L378">                    Point2D i = h.getKey().intersectionPoint(so.ruling);</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">                    if (i == null) {</span>
+<span class="nc" id="L380">                        continue;</span>
+                    }
+<span class="nc" id="L382">                    rv.put(i, </span>
+<span class="nc" id="L383">                           new Ruling[] { h.getKey().expand(PERPENDICULAR_PIXEL_EXPAND_AMOUNT), </span>
+<span class="nc" id="L384">                                          so.ruling.expand(PERPENDICULAR_PIXEL_EXPAND_AMOUNT) });</span>
+<span class="nc" id="L385">                }</span>
+<span class="nc" id="L386">                break;</span>
+            case HRIGHT:
+<span class="nc" id="L388">                tree.remove(so.ruling);</span>
+<span class="nc" id="L389">                break;</span>
+            case HLEFT:
+<span class="nc" id="L391">                tree.put(so.ruling, true);</span>
+                break;
+            }
+<span class="nc" id="L394">        }</span>
+        
+<span class="nc" id="L396">        return rv;</span>
+        
+    }
+
+    public static List&lt;Ruling&gt; collapseOrientedRulings(List&lt;Ruling&gt; lines) {
+<span class="nc" id="L401">        return collapseOrientedRulings(lines, COLINEAR_OR_PARALLEL_PIXEL_EXPAND_AMOUNT);</span>
+    }
+    
+    public static List&lt;Ruling&gt; collapseOrientedRulings(List&lt;Ruling&gt; lines, int expandAmount) {
+<span class="nc" id="L405">        ArrayList&lt;Ruling&gt; rv = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L406">        Collections.sort(lines, new Comparator&lt;Ruling&gt;() {</span>
+            @Override
+            public int compare(Ruling a, Ruling b) {
+<span class="nc" id="L409">                final float diff = a.getPosition() - b.getPosition();</span>
+<span class="nc bnc" id="L410" title="All 2 branches missed.">                return java.lang.Float.compare(diff == 0 ? a.getStart() - b.getStart() : diff, 0f);</span>
+            }
+        });
+
+<span class="nc bnc" id="L414" title="All 2 branches missed.">        for (Ruling next_line : lines) {</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">            Ruling last = rv.isEmpty() ? null : rv.get(rv.size() - 1);</span>
+            // if current line colinear with next, and are &quot;close enough&quot;: expand current line
+<span class="nc bnc" id="L417" title="All 6 branches missed.">            if (last != null &amp;&amp; Utils.feq(next_line.getPosition(), last.getPosition()) &amp;&amp; last.nearlyIntersects(next_line, expandAmount)) {</span>
+<span class="nc" id="L418">                final float lastStart = last.getStart();</span>
+<span class="nc" id="L419">                final float lastEnd = last.getEnd();</span>
+
+<span class="nc bnc" id="L421" title="All 2 branches missed.">                final boolean lastFlipped = lastStart            &gt; lastEnd;</span>
+<span class="nc bnc" id="L422" title="All 2 branches missed.">                final boolean nextFlipped = next_line.getStart() &gt; next_line.getEnd();</span>
+
+<span class="nc bnc" id="L424" title="All 2 branches missed.">                boolean differentDirections = nextFlipped != lastFlipped;</span>
+<span class="nc bnc" id="L425" title="All 2 branches missed.">                float nextS = differentDirections ? next_line.getEnd()   : next_line.getStart();</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">                float nextE = differentDirections ? next_line.getStart() : next_line.getEnd();</span>
+
+<span class="nc bnc" id="L428" title="All 2 branches missed.">                final float newStart = lastFlipped ? Math.max(nextS, lastStart) : Math.min(nextS, lastStart);</span>
+<span class="nc bnc" id="L429" title="All 2 branches missed.">                final float newEnd   = lastFlipped ? Math.min(nextE, lastEnd)   : Math.max(nextE, lastEnd);</span>
+<span class="nc" id="L430">                last.setStartEnd(newStart, newEnd);</span>
+<span class="nc bnc" id="L431" title="All 4 branches missed.">                assert !last.oblique();</span>
+<span class="nc" id="L432">            }</span>
+<span class="nc bnc" id="L433" title="All 2 branches missed.">            else if (next_line.length() == 0) {</span>
+<span class="nc" id="L434">                continue;</span>
+            }
+            else {
+<span class="nc" id="L437">                rv.add(next_line);</span>
+            }
+<span class="nc" id="L439">        }</span>
+<span class="nc" id="L440">        return rv;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstagramAuthService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.auth</a> &gt; <span class="el_source">InstagramAuthService.java</span></div><h1>InstagramAuthService.java</h1><pre class="source lang-java linenums">package org.jinstagram.auth;
+
+import java.net.Proxy;
+
+import org.jinstagram.auth.model.OAuthConfig;
+import org.jinstagram.auth.model.OAuthConstants;
+import org.jinstagram.auth.oauth.InstagramService;
+import org.jinstagram.auth.oauth.OAuthService;
+import org.jinstagram.utils.Preconditions;
+
+public class InstagramAuthService {
+	private String apiKey;
+
+	private String apiSecret;
+
+	private String callback;
+
+	private String display;
+
+	private String scope;
+
+	private Proxy requestProxy;
+
+	/**
+	 * Default constructor
+	 */
+<span class="nc" id="L27">	public InstagramAuthService() {</span>
+<span class="nc" id="L28">		this.callback = OAuthConstants.OUT_OF_BAND;</span>
+<span class="nc" id="L29">	}</span>
+
+	/**
+	 * Adds an OAuth callback url
+	 * 
+	 * @param callback callback url. Must be a valid url or 'oob' for out of
+	 * band OAuth
+	 * @return the {@link InstagramAuthService} instance for method chaining
+	 */
+	public InstagramAuthService callback(String callback) {
+<span class="nc" id="L39">		Preconditions.checkValidOAuthCallback(callback, &quot;Callback must be a valid URL or 'oob'&quot;);</span>
+
+<span class="nc" id="L41">		this.callback = callback;</span>
+
+<span class="nc" id="L43">		return this;</span>
+	}
+
+	/**
+	 * Configures the api key
+	 * 
+	 * @param apiKey The api key for your application
+	 * @return the {@link InstagramAuthService} instance for method chaining
+	 */
+	public InstagramAuthService apiKey(String apiKey) {
+<span class="nc" id="L53">		Preconditions.checkEmptyString(apiKey, &quot;Invalid Api key&quot;);</span>
+
+<span class="nc" id="L55">		this.apiKey = apiKey;</span>
+
+<span class="nc" id="L57">		return this;</span>
+	}
+
+	/**
+	 * Configures the api secret
+	 * 
+	 * @param apiSecret The api secret for your application
+	 * @return the {@link InstagramAuthService} instance for method chaining
+	 */
+	public InstagramAuthService apiSecret(String apiSecret) {
+<span class="nc" id="L67">		Preconditions.checkEmptyString(apiSecret, &quot;Invalid Api secret&quot;);</span>
+
+<span class="nc" id="L69">		this.apiSecret = apiSecret;</span>
+
+<span class="nc" id="L71">		return this;</span>
+	}
+
+	/**
+	 * Configures the OAuth scope. This is only necessary in some APIs (like
+	 * Google's).
+	 * 
+	 * @param scope The OAuth scope
+	 * @return the {@link InstagramAuthService} instance for method chaining
+	 */
+	public InstagramAuthService scope(String scope) {
+<span class="nc" id="L82">		Preconditions.checkEmptyString(scope, &quot;Invalid OAuth scope&quot;);</span>
+
+<span class="nc" id="L84">		this.scope = scope;</span>
+
+<span class="nc" id="L86">		return this;</span>
+	}
+
+	/**
+	 * Configures the Display parameter ; if you want a mobile-optimized
+	 * authorization screen
+	 * 
+	 * @param display The Display parameter for mobile devices
+	 * @return the {@link InstagramAuthService} instance for method chaining
+	 */
+	public InstagramAuthService display(String display) {
+<span class="nc" id="L97">		Preconditions.checkEmptyString(display, &quot;Invalid Display scope&quot;);</span>
+
+<span class="nc" id="L99">		this.display = display;</span>
+
+<span class="nc" id="L101">		return this;</span>
+	}
+
+	/**
+	 * Configures the Display parameter ; if you want a mobile-optimized
+	 * authorization screen
+	 *
+	 * @param requestProxy The {@link Proxy} object to be used by the OAuthRequest
+	 * @return the {@link InstagramAuthService} instance for method chaining
+	 */
+	public InstagramAuthService proxy(Proxy requestProxy) {
+		//TODO Add Preconditions check here
+
+<span class="nc" id="L114">		this.requestProxy = requestProxy;</span>
+
+<span class="nc" id="L116">		return this;</span>
+	}
+
+	/**
+	 * Returns the fully configured {@link OAuthService}
+	 * 
+	 * @return fully configured {@link OAuthService}
+	 */
+	public InstagramService build() {
+<span class="nc" id="L125">		InstagramApi api = new InstagramApi();</span>
+		OAuthConfig config;
+
+<span class="nc" id="L128">		Preconditions.checkEmptyString(apiKey, &quot;You must provide an api key&quot;);</span>
+<span class="nc" id="L129">		Preconditions.checkEmptyString(apiSecret, &quot;You must provide an api secret&quot;);</span>
+
+<span class="nc" id="L131">		config = new OAuthConfig(apiKey, apiSecret, callback, scope, display);</span>
+
+<span class="nc bnc" id="L133" title="All 2 branches missed.">		if (this.requestProxy != null) {</span>
+<span class="nc" id="L134">			config.setRequestProxy(this.requestProxy);</span>
+		}
+
+<span class="nc" id="L137">		return api.createService(config);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

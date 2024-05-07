@@ -1,0 +1,56 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetUsersInPhotoList() {
+        MediaFeedData mediaFeedData = new MediaFeedData();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<UsersInPhoto> testUsersInPhotoList = new LinkedList<>();
+
+        UsersInPhoto user1 = new UsersInPhoto();
+        UsersInPhoto user2 = new UsersInPhoto();
+        testUsersInPhotoList.add(user1);
+        testUsersInPhotoList.add(user2);
+        mediaFeedData.setUsersInPhotoList(testUsersInPhotoList);
+        List<UsersInPhoto> updatedUsersInPhotoList = mediaFeedData.getUsersInPhotoList();
+        assertEquals(testUsersInPhotoList, updatedUsersInPhotoList);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testSetUsersInPhotoList() {
+    MediaFeedData mediaFeedData = new MediaFeedData();
+
+      <Buggy Line>: diamond operator is not supported in -source 1.6
+    List<UsersInPhoto> testUsersInPhotoList = new LinkedList<>();
+
+    UsersInPhoto user1 = new UsersInPhoto();
+    UsersInPhoto user2 = new UsersInPhoto();
+    testUsersInPhotoList.add(user1);
+    testUsersInPhotoList.add(user2);
+    mediaFeedData.setUsersInPhotoList(testUsersInPhotoList);
+    List<UsersInPhoto> updatedUsersInPhotoList = mediaFeedData.getUsersInPhotoList();
+    assertEquals(testUsersInPhotoList, updatedUsersInPhotoList);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArrayTypeWrapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json.wrapper</a> &gt; <span class="el_source">ArrayTypeWrapper.java</span></div><h1>ArrayTypeWrapper.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json.wrapper;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ * @param &lt;T&gt; the type of target
+ */
+<span class="nc" id="L24">public class ArrayTypeWrapper&lt;T&gt; implements TypeWrapper&lt;T&gt;{</span>
+  
+  private Class&lt;?&gt; componentType;
+  
+  private T target;
+  
+  @Override
+  public void setTarget(T target) {
+<span class="nc" id="L32">    this.target = target;</span>
+<span class="nc" id="L33">  }</span>
+  
+  @Override
+  public T getTarget() {
+<span class="nc" id="L37">    return target;</span>
+  }
+
+  public Class&lt;?&gt; getComponentType() {
+<span class="nc" id="L41">    return componentType;</span>
+  }
+
+  public void setComponentType(Class&lt;?&gt; componentType) {
+<span class="nc" id="L45">    this.componentType = componentType;</span>
+<span class="nc" id="L46">  }</span>
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

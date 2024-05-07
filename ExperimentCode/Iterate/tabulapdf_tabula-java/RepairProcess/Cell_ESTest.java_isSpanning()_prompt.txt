@@ -1,0 +1,34 @@
+0-->1-->0-->compileRepair
+
+# Cell class
+package technology.tabula;
+public class Cell {
+public Cell(float top, float left, float width, float height);
+public Cell(Point2D topLeft, Point2D bottomRight);
+public String getText(boolean useLineReturns);
+public String getText();
+public boolean isSpanning();
+public void setSpanning(boolean spanning);
+public boolean isPlaceholder();
+public void setPlaceholder(boolean placeholder);
+}
+
+
+# Test Method
+@Test
+    public void setUp() {
+
+            <Buggy Line>: cannot find symbol variable "cell"
+        cell = new Cell(0, 0, 10, 10);
+
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Cell" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Cell" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

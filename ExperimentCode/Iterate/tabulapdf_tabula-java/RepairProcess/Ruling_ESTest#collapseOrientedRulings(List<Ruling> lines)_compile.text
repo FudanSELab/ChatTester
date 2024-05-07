@@ -1,0 +1,30 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Ruling_ESTest.java
+[GENERATED PATH] Ruling_ESTest#collapseOrientedRulings(List<Ruling> lines).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Ruling_ESTest.java:[38,35] cannot find symbol
+  symbol:   variable YourClassName
+  location: class technology.tabula.Ruling_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Ruling_ESTest.java
+[GENERATED PATH] Ruling_ESTest#collapseOrientedRulings(List<Ruling> lines).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Ruling_ESTest.java:[40,35] cannot find symbol
+  symbol:   variable YourClassName
+  location: class technology.tabula.Ruling_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Ruling_ESTest.java
+[GENERATED PATH] Ruling_ESTest#collapseOrientedRulings(List<Ruling> lines).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Ruling_ESTest.java:[40,35] cannot find symbol
+  symbol:   variable YourClassName
+  location: class technology.tabula.Ruling_ESTest
+[INFO] 1 error
+####################
+

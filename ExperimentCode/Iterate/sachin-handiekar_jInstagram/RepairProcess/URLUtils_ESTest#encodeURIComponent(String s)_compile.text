@@ -1,0 +1,10 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/URLUtils_ESTest.java
+[GENERATED PATH] URLUtils_ESTest#encodeURIComponent(String s).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/URLUtils_ESTest.java:[37,27] cannot find symbol
+  symbol:   method encodeURIComponent(java.lang.String)
+  location: class org.jinstagram.http.URLUtils_ESTest
+[INFO] 1 error
+####################
+

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LogHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.utils</a> &gt; <span class="el_source">LogHelper.java</span></div><h1>LogHelper.java</h1><pre class="source lang-java linenums">package org.jinstagram.utils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import org.slf4j.Logger;
+
+public final class LogHelper {
+    
+    /**
+     * &lt;p&gt;
+     * The message format pattern used to log the exception.
+     * &lt;/p&gt;
+     */
+    private static final String EXCEPTION_PATTERN = &quot;Error in method {0}.\n\tException name: {1}.\n\t&quot;
+            + &quot;Stack trace: {2}.\n\tTime spent in the method: {3} milliseconds.&quot;;
+    
+    /**
+     * &lt;p&gt;
+     * The message format pattern used to log the exit of method.
+     * &lt;/p&gt;
+     */
+    private static final String EXIT_METHOD_PATTERN = &quot;Exiting method %s.\n\tReturn value: [{%s}].\n\tTime spent in the method: {2&quot; +
+            &quot;%d} milliseconds.&quot;;
+    
+    /**
+     * &lt;p&gt;
+     * The message format pattern used to log the entrance of method.
+     * &lt;/p&gt;
+     */
+    private static final String ENTRANCE_METHOD_PATTERN = &quot;Entering method %s.\n\tMethod arguments: [%s].&quot;;
+
+<span class="nc" id="L34">    private static Gson GSON = new GsonBuilder().setPrettyPrinting().create();</span>
+
+    /**
+     * &lt;p&gt;
+     * Private default constructor, so the &lt;code&gt;LogHelper&lt;/code&gt; can not be created
+     * by the outside code.
+     * &lt;/p&gt;
+     */
+    private LogHelper() {
+    }
+
+    /**
+     * &lt;p&gt;
+     * Logs for entrance into every public methods with {@link Level#DEBUG}.
+     * &lt;/p&gt;
+     *
+     * @param methodName      The name of method entranced into.
+     * @param methodArguments The method arguments
+     * @param logger          the logger instance
+     */
+    public static void logEntrance(Logger logger, String methodName, String methodArguments) {
+<span class="nc" id="L55">        logger.debug(String.format(ENTRANCE_METHOD_PATTERN, methodName, methodArguments));</span>
+
+<span class="nc" id="L57">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Logs for exit from every public methods with {@link Level#DEBUG}.
+     * &lt;/p&gt;
+     *
+     * @param methodName     The name of method existed from.
+     * @param returnValue    the return value
+     * @param timeSpent      the time spent
+     * @param logger         the logger instance
+     * @param verboseLogging the control flag defining whether the detailed logging actions should be performed
+     */
+    public static void logExit(Logger logger, String methodName, String returnValue,
+                               long timeSpent) {
+<span class="nc" id="L72">        logger.debug(String.format(EXIT_METHOD_PATTERN, methodName, returnValue, timeSpent));</span>
+
+<span class="nc" id="L74">    }</span>
+
+    /**
+     * &lt;p&gt;
+     * Logs the given &lt;code&gt;Throwable&lt;/code&gt; with {@link Level#ERROR}.
+     * &lt;/p&gt;;2
+     *
+     * @param methodName     The name of method where the exception occurs.
+     * @param e              The &lt;code&gt;Throwable&lt;/code&gt; caught to be logged.
+     * @param timeSpent      the time spent
+     * @param logger         the logger instance
+     * @param verboseLogging the control flag defining whether the detailed logging actions should be performed
+     */
+    public static void logException(Logger logger, String methodName, Throwable e,
+                                    long timeSpent) {
+<span class="nc" id="L89">        logger.error(String.format(EXCEPTION_PATTERN, methodName, e.getClass().getSimpleName(), e.getMessage()));</span>
+<span class="nc" id="L90">    }</span>
+
+    /**
+     * Pretty print the JSON response in the logs
+     *
+     * @param logger     the logger instance
+     * @param jsonString the json String which is to be pretty printed.
+     */
+    public static void prettyPrintJSONResponse(Logger logger, String jsonString) {
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if(logger.isDebugEnabled()) {</span>
+            // it can fail...on 404 it usually not a json
+            String s;
+            try {
+<span class="nc" id="L103">                final JsonElement element = new JsonParser().parse(jsonString);</span>
+<span class="nc" id="L104">                s = new GsonBuilder().setPrettyPrinting().create().toJson(element);</span>
+<span class="nc" id="L105">            } catch(Exception e) {</span>
+<span class="nc" id="L106">                s = jsonString;</span>
+<span class="nc" id="L107">            }</span>
+            
+<span class="nc" id="L109">            logger.debug(&quot;Received JSON response from Instagram - &quot; + s);</span>
+        }
+<span class="nc" id="L111">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

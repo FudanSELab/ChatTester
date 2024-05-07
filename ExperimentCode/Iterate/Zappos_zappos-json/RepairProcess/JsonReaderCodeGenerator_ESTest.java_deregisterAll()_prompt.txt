@@ -1,0 +1,81 @@
+0-->1-->0-->compileRepair
+
+# JsonBeanIntrospector class
+package com.zappos.json;
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda);
+public List<JsonBeanAttribute> getMutators(Class<?> clazz);
+public List<JsonBeanAttribute> getAccessors(Class<?> clazz);
+}
+
+
+# Test Method
+    @Test
+    public void testDeregisterAll() {
+        ZapposJson zapposJson = new ZapposJson();
+
+          <Buggy Line>: constructor JsonBeanIntrospector in class com.zappos.json.JsonBeanIntrospector cannot be applied to given types;
+        JsonBeanIntrospector beanIntrospector = new JsonBeanIntrospector();
+
+        JsonReaderCodeGenerator jsonReaderCodeGenerator = new JsonReaderCodeGenerator(zapposJson, beanIntrospector);
+        Map<Class<?>, JsonReaderInvoker> testMap = new ConcurrentHashMap<>();
+        testMap.put(String.class, new JsonReaderInvoker());
+        testMap.put(Integer.class, new JsonReaderInvoker());
+        jsonReaderCodeGenerator.JSON_READER_INVOKERS.putAll(testMap);
+        jsonReaderCodeGenerator.deregisterAll();
+        assertEquals(0, jsonReaderCodeGenerator.JSON_READER_INVOKERS.size());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "JsonBeanIntrospector" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "JsonBeanIntrospector" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# JsonBeanIntrospector class
+package com.zappos.json;
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda);
+public List<JsonBeanAttribute> getMutators(Class<?> clazz);
+public List<JsonBeanAttribute> getAccessors(Class<?> clazz);
+}
+
+# JsonReaderInvoker class
+package com.zappos.json;
+public class JsonReaderInvoker {
+public JsonReaderInvoker(ZapposJson jacinda, Class<?> readerClass) throws Exception;
+public T readJson(Reader reader, Class<T> clazz);
+}
+
+
+# Test Method
+    @Test
+    public void testDeregisterAll() {
+        ZapposJson zapposJson = new ZapposJson();
+        JsonBeanIntrospector beanIntrospector = new JsonBeanIntrospector(zapposJson);
+        JsonReaderCodeGenerator jsonReaderCodeGenerator = new JsonReaderCodeGenerator(zapposJson, beanIntrospector);
+        Map<Class<?>, JsonReaderInvoker> testMap = new ConcurrentHashMap<>();
+
+        <Buggy Line>: constructor JsonReaderInvoker in class com.zappos.json.JsonReaderInvoker cannot be applied to given types;
+        testMap.put(String.class, new JsonReaderInvoker());
+
+        testMap.put(Integer.class, new JsonReaderInvoker());
+        jsonReaderCodeGenerator.JSON_READER_INVOKERS.putAll(testMap);
+        jsonReaderCodeGenerator.deregisterAll();
+        assertEquals(0, jsonReaderCodeGenerator.JSON_READER_INVOKERS.size());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "JsonReaderInvoker" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "JsonReaderInvoker" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

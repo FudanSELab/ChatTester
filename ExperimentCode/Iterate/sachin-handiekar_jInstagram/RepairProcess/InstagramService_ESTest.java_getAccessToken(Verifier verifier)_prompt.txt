@@ -1,0 +1,36 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetAccessToken() {
+        InstagramApi api = mock(InstagramApi.class);
+        OAuthConfig config = mock(OAuthConfig.class);
+        Verifier verifier = new Verifier("mock_verifier_code");
+        Token expectedToken = new Token("mock_access_token", "mock_token_secret");
+        InstagramService instagramService = new InstagramService(api, config);
+
+      <Buggy Line>: no suitable method found for thenReturn(java.lang.String)
+        when(api.getAccessTokenVerb()).thenReturn("POST");
+
+        when(api.getAccessTokenEndpoint()).thenReturn("https://api.instagram.com/oauth/access_token");
+        when(config.getApiKey()).thenReturn("mock_api_key");
+        when(config.getApiSecret()).thenReturn("mock_api_secret");
+        when(config.getCallback()).thenReturn("http://localhost/callback");
+        when(config.hasScope()).thenReturn(false);
+        Response mockResponse = new Response(200, "mock_response_body");
+        when(request.send()).thenReturn(mockResponse);
+        when(api.getAccessTokenExtractor().extract("mock_response_body")).thenReturn(expectedToken);
+        Token actualToken = instagramService.getAccessToken(verifier);
+        assertEquals(expectedToken, actualToken);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "OngoingStubbing" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "OngoingStubbing" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

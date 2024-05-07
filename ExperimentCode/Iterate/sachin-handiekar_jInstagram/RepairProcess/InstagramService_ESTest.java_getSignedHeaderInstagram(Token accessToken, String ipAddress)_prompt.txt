@@ -1,0 +1,28 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetSignedHeaderInstagram() {
+        InstagramApi api = new InstagramApi();
+
+            <Buggy Line>: no suitable constructor found for OAuthConfig(java.lang.String,java.lang.String,java.lang.String)
+        OAuthConfig config = new OAuthConfig("client_id", "client_secret", "redirect_uri");
+
+        InstagramService instagramService = new InstagramService(api, config);
+        Token accessToken = new Token("access_token");
+        String ipAddress = "127.0.0.1";
+        InstagramClient instagramClient = instagramService.getSignedHeaderInstagram(accessToken, ipAddress);
+        assertEquals(accessToken.getToken(), instagramClient.getAccessToken());
+        assertEquals(config.getApiSecret(), instagramClient.getApiSecret());
+        assertEquals(ipAddress, instagramClient.getIpAddress());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

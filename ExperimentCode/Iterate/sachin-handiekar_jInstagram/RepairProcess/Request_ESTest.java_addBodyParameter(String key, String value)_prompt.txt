@@ -1,0 +1,27 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testAddBodyParameter() {
+        Request request = new Request(Verbs.POST, "https://example.com/api");
+        request.addBodyParameter("key1", "value1");
+        request.addBodyParameter("key2", "value2");
+
+           <Buggy Line>: diamond operator is not supported in -source 1.6
+        Map<String, String> expectedBodyParams = new HashMap<>();
+
+        expectedBodyParams.put("key1", "value1");
+        expectedBodyParams.put("key2", "value2");
+        Map<String, String> actualBodyParams = request.getBodyParams();
+        assertEquals(expectedBodyParams, actualBodyParams);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

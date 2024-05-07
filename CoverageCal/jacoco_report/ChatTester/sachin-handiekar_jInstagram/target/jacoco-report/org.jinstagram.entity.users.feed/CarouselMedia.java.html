@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CarouselMedia.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.users.feed</a> &gt; <span class="el_source">CarouselMedia.java</span></div><h1>CarouselMedia.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.users.feed;
+
+import com.google.gson.annotations.SerializedName;
+import org.jinstagram.entity.common.Images;
+import org.jinstagram.entity.common.UsersInPhoto;
+import org.jinstagram.entity.common.Videos;
+
+import java.util.List;
+
+/**
+ * {@link CarouselMedia} represents an individual image or video in an instagram carousel.
+ * &lt;br&gt;&lt;br&gt;
+ * This object represents any media contained within the carousel and does not differentiate
+ * by {@link #type}. Use {@link #getType()} to differentiate &lt;em&gt;image&lt;/em&gt; or &lt;em&gt;video&lt;/em&gt;.
+ *
+ * @author abargnesi
+ */
+<span class="fc" id="L18">public class CarouselMedia {</span>
+
+	@SerializedName(&quot;type&quot;)
+	private String type;
+
+	@SerializedName(&quot;images&quot;)
+	private Images images;
+
+	@SerializedName(&quot;videos&quot;)
+	private Videos videos;
+
+	@SerializedName(&quot;users_in_photo&quot;)
+	private List&lt;UsersInPhoto&gt; usersInPhotoList;
+
+	/**
+	 * Return the media type (e.g. &lt;em&gt;image&lt;/em&gt; or &lt;em&gt;video&lt;/em&gt;).
+	 *
+	 * @return the media type
+	 */
+	public String getType() {
+<span class="fc" id="L38">		return type;</span>
+	}
+
+	/**
+	 * Set the media type.
+	 *
+	 * @param type the media type
+	 */
+	public void setType(String type) {
+<span class="fc" id="L47">		this.type = type;</span>
+<span class="fc" id="L48">	}</span>
+
+	/**
+	 * Return the media images.
+	 *
+	 * @return {@link Images} the media images
+	 */
+	public Images getImages() {
+<span class="fc" id="L56">		return images;</span>
+	}
+
+	/**
+	 * Set the media images.
+	 *
+	 * @param images {@link Images} the media images
+	 */
+	public void setImages(Images images) {
+<span class="fc" id="L65">		this.images = images;</span>
+<span class="fc" id="L66">	}</span>
+
+	/**
+	 * Return the media videos.
+	 *
+	 * @return {@link Videos} the media videos
+	 */
+	public Videos getVideos() {
+<span class="fc" id="L74">		return videos;</span>
+	}
+
+	/**
+	 * Set the media videos.
+	 *
+	 * @param videos {@link Videos} the media videos
+	 */
+	public void setVideos(Videos videos) {
+<span class="fc" id="L83">		this.videos = videos;</span>
+<span class="fc" id="L84">	}</span>
+
+	/**
+	 * Return the users found in the media.
+	 *
+	 * @return {@link List} of {@link UsersInPhoto} the users found in the media
+	 */
+	public List&lt;UsersInPhoto&gt; getUsersInPhotoList() {
+<span class="nc" id="L92">		return usersInPhotoList;</span>
+	}
+
+	/**
+	 * Set the users found in the media.
+	 *
+	 * @param usersInPhotoList {@link List} of {@link UsersInPhoto} the users found in the media
+	 */
+	public void setUsersInPhotoList(List&lt;UsersInPhoto&gt; usersInPhotoList) {
+<span class="fc" id="L101">		this.usersInPhotoList = usersInPhotoList;</span>
+<span class="fc" id="L102">	}</span>
+
+	@Override
+	public String toString() {
+<span class="fc" id="L106">		return String.format(</span>
+				&quot;CarouselMedia [type=%s, images=%s, videos=%s, usersInPhotoList=%s]&quot;,
+				type, images, videos, usersInPhotoList);
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

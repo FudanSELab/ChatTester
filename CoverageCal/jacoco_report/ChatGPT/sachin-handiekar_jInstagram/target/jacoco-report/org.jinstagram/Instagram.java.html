@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Instagram.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram</a> &gt; <span class="el_source">Instagram.java</span></div><h1>Instagram.java</h1><pre class="source lang-java linenums">package org.jinstagram;
+
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.jinstagram.auth.model.OAuthConstants;
+import org.jinstagram.auth.model.OAuthRequest;
+import org.jinstagram.auth.model.Token;
+import org.jinstagram.exceptions.InstagramException;
+import org.jinstagram.http.Request;
+import org.jinstagram.http.Verbs;
+import org.jinstagram.model.QueryParam;
+import org.jinstagram.utils.EnforceSignedHeaderUtils;
+import org.jinstagram.utils.EnforceSignedRequestUtils;
+import org.jinstagram.utils.Preconditions;
+
+/**
+ * Instagram
+ *
+ * @author Sachin Handiekar
+ * @since 1.0
+ */
+public class Instagram extends InstagramBase {
+
+    private static final String USING = &quot;Using &quot;;
+
+    private Token accessToken;
+    private final String clientId;
+
+    @Deprecated
+    private String enforceSignature;
+
+    public Instagram(Token accessToken) {
+<span class="nc" id="L34">        this(accessToken, null, new InstagramConfig());</span>
+<span class="nc" id="L35">    }</span>
+
+    public Instagram(String token, String secret) {
+<span class="nc" id="L38">        this(new Token(token, secret), null, new InstagramConfig());</span>
+<span class="nc" id="L39">    }</span>
+
+    @Deprecated
+    public Instagram(String token, String secret, String ips) {
+<span class="nc" id="L43">        super(new InstagramConfig());</span>
+<span class="nc" id="L44">        accessToken = new Token(token, secret);</span>
+<span class="nc" id="L45">        clientId = null;</span>
+<span class="nc" id="L46">        enforceSignature = createEnforceSignature(secret, ips);</span>
+<span class="nc" id="L47">    }</span>
+
+    public Instagram(Token accessToken, InstagramConfig config) {
+<span class="nc" id="L50">        this(accessToken, null, config);</span>
+<span class="nc" id="L51">    }</span>
+
+    /**
+     * Create a new Instagram instance only appropriate for unauthenticated
+     * requests (i.e. on behalf of the application but not any particular user)
+     */
+    public Instagram(String clientId) {
+<span class="nc" id="L58">        this(null, clientId, new InstagramConfig());</span>
+<span class="nc" id="L59">    }</span>
+
+    public Instagram(String clientId, InstagramConfig config) {
+<span class="nc" id="L62">        this(null, clientId, config);</span>
+<span class="nc" id="L63">    }</span>
+
+    /**
+     * Private constructor
+     *
+     * @param accessToken
+     *            the access Token object
+     * @param clientId
+     *            the client ID for unauthenticated requests
+     * @param config
+     *            the Instagram Config
+     * @throws IllegalArgumentException
+     *             if any of the arguments are invalid
+     */
+    private Instagram(Token accessToken, String clientId, InstagramConfig config) {
+<span class="nc" id="L78">        super(config);</span>
+        // pre-checks
+<span class="nc" id="L80">        Preconditions.checkBothNotNull(accessToken, clientId, &quot;accessToken and clientId cannot both be null&quot;);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (accessToken == null) {</span>
+<span class="nc" id="L82">            Preconditions.checkEmptyString(clientId, &quot;clientId cannot be an empty string&quot;);</span>
+        } else {
+            // accessToken not null, check we have secret if enforcing signed
+            // requests
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (config.isEnforceSignedRequest()) {</span>
+<span class="nc" id="L87">                Preconditions.checkEmptyString(accessToken.getSecret(), &quot;enforce signed requests need a client secret&quot;);</span>
+            }
+        }
+
+<span class="nc" id="L91">        this.accessToken = accessToken;</span>
+<span class="nc" id="L92">        this.clientId = clientId;</span>
+<span class="nc" id="L93">    }</span>
+
+    /**
+     * @return the accessToken
+     */
+    public Token getAccessToken() {
+<span class="nc" id="L99">        return accessToken;</span>
+    }
+
+    /**
+     * @return the clientId
+     */
+    public String getClientId() {
+<span class="nc" id="L106">        return clientId;</span>
+    }
+
+    /**
+     * @param accessToken
+     *            the accessToken to set
+     */
+    public void setAccessToken(Token accessToken) {
+<span class="nc" id="L114">        this.accessToken = accessToken;</span>
+<span class="nc" id="L115">    }</span>
+
+    @Override
+    protected OAuthRequest request(Verbs verb, String methodName, String rawMethodName, Map&lt;String, String&gt; params) throws InstagramException {
+<span class="nc" id="L119">        Request request=super.request(verb, methodName, rawMethodName, params);</span>
+<span class="nc" id="L120">        OAuthRequest result=new OAuthRequest(request.getVerb(), request.getUrl());</span>
+<span class="nc" id="L121">        result.setCharset(request.getCharset());</span>
+<span class="nc" id="L122">        result.setConnectionKeepAlive(request.getConnectionKeepAlive());</span>
+<span class="nc" id="L123">        result.setConnectTimeout(request.getConnectTimeoutInMillis(), TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L124">        result.setProxy(request.getProxy());</span>
+<span class="nc" id="L125">        result.setReadTimeout(request.getReadTimeoutInMillis(), TimeUnit.MILLISECONDS);</span>
+        
+        // Additional parameters in url
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if (verb == Verbs.GET) {</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            for(Map.Entry&lt;String, String&gt; entry : request.getQueryStringParams().entrySet())</span>
+<span class="nc" id="L130">                result.addQuerystringParameter(entry.getKey(), entry.getValue());</span>
+        } else {
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            for(Map.Entry&lt;String, String&gt; entry : request.getBodyParams().entrySet())</span>
+<span class="nc" id="L133">                result.addBodyParameter(entry.getKey(), entry.getValue());</span>
+        }
+    
+        // Add the AccessToken to the Request Url
+<span class="nc bnc" id="L137" title="All 4 branches missed.">        if ((verb == Verbs.GET) || (verb == Verbs.DELETE)) {</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">            if (accessToken == null) {</span>
+<span class="nc" id="L139">                logger.debug(USING + OAuthConstants.CLIENT_ID + &quot; : &quot; + clientId);</span>
+<span class="nc" id="L140">                result.addQuerystringParameter(OAuthConstants.CLIENT_ID, clientId);</span>
+            } else {
+<span class="nc" id="L142">                logger.debug(USING + OAuthConstants.ACCESS_TOKEN + &quot; : &quot; + accessToken.getToken());</span>
+<span class="nc" id="L143">                result.addQuerystringParameter(OAuthConstants.ACCESS_TOKEN, accessToken.getToken());</span>
+            }
+        } else {
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (accessToken == null) {</span>
+<span class="nc" id="L147">                logger.debug(USING + OAuthConstants.CLIENT_ID + &quot; : &quot; + clientId);</span>
+<span class="nc" id="L148">                result.addBodyParameter(OAuthConstants.CLIENT_ID, clientId);</span>
+            } else {
+<span class="nc" id="L150">                logger.debug(USING + OAuthConstants.ACCESS_TOKEN + &quot; : &quot; + accessToken.getToken());</span>
+<span class="nc" id="L151">                result.addBodyParameter(OAuthConstants.ACCESS_TOKEN, accessToken.getToken());</span>
+            }
+        }
+
+        // check if we are enforcing a signed request and add the 'sig'
+        // parameter.  Must use rawMethodName here (i.e. sign the non-URI-encoded version).
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (config.isEnforceSignedRequest()) {</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">            boolean useQueryParam = (verb == Verbs.GET) || (verb == Verbs.DELETE);</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">            Map&lt;String,String&gt; sigParams = useQueryParam ? result.getQueryStringParams() : result.getBodyParams();</span>
+
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            String sig = EnforceSignedRequestUtils.signature(rawMethodName,</span>
+<span class="nc" id="L163">                                    sigParams, accessToken != null ? accessToken.getSecret() : null);</span>
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">            if (useQueryParam) {</span>
+<span class="nc" id="L166">                result.addQuerystringParameter(QueryParam.SIGNATURE, sig);</span>
+            } else {
+<span class="nc" id="L168">                result.addBodyParameter(QueryParam.SIGNATURE, sig);</span>
+            }
+        }
+        
+<span class="nc" id="L172">        return result;</span>
+    }
+
+    @Deprecated
+    protected String createEnforceSignature(String secret, String ips) {
+<span class="nc bnc" id="L177" title="All 2 branches missed.">        if (null != ips) {</span>
+            try {
+<span class="nc" id="L179">                String signature = EnforceSignedHeaderUtils.signature(secret, ips);</span>
+<span class="nc" id="L180">                return ips + &quot;|&quot; + signature;</span>
+<span class="nc" id="L181">            } catch (InstagramException e) {</span>
+                // do nothing
+            }
+        }
+<span class="nc" id="L185">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

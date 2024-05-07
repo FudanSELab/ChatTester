@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Utils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">Utils.java</span></div><h1>Utils.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.awt.Shape;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.*;
+
+import org.apache.commons.cli.ParseException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
+
+/**
+ * @author manuel
+ */
+<span class="nc" id="L21">public class Utils {</span>
+    public static boolean within(double first, double second, double variance) {
+<span class="nc bnc" id="L23" title="All 4 branches missed.">        return second &lt; first + variance &amp;&amp; second &gt; first - variance;</span>
+    }
+
+    public static boolean overlap(double y1, double height1, double y2, double height2, double variance) {
+<span class="nc bnc" id="L27" title="All 10 branches missed.">        return within(y1, y2, variance) || (y2 &lt;= y1 &amp;&amp; y2 &gt;= y1 - height1) || (y1 &lt;= y2 &amp;&amp; y1 &gt;= y2 - height2);</span>
+    }
+
+    public static boolean overlap(double y1, double height1, double y2, double height2) {
+<span class="nc" id="L31">        return overlap(y1, height1, y2, height2, 0.1f);</span>
+    }
+
+    private final static float EPSILON = 0.01f;
+<span class="fc" id="L35">    protected static boolean useQuickSort = useCustomQuickSort();</span>
+
+    public static boolean feq(double f1, double f2) {
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        return (Math.abs(f1 - f2) &lt; EPSILON);</span>
+    }
+
+    public static float round(double d, int decimalPlace) {
+<span class="fc" id="L42">        BigDecimal bd = new BigDecimal(Double.toString(d));</span>
+<span class="fc" id="L43">        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);</span>
+<span class="fc" id="L44">        return bd.floatValue();</span>
+    }
+
+    public static Rectangle bounds(Collection&lt;? extends Shape&gt; shapes) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (shapes.isEmpty()) {</span>
+<span class="nc" id="L49">            throw new IllegalArgumentException(&quot;shapes can't be empty&quot;);</span>
+        }
+
+<span class="nc" id="L52">        Iterator&lt;? extends Shape&gt; iter = shapes.iterator();</span>
+<span class="nc" id="L53">        Rectangle rv = new Rectangle();</span>
+<span class="nc" id="L54">        rv.setRect(iter.next().getBounds2D());</span>
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        while (iter.hasNext()) {</span>
+<span class="nc" id="L57">            Rectangle2D.union(iter.next().getBounds2D(), rv, rv);</span>
+        }
+
+<span class="nc" id="L60">        return rv;</span>
+
+    }
+
+    // range iterator
+    public static List&lt;Integer&gt; range(final int begin, final int end) {
+<span class="nc" id="L66">        return new AbstractList&lt;Integer&gt;() {</span>
+            @Override
+            public Integer get(int index) {
+<span class="nc" id="L69">                return begin + index;</span>
+            }
+
+            @Override
+            public int size() {
+<span class="nc" id="L74">                return end - begin;</span>
+            }
+        };
+    }
+
+
+    /* from apache.commons-lang */
+    public static boolean isNumeric(final CharSequence cs) {
+<span class="nc bnc" id="L82" title="All 4 branches missed.">        if (cs == null || cs.length() == 0) {</span>
+<span class="nc" id="L83">            return false;</span>
+        }
+<span class="nc" id="L85">        final int sz = cs.length();</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        for (int i = 0; i &lt; sz; i++) {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">            if (!Character.isDigit(cs.charAt(i))) {</span>
+<span class="nc" id="L88">                return false;</span>
+            }
+        }
+<span class="nc" id="L91">        return true;</span>
+    }
+
+    public static String join(String glue, String... s) {
+<span class="nc" id="L95">        int k = s.length;</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (k == 0) {</span>
+<span class="nc" id="L97">            return null;</span>
+        }
+<span class="nc" id="L99">        StringBuilder out = new StringBuilder();</span>
+<span class="nc" id="L100">        out.append(s[0]);</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        for (int x = 1; x &lt; k; ++x) {</span>
+<span class="nc" id="L102">            out.append(glue).append(s[x]);</span>
+        }
+<span class="nc" id="L104">        return out.toString();</span>
+    }
+
+    public static &lt;T&gt; List&lt;List&lt;T&gt;&gt; transpose(List&lt;List&lt;T&gt;&gt; table) {
+<span class="nc" id="L108">        List&lt;List&lt;T&gt;&gt; ret = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L109">        final int N = table.get(0).size();</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">        for (int i = 0; i &lt; N; i++) {</span>
+<span class="nc" id="L111">            List&lt;T&gt; col = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            for (List&lt;T&gt; row : table) {</span>
+<span class="nc" id="L113">                col.add(row.get(i));</span>
+<span class="nc" id="L114">            }</span>
+<span class="nc" id="L115">            ret.add(col);</span>
+        }
+<span class="nc" id="L117">        return ret;</span>
+    }
+
+	/**
+	 * Wrap Collections.sort so we can fallback to a non-stable quicksort if we're
+	 * running on JDK7+
+	 */
+	public static &lt;T extends Comparable&lt;? super T&gt;&gt; void sort(List&lt;T&gt; list) {
+<span class="nc bnc" id="L125" title="All 2 branches missed.">		if (useQuickSort) QuickSort.sort(list);</span>
+<span class="nc" id="L126">		else              Collections.sort(list);</span>
+<span class="nc" id="L127">	}</span>
+
+	public static &lt;T&gt; void sort(List&lt;T&gt; list, Comparator&lt;? super T&gt; comparator) {
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">		if (useQuickSort) QuickSort.sort(list, comparator);</span>
+<span class="nc" id="L131">		else              Collections.sort(list, comparator);</span>
+<span class="fc" id="L132">	}</span>
+
+    private static boolean useCustomQuickSort() {
+        // taken from PDFBOX:
+
+        // check if we need to use the custom quicksort algorithm as a
+        // workaround to the transitivity issue of TextPositionComparator:
+        // https://issues.apache.org/jira/browse/PDFBOX-1512
+
+<span class="fc" id="L141">        String numberybits = System.getProperty(&quot;java.version&quot;).split(</span>
+                &quot;-&quot;)[0]; // some Java version strings are 9-internal, which is dumb.
+<span class="fc" id="L143">        String[] versionComponents = numberybits.split(</span>
+                &quot;\\.&quot;);
+        int javaMajorVersion;
+        int javaMinorVersion;
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        if (versionComponents.length &gt;= 2) {</span>
+<span class="fc" id="L148">            javaMajorVersion = Integer.parseInt(versionComponents[0]);</span>
+<span class="fc" id="L149">            javaMinorVersion = Integer.parseInt(versionComponents[1]);</span>
+        } else {
+<span class="nc" id="L151">            javaMajorVersion = 1;</span>
+<span class="nc" id="L152">            javaMinorVersion = Integer.parseInt(versionComponents[0]);</span>
+        }
+<span class="pc bpc" id="L154" title="2 of 4 branches missed.">        boolean is16orLess = javaMajorVersion == 1 &amp;&amp; javaMinorVersion &lt;= 6;</span>
+<span class="fc" id="L155">        String useLegacySort = System.getProperty(&quot;java.util.Arrays.useLegacyMergeSort&quot;);</span>
+<span class="pc bpc" id="L156" title="5 of 6 branches missed.">        return !is16orLess || (useLegacySort != null &amp;&amp; useLegacySort.equals(&quot;true&quot;));</span>
+    }
+
+
+    public static List&lt;Integer&gt; parsePagesOption(String pagesSpec) throws ParseException {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">        if (pagesSpec.equals(&quot;all&quot;)) {</span>
+<span class="nc" id="L162">            return null;</span>
+        }
+
+<span class="nc" id="L165">        List&lt;Integer&gt; rv = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L167">        String[] ranges = pagesSpec.split(&quot;,&quot;);</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        for (int i = 0; i &lt; ranges.length; i++) {</span>
+<span class="nc" id="L169">            String[] r = ranges[i].split(&quot;-&quot;);</span>
+<span class="nc bnc" id="L170" title="All 8 branches missed.">            if (r.length == 0 || !Utils.isNumeric(r[0]) || r.length &gt; 1 &amp;&amp; !Utils.isNumeric(r[1])) {</span>
+<span class="nc" id="L171">                throw new ParseException(&quot;Syntax error in page range specification&quot;);</span>
+            }
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (r.length &lt; 2) {</span>
+<span class="nc" id="L175">                rv.add(Integer.parseInt(r[0]));</span>
+            } else {
+<span class="nc" id="L177">                int t = Integer.parseInt(r[0]);</span>
+<span class="nc" id="L178">                int f = Integer.parseInt(r[1]);</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">                if (t &gt; f) {</span>
+<span class="nc" id="L180">                    throw new ParseException(&quot;Syntax error in page range specification&quot;);</span>
+                }
+<span class="nc" id="L182">                rv.addAll(Utils.range(t, f + 1));</span>
+            }
+        }
+
+<span class="nc" id="L186">        Collections.sort(rv);</span>
+<span class="nc" id="L187">        return rv;</span>
+    }
+
+    public static void snapPoints(List&lt;? extends Line2D.Float&gt; rulings, float xThreshold, float yThreshold) {
+
+        // collect points and keep a Line -&gt; p1,p2 map
+<span class="nc" id="L193">        Map&lt;Line2D.Float, Point2D[]&gt; linesToPoints = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L194">        List&lt;Point2D&gt; points = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        for (Line2D.Float r : rulings) {</span>
+<span class="nc" id="L196">            Point2D p1 = r.getP1();</span>
+<span class="nc" id="L197">            Point2D p2 = r.getP2();</span>
+<span class="nc" id="L198">            linesToPoints.put(r, new Point2D[]{p1, p2});</span>
+<span class="nc" id="L199">            points.add(p1);</span>
+<span class="nc" id="L200">            points.add(p2);</span>
+<span class="nc" id="L201">        }</span>
+
+        // snap by X
+<span class="nc" id="L204">        Collections.sort(points, new Comparator&lt;Point2D&gt;() {</span>
+            @Override
+            public int compare(Point2D arg0, Point2D arg1) {
+<span class="nc" id="L207">                return java.lang.Double.compare(arg0.getX(), arg1.getX());</span>
+            }
+        });
+
+<span class="nc" id="L211">        List&lt;List&lt;Point2D&gt;&gt; groupedPoints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L212">        groupedPoints.add(new ArrayList&lt;&gt;(Arrays.asList(new Point2D[]{points.get(0)})));</span>
+
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        for (Point2D p : points.subList(1, points.size() - 1)) {</span>
+<span class="nc" id="L215">            List&lt;Point2D&gt; last = groupedPoints.get(groupedPoints.size() - 1);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">            if (Math.abs(p.getX() - last.get(0).getX()) &lt; xThreshold) {</span>
+<span class="nc" id="L217">                groupedPoints.get(groupedPoints.size() - 1).add(p);</span>
+            } else {
+<span class="nc" id="L219">                groupedPoints.add(new ArrayList&lt;&gt;(Arrays.asList(new Point2D[]{p})));</span>
+            }
+<span class="nc" id="L221">        }</span>
+
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        for (List&lt;Point2D&gt; group : groupedPoints) {</span>
+<span class="nc" id="L224">            float avgLoc = 0;</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">            for (Point2D p : group) {</span>
+<span class="nc" id="L226">                avgLoc += p.getX();</span>
+<span class="nc" id="L227">            }</span>
+<span class="nc" id="L228">            avgLoc /= group.size();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">            for (Point2D p : group) {</span>
+<span class="nc" id="L230">                p.setLocation(avgLoc, p.getY());</span>
+<span class="nc" id="L231">            }</span>
+<span class="nc" id="L232">        }</span>
+        // ---
+
+        // snap by Y
+<span class="nc" id="L236">        Collections.sort(points, new Comparator&lt;Point2D&gt;() {</span>
+            @Override
+            public int compare(Point2D arg0, Point2D arg1) {
+<span class="nc" id="L239">                return java.lang.Double.compare(arg0.getY(), arg1.getY());</span>
+            }
+        });
+
+<span class="nc" id="L243">        groupedPoints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L244">        groupedPoints.add(new ArrayList&lt;&gt;(Arrays.asList(new Point2D[]{points.get(0)})));</span>
+
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        for (Point2D p : points.subList(1, points.size() - 1)) {</span>
+<span class="nc" id="L247">            List&lt;Point2D&gt; last = groupedPoints.get(groupedPoints.size() - 1);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">            if (Math.abs(p.getY() - last.get(0).getY()) &lt; yThreshold) {</span>
+<span class="nc" id="L249">                groupedPoints.get(groupedPoints.size() - 1).add(p);</span>
+            } else {
+<span class="nc" id="L251">                groupedPoints.add(new ArrayList&lt;&gt;(Arrays.asList(new Point2D[]{p})));</span>
+            }
+<span class="nc" id="L253">        }</span>
+
+<span class="nc bnc" id="L255" title="All 2 branches missed.">        for (List&lt;Point2D&gt; group : groupedPoints) {</span>
+<span class="nc" id="L256">            float avgLoc = 0;</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">            for (Point2D p : group) {</span>
+<span class="nc" id="L258">                avgLoc += p.getY();</span>
+<span class="nc" id="L259">            }</span>
+<span class="nc" id="L260">            avgLoc /= group.size();</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">            for (Point2D p : group) {</span>
+<span class="nc" id="L262">                p.setLocation(p.getX(), avgLoc);</span>
+<span class="nc" id="L263">            }</span>
+<span class="nc" id="L264">        }</span>
+        // ---
+
+        // finally, modify lines
+<span class="nc bnc" id="L268" title="All 2 branches missed.">        for (Map.Entry&lt;Line2D.Float, Point2D[]&gt; ltp : linesToPoints.entrySet()) {</span>
+<span class="nc" id="L269">            Point2D[] p = ltp.getValue();</span>
+<span class="nc" id="L270">            ltp.getKey().setLine(p[0], p[1]);</span>
+<span class="nc" id="L271">        }</span>
+<span class="nc" id="L272">    }</span>
+
+	public static BufferedImage pageConvertToImage(PDPage page, int dpi, ImageType imageType) throws IOException {
+<span class="nc" id="L275">		try (PDDocument document = new PDDocument()) {</span>
+<span class="nc" id="L276">			document.addPage(page);</span>
+<span class="nc" id="L277">			PDFRenderer renderer = new PDFRenderer(document);</span>
+<span class="nc" id="L278">			document.close();</span>
+<span class="nc" id="L279">			return renderer.renderImageWithDPI(0, dpi, imageType);</span>
+		}
+	}
+
+  public static BufferedImage pageConvertToImage(PDDocument doc, PDPage page, int dpi, ImageType imageType) throws IOException {
+<span class="nc" id="L284">    PDFRenderer renderer = new PDFRenderer(doc);</span>
+<span class="nc" id="L285">    return renderer.renderImageWithDPI(doc.getPages().indexOf(page), dpi, imageType);</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

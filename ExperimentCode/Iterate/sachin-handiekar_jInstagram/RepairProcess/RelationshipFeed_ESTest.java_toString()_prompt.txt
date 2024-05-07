@@ -1,0 +1,88 @@
+0-->1-->0-->compileRepair
+
+# RelationshipData class
+package org.jinstagram.entity.relationships;
+public class RelationshipData {
+public String getOutgoingStatus();
+public void setOutgoingStatus(String outgoingStatus);
+public void setTargetUserPrivate(boolean targetUserPrivate);
+public boolean isTargetUserPrivate();
+public String getIncomingStatus();
+public void setIncomingStatus(String incomingStatus);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        RelationshipData testData = new RelationshipData();
+
+      <Buggy Line>: cannot find symbol method "setId(java.lang.String)" in RelationshipData
+        testData.setId("123");
+
+        testData.setType("test");
+        Meta testMeta = new Meta();
+        testMeta.setCode(200);
+        testMeta.setErrorType("none");
+        RelationshipFeed testFeed = new RelationshipFeed();
+        testFeed.setData(testData);
+        testFeed.setMeta(testMeta);
+        String expected = "RelationshipFeed [data=RelationshipData{id='123', type='test'}, meta=Meta{code=200, errorType='none'}]";
+        String actual = testFeed.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "RelationshipData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "RelationshipData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# RelationshipData class
+package org.jinstagram.entity.relationships;
+public class RelationshipData {
+public String getOutgoingStatus();
+public void setOutgoingStatus(String outgoingStatus);
+public void setTargetUserPrivate(boolean targetUserPrivate);
+public boolean isTargetUserPrivate();
+public String getIncomingStatus();
+public void setIncomingStatus(String incomingStatus);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        RelationshipData testData = new RelationshipData();
+        testData.setOutgoingStatus("123");
+
+      <Buggy Line>: cannot find symbol method "setType(java.lang.String)" in RelationshipData
+        testData.setType("test");
+
+        Meta testMeta = new Meta();
+        testMeta.setCode(200);
+        testMeta.setErrorType("none");
+        RelationshipFeed testFeed = new RelationshipFeed();
+        testFeed.setData(testData);
+        testFeed.setMeta(testMeta);
+        String expected = "RelationshipFeed [data=RelationshipData{id='123', type='test'}, meta=Meta{code=200, errorType='none'}]";
+        String actual = testFeed.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "RelationshipData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "RelationshipData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Table.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">Table.java</span></div><h1>Table.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
+
+import technology.tabula.extractors.ExtractionAlgorithm;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class Table extends Rectangle {
+
+<span class="fc" id="L12">	public static final Table empty() { return new Table(&quot;&quot;); }</span>
+
+<span class="fc" id="L14">	private Table(String extractionMethod) {</span>
+<span class="fc" id="L15">		this.extractionMethod = extractionMethod;</span>
+<span class="fc" id="L16">	}</span>
+
+	public Table(ExtractionAlgorithm extractionAlgorithm) {
+<span class="fc" id="L19">		this(extractionAlgorithm.toString());</span>
+<span class="fc" id="L20">	}</span>
+
+	private final String extractionMethod;
+
+<span class="fc" id="L24">	private int rowCount = 0;</span>
+<span class="fc" id="L25">	private int colCount = 0;</span>
+<span class="fc" id="L26">	private int pageNumber = 0;</span>
+
+<span class="fc" id="L28">	/* visible for testing */ final TreeMap&lt;CellPosition, RectangularTextContainer&gt; cells = new TreeMap&lt;&gt;();</span>
+
+<span class="fc" id="L30">	public int getRowCount() { return rowCount; }</span>
+<span class="fc" id="L31">	public int getColCount() { return colCount; }</span>
+<span class="fc" id="L32">	public int getPageNumber() { return pageNumber; }</span>
+<span class="fc" id="L33">	public void setPageNumber(int pageNumber) {	this.pageNumber = pageNumber; }</span>
+
+<span class="fc" id="L35">	public String getExtractionMethod() { return extractionMethod; }</span>
+
+	public void add(RectangularTextContainer chunk, int row, int col) {
+<span class="nc" id="L38">		this.merge(chunk);</span>
+		
+<span class="nc" id="L40">		rowCount = Math.max(rowCount, row + 1);</span>
+<span class="nc" id="L41">		colCount = Math.max(colCount, col + 1);</span>
+		
+<span class="nc" id="L43">		CellPosition cp = new CellPosition(row, col);</span>
+		
+<span class="nc" id="L45">		RectangularTextContainer old = cells.get(cp);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">		if (old != null) chunk.merge(old);</span>
+<span class="nc" id="L47">		cells.put(cp, chunk);</span>
+
+<span class="nc" id="L49">		this.memoizedRows = null;</span>
+<span class="nc" id="L50">	}</span>
+
+<span class="fc" id="L52">	private List&lt;List&lt;RectangularTextContainer&gt;&gt; memoizedRows = null;</span>
+
+	public List&lt;List&lt;RectangularTextContainer&gt;&gt; getRows() {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">		if (this.memoizedRows == null) this.memoizedRows = computeRows();</span>
+<span class="nc" id="L56">		return this.memoizedRows;</span>
+	}
+
+	private List&lt;List&lt;RectangularTextContainer&gt;&gt; computeRows() {
+<span class="nc" id="L60">		List&lt;List&lt;RectangularTextContainer&gt;&gt; rows = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">		for (int i = 0; i &lt; rowCount; i++) {</span>
+<span class="nc" id="L62">			List&lt;RectangularTextContainer&gt; lastRow = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L63">			rows.add(lastRow);</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">			for (int j = 0; j &lt; colCount; j++) {</span>
+<span class="nc" id="L65">				RectangularTextContainer cell = cells.get(new CellPosition(i,j)); // JAVA_8 use getOrDefault()</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">				lastRow.add(cell != null ? cell : TextChunk.EMPTY);</span>
+			}
+		}
+<span class="nc" id="L69">		return rows;</span>
+	}
+	
+	public RectangularTextContainer getCell(int i, int j) {
+<span class="nc" id="L73">		RectangularTextContainer cell = cells.get(new CellPosition(i,j)); // JAVA_8 use getOrDefault()</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">		return cell != null ? cell : TextChunk.EMPTY;</span>
+	}
+
+}
+
+class CellPosition implements Comparable&lt;CellPosition&gt; {
+
+<span class="nc" id="L81">	CellPosition(int row, int col) {</span>
+<span class="nc" id="L82">		this.row = row;</span>
+<span class="nc" id="L83">		this.col = col;</span>
+<span class="nc" id="L84">	}</span>
+
+	final int row, col;
+
+	@Override public int hashCode() {
+<span class="nc" id="L89">		return row + 101 * col;</span>
+	}
+
+	@Override public boolean equals(Object obj) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (this == obj) return true;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">		if (obj == null) return false;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">		if (getClass() != obj.getClass()) return false;</span>
+<span class="nc" id="L96">		CellPosition other = (CellPosition) obj;</span>
+<span class="nc bnc" id="L97" title="All 4 branches missed.">		return row == other.row &amp;&amp; col == other.col;</span>
+	}
+
+	@Override public int compareTo(CellPosition other) {
+<span class="nc" id="L101">		int rowdiff = row - other.row;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">		return rowdiff != 0 ? rowdiff : col - other.col;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Caption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.common</a> &gt; <span class="el_source">Caption.java</span></div><h1>Caption.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.common;
+
+import com.google.gson.annotations.SerializedName;
+
+<span class="fc" id="L5">public class Caption {</span>
+	@SerializedName(&quot;created_time&quot;)
+	private String createdTime;
+
+	@SerializedName(&quot;from&quot;)
+	private FromTagData from;
+
+	@SerializedName(&quot;id&quot;)
+	private String id;
+
+	@SerializedName(&quot;text&quot;)
+	private String text;
+
+	/**
+	 * @return the createdTime
+	 */
+	public String getCreatedTime() {
+<span class="fc" id="L22">		return createdTime;</span>
+	}
+
+	/**
+	 * @param createdTime the createdTime to set
+	 */
+	public void setCreatedTime(String createdTime) {
+<span class="fc" id="L29">		this.createdTime = createdTime;</span>
+<span class="fc" id="L30">	}</span>
+
+	/**
+	 * @return the text
+	 */
+	public String getText() {
+<span class="fc" id="L36">		return text;</span>
+	}
+
+	/**
+	 * @param text the text to set
+	 */
+	public void setText(String text) {
+<span class="fc" id="L43">		this.text = text;</span>
+<span class="fc" id="L44">	}</span>
+
+	/**
+	 * @return the from
+	 */
+	public FromTagData getFrom() {
+<span class="fc" id="L50">		return from;</span>
+	}
+
+	/**
+	 * @param from the from to set
+	 */
+	public void setFrom(FromTagData from) {
+<span class="fc" id="L57">		this.from = from;</span>
+<span class="fc" id="L58">	}</span>
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+<span class="nc" id="L64">		return id;</span>
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+<span class="fc" id="L71">		this.id = id;</span>
+<span class="fc" id="L72">	}</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L76">        return String.format(&quot;Caption [createdTime=%s, from=%s, id=%s, text=%s]&quot;, createdTime, from, id, text);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

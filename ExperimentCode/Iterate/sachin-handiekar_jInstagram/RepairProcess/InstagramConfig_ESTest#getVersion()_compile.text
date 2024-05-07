@@ -1,0 +1,10 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/InstagramConfig_ESTest.java
+[GENERATED PATH] InstagramConfig_ESTest#getVersion().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/InstagramConfig_ESTest.java:[22,34] cannot find symbol
+  symbol:   variable Constants
+  location: class org.jinstagram.InstagramConfig_ESTest
+[INFO] 1 error
+####################
+

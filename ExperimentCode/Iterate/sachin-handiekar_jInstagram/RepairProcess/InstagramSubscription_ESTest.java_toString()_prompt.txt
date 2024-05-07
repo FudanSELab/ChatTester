@@ -1,0 +1,185 @@
+0-->1-->0-->compileRepair
+
+# SubscriptionType class
+
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        InstagramSubscription subscription = new InstagramSubscription();
+        subscription.callback("testCallback")
+                    .clientId("testClientId")
+                    .clientSecret("testClientSecret")
+
+                  <Buggy Line>: cannot find symbol variable "MEDIA"
+                    .object(SubscriptionType.MEDIA)
+
+                    .objectId("testObjectId")
+                    .verifyToken("testVerifyToken")
+                    .aspect("testAspect")
+                    .latitute("testLatitude")
+                    .longitude("testLongitude")
+                    .radius("testRadius");
+        String expected = "InstagramSubscription [callback=testCallback,clientId=testClientId,clientSecret=testClientSecret,object=MEDIA,objectId=testObjectId,verifyToken=testVerifyToken,aspect=testAspect,latitute=testLatitude,longitude=testLongitude,radius=testRadius]";
+        String actual = subscription.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "SubscriptionType" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "SubscriptionType" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# SubscriptionType class
+
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        InstagramSubscription subscription = new InstagramSubscription();
+        subscription.callback("testCallback")
+                    .clientId("testClientId")
+                    .clientSecret("testClientSecret")
+
+                  <Buggy Line>: cannot find symbol variable "MEDIA"
+                    .object(SubscriptionType.MEDIA)
+
+                    .objectId("testObjectId")
+                    .verifyToken("testVerifyToken")
+                    .aspect("testAspect")
+                    .latitute("testLatitude")
+                    .longitude("testLongitude")
+                    .radius("testRadius");
+        String expected = "InstagramSubscription [callback=testCallback,clientId=testClientId,clientSecret=testClientSecret,object=MEDIA,objectId=testObjectId,verifyToken=testVerifyToken,aspect=testAspect,latitute=testLatitude,longitude=testLongitude,radius=testRadius]";
+        String actual = subscription.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "SubscriptionType" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "SubscriptionType" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+# SubscriptionType class
+
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        InstagramSubscription subscription = new InstagramSubscription();
+        subscription.callback("testCallback")
+                    .clientId("testClientId")
+                    .clientSecret("testClientSecret")
+
+                     <Buggy Line>: cannot find symbol variable "MEDIA"
+                    .object(SubscriptionType.MEDIA) 
+
+                    .objectId("testObjectId")
+                    .verifyToken("testVerifyToken")
+                    .aspect("testAspect")
+                    .latitute("testLatitude")
+                    .longitude("testLongitude")
+                    .radius("testRadius");
+        String expected = "InstagramSubscription [callback=testCallback,clientId=testClientId,clientSecret=testClientSecret,object=MEDIA,objectId=testObjectId,verifyToken=testVerifyToken,aspect=testAspect,latitute=testLatitude,longitude=testLongitude,radius=testRadius]";
+        String actual = subscription.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "SubscriptionType" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "SubscriptionType" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+# SubscriptionType class
+
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        InstagramSubscription subscription = new InstagramSubscription();
+        subscription.callback("testCallback")
+                    .clientId("testClientId")
+                    .clientSecret("testClientSecret")
+
+                   <Buggy Line>: cannot find symbol variable "MEDIA"
+                    .object(SubscriptionType.MEDIA) 
+
+                    .objectId("testObjectId")
+                    .verifyToken("testVerifyToken")
+                    .aspect("testAspect")
+                    .latitute("testLatitude")
+                    .longitude("testLongitude")
+                    .radius("testRadius");
+        String expected = "InstagramSubscription [callback=testCallback,clientId=testClientId,clientSecret=testClientSecret,object=MEDIA,objectId=testObjectId,verifyToken=testVerifyToken,aspect=testAspect,latitute=testLatitude,longitude=testLongitude,radius=testRadius]";
+        String actual = subscription.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "SubscriptionType" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "SubscriptionType" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+# SubscriptionType class
+
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        InstagramSubscription subscription = new InstagramSubscription();
+        subscription.callback("testCallback")
+                    .clientId("testClientId")
+                    .clientSecret("testClientSecret")
+
+                             <Buggy Line>: cannot find symbol variable "PHOTO"
+                    .object(SubscriptionType.PHOTO) 
+
+                    .objectId("testObjectId")
+                    .verifyToken("testVerifyToken")
+                    .aspect("testAspect")
+                    .latitute("testLatitude")
+                    .longitude("testLongitude")
+                    .radius("testRadius");
+        String expected = "InstagramSubscription [callback=testCallback,clientId=testClientId,clientSecret=testClientSecret,object=PHOTO,objectId=testObjectId,verifyToken=testVerifyToken,aspect=testAspect,latitute=testLatitude,longitude=testLongitude,radius=testRadius]";
+        String actual = subscription.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "SubscriptionType" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "SubscriptionType" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

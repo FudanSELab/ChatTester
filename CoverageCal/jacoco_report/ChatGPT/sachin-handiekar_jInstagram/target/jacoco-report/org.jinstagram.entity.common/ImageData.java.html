@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ImageData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.common</a> &gt; <span class="el_source">ImageData.java</span></div><h1>ImageData.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.common;
+
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * A class to denote the ImageData.
+ *
+ * @author Sachin Handiekar
+ * @version 1.0
+ */
+<span class="fc" id="L11">public class ImageData {</span>
+	@SerializedName(&quot;height&quot;)
+	private int imageHeight;
+
+	@SerializedName(&quot;url&quot;)
+	private String imageUrl;
+
+	@SerializedName(&quot;width&quot;)
+	private int imageWidth;
+
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+<span class="fc" id="L25">		return imageUrl;</span>
+	}
+
+	/**
+	 * @param imageUrl the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+<span class="fc" id="L32">		this.imageUrl = imageUrl;</span>
+<span class="fc" id="L33">	}</span>
+
+	/**
+	 * @return the imageWidth
+	 */
+	public int getImageWidth() {
+<span class="fc" id="L39">		return imageWidth;</span>
+	}
+
+	/**
+	 * @param imageWidth the imageWidth to set
+	 */
+	public void setImageWidth(int imageWidth) {
+<span class="fc" id="L46">		this.imageWidth = imageWidth;</span>
+<span class="fc" id="L47">	}</span>
+
+	/**
+	 * @return the imageHeight
+	 */
+	public int getImageHeight() {
+<span class="fc" id="L53">		return imageHeight;</span>
+	}
+
+	/**
+	 * @param imageHeight the imageHeight to set
+	 */
+	public void setImageHeight(int imageHeight) {
+<span class="fc" id="L60">		this.imageHeight = imageHeight;</span>
+<span class="fc" id="L61">	}</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L65">        return String.format(&quot;ImageData [imageHeight=%s, imageUrl=%s, imageWidth=%s]&quot;,</span>
+<span class="fc" id="L66">                imageHeight, imageUrl, imageWidth);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

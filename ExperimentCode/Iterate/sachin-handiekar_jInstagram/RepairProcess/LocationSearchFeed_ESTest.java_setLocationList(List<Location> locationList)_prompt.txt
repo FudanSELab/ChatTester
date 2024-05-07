@@ -1,0 +1,71 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetLocationList() {
+        LocationSearchFeed locationSearchFeed = new LocationSearchFeed();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<Location> testLocationList = new LinkedList<>();
+
+        Location location1 = new Location("Location 1", 123.456, 789.012);
+        Location location2 = new Location("Location 2", 456.789, 321.654);
+        testLocationList.add(location1);
+        testLocationList.add(location2);
+        locationSearchFeed.setLocationList(testLocationList);
+        List<Location> retrievedLocationList = locationSearchFeed.getLocationList();
+        assertEquals(testLocationList, retrievedLocationList);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# Location class
+package org.jinstagram.entity.common;
+public class Location {
+public double getLatitude();
+public void setLatitude(double latitude);
+public double getLongitude();
+public void setLongitude(double longitude);
+public String getId();
+public void setId(String id);
+public String getName();
+public void setName(String name);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testSetLocationList() {
+    LocationSearchFeed locationSearchFeed = new LocationSearchFeed();
+    List<Location> testLocationList = new LinkedList<Location>();
+
+         <Buggy Line>: constructor Location in class org.jinstagram.entity.common.Location cannot be applied to given types;
+    Location location1 = new Location("Location 1", 123.456, 789.012);
+
+    Location location2 = new Location("Location 2", 456.789, 321.654);
+    testLocationList.add(location1);
+    testLocationList.add(location2);
+    locationSearchFeed.setLocationList(testLocationList);
+    List<Location> retrievedLocationList = locationSearchFeed.getLocationList();
+    assertEquals(testLocationList, retrievedLocationList);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Location" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Location" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

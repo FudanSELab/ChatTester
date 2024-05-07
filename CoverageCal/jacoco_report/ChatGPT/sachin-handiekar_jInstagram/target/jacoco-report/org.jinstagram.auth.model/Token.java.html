@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Token.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.auth.model</a> &gt; <span class="el_source">Token.java</span></div><h1>Token.java</h1><pre class="source lang-java linenums">package org.jinstagram.auth.model;
+
+import java.io.Serializable;
+
+/**
+ * Represents an OAuth token (either request or access token) and its secret
+ */
+public class Token implements Serializable {
+	private static final long serialVersionUID = 715000866082812683L;
+
+	private final String rawResponse;
+
+	private final String secret;
+
+	private final String token;
+
+	/**
+	 * Default constructor
+	 * 
+	 * @param token token value
+	 * @param secret token secret
+	 */
+	public Token(String token, String secret) {
+<span class="fc" id="L24">		this(token, secret, null);</span>
+<span class="fc" id="L25">	}</span>
+
+<span class="fc" id="L27">	public Token(String token, String secret, String rawResponse) {</span>
+<span class="fc" id="L28">		this.token = token;</span>
+<span class="fc" id="L29">		this.secret = secret;</span>
+<span class="fc" id="L30">		this.rawResponse = rawResponse;</span>
+<span class="fc" id="L31">	}</span>
+
+	public String getToken() {
+<span class="fc" id="L34">		return token;</span>
+	}
+
+	public String getSecret() {
+<span class="fc" id="L38">		return secret;</span>
+	}
+
+	public String getRawResponse() {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">		if (rawResponse == null) {</span>
+<span class="nc" id="L43">			throw new IllegalStateException(&quot;This token object was not constructed &quot;</span>
+                    + &quot;by jInstagramAuthService and does not have a rawResponse&quot;);
+		}
+
+<span class="fc" id="L47">		return rawResponse;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L52">		return String.format(&quot;Token[%s , %s]&quot;, token, secret);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

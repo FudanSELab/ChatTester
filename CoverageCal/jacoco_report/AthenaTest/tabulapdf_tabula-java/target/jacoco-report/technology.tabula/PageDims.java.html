@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PageDims.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">PageDims.java</span></div><h1>PageDims.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+public class PageDims {
+    private final float top;
+    private final float left;
+    private final float width;
+    private final float height;
+
+<span class="nc" id="L9">    private PageDims(final float top, final float left, final float width, final float height) {</span>
+<span class="nc" id="L10">        this.top = top;</span>
+<span class="nc" id="L11">        this.left = left;</span>
+<span class="nc" id="L12">        this.width = width;</span>
+<span class="nc" id="L13">        this.height = height;</span>
+<span class="nc" id="L14">    }</span>
+
+    public static PageDims of(final float top, final float left, final float width, final float height) {
+<span class="nc" id="L17">        return new PageDims(top, left, width, height);</span>
+    }
+
+    public float getTop() {
+<span class="nc" id="L21">        return top;</span>
+    }
+
+    public float getLeft() {
+<span class="nc" id="L25">        return left;</span>
+    }
+
+    public float getWidth() {
+<span class="nc" id="L29">        return width;</span>
+    }
+
+    public float getHeight() {
+<span class="nc" id="L33">        return height;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

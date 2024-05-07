@@ -1,0 +1,45 @@
+0-->1-->0-->compileRepair
+
+# User class
+package org.jinstagram.entity.common;
+public class User {
+public String getUserName();
+public void setUserName(String userName);
+public String getFullName();
+public void setFullName(String fullName);
+public String getProfilePictureUrl();
+public void setProfilePictureUrl(String profilePictureUrl);
+public String getBio();
+public void setBio(String bio);
+public String getWebsiteUrl();
+public void setWebsiteUrl(String websiteUrl);
+public String getId();
+public void setId(String id);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testSetUser() {
+        MediaFeedData mediaFeedData = new MediaFeedData();
+        User user = new User();
+        user.setId("123");
+
+      <Buggy Line>: cannot find symbol method "setUsername(java.lang.String)" in User
+        user.setUsername("testUser");
+
+        mediaFeedData.setUser(user);
+        assertEquals("123", mediaFeedData.getUser().getId());
+        assertEquals("testUser", mediaFeedData.getUser().getUsername());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "User" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "User" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

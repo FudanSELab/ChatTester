@@ -1,0 +1,83 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetLikesUserList() {
+        Likes likes = new Likes();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<User> expectedLikesUserList = new LinkedList<>();
+
+        User user1 = new User("JohnDoe");
+        User user2 = new User("JaneSmith");
+        expectedLikesUserList.add(user1);
+        expectedLikesUserList.add(user2);
+        likes.setLikesUserList(expectedLikesUserList);
+        List<User> actualLikesUserList = likes.getLikesUserList();
+        assertNotNull(actualLikesUserList);
+        assertEquals(expectedLikesUserList.size(), actualLikesUserList.size());
+        for (int i = 0; i < expectedLikesUserList.size(); i++) {
+            assertEquals(expectedLikesUserList.get(i).getUsername(), actualLikesUserList.get(i).getUsername());
+        }
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# User class
+package org.jinstagram.entity.common;
+public class User {
+public String getUserName();
+public void setUserName(String userName);
+public String getFullName();
+public void setFullName(String fullName);
+public String getProfilePictureUrl();
+public void setProfilePictureUrl(String profilePictureUrl);
+public String getBio();
+public void setBio(String bio);
+public String getWebsiteUrl();
+public void setWebsiteUrl(String websiteUrl);
+public String getId();
+public void setId(String id);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testGetLikesUserList() {
+    Likes likes = new Likes();
+    List<User> expectedLikesUserList = new LinkedList<User>();
+
+      <Buggy Line>: constructor User in class org.jinstagram.entity.common.User cannot be applied to given types;
+    User user1 = new User("JohnDoe");
+
+    User user2 = new User("JaneSmith");
+    expectedLikesUserList.add(user1);
+    expectedLikesUserList.add(user2);
+    likes.setLikesUserList(expectedLikesUserList);
+    List<User> actualLikesUserList = likes.getLikesUserList();
+    assertNotNull(actualLikesUserList);
+    assertEquals(expectedLikesUserList.size(), actualLikesUserList.size());
+    for (int i = 0; i < expectedLikesUserList.size(); i++) {
+        assertEquals(expectedLikesUserList.get(i).getUsername(), actualLikesUserList.get(i).getUsername());
+    }
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "User" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "User" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

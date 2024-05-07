@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CharacterCaseUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">CharacterCaseUtil.java</span></div><h1>CharacterCaseUtil.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+<span class="nc" id="L3">public class CharacterCaseUtil</span>
+{
+    /**
+     * Of the characters in the string that have an uppercase form, how many are uppercased?
+     *
+     * @param input Input string.
+     * @return The fraction of uppercased characters, with {@code 0.0d} meaning that all uppercasable characters are in
+     * lowercase and {@code 1.0d} that all of them are in uppercase.
+     */
+    public static double fractionOfStringUppercase(String input)
+    {
+<span class="pc bpc" id="L14" title="1 of 2 branches missed.">        if (input == null)</span>
+        {
+<span class="nc" id="L16">            return 0;</span>
+        }
+
+<span class="fc" id="L19">        double upperCasableCharacters = 0;</span>
+<span class="fc" id="L20">        double upperCount = 0;</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        for (int i = 0; i &lt; input.length(); i++)</span>
+        {
+<span class="fc" id="L23">            char c = input.charAt(i);</span>
+<span class="fc" id="L24">            char uc = Character.toUpperCase(c);</span>
+<span class="fc" id="L25">            char lc = Character.toLowerCase(c);</span>
+            // If both the upper and lowercase version of a character are the same, then the character has
+            // no distinct uppercase form (e.g., a digit or punctuation). Ignore these.
+<span class="fc bfc" id="L28" title="All 4 branches covered.">            if (c == uc &amp;&amp; c == lc)</span>
+            {
+<span class="fc" id="L30">                continue;</span>
+            }
+
+<span class="fc" id="L33">            upperCasableCharacters++;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            if (c == uc)</span>
+            {
+<span class="fc" id="L36">                upperCount++;</span>
+            }
+        }
+
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">        return upperCasableCharacters == 0 ? 0 : upperCount / upperCasableCharacters;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

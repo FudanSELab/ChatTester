@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Reflections.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json.util</a> &gt; <span class="el_source">Reflections.java</span></div><h1>Reflections.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json.util;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+<span class="nc" id="L31">public final class Reflections {</span>
+
+  
+  public static boolean classPresent(String className) {
+<span class="fc" id="L35">    ClassLoader thisClassLoader = Reflections.class.getClassLoader();</span>
+    try {
+<span class="fc" id="L37">      Class.forName(className, false, thisClassLoader);</span>
+<span class="fc" id="L38">      return true;</span>
+<span class="fc" id="L39">    } catch (ClassNotFoundException e) {</span>
+<span class="fc" id="L40">      return false;</span>
+    }
+  }
+
+  /**
+   * Recursively find the field by name up to the top of class hierarchy.
+   * 
+   * @param clazz the class object
+   * @param fieldName declared field name of specified class
+   * @return the field object
+   */
+  public static Field getField(Class&lt;?&gt; clazz, String fieldName)
+      throws NoSuchFieldException {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">    if (clazz == Object.class) {</span>
+<span class="nc" id="L54">      return null;</span>
+    }
+    try {
+<span class="nc" id="L57">      Field field = clazz.getDeclaredField(fieldName);</span>
+<span class="nc" id="L58">      return field;</span>
+<span class="nc" id="L59">    } catch (NoSuchFieldException e) {</span>
+<span class="nc" id="L60">      return getField(clazz.getSuperclass(), fieldName);</span>
+    }
+  }
+
+  public static boolean hasAnnotation(Field field,
+      Class&lt;? extends Annotation&gt; annotationClass) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">    if (field != null) {</span>
+<span class="nc" id="L67">      return field.isAnnotationPresent(annotationClass);</span>
+    }
+<span class="nc" id="L69">    return false;</span>
+  }
+
+  public static boolean hasAnnotation(Method method,
+      Class&lt;? extends Annotation&gt; annotationClass) {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">    if (method != null) {</span>
+<span class="fc" id="L75">      return method.isAnnotationPresent(annotationClass);</span>
+    }
+<span class="nc" id="L77">    return false;</span>
+  }
+
+  public static boolean hasAnnotation(Method method, Field field,
+      Class&lt;? extends Annotation&gt; annotationClass) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">    return hasAnnotation(field, annotationClass)</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        || hasAnnotation(method, annotationClass);</span>
+  }
+  
+  public static &lt;T extends Annotation&gt; T getAnnotation(Method method,
+      Field field, Class&lt;T&gt; annotationClass) {
+<span class="nc" id="L88">    T annot = null;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">    if (field != null) {</span>
+<span class="nc" id="L90">      annot = field.getAnnotation(annotationClass);</span>
+    }
+<span class="nc bnc" id="L92" title="All 4 branches missed.">    if (annot == null &amp;&amp; method != null) {</span>
+<span class="nc" id="L93">      annot = method.getAnnotation(annotationClass);</span>
+    }
+<span class="nc" id="L95">    return annot;</span>
+  }
+
+  public static Class&lt;?&gt; getFirstGenericParameterType(Method method) {
+<span class="nc" id="L99">    Class&lt;?&gt; types[] = getGenericParameterTypes(method);</span>
+<span class="nc bnc" id="L100" title="All 4 branches missed.">    if (types != null &amp;&amp; types.length &gt; 0) {</span>
+<span class="nc" id="L101">      return types[0];</span>
+    }
+<span class="nc" id="L103">    return null;</span>
+  }
+
+  public static Class&lt;?&gt; getSecondGenericParameterType(Method method) {
+<span class="fc" id="L107">    Class&lt;?&gt; types[] = getGenericParameterTypes(method);</span>
+<span class="pc bpc" id="L108" title="3 of 4 branches missed.">    if (types != null &amp;&amp; types.length &gt; 1) {</span>
+<span class="nc" id="L109">      return types[1];</span>
+    }
+<span class="fc" id="L111">    return null;</span>
+  }
+
+  public static Class&lt;?&gt;[] getGenericParameterTypes(Method method) {
+<span class="fc" id="L115">    Type argTypes[] = method.getGenericParameterTypes();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">    for (Type argType : argTypes) {</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">      if (argType instanceof ParameterizedType) {</span>
+<span class="nc" id="L118">        Type typeArgs[] = ((ParameterizedType) argType)</span>
+<span class="nc" id="L119">            .getActualTypeArguments();</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (typeArgs.length &gt; 0) {</span>
+<span class="nc" id="L121">          List&lt;Class&lt;?&gt;&gt; genericTypes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">          for (Type typeArg : typeArgs) {</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">            if (typeArg instanceof Class&lt;?&gt;) {</span>
+<span class="nc" id="L124">              genericTypes.add((Class&lt;?&gt;) typeArg);</span>
+            }
+          }
+<span class="nc" id="L127">          return genericTypes.toArray(new Class[0]);</span>
+        }
+      }
+    }
+<span class="fc" id="L131">    return null;</span>
+  }
+
+  public static Class&lt;?&gt; getFirstGenericType(Field field) {
+<span class="nc" id="L135">    Class&lt;?&gt; types[] = getGenericTypes(field);</span>
+<span class="nc bnc" id="L136" title="All 4 branches missed.">    if (types != null &amp;&amp; types.length &gt; 0) {</span>
+<span class="nc" id="L137">      return types[0];</span>
+    }
+<span class="nc" id="L139">    return null;</span>
+  }
+
+  public static Class&lt;?&gt; getSecondGenericType(Field field) {
+<span class="nc" id="L143">    Class&lt;?&gt; types[] = getGenericTypes(field);</span>
+<span class="nc bnc" id="L144" title="All 4 branches missed.">    if (types != null &amp;&amp; types.length &gt; 1) {</span>
+<span class="nc" id="L145">      return types[1];</span>
+    }
+<span class="nc" id="L147">    return null;</span>
+  }
+
+  public static Class&lt;?&gt;[] getGenericTypes(Field field) {
+<span class="nc" id="L151">    Type fieldType = field.getGenericType();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">    if (fieldType instanceof ParameterizedType) {</span>
+<span class="nc" id="L153">      Type typeArgs[] = ((ParameterizedType) fieldType)</span>
+<span class="nc" id="L154">          .getActualTypeArguments();</span>
+<span class="nc bnc" id="L155" title="All 2 branches missed.">      if (typeArgs.length &gt; 0) {</span>
+<span class="nc" id="L156">        List&lt;Class&lt;?&gt;&gt; genericTypes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        for (Type typeArg : typeArgs) {</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">          if (typeArg instanceof Class&lt;?&gt;) {</span>
+<span class="nc" id="L159">            genericTypes.add((Class&lt;?&gt;) typeArg);</span>
+          }
+        }
+<span class="nc" id="L162">        return genericTypes.toArray(new Class[0]);</span>
+      }
+    }
+<span class="nc" id="L165">    return null;</span>
+  }
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextElement.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">TextElement.java</span></div><h1>TextElement.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.pdfbox.pdmodel.font.PDFont;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class TextElement extends Rectangle implements HasText {
+
+    private final String text;
+    private final PDFont font;
+    private float fontSize;
+    private float widthOfSpace, dir;
+    private static final float AVERAGE_CHAR_TOLERANCE = 0.3f;
+
+    public TextElement(float y, float x, float width, float height,
+                       PDFont font, float fontSize, String c, float widthOfSpace) {
+<span class="nc" id="L19">        this(y, x, width, height, font, fontSize, c, widthOfSpace, 0f);</span>
+<span class="nc" id="L20">    }</span>
+
+    public TextElement(float y, float x, float width, float height,
+                       PDFont font, float fontSize, String c, float widthOfSpace, float dir) {
+<span class="nc" id="L24">        super();</span>
+<span class="nc" id="L25">        this.setRect(x, y, width, height);</span>
+<span class="nc" id="L26">        this.text = c;</span>
+<span class="nc" id="L27">        this.widthOfSpace = widthOfSpace;</span>
+<span class="nc" id="L28">        this.fontSize = fontSize;</span>
+<span class="nc" id="L29">        this.font = font;</span>
+<span class="nc" id="L30">        this.dir = dir;</span>
+<span class="nc" id="L31">    }</span>
+
+    @Override
+    public String getText() {
+<span class="nc" id="L35">        return text;</span>
+    }
+
+    @Override
+    public String getText(boolean useLineReturns) {
+<span class="nc" id="L40">        return text;</span>
+    }
+
+    public float getDirection() {
+<span class="nc" id="L44">        return dir;</span>
+    }
+
+    public float getWidthOfSpace() {
+<span class="nc" id="L48">        return widthOfSpace;</span>
+    }
+
+    public PDFont getFont() {
+<span class="nc" id="L52">        return font;</span>
+    }
+
+    public float getFontSize() {
+<span class="nc" id="L56">        return fontSize;</span>
+    }
+
+    @Override public String toString() {
+<span class="nc" id="L60">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L61">        String s = super.toString();</span>
+<span class="nc" id="L62">        sb.append(s.substring(0, s.length() - 1));</span>
+<span class="nc" id="L63">        sb.append(String.format(&quot;,text=\&quot;%s\&quot;]&quot;, this.getText()));</span>
+<span class="nc" id="L64">        return sb.toString();</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L69">        final int prime = 31;</span>
+<span class="nc" id="L70">        int result = super.hashCode();</span>
+<span class="nc" id="L71">        result = prime * result + java.lang.Float.floatToIntBits(dir);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        result = prime * result + ((font == null) ? 0 : font.hashCode());</span>
+<span class="nc" id="L73">        result = prime * result + java.lang.Float.floatToIntBits(fontSize);</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        result = prime * result + ((text == null) ? 0 : text.hashCode());</span>
+<span class="nc" id="L75">        result = prime * result + java.lang.Float.floatToIntBits(widthOfSpace);</span>
+<span class="nc" id="L76">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (this == obj)</span>
+<span class="nc" id="L82">            return true;</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (!super.equals(obj))</span>
+<span class="nc" id="L84">            return false;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L86">            return false;</span>
+<span class="nc" id="L87">        TextElement other = (TextElement) obj;</span>
+<span class="nc" id="L88">        if (java.lang.Float.floatToIntBits(dir) != java.lang.Float</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                .floatToIntBits(other.dir))</span>
+<span class="nc" id="L90">            return false;</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (font == null) {</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            if (other.font != null)</span>
+<span class="nc" id="L93">                return false;</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        } else if (!font.equals(other.font))</span>
+<span class="nc" id="L95">            return false;</span>
+<span class="nc" id="L96">        if (java.lang.Float.floatToIntBits(fontSize) != java.lang.Float</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                .floatToIntBits(other.fontSize))</span>
+<span class="nc" id="L98">            return false;</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (text == null) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (other.text != null)</span>
+<span class="nc" id="L101">                return false;</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        } else if (!text.equals(other.text))</span>
+<span class="nc" id="L103">            return false;</span>
+<span class="nc" id="L104">        return java.lang.Float.floatToIntBits(widthOfSpace) == java.lang.Float</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                .floatToIntBits(other.widthOfSpace);</span>
+    }
+
+    public static List&lt;TextChunk&gt; mergeWords(List&lt;TextElement&gt; textElements) {
+<span class="nc" id="L109">        return mergeWords(textElements, new ArrayList&lt;Ruling&gt;());</span>
+    }
+
+    /**
+     * heuristically merge a list of TextElement into a list of TextChunk
+     * ported from from PDFBox's PDFTextStripper.writePage, with modifications.
+     * Here be dragons
+     */
+    public static List&lt;TextChunk&gt; mergeWords(List&lt;TextElement&gt; textElements, List&lt;Ruling&gt; verticalRulings) {
+
+<span class="nc" id="L119">        List&lt;TextChunk&gt; textChunks = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (textElements.isEmpty()) {</span>
+<span class="nc" id="L122">            return textChunks;</span>
+        }
+
+        // it's a problem that this `remove` is side-effecty
+        // other things depend on `textElements` and it can sometimes lead to the first textElement in textElement
+        // not appearing in the final output because it's been removed here.
+        // https://github.com/tabulapdf/tabula-java/issues/78
+<span class="nc" id="L129">        List&lt;TextElement&gt; copyOfTextElements = new ArrayList&lt;&gt;(textElements);</span>
+<span class="nc" id="L130">        textChunks.add(new TextChunk(copyOfTextElements.remove(0)));</span>
+<span class="nc" id="L131">        TextChunk firstTC = textChunks.get(0);</span>
+
+<span class="nc" id="L133">        float previousAveCharWidth = (float) firstTC.getWidth();</span>
+<span class="nc" id="L134">        float endOfLastTextX = firstTC.getRight();</span>
+<span class="nc" id="L135">        float maxYForLine = firstTC.getBottom();</span>
+<span class="nc" id="L136">        float maxHeightForLine = (float) firstTC.getHeight();</span>
+<span class="nc" id="L137">        float minYTopForLine = firstTC.getTop();</span>
+<span class="nc" id="L138">        float lastWordSpacing = -1;</span>
+        float wordSpacing, deltaSpace, averageCharWidth, deltaCharWidth;
+        float expectedStartOfNextWordX, dist;
+        TextElement sp, prevChar;
+        TextChunk currentChunk;
+        boolean sameLine, acrossVerticalRuling;
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        for (TextElement chr : copyOfTextElements) {</span>
+<span class="nc" id="L146">            currentChunk = textChunks.get(textChunks.size() - 1);</span>
+<span class="nc" id="L147">            prevChar = currentChunk.textElements.get(currentChunk.textElements.size() - 1);</span>
+
+            // if same char AND overlapped, skip
+<span class="nc bnc" id="L150" title="All 4 branches missed.">            if ((chr.getText().equals(prevChar.getText())) &amp;&amp; (prevChar.overlapRatio(chr) &gt; 0.5)) {</span>
+<span class="nc" id="L151">                continue;</span>
+            }
+
+            // if chr is a space that overlaps with prevChar, skip
+<span class="nc bnc" id="L155" title="All 6 branches missed.">            if (chr.getText().equals(&quot; &quot;) &amp;&amp; Utils.feq(prevChar.getLeft(), chr.getLeft()) &amp;&amp; Utils.feq(prevChar.getTop(), chr.getTop())) {</span>
+<span class="nc" id="L156">                continue;</span>
+            }
+
+            // Resets the average character width when we see a change in font
+            // or a change in the font size
+<span class="nc bnc" id="L161" title="All 4 branches missed.">            if ((chr.getFont() != prevChar.getFont()) || !Utils.feq(chr.getFontSize(), prevChar.getFontSize())) {</span>
+<span class="nc" id="L162">                previousAveCharWidth = -1;</span>
+            }
+
+            // is there any vertical ruling that goes across chr and prevChar?
+<span class="nc" id="L166">            acrossVerticalRuling = false;</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">            for (Ruling r : verticalRulings) {</span>
+<span class="nc" id="L168">                if (</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">                        (verticallyOverlapsRuling(prevChar, r) &amp;&amp; verticallyOverlapsRuling(chr, r)) &amp;&amp;</span>
+<span class="nc bnc" id="L170" title="All 8 branches missed.">                                (prevChar.x &lt; r.getPosition() &amp;&amp; chr.x &gt; r.getPosition()) || (prevChar.x &gt; r.getPosition() &amp;&amp; chr.x &lt; r.getPosition())</span>
+                        ) {
+<span class="nc" id="L172">                    acrossVerticalRuling = true;</span>
+<span class="nc" id="L173">                    break;</span>
+                }
+<span class="nc" id="L175">            }</span>
+
+            // Estimate the expected width of the space based on the
+            // space character with some margin.
+<span class="nc" id="L179">            wordSpacing = chr.getWidthOfSpace();</span>
+<span class="nc" id="L180">            deltaSpace = 0;</span>
+<span class="nc bnc" id="L181" title="All 4 branches missed.">            if (java.lang.Float.isNaN(wordSpacing) || wordSpacing == 0) {</span>
+<span class="nc" id="L182">                deltaSpace = java.lang.Float.MAX_VALUE;</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">            } else if (lastWordSpacing &lt; 0) {</span>
+<span class="nc" id="L184">                deltaSpace = wordSpacing * 0.5f; // 0.5 == spacing tolerance</span>
+            } else {
+<span class="nc" id="L186">                deltaSpace = ((wordSpacing + lastWordSpacing) / 2.0f) * 0.5f;</span>
+            }
+
+            // Estimate the expected width of the space based on the
+            // average character width with some margin. This calculation does not
+            // make a true average (average of averages) but we found that it gave the
+            // best results after numerous experiments. Based on experiments we also found that
+            // .3 worked well.
+<span class="nc bnc" id="L194" title="All 2 branches missed.">            if (previousAveCharWidth &lt; 0) {</span>
+<span class="nc" id="L195">                averageCharWidth = (float) (chr.getWidth() / chr.getText().length());</span>
+            } else {
+<span class="nc" id="L197">                averageCharWidth = (float) ((previousAveCharWidth + (chr.getWidth() / chr.getText().length())) / 2.0f);</span>
+            }
+<span class="nc" id="L199">            deltaCharWidth = averageCharWidth * AVERAGE_CHAR_TOLERANCE;</span>
+
+            // Compares the values obtained by the average method and the wordSpacing method and picks
+            // the smaller number.
+<span class="nc" id="L203">            expectedStartOfNextWordX = -java.lang.Float.MAX_VALUE;</span>
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">            if (endOfLastTextX != -1) {</span>
+<span class="nc" id="L206">                expectedStartOfNextWordX = endOfLastTextX + Math.min(deltaCharWidth, deltaSpace);</span>
+            }
+
+            // new line?
+<span class="nc" id="L210">            sameLine = true;</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">            if (!Utils.overlap(chr.getBottom(), chr.height, maxYForLine, maxHeightForLine)) {</span>
+<span class="nc" id="L212">                endOfLastTextX = -1;</span>
+<span class="nc" id="L213">                expectedStartOfNextWordX = -java.lang.Float.MAX_VALUE;</span>
+<span class="nc" id="L214">                maxYForLine = -java.lang.Float.MAX_VALUE;</span>
+<span class="nc" id="L215">                maxHeightForLine = -1;</span>
+<span class="nc" id="L216">                minYTopForLine = java.lang.Float.MAX_VALUE;</span>
+<span class="nc" id="L217">                sameLine = false;</span>
+            }
+
+<span class="nc" id="L220">            endOfLastTextX = chr.getRight();</span>
+
+            // should we add a space?
+<span class="nc bnc" id="L223" title="All 4 branches missed.">            if (!acrossVerticalRuling &amp;&amp;</span>
+                    sameLine &amp;&amp;
+<span class="nc bnc" id="L225" title="All 2 branches missed.">                    expectedStartOfNextWordX &lt; chr.getLeft() &amp;&amp;</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">                    !prevChar.getText().endsWith(&quot; &quot;)) {</span>
+
+<span class="nc" id="L228">                sp = new TextElement(prevChar.getTop(),</span>
+<span class="nc" id="L229">                        prevChar.getLeft(),</span>
+<span class="nc" id="L230">                        expectedStartOfNextWordX - prevChar.getLeft(),</span>
+<span class="nc" id="L231">                        (float) prevChar.getHeight(),</span>
+<span class="nc" id="L232">                        prevChar.getFont(),</span>
+<span class="nc" id="L233">                        prevChar.getFontSize(),</span>
+                        &quot; &quot;,
+<span class="nc" id="L235">                        prevChar.getWidthOfSpace());</span>
+
+<span class="nc" id="L237">                currentChunk.add(sp);</span>
+            } else {
+<span class="nc" id="L239">                sp = null;</span>
+            }
+
+<span class="nc" id="L242">            maxYForLine = Math.max(chr.getBottom(), maxYForLine);</span>
+<span class="nc" id="L243">            maxHeightForLine = (float) Math.max(maxHeightForLine, chr.getHeight());</span>
+<span class="nc" id="L244">            minYTopForLine = Math.min(minYTopForLine, chr.getTop());</span>
+
+<span class="nc bnc" id="L246" title="All 2 branches missed.">            dist = chr.getLeft() - (sp != null ? sp.getRight() : prevChar.getRight());</span>
+
+<span class="nc bnc" id="L248" title="All 6 branches missed.">            if (!acrossVerticalRuling &amp;&amp;</span>
+                    sameLine &amp;&amp;
+<span class="nc bnc" id="L250" title="All 4 branches missed.">                    (dist &lt; 0 ? currentChunk.verticallyOverlaps(chr) : dist &lt; wordSpacing)) {</span>
+<span class="nc" id="L251">                currentChunk.add(chr);</span>
+            } else { // create a new chunk
+<span class="nc" id="L253">                textChunks.add(new TextChunk(chr));</span>
+            }
+
+<span class="nc" id="L256">            lastWordSpacing = wordSpacing;</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">            previousAveCharWidth = (float) (sp != null ? (averageCharWidth + sp.getWidth()) / 2.0f : averageCharWidth);</span>
+<span class="nc" id="L258">        }</span>
+
+
+<span class="nc" id="L261">        List&lt;TextChunk&gt; textChunksSeparatedByDirectionality = new ArrayList&lt;&gt;();</span>
+        // count up characters by directionality
+<span class="nc bnc" id="L263" title="All 2 branches missed.">        for (TextChunk chunk : textChunks) {</span>
+            // choose the dominant direction
+<span class="nc bnc" id="L265" title="All 2 branches missed.">            boolean isLtrDominant = chunk.isLtrDominant() != -1; // treat neutral as LTR</span>
+<span class="nc" id="L266">            TextChunk dirChunk = chunk.groupByDirectionality(isLtrDominant);</span>
+<span class="nc" id="L267">            textChunksSeparatedByDirectionality.add(dirChunk);</span>
+<span class="nc" id="L268">        }</span>
+
+<span class="nc" id="L270">        return textChunksSeparatedByDirectionality;</span>
+    }
+
+    private static boolean verticallyOverlapsRuling(TextElement te, Ruling r) {
+<span class="nc bnc" id="L274" title="All 2 branches missed.">        return Math.max(0, Math.min(te.getBottom(), r.getY2()) - Math.max(te.getTop(), r.getY1())) &gt; 0;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

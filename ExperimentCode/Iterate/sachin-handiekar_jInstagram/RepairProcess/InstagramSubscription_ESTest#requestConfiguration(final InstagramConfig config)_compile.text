@@ -1,0 +1,25 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java
+[GENERATED PATH] InstagramSubscription_ESTest#requestConfiguration(final InstagramConfig config).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[27,18] cannot find symbol
+  symbol:   method setClientId(java.lang.String)
+  location: variable newConfig of type org.jinstagram.InstagramConfig
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[28,18] cannot find symbol
+  symbol:   method setClientSecret(java.lang.String)
+  location: variable newConfig of type org.jinstagram.InstagramConfig
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[34,31] cannot find symbol
+  symbol:   method getClientId()
+  location: variable newConfig of type org.jinstagram.InstagramConfig
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[34,66] cannot find symbol
+  symbol:   method getConfig()
+  location: variable updatedSubscription of type org.jinstagram.realtime.InstagramSubscription
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[35,31] cannot find symbol
+  symbol:   method getClientSecret()
+  location: variable newConfig of type org.jinstagram.InstagramConfig
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[35,70] cannot find symbol
+  symbol:   method getConfig()
+  location: variable updatedSubscription of type org.jinstagram.realtime.InstagramSubscription
+[INFO] 6 errors 
+####################
+

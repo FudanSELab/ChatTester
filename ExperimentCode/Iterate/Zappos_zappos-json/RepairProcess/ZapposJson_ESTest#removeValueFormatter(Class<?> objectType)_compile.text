@@ -1,0 +1,48 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#removeValueFormatter(Class<?> objectType).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[43,52] cannot find symbol
+  symbol:   class TestValueFormatter
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#removeValueFormatter(Class<?> objectType).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[45,48] cannot find symbol
+  symbol:   class DefaultValueFormatter
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#removeValueFormatter(Class<?> objectType).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[47,48] cannot find symbol
+  symbol:   class DefaultValueFormatter
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#removeValueFormatter(Class<?> objectType).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[50,48] incompatible types: com.zappos.json.format.JavaDateFormatter cannot be converted to com.zappos.json.format.ValueFormatter<java.lang.Object>
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#removeValueFormatter(Class<?> objectType).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[50,9] cannot find symbol
+  symbol:   variable zapposJson
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 1 error
+####################
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnforceSignedRequestUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.utils</a> &gt; <span class="el_source">EnforceSignedRequestUtils.java</span></div><h1>EnforceSignedRequestUtils.java</h1><pre class="source lang-java linenums">package org.jinstagram.utils;
+
+import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringUtils;
+import org.jinstagram.exceptions.InstagramException;
+
+<span class="nc" id="L17">public class EnforceSignedRequestUtils {</span>
+
+    private static final String HMAC_SHA256 = &quot;HmacSHA256&quot;;
+
+<span class="nc" id="L21">    private static final Charset UTF_8 = Charset.forName(&quot;UTF-8&quot;);</span>
+
+    /**
+     * signature returns the HmacSHA256 encoded signature used for signed Instagram requests
+     * @param endpoint The endpoint
+     * @param params   The query parameters
+     * @param clientSecret The client application secret
+     * @return encoded signature String
+     * @throws InstagramException
+     */
+    public static String signature(String endpoint, Map&lt;String, String&gt; params, String clientSecret) throws InstagramException {
+<span class="nc" id="L32">        SecretKeySpec keySpec = new SecretKeySpec(clientSecret.getBytes(UTF_8), HMAC_SHA256);</span>
+
+        // ensure we iterate through the keys in sorted order
+<span class="nc" id="L35">        List&lt;String&gt; values = new ArrayList&lt;String&gt;(params.size());</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        for (String key : MapUtils.getSortedKeys(params)) {</span>
+<span class="nc" id="L37">            values.add(String.format(&quot;%s=%s&quot;, key, params.get(key)));</span>
+<span class="nc" id="L38">        }</span>
+
+        // the sig string to sign in the form &quot;endpoint|key1=value1|key2=value2|....&quot;
+<span class="nc" id="L41">        String sig = String.format(&quot;%s|%s&quot;, endpoint, StringUtils.join(values, '|'));</span>
+
+        try {
+<span class="nc" id="L44">            Mac mac = Mac.getInstance(HMAC_SHA256);</span>
+<span class="nc" id="L45">            mac.init(keySpec);</span>
+<span class="nc" id="L46">            byte[] result = mac.doFinal(sig.getBytes(UTF_8));</span>
+<span class="nc" id="L47">            return Hex.encodeHexString(result);</span>
+<span class="nc" id="L48">        } catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L49">            throw new InstagramException(&quot;Invalid algorithm name!&quot;, e);</span>
+<span class="nc" id="L50">        } catch (InvalidKeyException e) {</span>
+<span class="nc" id="L51">            throw new InstagramException(&quot;Invalid key: &quot; + clientSecret, e);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,55 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java
+[GENERATED PATH] MapUtils_ESTest#decodeAndAppendEntries(Map<String, String> source, Map<String, String> target).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java:[29,50] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java
+[GENERATED PATH] MapUtils_ESTest#decodeAndAppendEntries(Map<String, String> source, Map<String, String> target).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java:[36,46] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java
+[GENERATED PATH] MapUtils_ESTest#decodeAndAppendEntries(Map<String, String> source, Map<String, String> target).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java:[33,46] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java
+[GENERATED PATH] MapUtils_ESTest#decodeAndAppendEntries(Map<String, String> source, Map<String, String> target).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java:[36,50] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java:[49,98] ')' expected
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java
+[GENERATED PATH] MapUtils_ESTest#decodeAndAppendEntries(Map<String, String> source, Map<String, String> target).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java:[38,50] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java
+[GENERATED PATH] MapUtils_ESTest#decodeAndAppendEntries(Map<String, String> source, Map<String, String> target).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/MapUtils_ESTest.java:[40,50] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[INFO] 1 error
+####################
+

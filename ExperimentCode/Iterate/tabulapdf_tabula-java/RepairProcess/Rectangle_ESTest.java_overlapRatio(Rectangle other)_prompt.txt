@@ -1,0 +1,180 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public float overlapRatio(Rectangle other) {
+    double intersectionWidth = Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+    double intersectionHeight = Math.max(0, Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));
+    double intersectionArea = Math.max(0, intersectionWidth * intersectionHeight);
+    double unionArea = this.getArea() + other.getArea() - intersectionArea;
+    return (float) (intersectionArea / unionArea);
+}
+
+# Method Intention
+The overlapRatio(Rectangle other) method calculates the ratio of the intersection area between two rectangles to the union area of the two rectangles, providing a measure of how much they overlap relative to their total combined area.
+
+# Test Method
+    @Test
+    public void testOverlapRatio() {
+        Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+        Rectangle rectangle2 = new Rectangle(3, 3, 5, 5);
+        float expectedOverlapRatio = 0.25f; 
+        float actualOverlapRatio = rectangle1.overlapRatio(rectangle2);
+                [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public float overlapRatio(Rectangle other) {
+    double intersectionWidth = Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+    double intersectionHeight = Math.max(0, Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));
+    double intersectionArea = Math.max(0, intersectionWidth * intersectionHeight);
+    double unionArea = this.getArea() + other.getArea() - intersectionArea;
+    return (float) (intersectionArea / unionArea);
+}
+
+# Method Intention
+The overlapRatio(Rectangle other) method calculates the ratio of the intersection area between two rectangles to the union area of the two rectangles, providing a measure of how much they overlap relative to their total combined area.
+
+# Test Method
+@Test
+public void testOverlapRatio() {
+    Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+    Rectangle rectangle2 = new Rectangle(3, 3, 5, 5);
+    float expectedOverlapRatio = 0.25f; 
+    float actualOverlapRatio = rectangle1.overlapRatio(rectangle2);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public float overlapRatio(Rectangle other) {
+    double intersectionWidth = Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+    double intersectionHeight = Math.max(0, Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));
+    double intersectionArea = Math.max(0, intersectionWidth * intersectionHeight);
+    double unionArea = this.getArea() + other.getArea() - intersectionArea;
+    return (float) (intersectionArea / unionArea);
+}
+
+# Method Intention
+The overlapRatio(Rectangle other) method calculates the ratio of the intersection area between two rectangles to the union area of the two rectangles, providing a measure of how much they overlap relative to their total combined area.
+
+# Test Method
+@Test
+public void testOverlapRatio() {
+    Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+    Rectangle rectangle2 = new Rectangle(3, 3, 5, 5);
+    float expectedOverlapRatio = 0.25f; 
+    float actualOverlapRatio = rectangle1.overlapRatio(rectangle2);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public float overlapRatio(Rectangle other) {
+    double intersectionWidth = Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+    double intersectionHeight = Math.max(0, Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));
+    double intersectionArea = Math.max(0, intersectionWidth * intersectionHeight);
+    double unionArea = this.getArea() + other.getArea() - intersectionArea;
+    return (float) (intersectionArea / unionArea);
+}
+
+# Method Intention
+The overlapRatio(Rectangle other) method calculates the ratio of the intersection area between two rectangles to the union area of the two rectangles, providing a measure of how much they overlap relative to their total combined area.
+
+# Test Method
+@Test
+public void testOverlapRatio() {
+    Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+    Rectangle rectangle2 = new Rectangle(3, 3, 5, 5);
+    float expectedOverlapRatio = 0.25f; 
+    float actualOverlapRatio = rectangle1.overlapRatio(rectangle2);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public float overlapRatio(Rectangle other) {
+    double intersectionWidth = Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+    double intersectionHeight = Math.max(0, Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));
+    double intersectionArea = Math.max(0, intersectionWidth * intersectionHeight);
+    double unionArea = this.getArea() + other.getArea() - intersectionArea;
+    return (float) (intersectionArea / unionArea);
+}
+
+# Method Intention
+The overlapRatio(Rectangle other) method calculates the ratio of the intersection area between two rectangles to the union area of the two rectangles, providing a measure of how much they overlap relative to their total combined area.
+
+# Test Method
+@Test
+public void testOverlapRatio() {
+    Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+    Rectangle rectangle2 = new Rectangle(3, 3, 5, 5);
+    float expectedOverlapRatio = 0.25f; 
+    float actualOverlapRatio = rectangle1.overlapRatio(rectangle2);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+5-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public float overlapRatio(Rectangle other) {
+    double intersectionWidth = Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+    double intersectionHeight = Math.max(0, Math.min(this.getBottom(), other.getBottom()) - Math.max(this.getTop(), other.getTop()));
+    double intersectionArea = Math.max(0, intersectionWidth * intersectionHeight);
+    double unionArea = this.getArea() + other.getArea() - intersectionArea;
+    return (float) (intersectionArea / unionArea);
+}
+
+# Method Intention
+The overlapRatio(Rectangle other) method calculates the ratio of the intersection area between two rectangles to the union area of the rectangles, providing a measure of how much they overlap relative to their total size.
+
+# Test Method
+@Test
+public void testOverlapRatio() {
+    Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+    Rectangle rectangle2 = new Rectangle(3, 3, 5, 5);
+    float expectedOverlapRatio = 0.25f; 
+    float actualOverlapRatio = rectangle1.overlapRatio(rectangle2);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

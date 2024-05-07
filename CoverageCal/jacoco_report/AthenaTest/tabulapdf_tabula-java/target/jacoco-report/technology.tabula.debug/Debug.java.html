@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Debug.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula.debug</a> &gt; <span class="el_source">Debug.java</span></div><h1>Debug.java</h1><pre class="source lang-java linenums">package technology.tabula.debug;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.commons.cli.*;
+import technology.tabula.Cell;
+import technology.tabula.CommandLineApp;
+import technology.tabula.Line;
+import technology.tabula.ObjectExtractor;
+import technology.tabula.Page;
+import technology.tabula.ProjectionProfile;
+import technology.tabula.Rectangle;
+import technology.tabula.Ruling;
+import technology.tabula.Table;
+import technology.tabula.TextChunk;
+import technology.tabula.TextElement;
+import technology.tabula.Utils;
+import technology.tabula.detectors.NurminenDetectionAlgorithm;
+import technology.tabula.extractors.BasicExtractionAlgorithm;
+import technology.tabula.extractors.SpreadsheetExtractionAlgorithm;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.rendering.ImageType;
+
+import javax.imageio.ImageIO;
+
+<span class="nc" id="L40">public class Debug {</span>
+
+    private static final float CIRCLE_RADIUS = 5f;
+
+<span class="nc" id="L44">    private static final Color[] COLORS = {new Color(27, 158, 119), new Color(217, 95, 2), new Color(117, 112, 179),</span>
+            new Color(231, 41, 138), new Color(102, 166, 30)};
+
+    public static void debugIntersections(Graphics2D g, Page page) {
+<span class="nc" id="L48">        int i = 0;</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        for (Point2D p : Ruling.findIntersections(page.getHorizontalRulings(), page.getVerticalRulings()).keySet()) {</span>
+<span class="nc" id="L50">            g.setColor(COLORS[(i++) % 5]);</span>
+<span class="nc" id="L51">            g.fill(new Ellipse2D.Float((float) p.getX() - CIRCLE_RADIUS / 2f, (float) p.getY() - CIRCLE_RADIUS / 2f, 5f,</span>
+                    5f));
+<span class="nc" id="L53">        }</span>
+<span class="nc" id="L54">    }</span>
+
+    private static void debugNonCleanRulings(Graphics2D g, Page page) {
+<span class="nc" id="L57">        drawShapes(g, page.getUnprocessedRulings());</span>
+<span class="nc" id="L58">    }</span>
+
+    private static void debugRulings(Graphics2D g, Page page) {
+        // draw detected lines
+<span class="nc" id="L62">        List&lt;Ruling&gt; rulings = new ArrayList&lt;&gt;(page.getHorizontalRulings());</span>
+<span class="nc" id="L63">        rulings.addAll(page.getVerticalRulings());</span>
+<span class="nc" id="L64">        drawShapes(g, rulings);</span>
+<span class="nc" id="L65">    }</span>
+
+    private static void debugColumns(Graphics2D g, Page page) {
+<span class="nc" id="L68">        List&lt;TextChunk&gt; textChunks = TextElement.mergeWords(page.getText());</span>
+<span class="nc" id="L69">        List&lt;Line&gt; lines = TextChunk.groupByLines(textChunks);</span>
+<span class="nc" id="L70">        List&lt;Float&gt; columns = BasicExtractionAlgorithm.columnPositions(lines);</span>
+<span class="nc" id="L71">        int i = 0;</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        for (float p : columns) {</span>
+<span class="nc" id="L73">            Ruling r = new Ruling(new Point2D.Float(p, page.getTop()),</span>
+<span class="nc" id="L74">                    new Point2D.Float(p, page.getBottom()));</span>
+<span class="nc" id="L75">            g.setColor(COLORS[(i++) % 5]);</span>
+<span class="nc" id="L76">            drawShape(g, r);</span>
+<span class="nc" id="L77">        }</span>
+<span class="nc" id="L78">    }</span>
+
+    private static void debugCharacters(Graphics2D g, Page page) {
+<span class="nc" id="L81">        drawShapes(g, page.getText());</span>
+<span class="nc" id="L82">    }</span>
+
+    private static void debugTextChunks(Graphics2D g, Page page) {
+<span class="nc" id="L85">        List&lt;TextChunk&gt; chunks = TextElement.mergeWords(page.getText(), page.getVerticalRulings());</span>
+<span class="nc" id="L86">        drawShapes(g, chunks);</span>
+<span class="nc" id="L87">    }</span>
+
+    private static void debugSpreadsheets(Graphics2D g, Page page) {
+<span class="nc" id="L90">        SpreadsheetExtractionAlgorithm sea = new SpreadsheetExtractionAlgorithm();</span>
+<span class="nc" id="L91">        List&lt;? extends Table&gt; tables = sea.extract(page);</span>
+<span class="nc" id="L92">        drawShapes(g, tables);</span>
+<span class="nc" id="L93">    }</span>
+
+    private static void debugCells(Graphics2D g, Rectangle area, Page page) {
+<span class="nc" id="L96">        List&lt;Ruling&gt; h = page.getHorizontalRulings();</span>
+<span class="nc" id="L97">        List&lt;Ruling&gt; v = page.getVerticalRulings();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (area != null) {</span>
+<span class="nc" id="L99">            h = Ruling.cropRulingsToArea(h, area);</span>
+<span class="nc" id="L100">            v = Ruling.cropRulingsToArea(v, area);</span>
+        }
+<span class="nc" id="L102">        List&lt;Cell&gt; cells = SpreadsheetExtractionAlgorithm.findCells(h, v);</span>
+<span class="nc" id="L103">        drawShapes(g, cells);</span>
+<span class="nc" id="L104">    }</span>
+
+    private static void debugDetectedTables(Graphics2D g, Page page) {
+<span class="nc" id="L107">        NurminenDetectionAlgorithm detectionAlgorithm = new NurminenDetectionAlgorithm();</span>
+<span class="nc" id="L108">        List&lt;Rectangle&gt; tables = detectionAlgorithm.detect(page);</span>
+<span class="nc" id="L109">        drawShapes(g, tables);</span>
+<span class="nc" id="L110">    }</span>
+
+    private static void drawShapes(Graphics2D g, Collection&lt;? extends Shape&gt; shapes, Stroke stroke) {
+<span class="nc" id="L113">        int i = 0;</span>
+<span class="nc" id="L114">        g.setStroke(stroke);</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (Shape s : shapes) {</span>
+<span class="nc" id="L116">            g.setColor(COLORS[(i++) % 5]);</span>
+<span class="nc" id="L117">            drawShape(g, s);</span>
+<span class="nc" id="L118">        }</span>
+<span class="nc" id="L119">    }</span>
+
+    private static void drawShapes(Graphics2D g, Collection&lt;? extends Shape&gt; shapes) {
+<span class="nc" id="L122">        drawShapes(g, shapes, new BasicStroke(2f));</span>
+<span class="nc" id="L123">    }</span>
+
+    private static void debugProjectionProfile(Graphics2D g, Page page) {
+<span class="nc" id="L126">        float horizSmoothKernel = 0, vertSmoothKernel = 0;</span>
+        // for (Rectangle r: page.getText()) {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        for (Rectangle r : page.getText()) {</span>
+<span class="nc" id="L129">            horizSmoothKernel += r.getWidth();</span>
+<span class="nc" id="L130">            vertSmoothKernel += r.getHeight();</span>
+<span class="nc" id="L131">        }</span>
+<span class="nc" id="L132">        horizSmoothKernel /= page.getText().size();</span>
+<span class="nc" id="L133">        vertSmoothKernel /= page.getText().size();</span>
+<span class="nc" id="L134">        System.out.println(&quot;hsk: &quot; + horizSmoothKernel + &quot; vsk: &quot; + vertSmoothKernel);</span>
+        // ProjectionProfile profile = new ProjectionProfile(page,
+        // page.getText(), horizSmoothKernel, vertSmoothKernel);
+<span class="nc" id="L137">        ProjectionProfile profile = new ProjectionProfile(page,</span>
+<span class="nc" id="L138">                TextElement.mergeWords(page.getText(), page.getVerticalRulings()), horizSmoothKernel * 1.5f,</span>
+                vertSmoothKernel);
+<span class="nc" id="L140">        float prec = (float) Math.pow(10, ProjectionProfile.DECIMAL_PLACES);</span>
+
+<span class="nc" id="L142">        float[] hproj = profile.getHorizontalProjection();</span>
+<span class="nc" id="L143">        float[] vproj = profile.getVerticalProjection();</span>
+
+<span class="nc" id="L145">        g.setStroke(new BasicStroke(1f));</span>
+<span class="nc" id="L146">        g.setColor(Color.RED);</span>
+
+        // hproj
+        // Point2D last = new Point2D.Double(page.getLeft(), page.getBottom() -
+        // hproj[0] / prec), cur;
+<span class="nc" id="L151">        Point2D last = new Point2D.Double(page.getLeft(), page.getBottom()), cur;</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">        for (int i = 0; i &lt; hproj.length; i++) {</span>
+<span class="nc" id="L153">            cur = new Point2D.Double(page.getLeft() + i / prec, page.getBottom() - hproj[i]);</span>
+<span class="nc" id="L154">            g.draw(new Line2D.Double(last, cur));</span>
+<span class="nc" id="L155">            last = cur;</span>
+        }
+
+        // hproj first derivative
+<span class="nc" id="L159">        g.setColor(Color.BLUE);</span>
+<span class="nc" id="L160">        float[] deriv = ProjectionProfile.filter(ProjectionProfile.getFirstDeriv(profile.getHorizontalProjection()),</span>
+                0.01f);
+<span class="nc" id="L162">        last = new Point2D.Double(page.getLeft(), page.getBottom());</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        for (int i = 0; i &lt; deriv.length; i++) {</span>
+<span class="nc" id="L164">            cur = new Point2D.Double(page.getLeft() + i / prec, page.getBottom() - deriv[i]);</span>
+<span class="nc" id="L165">            g.draw(new Line2D.Double(last, cur));</span>
+<span class="nc" id="L166">            last = cur;</span>
+        }
+
+        // columns
+<span class="nc" id="L170">        g.setColor(Color.MAGENTA);</span>
+<span class="nc" id="L171">        g.setStroke(new BasicStroke(1f));</span>
+<span class="nc" id="L172">        float[] seps = profile.findVerticalSeparators(horizSmoothKernel * 2.5f);</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        for (int i = 0; i &lt; seps.length; i++) {</span>
+<span class="nc" id="L174">            float x = page.getLeft() + seps[i];</span>
+<span class="nc" id="L175">            g.draw(new Line2D.Double(x, page.getTop(), x, page.getBottom()));</span>
+        }
+
+        // vproj
+<span class="nc" id="L179">        g.setStroke(new BasicStroke(1f));</span>
+<span class="nc" id="L180">        g.setColor(Color.GREEN);</span>
+<span class="nc" id="L181">        last = new Point2D.Double(page.getLeft(), page.getTop());</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        for (int i = 0; i &lt; vproj.length; i++) {</span>
+<span class="nc" id="L183">            cur = new Point2D.Double(page.getLeft() + vproj[i] / prec, page.getTop() + i / prec);</span>
+<span class="nc" id="L184">            g.draw(new Line2D.Double(last, cur));</span>
+<span class="nc" id="L185">            last = cur;</span>
+        }
+
+        // vproj first derivative
+<span class="nc" id="L189">        g.setColor(new Color(0, 0, 1, 0.5f));</span>
+<span class="nc" id="L190">        deriv = ProjectionProfile.filter(ProjectionProfile.getFirstDeriv(vproj), 0.1f);</span>
+<span class="nc" id="L191">        last = new Point2D.Double(page.getRight(), page.getTop());</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        for (int i = 0; i &lt; deriv.length; i++) {</span>
+<span class="nc" id="L193">            cur = new Point2D.Double(page.getRight() - deriv[i] * 10, page.getTop() + i / prec);</span>
+<span class="nc" id="L194">            g.draw(new Line2D.Double(last, cur));</span>
+<span class="nc" id="L195">            last = cur;</span>
+        }
+
+        // rows
+<span class="nc" id="L199">        g.setStroke(new BasicStroke(1.5f));</span>
+<span class="nc" id="L200">        seps = profile.findHorizontalSeparators(vertSmoothKernel);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        for (int i = 0; i &lt; seps.length; i++) {</span>
+<span class="nc" id="L202">            float y = page.getTop() + seps[i];</span>
+<span class="nc" id="L203">            g.draw(new Line2D.Double(page.getLeft(), y, page.getRight(), y));</span>
+        }
+
+<span class="nc" id="L206">    }</span>
+
+    private static void drawShape(Graphics2D g, Shape shape) {
+        //g.setStroke(new BasicStroke(1));
+<span class="nc" id="L210">        g.draw(shape);</span>
+<span class="nc" id="L211">    }</span>
+
+    public static void renderPage(String pdfPath, String outPath, int pageNumber, Rectangle area,
+                                  boolean drawTextChunks, boolean drawSpreadsheets, boolean drawRulings, boolean drawIntersections,
+                                  boolean drawColumns, boolean drawCharacters, boolean drawArea, boolean drawCells,
+                                  boolean drawUnprocessedRulings, boolean drawProjectionProfile, boolean drawClippingPaths,
+                                  boolean drawDetectedTables) throws IOException {
+<span class="nc" id="L218">        PDDocument document = PDDocument.load(new File(pdfPath));</span>
+
+<span class="nc" id="L220">        ObjectExtractor oe = new ObjectExtractor(document);</span>
+
+<span class="nc" id="L222">        Page page = oe.extract(pageNumber + 1);</span>
+
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if (area != null) {</span>
+<span class="nc" id="L225">            page = page.getArea(area);</span>
+        }
+
+<span class="nc" id="L228">        PDPage p = document.getPage(pageNumber);</span>
+
+<span class="nc" id="L230">        BufferedImage image = Utils.pageConvertToImage(document, p, 72, ImageType.RGB);</span>
+
+<span class="nc" id="L232">        Graphics2D g = (Graphics2D) image.getGraphics();</span>
+
+<span class="nc bnc" id="L234" title="All 2 branches missed.">        if (drawTextChunks) {</span>
+<span class="nc" id="L235">            debugTextChunks(g, page);</span>
+        }
+<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (drawSpreadsheets) {</span>
+<span class="nc" id="L238">            debugSpreadsheets(g, page);</span>
+        }
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        if (drawRulings) {</span>
+<span class="nc" id="L241">            debugRulings(g, page);</span>
+        }
+<span class="nc bnc" id="L243" title="All 2 branches missed.">        if (drawIntersections) {</span>
+<span class="nc" id="L244">            debugIntersections(g, page);</span>
+        }
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        if (drawColumns) {</span>
+<span class="nc" id="L247">            debugColumns(g, page);</span>
+        }
+<span class="nc bnc" id="L249" title="All 2 branches missed.">        if (drawCharacters) {</span>
+<span class="nc" id="L250">            debugCharacters(g, page);</span>
+        }
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        if (drawArea) {</span>
+<span class="nc" id="L253">            g.setColor(Color.ORANGE);</span>
+<span class="nc" id="L254">            drawShape(g, area);</span>
+        }
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        if (drawCells) {</span>
+<span class="nc" id="L257">            debugCells(g, area, page);</span>
+        }
+<span class="nc bnc" id="L259" title="All 2 branches missed.">        if (drawUnprocessedRulings) {</span>
+<span class="nc" id="L260">            debugNonCleanRulings(g, page);</span>
+        }
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        if (drawProjectionProfile) {</span>
+<span class="nc" id="L263">            debugProjectionProfile(g, page);</span>
+        }
+<span class="nc bnc" id="L265" title="All 2 branches missed.">        if (drawClippingPaths) {</span>
+            // TODO: Enable when oe.clippingPaths is done
+            //drawShapes(g, oe.clippingPaths,
+            //		new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10f, new float[] { 3f }, 0f));
+        }
+<span class="nc bnc" id="L270" title="All 2 branches missed.">        if (drawDetectedTables) {</span>
+<span class="nc" id="L271">            debugDetectedTables(g, page);</span>
+        }
+
+<span class="nc" id="L274">        document.close();</span>
+
+<span class="nc" id="L276">        ImageIO.write(image, &quot;jpg&quot;, new File(outPath));</span>
+<span class="nc" id="L277">    }</span>
+
+    private static Options buildOptions() {
+<span class="nc" id="L280">        Options o = new Options();</span>
+
+<span class="nc" id="L282">        o.addOption(&quot;h&quot;, &quot;help&quot;, false, &quot;Print this help text.&quot;);</span>
+<span class="nc" id="L283">        o.addOption(&quot;r&quot;, &quot;rulings&quot;, false, &quot;Show detected rulings.&quot;);</span>
+<span class="nc" id="L284">        o.addOption(&quot;i&quot;, &quot;intersections&quot;, false, &quot;Show intersections between rulings.&quot;);</span>
+<span class="nc" id="L285">        o.addOption(&quot;s&quot;, &quot;spreadsheets&quot;, false, &quot;Show detected spreadsheets.&quot;);</span>
+<span class="nc" id="L286">        o.addOption(&quot;t&quot;, &quot;textchunks&quot;, false, &quot;Show detected text chunks (merged characters)&quot;);</span>
+<span class="nc" id="L287">        o.addOption(&quot;c&quot;, &quot;columns&quot;, false, &quot;Show columns as detected by BasicExtractionAlgorithm&quot;);</span>
+<span class="nc" id="L288">        o.addOption(&quot;e&quot;, &quot;characters&quot;, false, &quot;Show detected characters&quot;);</span>
+<span class="nc" id="L289">        o.addOption(&quot;g&quot;, &quot;region&quot;, false, &quot;Show provided region (-a parameter)&quot;);</span>
+<span class="nc" id="L290">        o.addOption(&quot;l&quot;, &quot;cells&quot;, false, &quot;Show detected cells&quot;);</span>
+<span class="nc" id="L291">        o.addOption(&quot;u&quot;, &quot;unprocessed-rulings&quot;, false, &quot;Show non-cleaned rulings&quot;);</span>
+<span class="nc" id="L292">        o.addOption(&quot;f&quot;, &quot;profile&quot;, false, &quot;Show projection profile&quot;);</span>
+<span class="nc" id="L293">        o.addOption(&quot;n&quot;, &quot;clipping-paths&quot;, false, &quot;Show clipping paths&quot;);</span>
+<span class="nc" id="L294">        o.addOption(&quot;d&quot;, &quot;detected-tables&quot;, false, &quot;Show detected tables&quot;);</span>
+
+<span class="nc" id="L296">        o.addOption(Option.builder(&quot;a&quot;).longOpt(&quot;area&quot;)</span>
+<span class="nc" id="L297">                .desc(&quot;Portion of the page to analyze (top,left,bottom,right). Example: --area 269.875,12.75,790.5,561. Default is entire page&quot;)</span>
+<span class="nc" id="L298">                .hasArg()</span>
+<span class="nc" id="L299">                .argName(&quot;AREA&quot;)</span>
+<span class="nc" id="L300">                .build());</span>
+
+<span class="nc" id="L302">        o.addOption(Option.builder(&quot;p&quot;).longOpt(&quot;pages&quot;)</span>
+<span class="nc" id="L303">                .desc(&quot;Comma separated list of ranges, or all. Examples: --pages 1-3,5-7, --pages 3 or --pages all. Default is --pages 1&quot;)</span>
+<span class="nc" id="L304">                .hasArg()</span>
+<span class="nc" id="L305">                .argName(&quot;PAGES&quot;)</span>
+<span class="nc" id="L306">                .build());</span>
+
+<span class="nc" id="L308">        return o;</span>
+    }
+
+    public static void main(String[] args) throws IOException {
+<span class="nc" id="L312">        CommandLineParser parser = new DefaultParser();</span>
+        try {
+            // parse the command line arguments
+<span class="nc" id="L315">            CommandLine line = parser.parse(buildOptions(), args);</span>
+<span class="nc" id="L316">            List&lt;Integer&gt; pages = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">            if (line.hasOption('p')) {</span>
+<span class="nc" id="L318">                pages = Utils.parsePagesOption(line.getOptionValue('p'));</span>
+            } else {
+<span class="nc" id="L320">                pages.add(1);</span>
+            }
+
+<span class="nc bnc" id="L323" title="All 2 branches missed.">            if (line.hasOption('h')) {</span>
+<span class="nc" id="L324">                printHelp();</span>
+<span class="nc" id="L325">                System.exit(0);</span>
+            }
+
+<span class="nc bnc" id="L328" title="All 2 branches missed.">            if (line.getArgs().length != 1) {</span>
+<span class="nc" id="L329">                throw new ParseException(&quot;Need one filename\nTry --help for help&quot;);</span>
+            }
+
+<span class="nc" id="L332">            File pdfFile = new File(line.getArgs()[0]);</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">            if (!pdfFile.exists()) {</span>
+<span class="nc" id="L334">                throw new ParseException(&quot;File does not exist&quot;);</span>
+            }
+
+<span class="nc bnc" id="L337" title="All 4 branches missed.">            if (line.hasOption('g') &amp;&amp; !line.hasOption('a')) {</span>
+<span class="nc" id="L338">                throw new ParseException(&quot;-g argument needs an area (-a)&quot;);</span>
+            }
+
+<span class="nc" id="L341">            Rectangle area = null;</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">            if (line.hasOption('a')) {</span>
+<span class="nc" id="L343">                List&lt;Float&gt; f = CommandLineApp.parseFloatList(line.getOptionValue('a'));</span>
+<span class="nc bnc" id="L344" title="All 2 branches missed.">                if (f.size() != 4) {</span>
+<span class="nc" id="L345">                    throw new ParseException(&quot;area parameters must be top,left,bottom,right&quot;);</span>
+                }
+<span class="nc" id="L347">                area = new Rectangle(f.get(0), f.get(1), f.get(3) - f.get(1), f.get(2) - f.get(0));</span>
+            }
+
+<span class="nc bnc" id="L350" title="All 2 branches missed.">            if (pages == null) {</span>
+                // user specified all pages
+<span class="nc" id="L352">                PDDocument document = PDDocument.load(pdfFile);</span>
+
+<span class="nc" id="L354">                int numPages = document.getNumberOfPages();</span>
+<span class="nc" id="L355">                pages = new ArrayList&lt;&gt;(numPages);</span>
+
+<span class="nc bnc" id="L357" title="All 2 branches missed.">                for (int i = 1; i &lt;= numPages; i++) {</span>
+<span class="nc" id="L358">                    pages.add(i);</span>
+                }
+
+<span class="nc" id="L361">                document.close();</span>
+            }
+
+<span class="nc bnc" id="L364" title="All 2 branches missed.">            for (int i : pages) {</span>
+<span class="nc" id="L365">                renderPage(pdfFile.getAbsolutePath(),</span>
+<span class="nc" id="L366">                        new File(pdfFile.getParent(), removeExtension(pdfFile.getName()) + &quot;-&quot; + (i) + &quot;.jpg&quot;)</span>
+<span class="nc" id="L367">                                .getAbsolutePath(),</span>
+<span class="nc" id="L368">                        i - 1, area, line.hasOption('t'), line.hasOption('s'), line.hasOption('r'), line.hasOption('i'),</span>
+<span class="nc" id="L369">                        line.hasOption('c'), line.hasOption('e'), line.hasOption('g'), line.hasOption('l'),</span>
+<span class="nc" id="L370">                        line.hasOption('u'), line.hasOption('f'), line.hasOption('n'), line.hasOption('d'));</span>
+<span class="nc" id="L371">            }</span>
+<span class="nc" id="L372">        } catch (ParseException e) {</span>
+<span class="nc" id="L373">            System.err.println(&quot;Error: &quot; + e.getMessage());</span>
+<span class="nc" id="L374">            System.exit(1);</span>
+<span class="nc" id="L375">        }</span>
+<span class="nc" id="L376">    }</span>
+
+    private static void printHelp() {
+<span class="nc" id="L379">        HelpFormatter formatter = new HelpFormatter();</span>
+<span class="nc" id="L380">        formatter.printHelp(&quot;tabula-debug&quot;, &quot;Generate debugging images&quot;, buildOptions(), &quot;&quot;, true);</span>
+<span class="nc" id="L381">    }</span>
+
+    private static String removeExtension(String s) {
+
+<span class="nc" id="L385">        String separator = System.getProperty(&quot;file.separator&quot;);</span>
+        String filename;
+
+        // Remove the path upto the filename.
+<span class="nc" id="L389">        int lastSeparatorIndex = s.lastIndexOf(separator);</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">        if (lastSeparatorIndex == -1) {</span>
+<span class="nc" id="L391">            filename = s;</span>
+        } else {
+<span class="nc" id="L393">            filename = s.substring(lastSeparatorIndex + 1);</span>
+        }
+
+        // Remove the extension.
+<span class="nc" id="L397">        int extensionIndex = filename.lastIndexOf(&quot;.&quot;);</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">        if (extensionIndex == -1)</span>
+<span class="nc" id="L399">            return filename;</span>
+
+<span class="nc" id="L401">        return filename.substring(0, extensionIndex);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

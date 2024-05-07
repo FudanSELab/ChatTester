@@ -1,0 +1,66 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#fromJson(Reader reader, Class<T> targetClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[45,9] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[45,58] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[62,9] cannot find symbol
+  symbol:   class TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[62,59] cannot find symbol
+  symbol:   class TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[63,22] cannot find symbol
+  symbol:   variable TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 5 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#fromJson(Reader reader, Class<T> targetClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[47,5] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[47,54] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[57,5] cannot find symbol
+  symbol:   class TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[57,55] cannot find symbol
+  symbol:   class TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[58,18] cannot find symbol
+  symbol:   variable TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 5 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#fromJson(Reader reader, Class<T> targetClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[49,5] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[49,54] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[59,5] cannot find symbol
+  symbol:   class TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[59,55] cannot find symbol
+  symbol:   class TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[60,18] cannot find symbol
+  symbol:   variable TestEnum
+  location: class com.zappos.json.ZapposJson_ESTest
+[INFO] 5 errors 
+####################
+

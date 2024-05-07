@@ -1,0 +1,73 @@
+0-->1-->0-->compileRepair
+
+# JsonBeanIntrospector class
+package com.zappos.json;
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda);
+public List<JsonBeanAttribute> getMutators(Class<?> clazz);
+public List<JsonBeanAttribute> getAccessors(Class<?> clazz);
+}
+
+
+# Test Method
+    @Test
+    public void testRegisterReader() throws Exception {
+        ZapposJson zapposJson = new ZapposJson();
+
+          <Buggy Line>: constructor JsonBeanIntrospector in class com.zappos.json.JsonBeanIntrospector cannot be applied to given types;
+        JsonBeanIntrospector beanIntrospector = new JsonBeanIntrospector();
+
+        JsonReaderCodeGenerator jsonReaderCodeGenerator = new JsonReaderCodeGenerator(zapposJson, beanIntrospector);
+        Class<?> clazz = YourTestClass.class; 
+        JsonReaderInvoker readerInvoker = jsonReaderCodeGenerator.registerReader(clazz);
+        assertNotNull(readerInvoker);
+        Map<Class<?>, JsonReaderInvoker> jsonReaderInvokers = jsonReaderCodeGenerator.JSON_READER_INVOKERS;
+        assertTrue(jsonReaderInvokers.containsKey(clazz));
+        assertEquals(readerInvoker, jsonReaderInvokers.get(clazz));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "JsonBeanIntrospector" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "JsonBeanIntrospector" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# JsonBeanIntrospector class
+package com.zappos.json;
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda);
+public List<JsonBeanAttribute> getMutators(Class<?> clazz);
+public List<JsonBeanAttribute> getAccessors(Class<?> clazz);
+}
+
+
+# Test Method
+    @Test
+    public void testRegisterReader() throws Exception {
+        ZapposJson zapposJson = new ZapposJson();
+        JsonBeanIntrospector beanIntrospector = new JsonBeanIntrospector(zapposJson);
+        JsonReaderCodeGenerator jsonReaderCodeGenerator = new JsonReaderCodeGenerator(zapposJson, beanIntrospector);
+
+          <Buggy Line>: cannot find symbol class "YourTestClass"
+        Class<?> clazz = YourTestClass.class; 
+
+        JsonReaderInvoker readerInvoker = jsonReaderCodeGenerator.registerReader(clazz);
+        assertNotNull(readerInvoker);
+        Map<Class<?>, JsonReaderInvoker> jsonReaderInvokers = jsonReaderCodeGenerator.JSON_READER_INVOKERS;
+        assertTrue(jsonReaderInvokers.containsKey(clazz));
+        assertEquals(readerInvoker, jsonReaderInvokers.get(clazz));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>APILimitUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.http</a> &gt; <span class="el_source">APILimitUtils.java</span></div><h1>APILimitUtils.java</h1><pre class="source lang-java linenums">package org.jinstagram.http;
+
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Helper class to process the HTTP headers from a Response object 
+ * and get the available and remaining API limit status
+ * 
+ * @author Arinto Murdopo
+ */
+public final class APILimitUtils {
+
+<span class="fc" id="L16">    private static final Logger logger = LoggerFactory.getLogger(APILimitUtils.class);</span>
+
+    protected static final String LIMIT_HEADER_KEY = &quot;X-Ratelimit-Limit&quot;;
+
+    protected static final String REMAINING_HEADER_KEY = &quot;X-Ratelimit-Remaining&quot;;
+
+    private APILimitUtils() {}
+
+    /**
+     * Get the available API limit. It correspond to the value of 
+     * X-Ratelimit-Limit key in HTTP response headers. For Instagram 
+     * v1 API, this method should return 5000.
+     * @param headers HTTP headers from a Response object
+     * @return Available API limit. -1 if response header is invalid or does not contains the API 
+     * limit information
+     */
+    public static int getAPILimitStatus(Map&lt;String, String&gt; headers) {
+<span class="fc" id="L33">        return APILimitUtils.getIntegerValue(headers, LIMIT_HEADER_KEY);</span>
+    }
+
+    /**
+     * Get the remaining API limit. It correspond to the value of 
+     * X-Ratelimit-Remaining key in HTTP response headers.
+     * @param headers HTTP headers from a Response object
+     * @return Remaining API limit. -1 if response header is invalid or does not contains the remaining 
+     * limit information
+     */
+    public static int getRemainingLimitStatus(Map&lt;String, String&gt; headers) {
+<span class="nc" id="L44">        return APILimitUtils.getIntegerValue(headers, REMAINING_HEADER_KEY);</span>
+    }
+
+    private static int getIntegerValue(Map&lt;String, String&gt; header, String key) {
+<span class="fc" id="L48">        String intValueStr = header.get(key);</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (intValueStr == null) {</span>
+<span class="nc" id="L50">            intValueStr = header.get(key.toLowerCase());</span>
+        }
+<span class="fc" id="L52">        int value = -1;</span>
+
+        try {
+<span class="fc" id="L55">            value = Integer.valueOf(intValueStr);</span>
+<span class="nc" id="L56">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L57">            logger.error(&quot;Invalid Integer value for key: &quot; + key + &quot;, value :&quot; + intValueStr);</span>
+<span class="fc" id="L58">        }</span>
+<span class="fc" id="L59">        return value;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

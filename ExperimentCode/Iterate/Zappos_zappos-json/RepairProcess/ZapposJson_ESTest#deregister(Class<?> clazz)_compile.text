@@ -1,0 +1,10 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java
+[GENERATED PATH] ZapposJson_ESTest#deregister(Class<?> clazz).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/ZapposJson_ESTest.java:[50,31] cannot find symbol
+  symbol:   method isRegistered(java.lang.Class<java.lang.String>)
+  location: variable zapposJson of type com.zappos.json.ZapposJson
+[INFO] 1 error
+####################
+

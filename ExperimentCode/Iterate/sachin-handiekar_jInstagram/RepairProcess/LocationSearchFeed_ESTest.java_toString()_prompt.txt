@@ -1,0 +1,111 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        Location location1 = new Location("Location 1", 1.0, 2.0);
+        Location location2 = new Location("Location 2", 3.0, 4.0);
+        LocationSearchFeed locationSearchFeed = new LocationSearchFeed();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<Location> locationList = new LinkedList<>();
+
+        locationList.add(location1);
+        locationList.add(location2);
+        locationSearchFeed.setLocationList(locationList);
+        String expected = "LocationSearchFeed [locationList=[Location{name='Location 1', latitude=1.0, longitude=2.0}, Location{name='Location 2', latitude=3.0, longitude=4.0}]]";
+        String actual = locationSearchFeed.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# Location class
+package org.jinstagram.entity.common;
+public class Location {
+public double getLatitude();
+public void setLatitude(double latitude);
+public double getLongitude();
+public void setLongitude(double longitude);
+public String getId();
+public void setId(String id);
+public String getName();
+public void setName(String name);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testToString() {
+
+         <Buggy Line>: constructor Location in class org.jinstagram.entity.common.Location cannot be applied to given types;
+    Location location1 = new Location("Location 1", 1.0, 2.0);
+
+    Location location2 = new Location("Location 2", 3.0, 4.0);
+    LocationSearchFeed locationSearchFeed = new LocationSearchFeed();
+    List<Location> locationList = new LinkedList<Location>();
+    locationList.add(location1);
+    locationList.add(location2);
+    locationSearchFeed.setLocationList(locationList);
+    String expected = "LocationSearchFeed [locationList=[Location{name='Location 1', latitude=1.0, longitude=2.0}, Location{name='Location 2', latitude=3.0, longitude=4.0}]]";
+    String actual = locationSearchFeed.toString();
+    assertEquals(expected, actual);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Location" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Location" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("LocationSearchFeed [locationList=%s]", locationList);
+}
+
+# Method Intention
+The toString() method in the LocationSearchFeed class is intended to provide a human-readable representation of the LocationSearchFeed object by returning a formatted string that includes the list of locations contained within the object.
+
+# Test Method
+@Test
+public void testToString() {
+    Location location1 = new Location();
+    location1.setName("Location 1");
+    location1.setLatitude(1.0);
+    location1.setLongitude(2.0);
+    Location location2 = new Location();
+    location2.setName("Location 2");
+    location2.setLatitude(3.0);
+    location2.setLongitude(4.0);
+    LocationSearchFeed locationSearchFeed = new LocationSearchFeed();
+    List<Location> locationList = new LinkedList<Location>();
+    locationList.add(location1);
+    locationList.add(location2);
+    locationSearchFeed.setLocationList(locationList);
+    String expected = "LocationSearchFeed [locationList=[Location{name='Location 1', latitude=1.0, longitude=2.0}, Location{name='Location 2', latitude=3.0, longitude=4.0}]]";
+    String actual = locationSearchFeed.toString();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...cationList=[Location[{name='Location 1', latitude=1.0, longitude=2.0}, Location{name='Location 2', latitude=3.0, longitude=4.0}]]]> but was:<...cationList=[Location[ [id=null, name=Location 1, latitude=1.0, longitude=2.0], Location [id=null, name=Location 2, latitude=3.0, longitude=4.0]]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

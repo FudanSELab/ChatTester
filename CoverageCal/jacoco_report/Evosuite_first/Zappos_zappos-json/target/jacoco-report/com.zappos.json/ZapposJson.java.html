@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ZapposJson.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json</a> &gt; <span class="el_source">ZapposJson.java</span></div><h1>ZapposJson.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json;
+
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.zappos.json.JsonConfig.ReaderConfig;
+import com.zappos.json.JsonConfig.WriterConfig;
+import com.zappos.json.format.BigDecimalFormatter;
+import com.zappos.json.format.BigIntegerFormatter;
+import com.zappos.json.format.JavaDateFormatter;
+import com.zappos.json.format.JavaSqlDateFormatter;
+import com.zappos.json.format.JavaTimeInstantFormatter;
+import com.zappos.json.format.JavaTimeLocalDateFormatter;
+import com.zappos.json.format.JavaTimestampFormatter;
+import com.zappos.json.format.ValueFormatter;
+import com.zappos.json.util.JsonUtils;
+import com.zappos.json.util.Reflections;
+import com.zappos.json.util.Strings;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+public class ZapposJson {
+
+<span class="fc" id="L50">  protected final Map&lt;Class&lt;?&gt;, ValueFormatter&lt;Object&gt;&gt; VALUE_FORMATTERS = new ConcurrentHashMap&lt;&gt;();</span>
+
+<span class="fc" id="L52">  private final static Map&lt;String, ZapposJson&gt; INSTANCES = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L54">  private boolean debug = false;</span>
+  
+  private JsonBeanIntrospector jsonBeanIntrospector;
+  
+  private JsonWriterCodeGenerator writerCodeGenerator;
+  
+  private JsonReaderCodeGenerator readerCodeGenerator;
+  
+<span class="fc" id="L62">  private final boolean[] WRITER_CONFIGS = new boolean[WriterConfig.values().length];</span>
+  
+<span class="fc" id="L64">  private final boolean[] READER_CONFIGS = new boolean[ReaderConfig.values().length];</span>
+  
+<span class="fc" id="L66">  protected ZapposJson() {</span>
+    
+<span class="fc" id="L68">    addValueFormatter(Date.class, new JavaDateFormatter());</span>
+<span class="fc" id="L69">    addValueFormatter(java.sql.Date.class, new JavaSqlDateFormatter());</span>
+<span class="fc" id="L70">    addValueFormatter(java.sql.Timestamp.class, new JavaTimestampFormatter());</span>
+<span class="fc" id="L71">    addValueFormatter(java.math.BigInteger.class, new BigIntegerFormatter());</span>
+<span class="fc" id="L72">    addValueFormatter(java.math.BigDecimal.class, new BigDecimalFormatter());</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">    if (Reflections.classPresent(&quot;java.time.chrono.ChronoLocalDate&quot;)) {</span>
+<span class="fc" id="L74">      ValueFormatter&lt;LocalDate&gt; localDateHandler = new JavaTimeLocalDateFormatter();</span>
+<span class="fc" id="L75">      addValueFormatter(LocalDate.class, localDateHandler);</span>
+<span class="fc" id="L76">      ValueFormatter&lt;Instant&gt; instantHandler = new JavaTimeInstantFormatter();</span>
+<span class="fc" id="L77">      addValueFormatter(Instant.class, instantHandler);</span>
+    }
+<span class="fc" id="L79">    jsonBeanIntrospector = new JsonBeanIntrospector(this);</span>
+<span class="fc" id="L80">    writerCodeGenerator = new JsonWriterCodeGenerator(this, jsonBeanIntrospector);</span>
+<span class="fc" id="L81">    readerCodeGenerator = new JsonReaderCodeGenerator(this, jsonBeanIntrospector);</span>
+<span class="fc" id="L82">  }</span>
+  
+  protected ZapposJson(boolean debug) {
+<span class="fc" id="L85">    this();</span>
+<span class="fc" id="L86">    this.debug = debug;</span>
+<span class="fc" id="L87">  }</span>
+
+<span class="fc" id="L89">  public static enum ZapposJsonSingleton {</span>
+<span class="fc" id="L90">    INSTANCE;</span>
+
+<span class="fc" id="L92">    ZapposJson zapposJson = new ZapposJson();</span>
+
+    public ZapposJson get() {
+<span class="fc" id="L95">      return zapposJson;</span>
+    }
+  }
+
+  public static ZapposJson getInstance() {
+<span class="fc" id="L100">    return ZapposJsonSingleton.INSTANCE.get();</span>
+  }
+
+  public synchronized static ZapposJson getInstance(String name) {
+<span class="fc" id="L104">    ZapposJson instance = INSTANCES.get(name);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">    if (instance == null) {</span>
+<span class="fc" id="L106">      instance = new ZapposJson();</span>
+<span class="fc" id="L107">      INSTANCES.put(name, instance);</span>
+    }
+<span class="fc" id="L109">    return instance;</span>
+  }
+
+  public void register(Class&lt;?&gt;... classes) {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">    for (Class&lt;?&gt; clazz : classes) {</span>
+<span class="nc" id="L114">      register(clazz);</span>
+    }
+<span class="nc" id="L116">  }</span>
+
+  public void register(Class&lt;?&gt; clazz) {
+    try{
+<span class="nc" id="L120">      writerCodeGenerator.registerWriter(clazz);</span>
+<span class="nc" id="L121">      readerCodeGenerator.registerReader(clazz);</span>
+<span class="nc" id="L122">    }catch(Exception e){</span>
+<span class="nc" id="L123">      throw new JsonException(e);</span>
+<span class="nc" id="L124">    }</span>
+<span class="nc" id="L125">  }</span>
+  
+  public void deregister(Class&lt;?&gt; clazz) {
+<span class="nc" id="L128">    writerCodeGenerator.deregister(clazz);</span>
+<span class="nc" id="L129">    readerCodeGenerator.deregister(clazz);</span>
+<span class="nc" id="L130">  }</span>
+
+  public void deregisterAll() {
+<span class="nc" id="L133">    writerCodeGenerator.deregisterAll();</span>
+<span class="nc" id="L134">    readerCodeGenerator.deregisterAll();</span>
+<span class="nc" id="L135">  }</span>
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public void addValueFormatter(Class&lt;?&gt; objectType,
+      ValueFormatter&lt;?&gt; valueFormatter) {
+<span class="fc" id="L140">    VALUE_FORMATTERS.put(objectType,</span>
+        (ValueFormatter&lt;Object&gt;) valueFormatter);
+<span class="fc" id="L142">  }</span>
+
+  public void removeValueFormatter(Class&lt;?&gt; objectType) {
+<span class="fc" id="L145">    VALUE_FORMATTERS.remove(objectType);</span>
+<span class="fc" id="L146">  }</span>
+
+  public ValueFormatter&lt;Object&gt; getValueFormatter(Class&lt;?&gt; objectType) {
+<span class="fc" id="L149">    return VALUE_FORMATTERS.get(objectType);</span>
+  }
+  
+  public synchronized void configure(ReaderConfig config, boolean value){
+<span class="nc" id="L153">    READER_CONFIGS[config.ordinal()] = true;</span>
+<span class="nc" id="L154">  }</span>
+  
+  public synchronized boolean is(ReaderConfig config){
+<span class="nc" id="L157">    return READER_CONFIGS[config.ordinal()];</span>
+  }
+  
+  public synchronized void configure(WriterConfig config, boolean value){
+<span class="nc" id="L161">    WRITER_CONFIGS[config.ordinal()] = true;</span>
+<span class="nc" id="L162">  }</span>
+  
+  public synchronized boolean is(WriterConfig config){
+<span class="fc" id="L165">    return WRITER_CONFIGS[config.ordinal()];</span>
+  }
+  
+  /**
+   * Try to format specified value with the formatter in a registry.
+   * This method throws {@link NullPointerException} when the specified value is null.
+   * @param value the object being formatted
+   * @return formatted value or value.toString when there is no formatter
+   */
+  public String format(Object value) {
+<span class="nc" id="L175">    ValueFormatter&lt;Object&gt; valueFormatter = VALUE_FORMATTERS.get(value.getClass());</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">    if (valueFormatter != null) {</span>
+<span class="nc" id="L177">      return valueFormatter.format(this, value);</span>
+    } else {
+<span class="nc" id="L179">      return value.toString();</span>
+    }
+  }
+  
+  public String toJson(Object object) {
+    
+<span class="nc" id="L185">    StringWriter writer = new StringWriter();</span>
+<span class="nc" id="L186">    toJson(object, writer);</span>
+<span class="nc" id="L187">    return writer.toString();</span>
+    
+  }
+  
+  public void toJson(Object object, Writer writer) {
+    
+    try{
+      
+<span class="nc bnc" id="L195" title="All 2 branches missed.">      if(object == null){</span>
+<span class="nc" id="L196">        writer.append(JsonWriter.CONST_NULL);</span>
+<span class="nc" id="L197">        return;</span>
+      }
+      
+<span class="nc" id="L200">      Class&lt;?&gt; objectType = object.getClass();</span>
+<span class="nc" id="L201">      ValueFormatter&lt;?&gt; formatter = VALUE_FORMATTERS.get(objectType);</span>
+      
+<span class="nc bnc" id="L203" title="All 2 branches missed.">      if(formatter != null){</span>
+        
+<span class="nc" id="L205">        String formattedStr = formatter.formatObject(this, object);</span>
+<span class="nc" id="L206">        writer.append(formattedStr);</span>
+<span class="nc" id="L207">        return;</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">      }else if(object instanceof Boolean) {</span>
+        
+<span class="nc" id="L210">        JsonWriter.writeBoolean(this, (Boolean)object, writer);</span>
+<span class="nc" id="L211">        return;</span>
+<span class="nc bnc" id="L212" title="All 4 branches missed.">      }else if(object instanceof String || object instanceof Character) {</span>
+        
+<span class="nc" id="L214">        JsonWriter.writeString(this, object.toString(), writer);</span>
+<span class="nc" id="L215">        return;</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">      }else if(object instanceof Number) {</span>
+        
+<span class="nc" id="L218">        JsonWriter.writeNumber(this, (Number)object, writer);</span>
+<span class="nc" id="L219">        return;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">      }else if(object instanceof Enum) {</span>
+        
+<span class="nc" id="L222">        JsonWriter.writeEnum(this, (Enum&lt;?&gt;)object, writer);</span>
+<span class="nc" id="L223">        return;</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">      }else if(object instanceof Iterable) {</span>
+        
+<span class="nc" id="L226">        JsonWriter.writeIterable(this, (Iterable&lt;?&gt;) object, writer);</span>
+<span class="nc" id="L227">        return;</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">      }else if(object instanceof Map) {</span>
+        
+<span class="nc" id="L230">        JsonWriter.writeMap(this, (Map&lt;?, ?&gt;) object, writer);</span>
+<span class="nc" id="L231">        return;</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">      }else if(objectType.isArray()){</span>
+<span class="nc" id="L233">        Class&lt;?&gt; componentType = objectType.getComponentType();</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">        if(componentType == byte.class){</span>
+<span class="nc" id="L235">          JsonWriter.writeBase64String(this, (byte[])object, writer);</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        }else if(componentType == char.class){</span>
+<span class="nc" id="L237">          JsonWriter.writeArray((char[])object, writer);</span>
+<span class="nc bnc" id="L238" title="All 2 branches missed.">        }else if(componentType == boolean.class){</span>
+<span class="nc" id="L239">          JsonWriter.writeArray((boolean[])object, writer);</span>
+<span class="nc bnc" id="L240" title="All 2 branches missed.">        }else if(componentType == short.class){</span>
+<span class="nc" id="L241">          JsonWriter.writeArray((short[])object, writer);</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        }else if(componentType == int.class){</span>
+<span class="nc" id="L243">          JsonWriter.writeArray((int[])object, writer);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        }else if(componentType == long.class){</span>
+<span class="nc" id="L245">          JsonWriter.writeArray((long[])object, writer);</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        }else if(componentType == float.class){</span>
+<span class="nc" id="L247">          JsonWriter.writeArray((float[])object, writer);</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">        }else if(componentType == double.class){</span>
+<span class="nc" id="L249">          JsonWriter.writeArray((double[])object, writer);</span>
+        }else{
+<span class="nc" id="L251">          JsonWriter.writeArray(this, (Object[]) object, writer);</span>
+        }
+<span class="nc" id="L253">        return;</span>
+      }
+      
+<span class="nc" id="L256">      JsonWriterInvoker writerInvoker = writerCodeGenerator.getWriter(objectType);</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">      if(writerInvoker == null){</span>
+<span class="nc" id="L258">        writerInvoker = writerCodeGenerator.registerWriter(objectType);</span>
+      }
+<span class="nc" id="L260">      writerInvoker.writeJson(object, writer);</span>
+    
+<span class="nc" id="L262">    }catch(JsonException e){</span>
+<span class="nc" id="L263">      throw e;</span>
+<span class="nc" id="L264">    }catch(Exception e){</span>
+<span class="nc" id="L265">      throw new JsonException(e);</span>
+<span class="nc" id="L266">    }</span>
+<span class="nc" id="L267">  }</span>
+  
+  public &lt;T&gt; T fromJson(String json, Class&lt;T&gt; targetClass) {
+<span class="nc" id="L270">    return fromJson(new StringReader(json), targetClass);</span>
+  }
+  
+  @SuppressWarnings({ &quot;unchecked&quot;, &quot;rawtypes&quot; })
+  public &lt;T&gt; T fromJson(Reader reader, Class&lt;T&gt; targetClass) {
+    
+    try{
+      
+<span class="fc" id="L278">      ValueFormatter&lt;?&gt; formatter = VALUE_FORMATTERS.get(targetClass);</span>
+      
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">      if(formatter != null){</span>
+<span class="nc" id="L281">        String s = Strings.fromReader(reader).trim();</span>
+<span class="nc" id="L282">        return (T)formatter.parse(this, s);</span>
+        
+<span class="pc bpc" id="L284" title="2 of 4 branches missed.">      }else if(targetClass == Boolean.class || targetClass == boolean.class){</span>
+        
+<span class="nc" id="L286">        String s = Strings.fromReader(reader).trim();</span>
+<span class="nc" id="L287">        return (T)Boolean.valueOf(s);</span>
+        
+<span class="pc bpc" id="L289" title="3 of 6 branches missed.">      }else if(targetClass == String.class || targetClass == Character.class || targetClass == char.class){</span>
+        
+<span class="nc" id="L291">        String s = Strings.fromReader(reader).trim();</span>
+<span class="nc bnc" id="L292" title="All 4 branches missed.">        if(s.charAt(0) != '&quot;' || s.charAt(s.length() - 1) != '&quot;'){</span>
+<span class="nc" id="L293">          throw new IllegalArgumentException(&quot;Invalid string: &quot; + s);</span>
+        }
+<span class="nc" id="L295">        s = JsonUtils.unescape(this, s.subSequence(1, s.length() - 1));</span>
+<span class="nc bnc" id="L296" title="All 4 branches missed.">        if(targetClass == Character.class || targetClass == char.class){</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">          if(s.length() != 1){</span>
+<span class="nc" id="L298">            throw new IllegalArgumentException(&quot;Invalid character: &quot; + s);</span>
+          }
+<span class="nc" id="L300">          return (T)new Character(s.charAt(0));</span>
+        }
+<span class="nc" id="L302">        return (T)s;</span>
+<span class="pc bpc" id="L303" title="2 of 4 branches missed.">      }else if(Number.class.isAssignableFrom(targetClass) || targetClass.isPrimitive()) {</span>
+        
+<span class="nc" id="L305">        String s = Strings.fromReader(reader).trim();</span>
+<span class="nc bnc" id="L306" title="All 4 branches missed.">        if(targetClass == Byte.class || targetClass == byte.class){</span>
+<span class="nc" id="L307">          return (T)Byte.valueOf(s);</span>
+<span class="nc bnc" id="L308" title="All 4 branches missed.">        }else if(targetClass == Short.class || targetClass == short.class){</span>
+<span class="nc" id="L309">          return (T)Short.valueOf(s);</span>
+<span class="nc bnc" id="L310" title="All 4 branches missed.">        }else if(targetClass == Integer.class || targetClass == int.class){</span>
+<span class="nc" id="L311">          return (T)Integer.valueOf(s);</span>
+<span class="nc bnc" id="L312" title="All 4 branches missed.">        }else if(targetClass == Long.class || targetClass == long.class){</span>
+<span class="nc" id="L313">          return (T)Long.valueOf(s);</span>
+<span class="nc bnc" id="L314" title="All 4 branches missed.">        }else if(targetClass == Float.class || targetClass == float.class){</span>
+<span class="nc" id="L315">          return (T)Float.valueOf(s);</span>
+<span class="nc bnc" id="L316" title="All 4 branches missed.">        }else if(targetClass == Double.class || targetClass == double.class){</span>
+<span class="nc" id="L317">          return (T)Double.valueOf(s);</span>
+        }else{
+<span class="nc" id="L319">          throw new IllegalArgumentException(targetClass.getName() +&quot; is an unsupported type.&quot; +</span>
+              &quot;You need a custom ValueFormatter for this type.&quot;);
+        }
+<span class="pc bpc" id="L322" title="1 of 2 branches missed.">      }else if(targetClass.isEnum()) {</span>
+        
+<span class="nc" id="L324">        String s = Strings.fromReader(reader).trim();</span>
+<span class="nc" id="L325">        return (T)Enum.valueOf((Class&lt;? extends Enum&gt;)targetClass, s);</span>
+        
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">      }else if(Iterable.class.isAssignableFrom(targetClass) ||</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">          Map.class.isAssignableFrom(targetClass)) {</span>
+        
+        //What should we do with these types?
+        //TODO: Should we use String/Boolean/Number/Array/Map type for generic parameter depending on JSON type?
+<span class="nc" id="L332">        throw new IllegalArgumentException(targetClass.getName() +&quot; not support yet&quot;);</span>
+      
+<span class="pc bpc" id="L334" title="1 of 2 branches missed.">      }else if(targetClass.isArray()){</span>
+        //TODO: add type hinting
+<span class="nc" id="L336">        throw new IllegalArgumentException(&quot;Array type not support yet&quot;);</span>
+      }
+      
+<span class="fc" id="L339">      JsonReaderInvoker readerInvoker = readerCodeGenerator.getReader(targetClass);</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">      if(readerInvoker == null){</span>
+<span class="nc" id="L341">        readerInvoker = readerCodeGenerator.registerReader(targetClass);</span>
+      }
+      
+<span class="nc" id="L344">      return readerInvoker.readJson(reader, targetClass);</span>
+    
+<span class="fc" id="L346">    }catch(JsonException e){</span>
+<span class="fc" id="L347">      throw e;</span>
+<span class="nc" id="L348">    }catch(Exception e){</span>
+<span class="nc" id="L349">      throw new JsonException(e);</span>
+    }
+  }
+  
+  protected void debug(String pattern, Object... args) {
+<span class="pc bpc" id="L354" title="1 of 2 branches missed.">    if (debug) {</span>
+<span class="nc" id="L355">      System.out.println(Strings.format(pattern, args));</span>
+    }
+<span class="fc" id="L357">  }</span>
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

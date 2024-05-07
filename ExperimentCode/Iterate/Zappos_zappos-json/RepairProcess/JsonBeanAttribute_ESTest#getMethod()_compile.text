@@ -1,0 +1,50 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getMethod().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[28,33] cannot find symbol
+  symbol:   class SomeClass
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getMethod().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[30,29] cannot find symbol
+  symbol:   class SomeClass
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getMethod().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[33,29] cannot find symbol
+  symbol:   class SomeClass
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getMethod().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[35,33] cannot find symbol
+  symbol:   class SomeClass
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java
+[GENERATED PATH] JsonBeanAttribute_ESTest#getMethod().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonBeanAttribute_ESTest.java:[37,33] cannot find symbol
+  symbol:   class SomeClass
+  location: class com.zappos.json.JsonBeanAttribute_ESTest
+[INFO] 1 error
+####################
+

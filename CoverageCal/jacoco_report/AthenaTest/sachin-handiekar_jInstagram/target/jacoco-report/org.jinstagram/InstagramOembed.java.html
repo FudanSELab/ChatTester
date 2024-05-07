@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstagramOembed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram</a> &gt; <span class="el_source">InstagramOembed.java</span></div><h1>InstagramOembed.java</h1><pre class="source lang-java linenums">package org.jinstagram;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.jinstagram.auth.model.OAuthRequest;
+import org.jinstagram.entity.common.InstagramErrorResponse;
+import org.jinstagram.entity.oembed.OembedInformation;
+import org.jinstagram.exceptions.InstagramException;
+import org.jinstagram.http.Response;
+import org.jinstagram.http.Verbs;
+import org.jinstagram.model.Constants;
+import org.jinstagram.model.Methods;
+
+import com.google.gson.Gson;
+
+/**
+ * Instagram Oembed
+ *
+ * @author Sachin Handiekar
+ */
+<span class="nc" id="L22">public class InstagramOembed {</span>
+    /**
+     * Returns information about the media associated with that link.
+     *
+     * @param url A short link, like http://instagr.am/p/BUG/.
+     * @return OembedInformation object
+     * @throws org.jinstagram.exceptions.InstagramException if any error occurs.
+     */
+    public OembedInformation getOembedInformation(String url) throws InstagramException {
+<span class="nc" id="L31">        String apiMethod = String.format(Methods.OEMBED_INFORMATION, url);</span>
+<span class="nc" id="L32">        return createInstagramObject(Verbs.GET, OembedInformation.class, apiMethod, null);</span>
+    }
+
+    /**
+     * Create an Instagram object based on class-name and response.
+     *
+     * @param verbs HTTP State
+     * @param clazz
+     * @param methodName
+     * @param params
+     * @return
+     * @throws InstagramException
+     */
+    private static &lt;T&gt; T createInstagramObject(Verbs verbs, Class&lt;T&gt; clazz, String methodName, Map&lt;String, String&gt; params)
+            throws InstagramException {
+        Response response;
+        try {
+<span class="nc" id="L49">            response = getApiResponse(verbs, methodName, params);</span>
+<span class="nc" id="L50">        } catch (IOException e) {</span>
+<span class="nc" id="L51">            throw new InstagramException(&quot;IOException while retrieving data&quot;, e);</span>
+<span class="nc" id="L52">        }</span>
+
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        if (response.getCode() &gt;= 200 &amp;&amp; response.getCode() &lt; 300) {</span>
+<span class="nc" id="L55">            return createObjectFromResponse(clazz, response.getBody());</span>
+        }
+
+<span class="nc" id="L58">        throw handleInstagramError(response);</span>
+    }
+
+    /**
+     * 
+     * @param response
+     * @return
+     * @throws InstagramException
+     */
+    private static InstagramException handleInstagramError(Response response) throws InstagramException {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        if (response.getCode() == 400) {</span>
+<span class="nc" id="L69">            Gson gson = new Gson();</span>
+<span class="nc" id="L70">            final InstagramErrorResponse error = InstagramErrorResponse.parse(gson, response.getBody());</span>
+<span class="nc" id="L71">            error.setHeaders(response.getHeaders());</span>
+<span class="nc" id="L72">            error.throwException();</span>
+        }
+<span class="nc" id="L74">        throw new InstagramException(&quot;Unknown error response code: &quot; + response.getCode() + &quot; &quot; + response.getBody(),</span>
+<span class="nc" id="L75">                response.getHeaders());</span>
+    }
+
+    /**
+     * Get response from Instagram.
+     *
+     * @param verb HTTP Verb
+     * @param methodName Instagram API Method
+     * @param params parameters which would be sent with the request.
+     * @return Response object.
+     */
+    private static Response getApiResponse(Verbs verb, String methodName, Map&lt;String, String&gt; params) throws IOException {
+        Response response;
+<span class="nc" id="L88">        String apiResourceUrl = Constants.OEMBED_URL + methodName;</span>
+<span class="nc" id="L89">        OAuthRequest request = new OAuthRequest(verb, apiResourceUrl);</span>
+
+        // Additional parameters in url
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (params != null) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : params.entrySet()) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">                if (verb == Verbs.GET) {</span>
+<span class="nc" id="L95">                    request.addQuerystringParameter(entry.getKey(), entry.getValue());</span>
+                } else {
+<span class="nc" id="L97">                    request.addBodyParameter(entry.getKey(), entry.getValue());</span>
+                }
+<span class="nc" id="L99">            }</span>
+        }
+
+<span class="nc" id="L102">        response = request.send();</span>
+
+<span class="nc" id="L104">        return response;</span>
+    }
+
+    /**
+     * Creates an object from the JSON response and the class which the object would be mapped to.
+     *
+     * @param clazz a class instance
+     * @param response a JSON feed
+     * @return a object of type &lt;T&gt;
+     * @throws InstagramException if any error occurs.
+     */
+    private static &lt;T&gt; T createObjectFromResponse(Class&lt;T&gt; clazz, final String response) throws InstagramException {
+<span class="nc" id="L116">        Gson gson = new Gson();</span>
+        T object;
+
+        try {
+<span class="nc" id="L120">            object = gson.fromJson(response, clazz);</span>
+<span class="nc" id="L121">        } catch (Exception e) {</span>
+<span class="nc" id="L122">            throw new InstagramException(&quot;Error parsing json to object type &quot; + clazz.getName(), e);</span>
+<span class="nc" id="L123">        }</span>
+
+<span class="nc" id="L125">        return object;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

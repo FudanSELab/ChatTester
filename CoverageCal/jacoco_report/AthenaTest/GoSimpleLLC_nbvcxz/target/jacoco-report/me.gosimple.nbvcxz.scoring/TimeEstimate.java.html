@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeEstimate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.scoring</a> &gt; <span class="el_source">TimeEstimate.java</span></div><h1>TimeEstimate.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.scoring;
+
+import java.math.BigDecimal;
+import java.util.ResourceBundle;
+
+/**
+ * @author Adam Brusselback
+ */
+<span class="nc" id="L9">public final class TimeEstimate</span>
+{
+
+    /**
+     * Gets the estimated time to crack in seconds.
+     *
+     * @param result     a {@code Result} object to estimate time to crack for.
+     * @param guess_type a {@code String} representing the estimate type to get time to crack for (defined in {@code Configuration}.
+     * @return time in seconds estimated to crack as a {@code BigDecimal}.
+     */
+    public static BigDecimal getTimeToCrack(final Result result, final String guess_type)
+    {
+<span class="nc" id="L21">        BigDecimal guess_per_second = BigDecimal.valueOf(result.getConfiguration().getGuessTypes().get(guess_type));</span>
+
+<span class="nc" id="L23">        return result.getGuesses().divide(guess_per_second, 0, BigDecimal.ROUND_FLOOR);</span>
+    }
+
+    /**
+     * Gets the estimated time to crack formatted as a string.
+     *
+     * @param result     a {@code Result} object to estimate time to crack for.
+     * @param guess_type a {@code String} representing the estimate type to get time to crack for (defined in {@code Configuration}.
+     * @return time estimated to crack as a {@code String} (instant, seconds, minutes, hours, days, months, years, centuries, infinite).
+     */
+    public static String getTimeToCrackFormatted(final Result result, final String guess_type)
+    {
+<span class="nc" id="L35">        ResourceBundle mainResource = result.getConfiguration().getMainResource();</span>
+<span class="nc" id="L36">        BigDecimal seconds = getTimeToCrack(result, guess_type);</span>
+<span class="nc" id="L37">        BigDecimal minutes = new BigDecimal(60);</span>
+<span class="nc" id="L38">        BigDecimal hours = minutes.multiply(new BigDecimal(60));</span>
+<span class="nc" id="L39">        BigDecimal days = hours.multiply(new BigDecimal(24));</span>
+<span class="nc" id="L40">        BigDecimal months = days.multiply(new BigDecimal(30));</span>
+<span class="nc" id="L41">        BigDecimal years = months.multiply(new BigDecimal(12));</span>
+<span class="nc" id="L42">        BigDecimal centuries = years.multiply(new BigDecimal(100));</span>
+<span class="nc" id="L43">        BigDecimal infinite = centuries.multiply(new BigDecimal(100000));</span>
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">        if (seconds.divide(infinite, 0, BigDecimal.ROUND_FLOOR).compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L47">            return mainResource.getString(&quot;main.estimate.greaterCenturies&quot;);</span>
+        }
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        else if (seconds.divide(centuries, 0, BigDecimal.ROUND_FLOOR).compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L51">            return seconds.divide(centuries, 0, BigDecimal.ROUND_FLOOR) + &quot; &quot; + mainResource.getString(&quot;main.estimate.centuries&quot;);</span>
+        }
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        else if (seconds.divide(years, 0, BigDecimal.ROUND_FLOOR).compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L55">            return seconds.divide(years, 0, BigDecimal.ROUND_FLOOR) + &quot; &quot; + mainResource.getString(&quot;main.estimate.years&quot;);</span>
+        }
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        else if (seconds.divide(months, 0, BigDecimal.ROUND_FLOOR).compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L59">            return seconds.divide(months, 0, BigDecimal.ROUND_FLOOR) + &quot; &quot; + mainResource.getString(&quot;main.estimate.months&quot;);</span>
+        }
+<span class="nc bnc" id="L61" title="All 2 branches missed.">        else if (seconds.divide(days, 0, BigDecimal.ROUND_FLOOR).compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L63">            return seconds.divide(days, 0, BigDecimal.ROUND_FLOOR) + &quot; &quot; + mainResource.getString(&quot;main.estimate.days&quot;);</span>
+        }
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        else if (seconds.divide(hours, 0, BigDecimal.ROUND_FLOOR).compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L67">            return seconds.divide(hours, 0, BigDecimal.ROUND_FLOOR) + &quot; &quot; + mainResource.getString(&quot;main.estimate.hours&quot;);</span>
+        }
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        else if (seconds.divide(minutes, 0, BigDecimal.ROUND_FLOOR).compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L71">            return seconds.divide(minutes, 0, BigDecimal.ROUND_FLOOR) + &quot; &quot; + mainResource.getString(&quot;main.estimate.minutes&quot;);</span>
+        }
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        else if (seconds.compareTo(BigDecimal.ONE) &gt;= 0)</span>
+        {
+<span class="nc" id="L75">            return seconds + &quot; &quot; + mainResource.getString(&quot;main.estimate.seconds&quot;);</span>
+        }
+        else
+        {
+<span class="nc" id="L79">            return mainResource.getString(&quot;main.estimate.instant&quot;);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

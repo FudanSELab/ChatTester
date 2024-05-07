@@ -1,0 +1,540 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public void toJson(Object object, Writer writer) {
+    try {
+        if (object == null) {
+            writer.append(JsonWriter.CONST_NULL);
+            return;
+        }
+        Class<?> objectType = object.getClass();
+        ValueFormatter<?> formatter = VALUE_FORMATTERS.get(objectType);
+        if (formatter != null) {
+            String formattedStr = formatter.formatObject(this, object);
+            writer.append(formattedStr);
+            return;
+        } else if (object instanceof Boolean) {
+            JsonWriter.writeBoolean(this, (Boolean) object, writer);
+            return;
+        } else if (object instanceof String || object instanceof Character) {
+            JsonWriter.writeString(this, object.toString(), writer);
+            return;
+        } else if (object instanceof Number) {
+            JsonWriter.writeNumber(this, (Number) object, writer);
+            return;
+        } else if (object instanceof Enum) {
+            JsonWriter.writeEnum(this, (Enum<?>) object, writer);
+            return;
+        } else if (object instanceof Iterable) {
+            JsonWriter.writeIterable(this, (Iterable<?>) object, writer);
+            return;
+        } else if (object instanceof Map) {
+            JsonWriter.writeMap(this, (Map<?, ?>) object, writer);
+            return;
+        } else if (objectType.isArray()) {
+            Class<?> componentType = objectType.getComponentType();
+            if (componentType == byte.class) {
+                JsonWriter.writeBase64String(this, (byte[]) object, writer);
+            } else if (componentType == char.class) {
+                JsonWriter.writeArray((char[]) object, writer);
+            } else if (componentType == boolean.class) {
+                JsonWriter.writeArray((boolean[]) object, writer);
+            } else if (componentType == short.class) {
+                JsonWriter.writeArray((short[]) object, writer);
+            } else if (componentType == int.class) {
+                JsonWriter.writeArray((int[]) object, writer);
+            } else if (componentType == long.class) {
+                JsonWriter.writeArray((long[]) object, writer);
+            } else if (componentType == float.class) {
+                JsonWriter.writeArray((float[]) object, writer);
+            } else if (componentType == double.class) {
+                JsonWriter.writeArray((double[]) object, writer);
+            } else {
+                JsonWriter.writeArray(this, (Object[]) object, writer);
+            }
+            return;
+        }
+        JsonWriterInvoker writerInvoker = writerCodeGenerator.getWriter(objectType);
+        if (writerInvoker == null) {
+            writerInvoker = writerCodeGenerator.registerWriter(objectType);
+        }
+        writerInvoker.writeJson(object, writer);
+    } catch (JsonException e) {
+        throw e;
+    } catch (Exception e) {
+        throw new JsonException(e);
+    }
+}
+
+# Method Intention
+The overall intention of the toJson(Object object, Writer writer) method is to serialize an object into a JSON representation by determining the appropriate formatting strategy based on the object's type and invoking the corresponding JSON writing methods, handling various data types and structures along the way.
+
+# Test Method
+    @Test
+    public void testToJson() {
+        ZapposJson zapposJson = ZapposJson.getInstance();
+        StringWriter stringWriter = new StringWriter();
+        zapposJson.toJson(null, stringWriter);
+        assertEquals("Expected JSON for null object", "null", stringWriter.toString());
+        stringWriter.getBuffer().setLength(0); 
+        Date date = new Date();
+        zapposJson.toJson(date, stringWriter);
+                [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure Expected JSON for Date object expected:<["Tue Apr 30 11:03:10 GMT 2024"]> but was:<[1714474990775]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public void toJson(Object object, Writer writer) {
+    try {
+        if (object == null) {
+            writer.append(JsonWriter.CONST_NULL);
+            return;
+        }
+        Class<?> objectType = object.getClass();
+        ValueFormatter<?> formatter = VALUE_FORMATTERS.get(objectType);
+        if (formatter != null) {
+            String formattedStr = formatter.formatObject(this, object);
+            writer.append(formattedStr);
+            return;
+        } else if (object instanceof Boolean) {
+            JsonWriter.writeBoolean(this, (Boolean) object, writer);
+            return;
+        } else if (object instanceof String || object instanceof Character) {
+            JsonWriter.writeString(this, object.toString(), writer);
+            return;
+        } else if (object instanceof Number) {
+            JsonWriter.writeNumber(this, (Number) object, writer);
+            return;
+        } else if (object instanceof Enum) {
+            JsonWriter.writeEnum(this, (Enum<?>) object, writer);
+            return;
+        } else if (object instanceof Iterable) {
+            JsonWriter.writeIterable(this, (Iterable<?>) object, writer);
+            return;
+        } else if (object instanceof Map) {
+            JsonWriter.writeMap(this, (Map<?, ?>) object, writer);
+            return;
+        } else if (objectType.isArray()) {
+            Class<?> componentType = objectType.getComponentType();
+            if (componentType == byte.class) {
+                JsonWriter.writeBase64String(this, (byte[]) object, writer);
+            } else if (componentType == char.class) {
+                JsonWriter.writeArray((char[]) object, writer);
+            } else if (componentType == boolean.class) {
+                JsonWriter.writeArray((boolean[]) object, writer);
+            } else if (componentType == short.class) {
+                JsonWriter.writeArray((short[]) object, writer);
+            } else if (componentType == int.class) {
+                JsonWriter.writeArray((int[]) object, writer);
+            } else if (componentType == long.class) {
+                JsonWriter.writeArray((long[]) object, writer);
+            } else if (componentType == float.class) {
+                JsonWriter.writeArray((float[]) object, writer);
+            } else if (componentType == double.class) {
+                JsonWriter.writeArray((double[]) object, writer);
+            } else {
+                JsonWriter.writeArray(this, (Object[]) object, writer);
+            }
+            return;
+        }
+        JsonWriterInvoker writerInvoker = writerCodeGenerator.getWriter(objectType);
+        if (writerInvoker == null) {
+            writerInvoker = writerCodeGenerator.registerWriter(objectType);
+        }
+        writerInvoker.writeJson(object, writer);
+    } catch (JsonException e) {
+        throw e;
+    } catch (Exception e) {
+        throw new JsonException(e);
+    }
+}
+
+# Method Intention
+The overall intention of the toJson(Object object, Writer writer) method is to serialize an object into a JSON representation by determining the appropriate formatting strategy based on the object's type and invoking the corresponding JSON writing methods.
+
+# Test Method
+@Test
+public void testToJson() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+    StringWriter stringWriter = new StringWriter();
+    zapposJson.toJson(null, stringWriter);
+    assertEquals("Expected JSON for null object", "null", stringWriter.toString());
+    stringWriter.getBuffer().setLength(0); 
+    Date date = new Date();
+    zapposJson.toJson(date, stringWriter);
+            [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure Expected JSON for Date object expected:<["Fri May 03 15:22:51 GMT 2024"]> but was:<[1714749771583]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public void toJson(Object object, Writer writer) {
+    try {
+        if (object == null) {
+            writer.append(JsonWriter.CONST_NULL);
+            return;
+        }
+        Class<?> objectType = object.getClass();
+        ValueFormatter<?> formatter = VALUE_FORMATTERS.get(objectType);
+        if (formatter != null) {
+            String formattedStr = formatter.formatObject(this, object);
+            writer.append(formattedStr);
+            return;
+        } else if (object instanceof Boolean) {
+            JsonWriter.writeBoolean(this, (Boolean) object, writer);
+            return;
+        } else if (object instanceof String || object instanceof Character) {
+            JsonWriter.writeString(this, object.toString(), writer);
+            return;
+        } else if (object instanceof Number) {
+            JsonWriter.writeNumber(this, (Number) object, writer);
+            return;
+        } else if (object instanceof Enum) {
+            JsonWriter.writeEnum(this, (Enum<?>) object, writer);
+            return;
+        } else if (object instanceof Iterable) {
+            JsonWriter.writeIterable(this, (Iterable<?>) object, writer);
+            return;
+        } else if (object instanceof Map) {
+            JsonWriter.writeMap(this, (Map<?, ?>) object, writer);
+            return;
+        } else if (objectType.isArray()) {
+            Class<?> componentType = objectType.getComponentType();
+            if (componentType == byte.class) {
+                JsonWriter.writeBase64String(this, (byte[]) object, writer);
+            } else if (componentType == char.class) {
+                JsonWriter.writeArray((char[]) object, writer);
+            } else if (componentType == boolean.class) {
+                JsonWriter.writeArray((boolean[]) object, writer);
+            } else if (componentType == short.class) {
+                JsonWriter.writeArray((short[]) object, writer);
+            } else if (componentType == int.class) {
+                JsonWriter.writeArray((int[]) object, writer);
+            } else if (componentType == long.class) {
+                JsonWriter.writeArray((long[]) object, writer);
+            } else if (componentType == float.class) {
+                JsonWriter.writeArray((float[]) object, writer);
+            } else if (componentType == double.class) {
+                JsonWriter.writeArray((double[]) object, writer);
+            } else {
+                JsonWriter.writeArray(this, (Object[]) object, writer);
+            }
+            return;
+        }
+        JsonWriterInvoker writerInvoker = writerCodeGenerator.getWriter(objectType);
+        if (writerInvoker == null) {
+            writerInvoker = writerCodeGenerator.registerWriter(objectType);
+        }
+        writerInvoker.writeJson(object, writer);
+    } catch (JsonException e) {
+        throw e;
+    } catch (Exception e) {
+        throw new JsonException(e);
+    }
+}
+
+# Method Intention
+The overall intention of the toJson(Object object, Writer writer) method is to serialize an object into a JSON representation by determining the appropriate formatting strategy based on the object's type and invoking the corresponding JSON writing methods, handling various data types and structures along the way.
+
+# Test Method
+@Test
+public void testToJson() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+    StringWriter stringWriter = new StringWriter();
+    zapposJson.toJson(null, stringWriter);
+    assertEquals("Expected JSON for null object", "null", stringWriter.toString());
+    stringWriter.getBuffer().setLength(0); 
+    Date date = new Date();
+    zapposJson.toJson(date, stringWriter);
+            [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure Expected JSON for Date object expected:<["Fri May 03 15:23:10 GMT 2024"]> but was:<[1714749790888]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public void toJson(Object object, Writer writer) {
+    try {
+        if (object == null) {
+            writer.append(JsonWriter.CONST_NULL);
+            return;
+        }
+        Class<?> objectType = object.getClass();
+        ValueFormatter<?> formatter = VALUE_FORMATTERS.get(objectType);
+        if (formatter != null) {
+            String formattedStr = formatter.formatObject(this, object);
+            writer.append(formattedStr);
+            return;
+        } else if (object instanceof Boolean) {
+            JsonWriter.writeBoolean(this, (Boolean) object, writer);
+            return;
+        } else if (object instanceof String || object instanceof Character) {
+            JsonWriter.writeString(this, object.toString(), writer);
+            return;
+        } else if (object instanceof Number) {
+            JsonWriter.writeNumber(this, (Number) object, writer);
+            return;
+        } else if (object instanceof Enum) {
+            JsonWriter.writeEnum(this, (Enum<?>) object, writer);
+            return;
+        } else if (object instanceof Iterable) {
+            JsonWriter.writeIterable(this, (Iterable<?>) object, writer);
+            return;
+        } else if (object instanceof Map) {
+            JsonWriter.writeMap(this, (Map<?, ?>) object, writer);
+            return;
+        } else if (objectType.isArray()) {
+            Class<?> componentType = objectType.getComponentType();
+            if (componentType == byte.class) {
+                JsonWriter.writeBase64String(this, (byte[]) object, writer);
+            } else if (componentType == char.class) {
+                JsonWriter.writeArray((char[]) object, writer);
+            } else if (componentType == boolean.class) {
+                JsonWriter.writeArray((boolean[]) object, writer);
+            } else if (componentType == short.class) {
+                JsonWriter.writeArray((short[]) object, writer);
+            } else if (componentType == int.class) {
+                JsonWriter.writeArray((int[]) object, writer);
+            } else if (componentType == long.class) {
+                JsonWriter.writeArray((long[]) object, writer);
+            } else if (componentType == float.class) {
+                JsonWriter.writeArray((float[]) object, writer);
+            } else if (componentType == double.class) {
+                JsonWriter.writeArray((double[]) object, writer);
+            } else {
+                JsonWriter.writeArray(this, (Object[]) object, writer);
+            }
+            return;
+        }
+        JsonWriterInvoker writerInvoker = writerCodeGenerator.getWriter(objectType);
+        if (writerInvoker == null) {
+            writerInvoker = writerCodeGenerator.registerWriter(objectType);
+        }
+        writerInvoker.writeJson(object, writer);
+    } catch (JsonException e) {
+        throw e;
+    } catch (Exception e) {
+        throw new JsonException(e);
+    }
+}
+
+# Method Intention
+The overall intention of the toJson(Object object, Writer writer) method is to serialize an object into a JSON representation by determining the appropriate formatting strategy based on the object's type and invoking the corresponding JSON writing methods, handling various data types and structures along the way.
+
+# Test Method
+@Test
+public void testToJson() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+    StringWriter stringWriter = new StringWriter();
+    zapposJson.toJson(null, stringWriter);
+    assertEquals("Expected JSON for null object", "null", stringWriter.toString());
+    stringWriter.getBuffer().setLength(0); 
+    Date date = new Date();
+    zapposJson.toJson(date, stringWriter);
+            [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure Expected JSON for Date object expected:<["Fri May 03 15:23:30 GMT 2024"]> but was:<[1714749810396]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public void toJson(Object object, Writer writer) {
+    try {
+        if (object == null) {
+            writer.append(JsonWriter.CONST_NULL);
+            return;
+        }
+        Class<?> objectType = object.getClass();
+        ValueFormatter<?> formatter = VALUE_FORMATTERS.get(objectType);
+        if (formatter != null) {
+            String formattedStr = formatter.formatObject(this, object);
+            writer.append(formattedStr);
+            return;
+        } else if (object instanceof Boolean) {
+            JsonWriter.writeBoolean(this, (Boolean) object, writer);
+            return;
+        } else if (object instanceof String || object instanceof Character) {
+            JsonWriter.writeString(this, object.toString(), writer);
+            return;
+        } else if (object instanceof Number) {
+            JsonWriter.writeNumber(this, (Number) object, writer);
+            return;
+        } else if (object instanceof Enum) {
+            JsonWriter.writeEnum(this, (Enum<?>) object, writer);
+            return;
+        } else if (object instanceof Iterable) {
+            JsonWriter.writeIterable(this, (Iterable<?>) object, writer);
+            return;
+        } else if (object instanceof Map) {
+            JsonWriter.writeMap(this, (Map<?, ?>) object, writer);
+            return;
+        } else if (objectType.isArray()) {
+            Class<?> componentType = objectType.getComponentType();
+            if (componentType == byte.class) {
+                JsonWriter.writeBase64String(this, (byte[]) object, writer);
+            } else if (componentType == char.class) {
+                JsonWriter.writeArray((char[]) object, writer);
+            } else if (componentType == boolean.class) {
+                JsonWriter.writeArray((boolean[]) object, writer);
+            } else if (componentType == short.class) {
+                JsonWriter.writeArray((short[]) object, writer);
+            } else if (componentType == int.class) {
+                JsonWriter.writeArray((int[]) object, writer);
+            } else if (componentType == long.class) {
+                JsonWriter.writeArray((long[]) object, writer);
+            } else if (componentType == float.class) {
+                JsonWriter.writeArray((float[]) object, writer);
+            } else if (componentType == double.class) {
+                JsonWriter.writeArray((double[]) object, writer);
+            } else {
+                JsonWriter.writeArray(this, (Object[]) object, writer);
+            }
+            return;
+        }
+        JsonWriterInvoker writerInvoker = writerCodeGenerator.getWriter(objectType);
+        if (writerInvoker == null) {
+            writerInvoker = writerCodeGenerator.registerWriter(objectType);
+        }
+        writerInvoker.writeJson(object, writer);
+    } catch (JsonException e) {
+        throw e;
+    } catch (Exception e) {
+        throw new JsonException(e);
+    }
+}
+
+# Method Intention
+The overall intention of the toJson(Object object, Writer writer) method is to serialize an object into a JSON representation by determining the appropriate formatting strategy based on the object's type and invoking the corresponding JSON writing methods, handling various data types and structures along the way.
+
+# Test Method
+@Test
+public void testToJson() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+    StringWriter stringWriter = new StringWriter();
+    zapposJson.toJson(null, stringWriter);
+    assertEquals("Expected JSON for null object", "null", stringWriter.toString());
+    stringWriter.getBuffer().setLength(0); 
+    Date date = new Date();
+    zapposJson.toJson(date, stringWriter);
+            [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure Expected JSON for Date object expected:<["Fri May 03 15:23:50 GMT 2024"]> but was:<[1714749830776]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+5-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public void toJson(Object object, Writer writer) {
+    try {
+        if (object == null) {
+            writer.append(JsonWriter.CONST_NULL);
+            return;
+        }
+        Class<?> objectType = object.getClass();
+        ValueFormatter<?> formatter = VALUE_FORMATTERS.get(objectType);
+        if (formatter != null) {
+            String formattedStr = formatter.formatObject(this, object);
+            writer.append(formattedStr);
+            return;
+        } else if (object instanceof Boolean) {
+            JsonWriter.writeBoolean(this, (Boolean) object, writer);
+            return;
+        } else if (object instanceof String || object instanceof Character) {
+            JsonWriter.writeString(this, object.toString(), writer);
+            return;
+        } else if (object instanceof Number) {
+            JsonWriter.writeNumber(this, (Number) object, writer);
+            return;
+        } else if (object instanceof Enum) {
+            JsonWriter.writeEnum(this, (Enum<?>) object, writer);
+            return;
+        } else if (object instanceof Iterable) {
+            JsonWriter.writeIterable(this, (Iterable<?>) object, writer);
+            return;
+        } else if (object instanceof Map) {
+            JsonWriter.writeMap(this, (Map<?, ?>) object, writer);
+            return;
+        } else if (objectType.isArray()) {
+            Class<?> componentType = objectType.getComponentType();
+            if (componentType == byte.class) {
+                JsonWriter.writeBase64String(this, (byte[]) object, writer);
+            } else if (componentType == char.class) {
+                JsonWriter.writeArray((char[]) object, writer);
+            } else if (componentType == boolean.class) {
+                JsonWriter.writeArray((boolean[]) object, writer);
+            } else if (componentType == short.class) {
+                JsonWriter.writeArray((short[]) object, writer);
+            } else if (componentType == int.class) {
+                JsonWriter.writeArray((int[]) object, writer);
+            } else if (componentType == long.class) {
+                JsonWriter.writeArray((long[]) object, writer);
+            } else if (componentType == float.class) {
+                JsonWriter.writeArray((float[]) object, writer);
+            } else if (componentType == double.class) {
+                JsonWriter.writeArray((double[]) object, writer);
+            } else {
+                JsonWriter.writeArray(this, (Object[]) object, writer);
+            }
+            return;
+        }
+        JsonWriterInvoker writerInvoker = writerCodeGenerator.getWriter(objectType);
+        if (writerInvoker == null) {
+            writerInvoker = writerCodeGenerator.registerWriter(objectType);
+        }
+        writerInvoker.writeJson(object, writer);
+    } catch (JsonException e) {
+        throw e;
+    } catch (Exception e) {
+        throw new JsonException(e);
+    }
+}
+
+# Method Intention
+The overall intention of the toJson(Object object, Writer writer) method is to serialize an object into a JSON representation by determining the appropriate formatting strategy based on the object's type and invoking the corresponding JSON writing methods, handling various data types and structures along the way.
+
+# Test Method
+@Test
+public void testToJson() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+    StringWriter stringWriter = new StringWriter();
+    zapposJson.toJson(null, stringWriter);
+    assertEquals("Expected JSON for null object", "null", stringWriter.toString());
+    stringWriter.getBuffer().setLength(0); 
+    Date date = new Date();
+    zapposJson.toJson(date, stringWriter);
+            [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure Expected JSON for Date object expected:<["Fri May 03 15:25:28 GMT 2024"]> but was:<[1714749928695]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

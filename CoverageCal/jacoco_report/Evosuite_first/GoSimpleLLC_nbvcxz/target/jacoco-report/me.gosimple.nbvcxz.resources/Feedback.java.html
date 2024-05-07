@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Feedback.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">Feedback.java</span></div><h1>Feedback.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import me.gosimple.nbvcxz.scoring.Result;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * @author Adam Brusselback.
+ */
+public class Feedback
+{
+    private final String result;
+    private final String warning;
+    private final List&lt;String&gt; suggestions;
+    private final Configuration configuration;
+
+    /**
+     * @param configuration the {@link Configuration} object.
+     * @param result        the primary message to display.
+     */
+    public Feedback(final Configuration configuration, final String result)
+<span class="fc" id="L24">    {</span>
+<span class="fc" id="L25">        this.configuration = configuration;</span>
+<span class="fc" id="L26">        this.result = result;</span>
+<span class="fc" id="L27">        this.warning = null;</span>
+<span class="fc" id="L28">        this.suggestions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * @param configuration the {@link Configuration} object.
+     * @param result        the primary message to display.
+     * @param warning       warning string
+     * @param suggestions   suggestions
+     */
+    public Feedback(final Configuration configuration, final String result, final String warning, final String... suggestions)
+<span class="fc" id="L38">    {</span>
+<span class="fc" id="L39">        this.configuration = configuration;</span>
+<span class="fc" id="L40">        this.result = result;</span>
+<span class="fc" id="L41">        this.warning = warning;</span>
+<span class="fc" id="L42">        this.suggestions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">        Collections.addAll(this.suggestions, suggestions);</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * @return if the password was secure enough or not (not null)
+     */
+    public String getResult()
+    {
+<span class="fc" id="L51">        return result;</span>
+    }
+
+    /**
+     * Get the raw untranslated warning key.
+     *
+     * @return the warning key (nullable)
+     */
+    public String getWarningKey()
+    {
+<span class="fc" id="L61">        return warning;</span>
+    }
+
+    /**
+     * @return the warning (nullable)
+     */
+    public String getWarning()
+    {
+        try
+        {
+<span class="nc" id="L71">            return configuration.getFeedbackResource().getString(warning);</span>
+        }
+<span class="nc" id="L73">        catch (Exception e)</span>
+        {
+<span class="nc" id="L75">            return null;</span>
+        }
+    }
+
+    /**
+     * Get the raw untranslated suggestion keys.
+     *
+     * @return list of suggestion keys (list is not null)
+     */
+    public List&lt;String&gt; getSuggestionKeys()
+    {
+<span class="fc" id="L86">        return suggestions;</span>
+    }
+
+    /**
+     * @return list of suggestions (list is not null)
+     */
+    public List&lt;String&gt; getSuggestion()
+    {
+<span class="nc" id="L94">        List&lt;String&gt; convertedSuggestions = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        for (String suggestion : suggestions)</span>
+        {
+<span class="nc" id="L97">            convertedSuggestions.add(configuration.getFeedbackResource().getString(suggestion));</span>
+<span class="nc" id="L98">        }</span>
+<span class="nc" id="L99">        return convertedSuggestions;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

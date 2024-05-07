@@ -1,0 +1,10 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java
+[GENERATED PATH] RectangularTextContainer_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/RectangularTextContainer_ESTest.java:[29,35] cannot find symbol
+  symbol:   variable Arrays
+  location: class technology.tabula.RectangularTextContainer_ESTest
+[INFO] 1 error
+####################
+

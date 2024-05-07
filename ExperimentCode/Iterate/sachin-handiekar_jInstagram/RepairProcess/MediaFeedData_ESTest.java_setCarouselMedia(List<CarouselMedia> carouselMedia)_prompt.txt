@@ -1,0 +1,75 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetCarouselMedia() {
+        MediaFeedData mediaFeedData = new MediaFeedData();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<CarouselMedia> testCarouselMediaList = new ArrayList<>();
+
+        CarouselMedia carouselMedia1 = new CarouselMedia();
+        carouselMedia1.setId("1");
+        CarouselMedia carouselMedia2 = new CarouselMedia();
+        carouselMedia2.setId("2");
+        testCarouselMediaList.add(carouselMedia1);
+        testCarouselMediaList.add(carouselMedia2);
+        mediaFeedData.setCarouselMedia(testCarouselMediaList);
+        List<CarouselMedia> retrievedCarouselMediaList = mediaFeedData.getCarouselMedia();
+        assertEquals(testCarouselMediaList, retrievedCarouselMediaList);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# CarouselMedia class
+package org.jinstagram.entity.users.feed;
+public class CarouselMedia {
+public String getType();
+public void setType(String type);
+public Images getImages();
+public void setImages(Images images);
+public Videos getVideos();
+public void setVideos(Videos videos);
+public List<UsersInPhoto> getUsersInPhotoList();
+public void setUsersInPhotoList(List<UsersInPhoto> usersInPhotoList);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testSetCarouselMedia() {
+    MediaFeedData mediaFeedData = new MediaFeedData();
+    List<CarouselMedia> testCarouselMediaList = new ArrayList<CarouselMedia>();
+    CarouselMedia carouselMedia1 = new CarouselMedia();
+
+  <Buggy Line>: cannot find symbol method "setId(java.lang.String)" in CarouselMedia
+    carouselMedia1.setId("1");
+
+    CarouselMedia carouselMedia2 = new CarouselMedia();
+    carouselMedia2.setId("2");
+    testCarouselMediaList.add(carouselMedia1);
+    testCarouselMediaList.add(carouselMedia2);
+    mediaFeedData.setCarouselMedia(testCarouselMediaList);
+    List<CarouselMedia> retrievedCarouselMediaList = mediaFeedData.getCarouselMedia();
+    assertEquals(testCarouselMediaList, retrievedCarouselMediaList);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "CarouselMedia" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "CarouselMedia" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpStatus.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.http</a> &gt; <span class="el_source">HttpStatus.java</span></div><h1>HttpStatus.java</h1><pre class="source lang-java linenums">package org.jinstagram.http;
+
+/**
+ * @author Sachin Handiekar
+ */
+<span class="fc" id="L6">public enum HttpStatus {</span>
+
+    // 2xx Success
+
+    /**
+     * {@code 200 OK}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.3.1&quot;&gt;HTTP/1.1: Semantics and Content, section 6.3.1&lt;/a&gt;
+     */
+<span class="fc" id="L15">    OK(200, &quot;OK&quot;),</span>
+    /**
+     * {@code 201 Created}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.3.2&quot;&gt;HTTP/1.1: Semantics and Content, section 6.3.2&lt;/a&gt;
+     */
+<span class="fc" id="L21">    CREATED(201, &quot;Created&quot;),</span>
+    /**
+     * {@code 202 Accepted}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.3.3&quot;&gt;HTTP/1.1: Semantics and Content, section 6.3.3&lt;/a&gt;
+     */
+<span class="fc" id="L27">    ACCEPTED(202, &quot;Accepted&quot;),</span>
+    /**
+     * {@code 203 Non-Authoritative Information}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.3.4&quot;&gt;HTTP/1.1: Semantics and Content, section 6.3.4&lt;/a&gt;
+     */
+<span class="fc" id="L33">    NON_AUTHORITATIVE_INFORMATION(203, &quot;Non-Authoritative Information&quot;),</span>
+    /**
+     * {@code 204 No Content}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.3.5&quot;&gt;HTTP/1.1: Semantics and Content, section 6.3.5&lt;/a&gt;
+     */
+<span class="fc" id="L39">    NO_CONTENT(204, &quot;No Content&quot;),</span>
+    /**
+     * {@code 205 Reset Content}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.3.6&quot;&gt;HTTP/1.1: Semantics and Content, section 6.3.6&lt;/a&gt;
+     */
+<span class="fc" id="L45">    RESET_CONTENT(205, &quot;Reset Content&quot;),</span>
+    /**
+     * {@code 206 Partial Content}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7233#section-4.1&quot;&gt;HTTP/1.1: Range Requests, section 4.1&lt;/a&gt;
+     */
+<span class="fc" id="L51">    PARTIAL_CONTENT(206, &quot;Partial Content&quot;),</span>
+    /**
+     * {@code 207 Multi-Status}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc4918#section-13&quot;&gt;WebDAV&lt;/a&gt;
+     */
+<span class="fc" id="L57">    MULTI_STATUS(207, &quot;Multi-Status&quot;),</span>
+    /**
+     * {@code 208 Already Reported}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc5842#section-7.1&quot;&gt;WebDAV Binding Extensions&lt;/a&gt;
+     */
+<span class="fc" id="L63">    ALREADY_REPORTED(208, &quot;Already Reported&quot;),</span>
+    /**
+     * {@code 226 IM Used}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc3229#section-10.4.1&quot;&gt;Delta encoding in HTTP&lt;/a&gt;
+     */
+<span class="fc" id="L69">    IM_USED(226, &quot;IM Used&quot;),</span>
+
+    // 3xx Redirection
+
+    /**
+     * {@code 300 Multiple Choices}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.4.1&quot;&gt;HTTP/1.1: Semantics and Content, section 6.4.1&lt;/a&gt;
+     */
+<span class="fc" id="L78">    MULTIPLE_CHOICES(300, &quot;Multiple Choices&quot;),</span>
+    /**
+     * {@code 301 Moved Permanently}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.4.2&quot;&gt;HTTP/1.1: Semantics and Content, section 6.4.2&lt;/a&gt;
+     */
+<span class="fc" id="L84">    MOVED_PERMANENTLY(301, &quot;Moved Permanently&quot;),</span>
+    /**
+     * {@code 302 Found}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.4.3&quot;&gt;HTTP/1.1: Semantics and Content, section 6.4.3&lt;/a&gt;
+     */
+<span class="fc" id="L90">    FOUND(302, &quot;Found&quot;),</span>
+    /**
+     * {@code 302 Moved Temporarily}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc1945#section-9.3&quot;&gt;HTTP/1.0, section 9.3&lt;/a&gt;
+     * @deprecated In favor of {@link #FOUND} which will be returned from {@code HttpStatus.valueOf(302)}
+     */
+<span class="fc" id="L97">    @Deprecated</span>
+    MOVED_TEMPORARILY(302, &quot;Moved Temporarily&quot;),
+    /**
+     * {@code 303 See Other}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.4.4&quot;&gt;HTTP/1.1: Semantics and Content, section 6.4.4&lt;/a&gt;
+     */
+<span class="fc" id="L104">    SEE_OTHER(303, &quot;See Other&quot;),</span>
+    /**
+     * {@code 304 Not Modified}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7232#section-4.1&quot;&gt;HTTP/1.1: Conditional Requests, section 4.1&lt;/a&gt;
+     */
+<span class="fc" id="L110">    NOT_MODIFIED(304, &quot;Not Modified&quot;),</span>
+    /**
+     * {@code 305 Use Proxy}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.4.5&quot;&gt;HTTP/1.1: Semantics and Content, section 6.4.5&lt;/a&gt;
+     * @deprecated due to security concerns regarding in-band configuration of a proxy
+     */
+<span class="fc" id="L117">    @Deprecated</span>
+    USE_PROXY(305, &quot;Use Proxy&quot;),
+    /**
+     * {@code 307 Temporary Redirect}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.4.7&quot;&gt;HTTP/1.1: Semantics and Content, section 6.4.7&lt;/a&gt;
+     */
+<span class="fc" id="L124">    TEMPORARY_REDIRECT(307, &quot;Temporary Redirect&quot;),</span>
+    /**
+     * {@code 308 Permanent Redirect}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7238&quot;&gt;RFC 7238&lt;/a&gt;
+     */
+<span class="fc" id="L130">    PERMANENT_REDIRECT(308, &quot;Permanent Redirect&quot;),</span>
+
+    // --- 4xx Client Error ---
+
+    /**
+     * {@code 400 Bad Request}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.1&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.1&lt;/a&gt;
+     */
+<span class="fc" id="L139">    BAD_REQUEST(400, &quot;Bad Request&quot;),</span>
+    /**
+     * {@code 401 Unauthorized}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7235#section-3.1&quot;&gt;HTTP/1.1: Authentication, section 3.1&lt;/a&gt;
+     */
+<span class="fc" id="L145">    UNAUTHORIZED(401, &quot;Unauthorized&quot;),</span>
+    /**
+     * {@code 402 Payment Required}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.2&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.2&lt;/a&gt;
+     */
+<span class="fc" id="L151">    PAYMENT_REQUIRED(402, &quot;Payment Required&quot;),</span>
+    /**
+     * {@code 403 Forbidden}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.3&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.3&lt;/a&gt;
+     */
+<span class="fc" id="L157">    FORBIDDEN(403, &quot;Forbidden&quot;),</span>
+    /**
+     * {@code 404 Not Found}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.4&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.4&lt;/a&gt;
+     */
+<span class="fc" id="L163">    NOT_FOUND(404, &quot;Not Found&quot;),</span>
+    /**
+     * {@code 405 Method Not Allowed}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.5&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.5&lt;/a&gt;
+     */
+<span class="fc" id="L169">    METHOD_NOT_ALLOWED(405, &quot;Method Not Allowed&quot;),</span>
+    /**
+     * {@code 406 Not Acceptable}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.6&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.6&lt;/a&gt;
+     */
+<span class="fc" id="L175">    NOT_ACCEPTABLE(406, &quot;Not Acceptable&quot;),</span>
+    /**
+     * {@code 407 Proxy Authentication Required}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7235#section-3.2&quot;&gt;HTTP/1.1: Authentication, section 3.2&lt;/a&gt;
+     */
+<span class="fc" id="L181">    PROXY_AUTHENTICATION_REQUIRED(407, &quot;Proxy Authentication Required&quot;),</span>
+    /**
+     * {@code 408 Request Timeout}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.7&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.7&lt;/a&gt;
+     */
+<span class="fc" id="L187">    REQUEST_TIMEOUT(408, &quot;Request Timeout&quot;),</span>
+    /**
+     * {@code 409 Conflict}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.8&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.8&lt;/a&gt;
+     */
+<span class="fc" id="L193">    CONFLICT(409, &quot;Conflict&quot;),</span>
+    /**
+     * {@code 410 Gone}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.9&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.9&lt;/a&gt;
+     */
+<span class="fc" id="L199">    GONE(410, &quot;Gone&quot;),</span>
+    /**
+     * {@code 411 Length Required}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.10&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.10&lt;/a&gt;
+     */
+<span class="fc" id="L205">    LENGTH_REQUIRED(411, &quot;Length Required&quot;),</span>
+    /**
+     * {@code 412 Precondition failed}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7232#section-4.2&quot;&gt;HTTP/1.1: Conditional Requests, section 4.2&lt;/a&gt;
+     */
+<span class="fc" id="L211">    PRECONDITION_FAILED(412, &quot;Precondition Failed&quot;),</span>
+    /**
+     * {@code 413 Payload Too Large}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.11&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.11&lt;/a&gt;
+     * @since 4.1
+     */
+<span class="fc" id="L218">    PAYLOAD_TOO_LARGE(413, &quot;Payload Too Large&quot;),</span>
+    /**
+     * {@code 413 Request Entity Too Large}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc2616#section-10.4.14&quot;&gt;HTTP/1.1, section 10.4.14&lt;/a&gt;
+     * @deprecated In favor of {@link #PAYLOAD_TOO_LARGE} which will be returned from {@code HttpStatus.valueOf(413)}
+     */
+<span class="fc" id="L225">    @Deprecated</span>
+    REQUEST_ENTITY_TOO_LARGE(413, &quot;Request Entity Too Large&quot;),
+    /**
+     * {@code 414 URI Too Long}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.12&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.12&lt;/a&gt;
+     * @since 4.1
+     */
+<span class="fc" id="L233">    URI_TOO_LONG(414, &quot;URI Too Long&quot;),</span>
+    /**
+     * {@code 414 Request-URI Too Long}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc2616#section-10.4.15&quot;&gt;HTTP/1.1, section 10.4.15&lt;/a&gt;
+     * @deprecated In favor of {@link #URI_TOO_LONG} which will be returned from {@code HttpStatus.valueOf(414)}
+     */
+<span class="fc" id="L240">    @Deprecated</span>
+    REQUEST_URI_TOO_LONG(414, &quot;Request-URI Too Long&quot;),
+    /**
+     * {@code 415 Unsupported Media Type}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.13&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.13&lt;/a&gt;
+     */
+<span class="fc" id="L247">    UNSUPPORTED_MEDIA_TYPE(415, &quot;Unsupported Media Type&quot;),</span>
+    /**
+     * {@code 416 Requested Range Not Satisfiable}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7233#section-4.4&quot;&gt;HTTP/1.1: Range Requests, section 4.4&lt;/a&gt;
+     */
+<span class="fc" id="L253">    REQUESTED_RANGE_NOT_SATISFIABLE(416, &quot;Requested range not satisfiable&quot;),</span>
+    /**
+     * {@code 417 Expectation Failed}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.5.14&quot;&gt;HTTP/1.1: Semantics and Content, section 6.5.14&lt;/a&gt;
+     */
+<span class="fc" id="L259">    EXPECTATION_FAILED(417, &quot;Expectation Failed&quot;),</span>
+    /**
+     * {@code 418 I'm a teapot}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc2324#section-2.3.2&quot;&gt;HTCPCP/1.0&lt;/a&gt;
+     */
+<span class="fc" id="L265">    I_AM_A_TEAPOT(418, &quot;I'm a teapot&quot;),</span>
+    /**
+     * @deprecated See &lt;a href=&quot;http://tools.ietf.org/rfcdiff?difftype=--hwdiff&amp;url2=draft-ietf-webdav-protocol-06.txt&quot;&gt;WebDAV Draft Changes&lt;/a&gt;
+     */
+<span class="fc" id="L269">    @Deprecated</span>
+    INSUFFICIENT_SPACE_ON_RESOURCE(419, &quot;Insufficient Space On Resource&quot;),
+    /**
+     * @deprecated See &lt;a href=&quot;http://tools.ietf.org/rfcdiff?difftype=--hwdiff&amp;url2=draft-ietf-webdav-protocol-06.txt&quot;&gt;WebDAV Draft Changes&lt;/a&gt;
+     */
+<span class="fc" id="L274">    @Deprecated</span>
+    METHOD_FAILURE(420, &quot;Method Failure&quot;),
+    /**
+     * @deprecated See &lt;a href=&quot;http://tools.ietf.org/rfcdiff?difftype=--hwdiff&amp;url2=draft-ietf-webdav-protocol-06.txt&quot;&gt;WebDAV Draft Changes&lt;/a&gt;
+     */
+<span class="fc" id="L279">    @Deprecated</span>
+    DESTINATION_LOCKED(421, &quot;Destination Locked&quot;),
+    /**
+     * {@code 422 Unprocessable Entity}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc4918#section-11.2&quot;&gt;WebDAV&lt;/a&gt;
+     */
+<span class="fc" id="L286">    UNPROCESSABLE_ENTITY(422, &quot;Unprocessable Entity&quot;),</span>
+    /**
+     * {@code 423 Locked}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc4918#section-11.3&quot;&gt;WebDAV&lt;/a&gt;
+     */
+<span class="fc" id="L292">    LOCKED(423, &quot;Locked&quot;),</span>
+    /**
+     * {@code 424 Failed Dependency}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc4918#section-11.4&quot;&gt;WebDAV&lt;/a&gt;
+     */
+<span class="fc" id="L298">    FAILED_DEPENDENCY(424, &quot;Failed Dependency&quot;),</span>
+    /**
+     * {@code 426 Upgrade Required}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc2817#section-6&quot;&gt;Upgrading to TLS Within HTTP/1.1&lt;/a&gt;
+     */
+<span class="fc" id="L304">    UPGRADE_REQUIRED(426, &quot;Upgrade Required&quot;),</span>
+    /**
+     * {@code 428 Precondition Required}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc6585#section-3&quot;&gt;Additional HTTP Status Codes&lt;/a&gt;
+     */
+<span class="fc" id="L310">    PRECONDITION_REQUIRED(428, &quot;Precondition Required&quot;),</span>
+    /**
+     * {@code 429 Too Many Requests}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc6585#section-4&quot;&gt;Additional HTTP Status Codes&lt;/a&gt;
+     */
+<span class="fc" id="L316">    TOO_MANY_REQUESTS(429, &quot;Too Many Requests&quot;),</span>
+    /**
+     * {@code 431 Request Header Fields Too Large}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc6585#section-5&quot;&gt;Additional HTTP Status Codes&lt;/a&gt;
+     */
+<span class="fc" id="L322">    REQUEST_HEADER_FIELDS_TOO_LARGE(431, &quot;Request Header Fields Too Large&quot;),</span>
+
+    // --- 5xx Server Error ---
+
+    /**
+     * {@code 500 Internal Server Error}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.6.1&quot;&gt;HTTP/1.1: Semantics and Content, section 6.6.1&lt;/a&gt;
+     */
+<span class="fc" id="L331">    INTERNAL_SERVER_ERROR(500, &quot;Internal Server Error&quot;),</span>
+    /**
+     * {@code 501 Not Implemented}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.6.2&quot;&gt;HTTP/1.1: Semantics and Content, section 6.6.2&lt;/a&gt;
+     */
+<span class="fc" id="L337">    NOT_IMPLEMENTED(501, &quot;Not Implemented&quot;),</span>
+    /**
+     * {@code 502 Bad Gateway}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.6.3&quot;&gt;HTTP/1.1: Semantics and Content, section 6.6.3&lt;/a&gt;
+     */
+<span class="fc" id="L343">    BAD_GATEWAY(502, &quot;Bad Gateway&quot;),</span>
+    /**
+     * {@code 503 Service Unavailable}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.6.4&quot;&gt;HTTP/1.1: Semantics and Content, section 6.6.4&lt;/a&gt;
+     */
+<span class="fc" id="L349">    SERVICE_UNAVAILABLE(503, &quot;Service Unavailable&quot;),</span>
+    /**
+     * {@code 504 Gateway Timeout}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.6.5&quot;&gt;HTTP/1.1: Semantics and Content, section 6.6.5&lt;/a&gt;
+     */
+<span class="fc" id="L355">    GATEWAY_TIMEOUT(504, &quot;Gateway Timeout&quot;),</span>
+    /**
+     * {@code 505 HTTP Version Not Supported}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc7231#section-6.6.6&quot;&gt;HTTP/1.1: Semantics and Content, section 6.6.6&lt;/a&gt;
+     */
+<span class="fc" id="L361">    HTTP_VERSION_NOT_SUPPORTED(505, &quot;HTTP Version not supported&quot;),</span>
+    /**
+     * {@code 506 Variant Also Negotiates}
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc2295#section-8.1&quot;&gt;Transparent Content Negotiation&lt;/a&gt;
+     */
+<span class="fc" id="L367">    VARIANT_ALSO_NEGOTIATES(506, &quot;Variant Also Negotiates&quot;),</span>
+    /**
+     * {@code 507 Insufficient Storage}
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc4918#section-11.5&quot;&gt;WebDAV&lt;/a&gt;
+     */
+<span class="fc" id="L373">    INSUFFICIENT_STORAGE(507, &quot;Insufficient Storage&quot;),</span>
+    /**
+     * {@code 508 Loop Detected}
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc5842#section-7.2&quot;&gt;WebDAV Binding Extensions&lt;/a&gt;
+     */
+<span class="fc" id="L379">    LOOP_DETECTED(508, &quot;Loop Detected&quot;),</span>
+    /**
+     * {@code 509 Bandwidth Limit Exceeded}
+     */
+<span class="fc" id="L383">    BANDWIDTH_LIMIT_EXCEEDED(509, &quot;Bandwidth Limit Exceeded&quot;),</span>
+    /**
+     * {@code 510 Not Extended}
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc2774#section-7&quot;&gt;HTTP Extension Framework&lt;/a&gt;
+     */
+<span class="fc" id="L389">    NOT_EXTENDED(510, &quot;Not Extended&quot;),</span>
+    /**
+     * {@code 511 Network Authentication Required}.
+     *
+     * @see &lt;a href=&quot;http://tools.ietf.org/html/rfc6585#section-6&quot;&gt;Additional HTTP Status Codes&lt;/a&gt;
+     */
+<span class="fc" id="L395">    NETWORK_AUTHENTICATION_REQUIRED(511, &quot;Network Authentication Required&quot;);</span>
+
+    private final int value;
+
+    private final String reasonPhrase;
+
+<span class="fc" id="L401">    private HttpStatus(int value, String reasonPhrase) {</span>
+<span class="fc" id="L402">        this.value = value;</span>
+<span class="fc" id="L403">        this.reasonPhrase = reasonPhrase;</span>
+<span class="fc" id="L404">    }</span>
+
+    /**
+     * Return the integer value of this status code.
+     */
+    public int value() {
+<span class="nc" id="L410">        return this.value;</span>
+    }
+
+    /**
+     * Return the reason phrase of this status code.
+     */
+    public String getReasonPhrase() {
+<span class="nc" id="L417">        return reasonPhrase;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

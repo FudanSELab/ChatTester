@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DictionaryUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">DictionaryUtil.java</span></div><h1>DictionaryUtil.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author Adam Brusselback
+ */
+<span class="nc" id="L15">public class DictionaryUtil</span>
+{
+    /**
+     * Ranked dictionary of common passwords
+     */
+    public static final String passwords = &quot;passwords.txt&quot;;
+
+    /**
+     * Ranked dictionary of common male names
+     */
+    public static final String male_names = &quot;male-names.txt&quot;;
+
+    /**
+     * Ranked dictionary of common female names
+     */
+    public static final String female_names = &quot;female-names.txt&quot;;
+
+    /**
+     * Ranked dictionary of common surnames
+     */
+    public static final String surnames = &quot;surnames.txt&quot;;
+
+    /**
+     * Ranked dictionary of common English word
+     */
+    public static final String english = &quot;english.txt&quot;;
+
+    /**
+     * Unranked dictionary from the EFF password wordlist
+     */
+    public static final String eff_large = &quot;eff_large.txt&quot;;
+
+    /**
+     * Read a resource file with a list of entries (sorted by frequency) and use
+     * it to create a ranked dictionary.
+     * &lt;p&gt;
+     * The dictionary must contain only lower case values for the matching to work properly.
+     *
+     * @param fileName the name of the file
+     * @return the ranked dictionary (a {@code HashMap} which associated a
+     * rank to each entry
+     */
+    public static Map&lt;String, Integer&gt; loadUnrankedDictionary(final String fileName)
+    {
+<span class="fc" id="L59">        Map&lt;String, Integer&gt; unranked = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L60">        Set&lt;String&gt; unranked_set = new HashSet&lt;&gt;();</span>
+
+<span class="fc" id="L62">        String path = &quot;/dictionaries/&quot; + fileName;</span>
+<span class="fc" id="L63">        try (InputStream is = DictionaryUtil.class.getResourceAsStream(path);</span>
+<span class="fc" id="L64">             BufferedReader br = new BufferedReader(new InputStreamReader(is, &quot;UTF-8&quot;)))</span>
+        {
+            String line;
+<span class="fc" id="L67">            int i = 0;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">            while ((line = br.readLine()) != null)</span>
+            {
+<span class="fc" id="L70">                unranked_set.add(line);</span>
+<span class="fc" id="L71">                i++;</span>
+            }
+
+<span class="fc" id="L74">            i = i / 2;</span>
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            for (String value : unranked_set)</span>
+            {
+<span class="fc" id="L78">                unranked.put(value, i);</span>
+<span class="fc" id="L79">            }</span>
+        }
+<span class="nc" id="L81">        catch (IOException e)</span>
+        {
+<span class="nc" id="L83">            System.out.println(&quot;Error while reading &quot; + fileName);</span>
+<span class="fc" id="L84">        }</span>
+
+<span class="fc" id="L86">        return unranked;</span>
+    }
+
+    /**
+     * Read a resource file with a list of entries (sorted by frequency) and use
+     * it to create a ranked dictionary.
+     * &lt;p&gt;
+     * The dictionary must contain only lower case values for the matching to work properly.
+     *
+     * @param fileName the name of the file
+     * @return the ranked dictionary (a {@code HashMap} which associated a
+     * rank to each entry
+     */
+    public static Map&lt;String, Integer&gt; loadRankedDictionary(final String fileName)
+    {
+<span class="fc" id="L101">        Map&lt;String, Integer&gt; ranked = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L102">        String path = &quot;/dictionaries/&quot; + fileName;</span>
+<span class="fc" id="L103">        try (InputStream is = DictionaryUtil.class.getResourceAsStream(path);</span>
+<span class="fc" id="L104">             BufferedReader br = new BufferedReader(new InputStreamReader(is, &quot;UTF-8&quot;)))</span>
+        {
+            String line;
+<span class="fc" id="L107">            int i = 1;</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            while ((line = br.readLine()) != null)</span>
+            {
+<span class="fc" id="L110">                ranked.put(line, i++);</span>
+            }
+        }
+<span class="nc" id="L113">        catch (IOException e)</span>
+        {
+<span class="nc" id="L115">            System.out.println(&quot;Error while reading &quot; + fileName);</span>
+<span class="fc" id="L116">        }</span>
+
+<span class="fc" id="L118">        return ranked;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

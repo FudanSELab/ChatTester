@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Preconditions.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.utils</a> &gt; <span class="el_source">Preconditions.java</span></div><h1>Preconditions.java</h1><pre class="source lang-java linenums">package org.jinstagram.utils;
+
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jinstagram.auth.model.OAuthConstants;
+
+/**
+ * Utils for checking preconditions and invariants
+ */
+<span class="nc" id="L11">public class Preconditions {</span>
+	private static final String DEFAULT_MESSAGE = &quot;Received an invalid parameter&quot;;
+
+<span class="fc" id="L14">	private static final Pattern URL_PATTERN = Pattern.compile(&quot;^[a-zA-Z][a-zA-Z0-9+.-]*://\\S+&quot;);</span>
+<span class="fc" id="L15">	private static final Pattern LAT_LONG_PATTERN = Pattern.compile(&quot;(-)?[0-9]+(\\.)?[0-9]*&quot;);</span>
+<span class="fc" id="L16">	private static final Pattern NUMERIC_PATTERN = Pattern.compile(&quot;[0-9]+&quot;);</span>
+
+	/**
+	 * Checks that an object is not null.
+	 *
+	 * @param object   any object
+	 * @param errorMsg error message
+	 * @throws IllegalArgumentException if the object is null
+	 */
+	public static void checkNotNull(Object object, String errorMsg) {
+<span class="nc bnc" id="L26" title="All 2 branches missed.">		check(object != null, errorMsg);</span>
+<span class="nc" id="L27">	}</span>
+
+	/**
+	 * Checks that at least one of object1 or object2 is not null
+	 *
+	 * @param object1 any object
+	 * @param object2 any object
+	 * @param errorMsg error message
+	 * @throws IllegalArgumentException if both object1 and object2 are null
+	 */
+	public static void checkBothNotNull(Object object1, Object object2, String errorMsg) {
+<span class="nc bnc" id="L38" title="All 4 branches missed.">		check(!(object1 == null &amp;&amp; object2 == null), errorMsg);</span>
+<span class="nc" id="L39">	}</span>
+
+	/**
+	 * Checks that a string is not null or empty
+	 * @param string   any string
+	 * @param errorMsg error message
+	 * @throws IllegalArgumentException if the string is null or empty
+	 */
+	public static void checkEmptyString(String string, String errorMsg) {
+<span class="nc" id="L48">		check(StringUtils.isNotBlank(string), errorMsg);</span>
+<span class="nc" id="L49">	}</span>
+
+	/**
+	 * Checks that a URL is valid
+	 *
+	 * @param url      any string
+	 * @param errorMsg error message
+	 */
+	public static void checkValidUrl(String url, String errorMsg) {
+<span class="nc" id="L58">		checkEmptyString(url, errorMsg);</span>
+<span class="nc" id="L59">		check(isUrl(url), errorMsg);</span>
+<span class="nc" id="L60">	}</span>
+
+	/**
+	 * Checks that a URL is a valid OAuth callback
+	 *
+	 * @param url      any string
+	 * @param errorMsg error message
+	 */
+	public static void checkValidOAuthCallback(String url, String errorMsg) {
+<span class="nc" id="L69">		checkEmptyString(url, errorMsg);</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (url.toLowerCase().compareToIgnoreCase(OAuthConstants.OUT_OF_BAND) != 0) {</span>
+<span class="nc" id="L72">			check(isUrl(url), errorMsg);</span>
+		}
+<span class="nc" id="L74">	}</span>
+
+	/**
+	 * Checks that a string is a valid longitude or latitude value ('lat' and 'lng') 
+	 * as shown in &lt;a href=&quot;http://instagram.com/developer/realtime/&quot;&gt;Instagram Developer real time section&lt;/a&gt;
+	 * 
+	 * @param latOrLong any string
+	 * @param errorMsg error message
+	 */
+	public static void checkValidLatLong(String latOrLong, String errorMsg) {
+<span class="nc" id="L84">		checkEmptyString(latOrLong, errorMsg);</span>
+<span class="nc" id="L85">		check(isLatLong(latOrLong), errorMsg);</span>
+<span class="nc" id="L86">	}</span>
+
+	/**
+	 * Check that a string is a valid radius value ('radius') 
+	 * as shown in &lt;a href=&quot;http://instagram.com/developer/realtime/&quot;&gt;Instagram Developer real time section&lt;/a&gt;
+	 * 
+	 * @param radiusString any string that is supposed to be a radius
+	 * @param errorMsg error message
+	 */
+	public static void checkValidRadius(String radiusString, String errorMsg) {
+<span class="nc" id="L96">		checkEmptyString(radiusString, errorMsg);</span>
+<span class="nc" id="L97">		check(isNumeric(radiusString), errorMsg);</span>
+<span class="nc" id="L98">	}</span>
+
+	private static boolean isUrl(String url) {
+<span class="nc" id="L101">		return URL_PATTERN.matcher(url).matches();</span>
+	}
+
+	private static boolean isLatLong(String latOrLong) {
+<span class="nc" id="L105">		return LAT_LONG_PATTERN.matcher(latOrLong).matches();</span>
+	}
+
+	private static boolean isNumeric(String numericString) {
+<span class="nc" id="L109">		return NUMERIC_PATTERN.matcher(numericString).matches();</span>
+	}
+
+	private static void check(boolean requirements, String error) {
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		String message = StringUtils.isBlank(error) ? DEFAULT_MESSAGE : error;</span>
+
+<span class="nc bnc" id="L115" title="All 2 branches missed.">		if (!requirements) {</span>
+<span class="nc" id="L116">			throw new IllegalArgumentException(message);</span>
+		}
+<span class="nc" id="L118">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

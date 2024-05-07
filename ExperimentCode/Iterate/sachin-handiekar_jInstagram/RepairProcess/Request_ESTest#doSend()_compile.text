@@ -1,0 +1,30 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/Request_ESTest.java
+[GENERATED PATH] Request_ESTest#doSend().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/Request_ESTest.java:[44,57] no suitable method found for openConnection(no arguments)
+    method org.evosuite.runtime.mock.java.net.MockURL.openConnection(java.net.URL) is not applicable
+      (actual and formal argument lists differ in length)
+    method org.evosuite.runtime.mock.java.net.MockURL.openConnection(java.net.URL,java.net.Proxy) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/Request_ESTest.java:[52,46] cannot find symbol
+  symbol:   method getConnection()
+  location: variable response of type org.jinstagram.http.Response
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/Request_ESTest.java
+[GENERATED PATH] Request_ESTest#doSend().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/Request_ESTest.java:[48,13] method does not override or implement a method from a supertype
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/Request_ESTest.java:[50,24] constructor HttpURLConnection in class java.net.HttpURLConnection cannot be applied to given types;
+  required: java.net.URL
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/http/Request_ESTest.java:[70,46] cannot find symbol
+  symbol:   method getConnection()
+  location: variable response of type org.jinstagram.http.Response
+[INFO] 3 errors 
+####################
+

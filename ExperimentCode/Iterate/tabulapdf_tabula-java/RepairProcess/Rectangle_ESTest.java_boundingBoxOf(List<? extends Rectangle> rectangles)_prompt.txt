@@ -1,0 +1,200 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Rectangle boundingBoxOf(List<? extends Rectangle> rectangles) {
+    float minx = java.lang.Float.MAX_VALUE;
+    float miny = java.lang.Float.MAX_VALUE;
+    float maxx = java.lang.Float.MIN_VALUE;
+    float maxy = java.lang.Float.MIN_VALUE;
+    for (Rectangle r : rectangles) {
+        minx = (float) Math.min(r.getMinX(), minx);
+        miny = (float) Math.min(r.getMinY(), miny);
+        maxx = (float) Math.max(r.getMaxX(), maxx);
+        maxy = (float) Math.max(r.getMaxY(), maxy);
+    }
+    return new Rectangle(miny, minx, maxx - minx, maxy - miny);
+}
+
+# Method Intention
+The overall intention of the boundingBoxOf method is to calculate and return the smallest rectangle that encompasses all the input rectangles by finding the minimum and maximum x and y coordinates among the input rectangles and using them to define the bounding box.
+
+# Test Method
+    @Test
+    public void testBoundingBoxOf() {
+        List<Rectangle> rectangles = new LinkedList<>();
+        rectangles.add(new Rectangle(0, 0, 5, 5));
+        rectangles.add(new Rectangle(2, 3, 4, 6));
+        rectangles.add(new Rectangle(1, 1, 3, 3));
+        float expectedMinX = 0;
+        float expectedMinY = 0;
+        float expectedMaxX = 6;
+        float expectedMaxY = 9;
+        Rectangle boundingBox = Rectangle.boundingBoxOf(rectangles);
+        assertEquals(expectedMinX, boundingBox.getLeft(), 0.001);
+        assertEquals(expectedMinY, boundingBox.getTop(), 0.001);
+        [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal Method
+public static Rectangle boundingBoxOf(List<? extends Rectangle> rectangles) {
+    float minx = java.lang.Float.MAX_VALUE;
+    float miny = java.lang.Float.MAX_VALUE;
+    float maxx = java.lang.Float.MIN_VALUE;
+    float maxy = java.lang.Float.MIN_VALUE;
+    for (Rectangle r : rectangles) {
+        minx = (float) Math.min(r.getMinX(), minx);
+        miny = (float) Math.min(r.getMinY(), miny);
+        maxx = (float) Math.max(r.getMaxX(), maxx);
+        maxy = (float) Math.max(r.getMaxY(), maxy);
+    }
+    return new Rectangle(miny, minx, maxx - minx, maxy - miny);
+}
+
+# Method Intention
+The overall intention of the boundingBoxOf method is to calculate and return the smallest rectangle that encompasses all the rectangles provided in the input list by finding the minimum and maximum x and y coordinates of their bounding boxes.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention`. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```
+
+########
+
+2-->3-->0-->testRepair
+
+
+# Test Method
+    @Test
+    public void testBoundingBoxOf() {
+        List<Rectangle> rectangles = new LinkedList<>();
+        rectangles.add(new Rectangle(0, 0, 5, 5));
+        rectangles.add(new Rectangle(2, 3, 4, 6));
+        rectangles.add(new Rectangle(1, 1, 3, 3));
+
+           <Buggy Line>: class, interface, or enum expected
+        float expectedMinX = 0;
+
+        float expectedMinY = 0;
+        float expectedMaxX = 6;
+        float expectedMaxY = 9;
+        Rectangle boundingBox = Rectangle.boundingBoxOf(rectangles);
+        assertEquals(expectedMinX, boundingBox.getLeft(), 0.001);
+        assertEquals(expectedMinY, boundingBox.getTop(), 0.001);
+        assertEquals(expectedMaxX, boundingBox.getRight(), 0.001);
+        assertEquals(expectedMaxY, boundingBox.getBottom(), 0.001);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Rectangle boundingBoxOf(List<? extends Rectangle> rectangles) {
+    float minx = java.lang.Float.MAX_VALUE;
+    float miny = java.lang.Float.MAX_VALUE;
+    float maxx = java.lang.Float.MIN_VALUE;
+    float maxy = java.lang.Float.MIN_VALUE;
+    for (Rectangle r : rectangles) {
+        minx = (float) Math.min(r.getMinX(), minx);
+        miny = (float) Math.min(r.getMinY(), miny);
+        maxx = (float) Math.max(r.getMaxX(), maxx);
+        maxy = (float) Math.max(r.getMaxY(), maxy);
+    }
+    return new Rectangle(miny, minx, maxx - minx, maxy - miny);
+}
+
+# Method Intention
+The overall intention of the boundingBoxOf method is to calculate and return the smallest rectangle that encompasses all the input rectangles by finding the minimum and maximum x and y coordinates among the input rectangles and using them to define the bounding box.
+
+# Test Method
+@Test
+public void testBoundingBoxOf() {
+    List<Rectangle> rectangles = new LinkedList<>();
+    rectangles.add(new Rectangle(0, 0, 5, 5));
+    rectangles.add(new Rectangle(2, 3, 4, 6));
+    rectangles.add(new Rectangle(1, 1, 3, 3));
+    float expectedMinX = 0;
+    float expectedMinY = 0;
+    float expectedMaxX = 6;
+    float expectedMaxY = 9;
+    Rectangle boundingBox = Rectangle.boundingBoxOf(rectangles);
+    assertEquals(expectedMinX, boundingBox.getLeft(), 0.001);
+    assertEquals(expectedMinY, boundingBox.getTop(), 0.001);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal Method
+public static Rectangle boundingBoxOf(List<? extends Rectangle> rectangles) {
+    float minx = java.lang.Float.MAX_VALUE;
+    float miny = java.lang.Float.MAX_VALUE;
+    float maxx = java.lang.Float.MIN_VALUE;
+    float maxy = java.lang.Float.MIN_VALUE;
+    for (Rectangle r : rectangles) {
+        minx = (float) Math.min(r.getMinX(), minx);
+        miny = (float) Math.min(r.getMinY(), miny);
+        maxx = (float) Math.max(r.getMaxX(), maxx);
+        maxy = (float) Math.max(r.getMaxY(), maxy);
+    }
+    return new Rectangle(miny, minx, maxx - minx, maxy - miny);
+}
+
+# Method Intention
+The overall intention of the boundingBoxOf method is to calculate and return the smallest rectangle that encompasses all the rectangles provided in the input list by finding the minimum and maximum x and y coordinates of their bounding boxes.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention`. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```
+
+########
+
+5-->5-->0-->testRepair
+
+
+# Test Method
+    @Test
+    public void testBoundingBoxOf() {
+        List<Rectangle> rectangles = new LinkedList<>();
+        rectangles.add(new Rectangle(0, 0, 5, 5));
+        rectangles.add(new Rectangle(2, 3, 4, 6));
+        rectangles.add(new Rectangle(1, 1, 3, 3));
+        float expectedMinX = 0;
+
+         <Buggy Line>: class, interface, or enum expected
+        float expectedMinY = 0;
+
+        float expectedMaxX = 6;
+        float expectedMaxY = 9;
+        Rectangle boundingBox = Rectangle.boundingBoxOf(rectangles);
+        assertEquals(expectedMinX, boundingBox.getLeft(), 0.001);
+        assertEquals(expectedMinY, boundingBox.getTop(), 0.001);
+        assertEquals(expectedMaxX, boundingBox.getRight(), 0.001);
+        assertEquals(expectedMaxY, boundingBox.getBottom(), 0.001);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

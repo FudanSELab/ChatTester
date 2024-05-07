@@ -1,0 +1,43 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java
+[GENERATED PATH] JsonWriterCodeGenerator_ESTest#deregister(Class<?> clazz).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[28,105] constructor JsonBeanIntrospector in class com.zappos.json.JsonBeanIntrospector cannot be applied to given types;
+  required: com.zappos.json.ZapposJson
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java
+[GENERATED PATH] JsonWriterCodeGenerator_ESTest#deregister(Class<?> clazz).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[31,59] constructor JsonWriterCodeGenerator in class com.zappos.json.JsonWriterCodeGenerator cannot be applied to given types;
+  required: com.zappos.json.ZapposJson,com.zappos.json.JsonBeanIntrospector
+  found: com.zappos.json.ZapposJson
+  reason: actual and formal argument lists differ in length
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java
+[GENERATED PATH] JsonWriterCodeGenerator_ESTest#deregister(Class<?> clazz).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[36,43] unreported exception java.lang.Exception; must be caught or declared to be thrown
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java
+[GENERATED PATH] JsonWriterCodeGenerator_ESTest#deregister(Class<?> clazz).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[36,46] constructor JsonWriterInvoker in class com.zappos.json.JsonWriterInvoker cannot be applied to given types;
+  required: java.lang.Class<?>,java.lang.Object
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[38,32] JSON_WRITER_INVOKERS has private access in com.zappos.json.JsonWriterCodeGenerator
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[44,44] JSON_WRITER_INVOKERS has private access in com.zappos.json.JsonWriterCodeGenerator
+[INFO] 3 errors 
+####################
+

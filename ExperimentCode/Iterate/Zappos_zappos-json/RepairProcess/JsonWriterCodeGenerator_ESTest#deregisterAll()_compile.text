@@ -1,0 +1,21 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java
+[GENERATED PATH] JsonWriterCodeGenerator_ESTest#deregisterAll().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[28,105] constructor JsonBeanIntrospector in class com.zappos.json.JsonBeanIntrospector cannot be applied to given types;
+  required: com.zappos.json.ZapposJson
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[30,46] constructor JsonWriterInvoker in class com.zappos.json.JsonWriterInvoker cannot be applied to given types;
+  required: java.lang.Class<?>,java.lang.Object
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[31,47] constructor JsonWriterInvoker in class com.zappos.json.JsonWriterInvoker cannot be applied to given types;
+  required: java.lang.Class<?>,java.lang.Object
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[32,32] JSON_WRITER_INVOKERS has private access in com.zappos.json.JsonWriterCodeGenerator
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/JsonWriterCodeGenerator_ESTest.java:[38,48] JSON_WRITER_INVOKERS has private access in com.zappos.json.JsonWriterCodeGenerator
+[INFO] 5 errors 
+####################
+

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpreadsheetExtractionAlgorithm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula.extractors</a> &gt; <span class="el_source">SpreadsheetExtractionAlgorithm.java</span></div><h1>SpreadsheetExtractionAlgorithm.java</h1><pre class="source lang-java linenums">package technology.tabula.extractors;
+
+import technology.tabula.*;
+
+import java.awt.geom.Point2D;
+import java.util.*;
+
+/**
+ * @author manuel
+ *
+ */
+<span class="nc" id="L12">public class SpreadsheetExtractionAlgorithm implements ExtractionAlgorithm {</span>
+    
+    private static final float MAGIC_HEURISTIC_NUMBER = 0.65f;
+    
+<span class="fc" id="L16">    private static final Comparator&lt;Point2D&gt; Y_FIRST_POINT_COMPARATOR = (point1, point2) -&gt; {</span>
+<span class="nc" id="L17">        int compareY = compareRounded(point1.getY(), point2.getY());</span>
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        if (compareY == 0) {</span>
+<span class="nc" id="L19">            return compareRounded(point1.getX(), point2.getX());</span>
+        }
+<span class="nc" id="L21">        return compareY;</span>
+    };
+    
+<span class="fc" id="L24">    private static final Comparator&lt;Point2D&gt; X_FIRST_POINT_COMPARATOR = (point1, point2) -&gt; {</span>
+<span class="nc" id="L25">        int compareX = compareRounded(point1.getX(), point2.getX());</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (compareX == 0) {</span>
+<span class="nc" id="L27">            return compareRounded(point1.getY(), point2.getY());</span>
+        }
+<span class="nc" id="L29">        return compareX;</span>
+    };
+
+    private static int compareRounded(double d1, double d2) {
+<span class="nc" id="L33">        float d1Rounded = Utils.round(d1, 2);</span>
+<span class="nc" id="L34">        float d2Rounded = Utils.round(d2, 2);</span>
+
+<span class="nc" id="L36">        return Float.compare(d1Rounded, d2Rounded);</span>
+    }
+    
+    @Override
+    public List&lt;Table&gt; extract(Page page) {
+<span class="nc" id="L41">        return extract(page, page.getRulings());</span>
+    }
+    
+    /**
+     * Extract a list of Table from page using rulings as separators
+     */
+    public List&lt;Table&gt; extract(Page page, List&lt;Ruling&gt; rulings) {
+        // split rulings into horizontal and vertical
+<span class="nc" id="L49">        List&lt;Ruling&gt; horizontalR = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L50">        List&lt;Ruling&gt; verticalR = new ArrayList&lt;&gt;();</span>
+        
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        for (Ruling r: rulings) {</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">            if (r.horizontal()) {</span>
+<span class="nc" id="L54">                horizontalR.add(r);</span>
+            }
+<span class="nc bnc" id="L56" title="All 2 branches missed.">            else if (r.vertical()) {</span>
+<span class="nc" id="L57">                verticalR.add(r);</span>
+            }
+<span class="nc" id="L59">        }</span>
+<span class="nc" id="L60">        horizontalR = Ruling.collapseOrientedRulings(horizontalR);</span>
+<span class="nc" id="L61">        verticalR = Ruling.collapseOrientedRulings(verticalR);</span>
+        
+<span class="nc" id="L63">        List&lt;Cell&gt; cells = findCells(horizontalR, verticalR);</span>
+<span class="nc" id="L64">        List&lt;Rectangle&gt; spreadsheetAreas = findSpreadsheetsFromCells(cells);</span>
+        
+<span class="nc" id="L66">        List&lt;Table&gt; spreadsheets = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        for (Rectangle area: spreadsheetAreas) {</span>
+
+<span class="nc" id="L69">            List&lt;Cell&gt; overlappingCells = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            for (Cell c: cells) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                if (c.intersects(area)) {</span>
+
+<span class="nc" id="L73">                    c.setTextElements(TextElement.mergeWords(page.getText(c)));</span>
+<span class="nc" id="L74">                    overlappingCells.add(c);</span>
+                }
+<span class="nc" id="L76">            }</span>
+
+<span class="nc" id="L78">            List&lt;Ruling&gt; horizontalOverlappingRulings = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            for (Ruling hr: horizontalR) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                if (area.intersectsLine(hr)) {</span>
+<span class="nc" id="L81">                    horizontalOverlappingRulings.add(hr);</span>
+                }
+<span class="nc" id="L83">            }</span>
+<span class="nc" id="L84">            List&lt;Ruling&gt; verticalOverlappingRulings = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            for (Ruling vr: verticalR) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                if (area.intersectsLine(vr)) {</span>
+<span class="nc" id="L87">                    verticalOverlappingRulings.add(vr);</span>
+                }
+<span class="nc" id="L89">            }</span>
+                        
+<span class="nc" id="L91">            TableWithRulingLines t = new TableWithRulingLines(area, overlappingCells, horizontalOverlappingRulings, verticalOverlappingRulings, this, page.getPageNumber());</span>
+<span class="nc" id="L92">            spreadsheets.add(t);</span>
+<span class="nc" id="L93">        }</span>
+<span class="nc" id="L94">        Utils.sort(spreadsheets, Rectangle.ILL_DEFINED_ORDER);</span>
+<span class="nc" id="L95">        return spreadsheets;</span>
+    }
+    
+    public boolean isTabular(Page page) {
+        
+        // if there's no text at all on the page, it's not a table 
+        // (we won't be able to do anything with it though)
+<span class="nc bnc" id="L102" title="All 2 branches missed.">        if (page.getText().isEmpty()){</span>
+<span class="nc" id="L103">            return false; </span>
+        }
+
+        // get minimal region of page that contains every character (in effect,
+        // removes white &quot;margins&quot;)
+<span class="nc" id="L108">        Page minimalRegion = page.getArea(Utils.bounds(page.getText()));</span>
+        
+<span class="nc" id="L110">        List&lt;? extends Table&gt; tables = new SpreadsheetExtractionAlgorithm().extract(minimalRegion);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        if (tables.isEmpty()) {</span>
+<span class="nc" id="L112">            return false;</span>
+        }
+<span class="nc" id="L114">        Table table = tables.get(0);</span>
+<span class="nc" id="L115">        int rowsDefinedByLines = table.getRowCount();</span>
+<span class="nc" id="L116">        int colsDefinedByLines = table.getColCount();</span>
+        
+<span class="nc" id="L118">        tables = new BasicExtractionAlgorithm().extract(minimalRegion);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (tables.isEmpty()) {</span>
+<span class="nc" id="L120">            return false;</span>
+        }
+<span class="nc" id="L122">        table = tables.get(0);</span>
+<span class="nc" id="L123">        int rowsDefinedWithoutLines = table.getRowCount();</span>
+<span class="nc" id="L124">        int colsDefinedWithoutLines = table.getColCount();</span>
+        
+<span class="nc" id="L126">        float ratio = (((float) colsDefinedByLines / colsDefinedWithoutLines) +</span>
+                ((float) rowsDefinedByLines / rowsDefinedWithoutLines)) / 2.0f;
+        
+<span class="nc bnc" id="L129" title="All 4 branches missed.">        return ratio &gt; MAGIC_HEURISTIC_NUMBER &amp;&amp; ratio &lt; (1 / MAGIC_HEURISTIC_NUMBER);</span>
+    }
+    
+    public static List&lt;Cell&gt; findCells(List&lt;Ruling&gt; horizontalRulingLines, List&lt;Ruling&gt; verticalRulingLines) {
+<span class="nc" id="L133">        List&lt;Cell&gt; cellsFound = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L134">        Map&lt;Point2D, Ruling[]&gt; intersectionPoints = Ruling.findIntersections(horizontalRulingLines, verticalRulingLines);</span>
+<span class="nc" id="L135">        List&lt;Point2D&gt; intersectionPointsList = new ArrayList&lt;&gt;(intersectionPoints.keySet());</span>
+<span class="nc" id="L136">        intersectionPointsList.sort(Y_FIRST_POINT_COMPARATOR);</span>
+        
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        for (int i = 0; i &lt; intersectionPointsList.size(); i++) {</span>
+<span class="nc" id="L139">            Point2D topLeft = intersectionPointsList.get(i);</span>
+<span class="nc" id="L140">            Ruling[] hv = intersectionPoints.get(topLeft);</span>
+
+<span class="nc" id="L142">            List&lt;Point2D&gt; xPoints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L143">            List&lt;Point2D&gt; yPoints = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L145" title="All 2 branches missed.">            for (Point2D p: intersectionPointsList.subList(i, intersectionPointsList.size())) {</span>
+<span class="nc bnc" id="L146" title="All 4 branches missed.">                if (p.getX() == topLeft.getX() &amp;&amp; p.getY() &gt; topLeft.getY()) {</span>
+<span class="nc" id="L147">                    xPoints.add(p);</span>
+                }
+<span class="nc bnc" id="L149" title="All 4 branches missed.">                if (p.getY() == topLeft.getY() &amp;&amp; p.getX() &gt; topLeft.getX()) {</span>
+<span class="nc" id="L150">                    yPoints.add(p);</span>
+                }
+<span class="nc" id="L152">            }</span>
+            outer:
+<span class="nc bnc" id="L154" title="All 2 branches missed.">            for (Point2D xPoint: xPoints) {</span>
+
+                // is there a vertical edge b/w topLeft and xPoint?
+<span class="nc bnc" id="L157" title="All 2 branches missed.">                if (!hv[1].equals(intersectionPoints.get(xPoint)[1])) {</span>
+<span class="nc" id="L158">                    continue;</span>
+                }
+<span class="nc bnc" id="L160" title="All 2 branches missed.">                for (Point2D yPoint: yPoints) {</span>
+                    // is there an horizontal edge b/w topLeft and yPoint ?
+<span class="nc bnc" id="L162" title="All 2 branches missed.">                    if (!hv[0].equals(intersectionPoints.get(yPoint)[0])) {</span>
+<span class="nc" id="L163">                        continue;</span>
+                    }
+<span class="nc" id="L165">                    Point2D btmRight = new Point2D.Float((float) yPoint.getX(), (float) xPoint.getY());</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">                    if (intersectionPoints.containsKey(btmRight) </span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">                            &amp;&amp; intersectionPoints.get(btmRight)[0].equals(intersectionPoints.get(xPoint)[0])</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">                            &amp;&amp; intersectionPoints.get(btmRight)[1].equals(intersectionPoints.get(yPoint)[1])) {</span>
+<span class="nc" id="L169">                            cellsFound.add(new Cell(topLeft, btmRight));</span>
+<span class="nc" id="L170">                        break outer;</span>
+                    }
+<span class="nc" id="L172">                }</span>
+<span class="nc" id="L173">            }</span>
+        }
+        
+        // TODO create cells for vertical ruling lines with aligned endpoints at the top/bottom of a grid 
+        // that aren't connected with an horizontal ruler?
+        // see: https://github.com/jazzido/tabula-extractor/issues/78#issuecomment-41481207
+        
+<span class="nc" id="L180">        return cellsFound;</span>
+    }
+    
+    public static List&lt;Rectangle&gt; findSpreadsheetsFromCells(List&lt;? extends Rectangle&gt; cells) {
+        // via: http://stackoverflow.com/questions/13746284/merging-multiple-adjacent-rectangles-into-one-polygon
+<span class="nc" id="L185">        List&lt;Rectangle&gt; rectangles = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L186">        Set&lt;Point2D&gt; pointSet = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L187">        Map&lt;Point2D, Point2D&gt; edgesH = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L188">        Map&lt;Point2D, Point2D&gt; edgesV = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L189">        int i = 0;</span>
+        
+<span class="nc" id="L191">        cells = new ArrayList&lt;&gt;(new HashSet&lt;&gt;(cells));</span>
+
+<span class="nc" id="L193">        Utils.sort(cells, Rectangle.ILL_DEFINED_ORDER);</span>
+
+<span class="nc bnc" id="L195" title="All 2 branches missed.">        for (Rectangle cell: cells) {</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">            for(Point2D pt: cell.getPoints()) {</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">                if (pointSet.contains(pt)) { // shared vertex, remove it</span>
+<span class="nc" id="L198">                    pointSet.remove(pt);</span>
+                }
+                else {
+<span class="nc" id="L201">                    pointSet.add(pt);</span>
+                }
+            }
+<span class="nc" id="L204">        }</span>
+        
+        // X first sort
+<span class="nc" id="L207">        List&lt;Point2D&gt; pointsSortX = new ArrayList&lt;&gt;(pointSet);</span>
+<span class="nc" id="L208">        pointsSortX.sort(X_FIRST_POINT_COMPARATOR);</span>
+        // Y first sort
+<span class="nc" id="L210">        List&lt;Point2D&gt; pointsSortY = new ArrayList&lt;&gt;(pointSet);</span>
+<span class="nc" id="L211">        pointsSortY.sort(Y_FIRST_POINT_COMPARATOR);</span>
+        
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        while (i &lt; pointSet.size()) {</span>
+<span class="nc" id="L214">            float currY = (float) pointsSortY.get(i).getY();</span>
+<span class="nc bnc" id="L215" title="All 4 branches missed.">            while (i &lt; pointSet.size() &amp;&amp; Utils.feq(pointsSortY.get(i).getY(), currY)) {</span>
+<span class="nc" id="L216">                edgesH.put(pointsSortY.get(i), pointsSortY.get(i+1));</span>
+<span class="nc" id="L217">                edgesH.put(pointsSortY.get(i+1), pointsSortY.get(i));</span>
+<span class="nc" id="L218">                i += 2;</span>
+            }
+<span class="nc" id="L220">        }</span>
+        
+<span class="nc" id="L222">        i = 0;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">        while (i &lt; pointSet.size()) {</span>
+<span class="nc" id="L224">            float currX = (float) pointsSortX.get(i).getX();</span>
+<span class="nc bnc" id="L225" title="All 4 branches missed.">            while (i &lt; pointSet.size() &amp;&amp; Utils.feq(pointsSortX.get(i).getX(), currX)) {</span>
+<span class="nc" id="L226">                edgesV.put(pointsSortX.get(i), pointsSortX.get(i+1));</span>
+<span class="nc" id="L227">                edgesV.put(pointsSortX.get(i+1), pointsSortX.get(i));</span>
+<span class="nc" id="L228">                i += 2;</span>
+            }
+<span class="nc" id="L230">        }</span>
+        
+        // Get all the polygons
+<span class="nc" id="L233">        List&lt;List&lt;PolygonVertex&gt;&gt; polygons = new ArrayList&lt;&gt;();</span>
+        Point2D nextVertex;
+<span class="nc bnc" id="L235" title="All 2 branches missed.">        while (!edgesH.isEmpty()) {</span>
+<span class="nc" id="L236">            ArrayList&lt;PolygonVertex&gt; polygon = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L237">            Point2D first = edgesH.keySet().iterator().next();</span>
+<span class="nc" id="L238">            polygon.add(new PolygonVertex(first, Direction.HORIZONTAL));</span>
+<span class="nc" id="L239">            edgesH.remove(first);</span>
+            
+            while (true) {
+<span class="nc" id="L242">                PolygonVertex curr = polygon.get(polygon.size() - 1);</span>
+                PolygonVertex lastAddedVertex;
+<span class="nc bnc" id="L244" title="All 2 branches missed.">                if (curr.direction == Direction.HORIZONTAL) {</span>
+<span class="nc" id="L245">                    nextVertex = edgesV.get(curr.point);</span>
+<span class="nc" id="L246">                    edgesV.remove(curr.point);</span>
+<span class="nc" id="L247">                    lastAddedVertex = new PolygonVertex(nextVertex, Direction.VERTICAL);</span>
+                }
+                else {
+<span class="nc" id="L250">                    nextVertex = edgesH.get(curr.point);</span>
+<span class="nc" id="L251">                    edgesH.remove(curr.point);</span>
+<span class="nc" id="L252">                    lastAddedVertex = new PolygonVertex(nextVertex, Direction.HORIZONTAL);</span>
+                }
+<span class="nc" id="L254">                polygon.add(lastAddedVertex);</span>
+
+<span class="nc bnc" id="L256" title="All 2 branches missed.">                if (lastAddedVertex.equals(polygon.get(0))) {</span>
+                    // closed polygon
+<span class="nc" id="L258">                    polygon.remove(polygon.size() - 1);</span>
+<span class="nc" id="L259">                    break;</span>
+                }
+<span class="nc" id="L261">            }</span>
+            
+<span class="nc bnc" id="L263" title="All 2 branches missed.">            for (PolygonVertex vertex: polygon) {</span>
+<span class="nc" id="L264">                edgesH.remove(vertex.point);</span>
+<span class="nc" id="L265">                edgesV.remove(vertex.point);</span>
+<span class="nc" id="L266">            }</span>
+<span class="nc" id="L267">            polygons.add(polygon);</span>
+<span class="nc" id="L268">        }</span>
+        
+        // calculate grid-aligned minimum area rectangles for each found polygon
+<span class="nc bnc" id="L271" title="All 2 branches missed.">        for(List&lt;PolygonVertex&gt; poly: polygons) {</span>
+<span class="nc" id="L272">            float top = java.lang.Float.MAX_VALUE;</span>
+<span class="nc" id="L273">            float left = java.lang.Float.MAX_VALUE;</span>
+<span class="nc" id="L274">            float bottom = java.lang.Float.MIN_VALUE;</span>
+<span class="nc" id="L275">            float right = java.lang.Float.MIN_VALUE;</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            for (PolygonVertex pt: poly) {</span>
+<span class="nc" id="L277">                top = (float) Math.min(top, pt.point.getY());</span>
+<span class="nc" id="L278">                left = (float) Math.min(left, pt.point.getX());</span>
+<span class="nc" id="L279">                bottom = (float) Math.max(bottom, pt.point.getY());</span>
+<span class="nc" id="L280">                right = (float) Math.max(right, pt.point.getX());</span>
+<span class="nc" id="L281">            }</span>
+<span class="nc" id="L282">            rectangles.add(new Rectangle(top, left, right - left, bottom - top));</span>
+<span class="nc" id="L283">        }</span>
+        
+<span class="nc" id="L285">        return rectangles;</span>
+    }
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L290">        return &quot;lattice&quot;;</span>
+    }
+    
+<span class="nc" id="L293">    private enum Direction {</span>
+<span class="nc" id="L294">        HORIZONTAL,</span>
+<span class="nc" id="L295">        VERTICAL</span>
+    }
+    
+     static class PolygonVertex {
+        Point2D point;
+        Direction direction;
+        
+<span class="nc" id="L302">        public PolygonVertex(Point2D point, Direction direction) {</span>
+<span class="nc" id="L303">            this.direction = direction;</span>
+<span class="nc" id="L304">            this.point = point;</span>
+<span class="nc" id="L305">        }</span>
+        
+        @Override
+        public boolean equals(Object other) {
+<span class="nc bnc" id="L309" title="All 2 branches missed.">            if (this == other) </span>
+<span class="nc" id="L310">                return true;</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">            if (!(other instanceof PolygonVertex))</span>
+<span class="nc" id="L312">                return false;</span>
+<span class="nc" id="L313">            return this.point.equals(((PolygonVertex) other).point);</span>
+        }
+        
+        @Override
+        public int hashCode() {
+<span class="nc" id="L318">            return this.point.hashCode();</span>
+        }
+        
+        @Override
+        public String toString() {
+<span class="nc" id="L323">            return String.format(&quot;%s[point=%s,direction=%s]&quot;, this.getClass().getName(), this.point.toString(), this.direction.toString());</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

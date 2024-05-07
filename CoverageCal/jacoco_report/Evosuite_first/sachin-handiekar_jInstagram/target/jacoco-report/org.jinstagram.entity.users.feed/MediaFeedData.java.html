@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MediaFeedData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.users.feed</a> &gt; <span class="el_source">MediaFeedData.java</span></div><h1>MediaFeedData.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.users.feed;
+
+import java.util.List;
+
+import org.jinstagram.entity.common.Caption;
+import org.jinstagram.entity.common.Comments;
+import org.jinstagram.entity.common.Images;
+import org.jinstagram.entity.common.Likes;
+import org.jinstagram.entity.common.Location;
+import org.jinstagram.entity.common.User;
+import org.jinstagram.entity.common.UsersInPhoto;
+import org.jinstagram.entity.common.Videos;
+
+import com.google.gson.annotations.SerializedName;
+
+<span class="fc" id="L16">public class MediaFeedData {</span>
+	@SerializedName(&quot;caption&quot;)
+	private Caption caption;
+
+	@SerializedName(&quot;comments&quot;)
+	private Comments comments;
+
+	@SerializedName(&quot;created_time&quot;)
+	private String createdTime;
+
+	@SerializedName(&quot;id&quot;)
+	private String id;
+
+	@SerializedName(&quot;filter&quot;)
+	private String imageFilter;
+
+	@SerializedName(&quot;images&quot;)
+	private Images images;
+
+	@SerializedName(&quot;videos&quot;)
+	private Videos videos;
+
+	@SerializedName(&quot;likes&quot;)
+	private Likes likes;
+
+	@SerializedName(&quot;link&quot;)
+	private String link;
+
+	@SerializedName(&quot;location&quot;)
+	private Location location;
+
+	@SerializedName(&quot;tags&quot;)
+	private List&lt;String&gt; tags;
+
+	public static final String TYPE_IMAGE = &quot;image&quot;;
+	public static final String TYPE_VIDEO = &quot;video&quot;;
+	public static final String TYPE_CAROUSEL = &quot;carousel&quot;;
+
+	@SerializedName(&quot;type&quot;)
+	private String type;
+
+	@SerializedName(&quot;user&quot;)
+	private User user;
+
+	@SerializedName(&quot;user_has_liked&quot;)
+	private boolean userHasLiked;
+
+	@SerializedName(&quot;users_in_photo&quot;)
+	private List&lt;UsersInPhoto&gt; usersInPhotoList;
+
+	@SerializedName(&quot;carousel_media&quot;)
+	private List&lt;CarouselMedia&gt; carouselMedia;
+	
+	/**
+	 * @return the location
+	 */
+	public Location getLocation() {
+<span class="fc" id="L73">		return location;</span>
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+<span class="fc" id="L80">		this.location = location;</span>
+<span class="fc" id="L81">	}</span>
+
+	/**
+	 * @return the comments
+	 */
+	public Comments getComments() {
+<span class="fc" id="L87">		return comments;</span>
+	}
+
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(Comments comments) {
+<span class="fc" id="L94">		this.comments = comments;</span>
+<span class="fc" id="L95">	}</span>
+
+	/**
+	 * @return the caption
+	 */
+	public Caption getCaption() {
+<span class="fc" id="L101">		return caption;</span>
+	}
+
+	/**
+	 * @param caption the caption to set
+	 */
+	public void setCaption(Caption caption) {
+<span class="fc" id="L108">		this.caption = caption;</span>
+<span class="fc" id="L109">	}</span>
+
+	/**
+	 * @return the link
+	 */
+	public String getLink() {
+<span class="fc" id="L115">		return link;</span>
+	}
+
+	/**
+	 * @param link the link to set
+	 */
+	public void setLink(String link) {
+<span class="fc" id="L122">		this.link = link;</span>
+<span class="fc" id="L123">	}</span>
+
+	/**
+	 * @return the likes
+	 */
+	public Likes getLikes() {
+<span class="fc" id="L129">		return likes;</span>
+	}
+
+	/**
+	 * @param likes the likes to set
+	 */
+	public void setLikes(Likes likes) {
+<span class="fc" id="L136">		this.likes = likes;</span>
+<span class="fc" id="L137">	}</span>
+
+	/**
+	 * @return the createdTime
+	 */
+	public String getCreatedTime() {
+<span class="fc" id="L143">		return createdTime;</span>
+	}
+
+	/**
+	 * @param createdTime the createdTime to set
+	 */
+	public void setCreatedTime(String createdTime) {
+<span class="fc" id="L150">		this.createdTime = createdTime;</span>
+<span class="fc" id="L151">	}</span>
+
+	/**
+	 * @return the images
+	 */
+	public Images getImages() {
+<span class="fc" id="L157">		return images;</span>
+	}
+
+	/**
+	 * @param images the images to set
+	 */
+	public void setImages(Images images) {
+<span class="fc" id="L164">		this.images = images;</span>
+<span class="fc" id="L165">	}</span>
+
+	/**
+	 * @return the imageFilter
+	 */
+	public String getImageFilter() {
+<span class="fc" id="L171">		return imageFilter;</span>
+	}
+
+	/**
+	 * @param imageFilter the imageFilter to set
+	 */
+	public void setImageFilter(String imageFilter) {
+<span class="fc" id="L178">		this.imageFilter = imageFilter;</span>
+<span class="fc" id="L179">	}</span>
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+<span class="fc" id="L185">		return id;</span>
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+<span class="fc" id="L192">		this.id = id;</span>
+<span class="fc" id="L193">	}</span>
+
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+<span class="fc" id="L199">		return user;</span>
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+<span class="fc" id="L206">		this.user = user;</span>
+<span class="fc" id="L207">	}</span>
+
+	public boolean isUserHasLiked() {
+<span class="fc" id="L210">		return userHasLiked;</span>
+	}
+
+	public void setUserHasLiked(boolean userHasLiked) {
+<span class="fc" id="L214">		this.userHasLiked = userHasLiked;</span>
+<span class="fc" id="L215">	}</span>
+
+	public List&lt;String&gt; getTags() {
+<span class="fc" id="L218">		return tags;</span>
+	}
+
+	public void setTags(List&lt;String&gt; tags) {
+<span class="fc" id="L222">		this.tags = tags;</span>
+<span class="fc" id="L223">	}</span>
+
+	public String getType() {
+<span class="fc" id="L226">		return type;</span>
+	}
+
+	public void setType(String type) {
+<span class="fc" id="L230">		this.type = type;</span>
+<span class="fc" id="L231">	}</span>
+
+	public Videos getVideos() {
+<span class="fc" id="L234">		return videos;</span>
+	}
+
+	public void setVideos(Videos videos) {
+<span class="fc" id="L238">		this.videos = videos;</span>
+<span class="fc" id="L239">	}</span>
+
+	public List&lt;UsersInPhoto&gt; getUsersInPhotoList() {
+<span class="fc" id="L242">		return usersInPhotoList;</span>
+	}
+
+	public void setUsersInPhotoList(List&lt;UsersInPhoto&gt; usersInPhotoList) {
+<span class="fc" id="L246">		this.usersInPhotoList = usersInPhotoList;</span>
+<span class="fc" id="L247">	}</span>
+
+	/**
+	 * Return the carousel media.
+	 *
+	 * @return {@link List} of {@link CarouselMedia} the carousel media
+	 */
+	public List&lt;CarouselMedia&gt; getCarouselMedia() {
+<span class="fc" id="L255">        return carouselMedia;</span>
+    }
+
+	/**
+	 * Set the carousel media.
+	 *
+	 * @param carouselMedia {@link List} of {@link CarouselMedia} the carousel media
+	 */
+	public void setCarouselMedia(List&lt;CarouselMedia&gt; carouselMedia) {
+<span class="fc" id="L264">        this.carouselMedia = carouselMedia;</span>
+<span class="fc" id="L265">    }</span>
+
+    @Override
+	public String toString() {
+<span class="nc" id="L269">		return String</span>
+<span class="nc" id="L270">				.format(&quot;MediaFeedData [caption=%s, comments=%s, createdTime=%s, id=%s, imageFilter=%s, images=%s, likes=%s, link=%s, location=%s, tags=%s, type=%s, user=%s, userHasLiked=%s, usersInPhoto=%s]&quot;,</span>
+						caption, comments, createdTime, id, imageFilter, images, likes, link, location, tags, type,
+<span class="nc" id="L272">						user, userHasLiked, usersInPhotoList);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

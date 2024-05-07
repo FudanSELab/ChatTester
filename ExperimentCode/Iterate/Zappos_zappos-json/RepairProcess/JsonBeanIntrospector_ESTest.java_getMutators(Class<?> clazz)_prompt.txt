@@ -1,0 +1,161 @@
+0-->1-->0-->compileRepair
+
+
+# Focal Method
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda) {
+    this.jacinda = jacinda;
+}
+# Focal method
+public List<JsonBeanAttribute> getMutators(Class<?> clazz) {
+    return getAccessorsOrMutators(clazz, false);
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Focal Method
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda) {
+    this.jacinda = jacinda;
+}
+# Focal method
+public List<JsonBeanAttribute> getMutators(Class<?> clazz) {
+    return getAccessorsOrMutators(clazz, false);
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda) {
+    this.jacinda = jacinda;
+}
+# Focal method
+public List<JsonBeanAttribute> getMutators(Class<?> clazz) {
+    return getAccessorsOrMutators(clazz, false);
+}
+}
+
+# Method Intention
+The getMutators(Class<?> clazz) method in the JsonBeanIntrospector class is intended to retrieve a list of mutator methods (setters) for a given class, by calling the getAccessorsOrMutators method with the specified class and a flag indicating that mutators should be returned.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda) {
+    this.jacinda = jacinda;
+}
+# Focal method
+public List<JsonBeanAttribute> getMutators(Class<?> clazz) {
+    return getAccessorsOrMutators(clazz, false);
+}
+}
+
+# Method Intention
+The getMutators(Class<?> clazz) method in the JsonBeanIntrospector class is intended to retrieve a list of mutator methods (setters) for a given class, by calling the getAccessorsOrMutators method with the specified class and a flag indicating that mutators should be returned.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->2-->compileRepair
+
+
+# Focal Method
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda) {
+    this.jacinda = jacinda;
+}
+# Focal method
+public List<JsonBeanAttribute> getMutators(Class<?> clazz) {
+    return getAccessorsOrMutators(clazz, false);
+}
+}
+
+# Method Intention
+The getMutators(Class<?> clazz) method in the JsonBeanIntrospector class is intended to retrieve a list of mutator methods (setters) for a given class, by calling the getAccessorsOrMutators method with the specified class and a flag indicating that mutators should be returned.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+5-->6-->3-->compileRepair
+
+
+# Focal Method
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda) {
+    this.jacinda = jacinda;
+}
+# Focal method
+public List<JsonBeanAttribute> getMutators(Class<?> clazz) {
+    return getAccessorsOrMutators(clazz, false);
+}
+}
+
+# Method Intention
+The getMutators(Class<?> clazz) method in the JsonBeanIntrospector class is intended to retrieve a list of mutator methods (setters) for a given class, by calling the getAccessorsOrMutators method with the specified class and a flag indicating that mutators should be returned.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+6-->7-->3-->compileRepair
+
+
+# Focal Method
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda) {
+    this.jacinda = jacinda;
+}
+# Focal method
+public List<JsonBeanAttribute> getMutators(Class<?> clazz) {
+    return getAccessorsOrMutators(clazz, false);
+}
+}
+
+# Method Intention
+The getMutators(Class<?> clazz) method in the JsonBeanIntrospector class is intended to retrieve a list of mutator methods (setters) for a given class, by calling the getAccessorsOrMutators method with the specified class and a flag indicating that mutators should be returned.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandLineApp.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">CommandLineApp.java</span></div><h1>CommandLineApp.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+
+import technology.tabula.detectors.DetectionAlgorithm;
+import technology.tabula.detectors.NurminenDetectionAlgorithm;
+import technology.tabula.extractors.BasicExtractionAlgorithm;
+import technology.tabula.extractors.SpreadsheetExtractionAlgorithm;
+import technology.tabula.writers.CSVWriter;
+import technology.tabula.writers.JSONWriter;
+import technology.tabula.writers.TSVWriter;
+import technology.tabula.writers.Writer;
+
+
+public class CommandLineApp {
+
+<span class="nc" id="L32">    private static String VERSION = &quot;1.0.6-SNAPSHOT&quot;;</span>
+<span class="nc" id="L33">    private static String VERSION_STRING = String.format(&quot;tabula %s (c) 2012-2020 Manuel Aristarán&quot;, VERSION);</span>
+<span class="nc" id="L34">    private static String BANNER = &quot;\nTabula helps you extract tables from PDFs\n\n&quot;;</span>
+
+    private static final int RELATIVE_AREA_CALCULATION_MODE = 0;
+    private static final int ABSOLUTE_AREA_CALCULATION_MODE = 1;
+
+
+    private Appendable defaultOutput;
+
+    private List&lt;Pair&lt;Integer, Rectangle&gt;&gt; pageAreas;
+    private List&lt;Integer&gt; pages;
+    private OutputFormat outputFormat;
+    private String password;
+    private TableExtractor tableExtractor;
+
+<span class="nc" id="L48">    public CommandLineApp(Appendable defaultOutput, CommandLine line) throws ParseException {</span>
+<span class="nc" id="L49">        this.defaultOutput = defaultOutput;</span>
+<span class="nc" id="L50">        this.pageAreas = CommandLineApp.whichAreas(line);</span>
+<span class="nc" id="L51">        this.pages = CommandLineApp.whichPages(line);</span>
+<span class="nc" id="L52">        this.outputFormat = CommandLineApp.whichOutputFormat(line);</span>
+<span class="nc" id="L53">        this.tableExtractor = CommandLineApp.createExtractor(line);</span>
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (line.hasOption('s')) {</span>
+<span class="nc" id="L56">            this.password = line.getOptionValue('s');</span>
+        }
+<span class="nc" id="L58">    }</span>
+
+    public static void main(String[] args) {
+<span class="nc" id="L61">        CommandLineParser parser = new DefaultParser();</span>
+        try {
+            // parse the command line arguments
+<span class="nc" id="L64">            CommandLine line = parser.parse(buildOptions(), args);</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            if (line.hasOption('h')) {</span>
+<span class="nc" id="L67">                printHelp();</span>
+<span class="nc" id="L68">                System.exit(0);</span>
+            }
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (line.hasOption('v')) {</span>
+<span class="nc" id="L72">                System.out.println(VERSION_STRING);</span>
+<span class="nc" id="L73">                System.exit(0);</span>
+            }
+
+<span class="nc" id="L76">            new CommandLineApp(System.out, line).extractTables(line);</span>
+<span class="nc" id="L77">        } catch (ParseException exp) {</span>
+<span class="nc" id="L78">            System.err.println(&quot;Error: &quot; + exp.getMessage());</span>
+<span class="nc" id="L79">            System.exit(1);</span>
+<span class="nc" id="L80">        }</span>
+<span class="nc" id="L81">        System.exit(0);</span>
+<span class="nc" id="L82">    }</span>
+
+    public void extractTables(CommandLine line) throws ParseException {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (line.hasOption('b')) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (line.getArgs().length != 0) {</span>
+<span class="nc" id="L87">                throw new ParseException(&quot;Filename specified with batch\nTry --help for help&quot;);</span>
+            }
+
+<span class="nc" id="L90">            File pdfDirectory = new File(line.getOptionValue('b'));</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            if (!pdfDirectory.isDirectory()) {</span>
+<span class="nc" id="L92">                throw new ParseException(&quot;Directory does not exist or is not a directory&quot;);</span>
+            }
+<span class="nc" id="L94">            extractDirectoryTables(line, pdfDirectory);</span>
+<span class="nc" id="L95">            return;</span>
+        }
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (line.getArgs().length != 1) {</span>
+<span class="nc" id="L99">            throw new ParseException(&quot;Need exactly one filename\nTry --help for help&quot;);</span>
+        }
+
+<span class="nc" id="L102">        File pdfFile = new File(line.getArgs()[0]);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (!pdfFile.exists()) {</span>
+<span class="nc" id="L104">            throw new ParseException(&quot;File does not exist&quot;);</span>
+        }
+<span class="nc" id="L106">        extractFileTables(line, pdfFile);</span>
+<span class="nc" id="L107">    }</span>
+
+    public void extractDirectoryTables(CommandLine line, File pdfDirectory) throws ParseException {
+<span class="nc" id="L110">        File[] pdfs = pdfDirectory.listFiles(new FilenameFilter() {</span>
+            public boolean accept(File dir, String name) {
+<span class="nc" id="L112">                return name.endsWith(&quot;.pdf&quot;);</span>
+            }
+        });
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        for (File pdfFile : pdfs) {</span>
+<span class="nc" id="L117">          File outputFile = new File(getOutputFilename(pdfFile));</span>
+          try {
+<span class="nc" id="L119">            extractFileInto(pdfFile, outputFile);</span>
+<span class="nc" id="L120">          } catch (ParseException e) {</span>
+<span class="nc" id="L121">            System.err.println(&quot;Caught exception while processing file: &quot; + pdfFile.toString());</span>
+<span class="nc" id="L122">            throw e;</span>
+<span class="nc" id="L123">          }</span>
+        }
+<span class="nc" id="L125">    }</span>
+
+    public void extractFileTables(CommandLine line, File pdfFile) throws ParseException {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if (!line.hasOption('o')) {</span>
+<span class="nc" id="L129">            extractFile(pdfFile, this.defaultOutput);</span>
+<span class="nc" id="L130">            return;</span>
+        }
+
+<span class="nc" id="L133">        File outputFile = new File(line.getOptionValue('o'));</span>
+<span class="nc" id="L134">        extractFileInto(pdfFile, outputFile);</span>
+<span class="nc" id="L135">    }</span>
+
+    public void extractFileInto(File pdfFile, File outputFile) throws ParseException {
+<span class="nc" id="L138">        BufferedWriter bufferedWriter = null;</span>
+        try {
+<span class="nc" id="L140">            FileWriter fileWriter = new FileWriter(outputFile.getAbsoluteFile());</span>
+<span class="nc" id="L141">            bufferedWriter = new BufferedWriter(fileWriter);</span>
+
+<span class="nc" id="L143">            outputFile.createNewFile();</span>
+<span class="nc" id="L144">            extractFile(pdfFile, bufferedWriter);</span>
+<span class="nc" id="L145">        } catch (IOException e) {</span>
+<span class="nc" id="L146">            throw new ParseException(&quot;Cannot create file &quot; + outputFile);</span>
+        } finally {
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            if (bufferedWriter != null) {</span>
+                try {
+<span class="nc" id="L150">                    bufferedWriter.close();</span>
+<span class="nc" id="L151">                } catch (IOException e) {</span>
+<span class="nc" id="L152">                    System.out.println(&quot;Error in closing the BufferedWriter&quot; + e);</span>
+<span class="nc" id="L153">                }</span>
+            }
+        }
+<span class="nc" id="L156">    }</span>
+
+    private void extractFile(File pdfFile, Appendable outFile) throws ParseException {
+<span class="nc" id="L159">        PDDocument pdfDocument = null;</span>
+        try {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            pdfDocument = this.password == null ? PDDocument.load(pdfFile) : PDDocument.load(pdfFile, this.password);</span>
+<span class="nc" id="L162">            PageIterator pageIterator = getPageIterator(pdfDocument);</span>
+<span class="nc" id="L163">            List&lt;Table&gt; tables = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L165" title="All 2 branches missed.">            while (pageIterator.hasNext()) {</span>
+<span class="nc" id="L166">                Page page = pageIterator.next();</span>
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">                if (tableExtractor.verticalRulingPositions != null) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">                    for (Float verticalRulingPosition : tableExtractor.verticalRulingPositions) {</span>
+<span class="nc" id="L170">                        page.addRuling(new Ruling(0, verticalRulingPosition, 0.0f, (float) page.getHeight()));</span>
+<span class="nc" id="L171">                    }</span>
+                }
+
+<span class="nc bnc" id="L174" title="All 2 branches missed.">                if (pageAreas != null) {</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">                    for (Pair&lt;Integer, Rectangle&gt; areaPair : pageAreas) {</span>
+<span class="nc" id="L176">                        Rectangle area = areaPair.getRight();</span>
+<span class="nc bnc" id="L177" title="All 2 branches missed.">                        if (areaPair.getLeft() == RELATIVE_AREA_CALCULATION_MODE) {</span>
+<span class="nc" id="L178">                            area = new Rectangle((float) (area.getTop() / 100 * page.getHeight()),</span>
+<span class="nc" id="L179">                                    (float) (area.getLeft() / 100 * page.getWidth()), (float) (area.getWidth() / 100 * page.getWidth()),</span>
+<span class="nc" id="L180">                                    (float) (area.getHeight() / 100 * page.getHeight()));</span>
+                        }
+<span class="nc" id="L182">                        tables.addAll(tableExtractor.extractTables(page.getArea(area)));</span>
+<span class="nc" id="L183">                    }</span>
+                } else {
+<span class="nc" id="L185">                    tables.addAll(tableExtractor.extractTables(page));</span>
+                }
+<span class="nc" id="L187">            }</span>
+<span class="nc" id="L188">            writeTables(tables, outFile);</span>
+<span class="nc" id="L189">        } catch (IOException e) {</span>
+<span class="nc" id="L190">            throw new ParseException(e.getMessage());</span>
+        } finally {
+            try {
+<span class="nc bnc" id="L193" title="All 2 branches missed.">                if (pdfDocument != null) {</span>
+<span class="nc" id="L194">                    pdfDocument.close();</span>
+                }
+<span class="nc" id="L196">            } catch (IOException e) {</span>
+<span class="nc" id="L197">                System.out.println(&quot;Error in closing pdf document&quot; + e);</span>
+<span class="nc" id="L198">            }</span>
+        }
+<span class="nc" id="L200">    }</span>
+
+    private PageIterator getPageIterator(PDDocument pdfDocument) throws IOException {
+<span class="nc" id="L203">        ObjectExtractor extractor = new ObjectExtractor(pdfDocument);</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        return (pages == null) ?</span>
+<span class="nc" id="L205">                extractor.extract() :</span>
+<span class="nc" id="L206">                extractor.extract(pages);</span>
+    }
+
+    // CommandLine parsing methods
+
+    private static OutputFormat whichOutputFormat(CommandLine line) throws ParseException {
+<span class="nc bnc" id="L212" title="All 2 branches missed.">        if (!line.hasOption('f')) {</span>
+<span class="nc" id="L213">            return OutputFormat.CSV;</span>
+        }
+
+        try {
+<span class="nc" id="L217">            return OutputFormat.valueOf(line.getOptionValue('f'));</span>
+<span class="nc" id="L218">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L219">            throw new ParseException(String.format(</span>
+                    &quot;format %s is illegal. Available formats: %s&quot;,
+<span class="nc" id="L221">                    line.getOptionValue('f'),</span>
+<span class="nc" id="L222">                    Utils.join(&quot;,&quot;, OutputFormat.formatNames())));</span>
+        }
+    }
+
+    private static List&lt;Pair&lt;Integer, Rectangle&gt;&gt; whichAreas(CommandLine line) throws ParseException {
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        if (!line.hasOption('a')) {</span>
+<span class="nc" id="L228">            return null;</span>
+        }
+
+<span class="nc" id="L231">        String[] optionValues = line.getOptionValues('a');</span>
+
+<span class="nc" id="L233">        List&lt;Pair&lt;Integer, Rectangle&gt;&gt; areaList = new ArrayList&lt;Pair&lt;Integer, Rectangle&gt;&gt;();</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">        for (String optionValue : optionValues) {</span>
+<span class="nc" id="L235">            int areaCalculationMode = ABSOLUTE_AREA_CALCULATION_MODE;</span>
+<span class="nc" id="L236">            int startIndex = 0;</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">            if (optionValue.startsWith(&quot;%&quot;)) {</span>
+<span class="nc" id="L238">                startIndex = 1;</span>
+<span class="nc" id="L239">                areaCalculationMode = RELATIVE_AREA_CALCULATION_MODE;</span>
+            }
+<span class="nc" id="L241">            List&lt;Float&gt; f = parseFloatList(optionValue.substring(startIndex));</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">            if (f.size() != 4) {</span>
+<span class="nc" id="L243">                throw new ParseException(&quot;area parameters must be top,left,bottom,right optionally preceded by %&quot;);</span>
+            }
+<span class="nc" id="L245">            areaList.add(new Pair&lt;Integer, Rectangle&gt;(areaCalculationMode, new Rectangle(f.get(0), f.get(1), f.get(3) - f.get(1), f.get(2) - f.get(0))));</span>
+        }
+<span class="nc" id="L247">        return areaList;</span>
+    }
+
+    private static List&lt;Integer&gt; whichPages(CommandLine line) throws ParseException {
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        String pagesOption = line.hasOption('p') ? line.getOptionValue('p') : &quot;1&quot;;</span>
+<span class="nc" id="L252">        return Utils.parsePagesOption(pagesOption);</span>
+    }
+
+    private static ExtractionMethod whichExtractionMethod(CommandLine line) {
+        // -r/--spreadsheet [deprecated; use -l] or -l/--lattice
+<span class="nc bnc" id="L257" title="All 4 branches missed.">        if (line.hasOption('r') || line.hasOption('l')) {</span>
+<span class="nc" id="L258">            return ExtractionMethod.SPREADSHEET;</span>
+        }
+
+        // -n/--no-spreadsheet [deprecated; use -t] or  -c/--columns or -g/--guess or -t/--stream
+<span class="nc bnc" id="L262" title="All 6 branches missed.">        if (line.hasOption('n') || line.hasOption('c') || line.hasOption('t')) {</span>
+<span class="nc" id="L263">            return ExtractionMethod.BASIC;</span>
+        }
+<span class="nc" id="L265">        return ExtractionMethod.DECIDE;</span>
+    }
+
+    private static TableExtractor createExtractor(CommandLine line) throws ParseException {
+<span class="nc" id="L269">        TableExtractor extractor = new TableExtractor();</span>
+<span class="nc" id="L270">        extractor.setGuess(line.hasOption('g'));</span>
+<span class="nc" id="L271">        extractor.setMethod(CommandLineApp.whichExtractionMethod(line));</span>
+<span class="nc" id="L272">        extractor.setUseLineReturns(line.hasOption('u'));</span>
+
+<span class="nc bnc" id="L274" title="All 2 branches missed.">        if (line.hasOption('c')) {</span>
+<span class="nc" id="L275">            String optionString = line.getOptionValue('c');</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">            if (optionString.startsWith(&quot;%&quot;)) {</span>
+<span class="nc" id="L277">                extractor.setVerticalRulingPositionsRelative(true);</span>
+<span class="nc" id="L278">                optionString = optionString.substring(1);</span>
+            }
+<span class="nc" id="L280">            extractor.setVerticalRulingPositions(parseFloatList(optionString));</span>
+        }
+
+<span class="nc" id="L283">        return extractor;</span>
+    }
+
+    // utilities, etc.
+
+    public static List&lt;Float&gt; parseFloatList(String option) throws ParseException {
+<span class="nc" id="L289">        String[] f = option.split(&quot;,&quot;);</span>
+<span class="nc" id="L290">        List&lt;Float&gt; rv = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="nc bnc" id="L292" title="All 2 branches missed.">            for (final String element : f) {</span>
+<span class="nc" id="L293">                rv.add(Float.parseFloat(element));</span>
+            }
+<span class="nc" id="L295">            return rv;</span>
+<span class="nc" id="L296">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L297">            throw new ParseException(&quot;Wrong number syntax&quot;);</span>
+        }
+    }
+
+    private static void printHelp() {
+<span class="nc" id="L302">        HelpFormatter formatter = new HelpFormatter();</span>
+<span class="nc" id="L303">        formatter.printHelp(&quot;tabula&quot;, BANNER, buildOptions(), &quot;&quot;, true);</span>
+<span class="nc" id="L304">    }</span>
+
+    public static Options buildOptions() {
+<span class="nc" id="L307">        Options o = new Options();</span>
+
+<span class="nc" id="L309">        o.addOption(&quot;v&quot;, &quot;version&quot;, false, &quot;Print version and exit.&quot;);</span>
+<span class="nc" id="L310">        o.addOption(&quot;h&quot;, &quot;help&quot;, false, &quot;Print this help text.&quot;);</span>
+<span class="nc" id="L311">        o.addOption(&quot;g&quot;, &quot;guess&quot;, false, &quot;Guess the portion of the page to analyze per page.&quot;);</span>
+<span class="nc" id="L312">        o.addOption(&quot;r&quot;, &quot;spreadsheet&quot;, false, &quot;[Deprecated in favor of -l/--lattice] Force PDF to be extracted using spreadsheet-style extraction (if there are ruling lines separating each cell, as in a PDF of an Excel spreadsheet)&quot;);</span>
+<span class="nc" id="L313">        o.addOption(&quot;n&quot;, &quot;no-spreadsheet&quot;, false, &quot;[Deprecated in favor of -t/--stream] Force PDF not to be extracted using spreadsheet-style extraction (if there are no ruling lines separating each cell)&quot;);</span>
+<span class="nc" id="L314">        o.addOption(&quot;l&quot;, &quot;lattice&quot;, false, &quot;Force PDF to be extracted using lattice-mode extraction (if there are ruling lines separating each cell, as in a PDF of an Excel spreadsheet)&quot;);</span>
+<span class="nc" id="L315">        o.addOption(&quot;t&quot;, &quot;stream&quot;, false, &quot;Force PDF to be extracted using stream-mode extraction (if there are no ruling lines separating each cell)&quot;);</span>
+<span class="nc" id="L316">        o.addOption(&quot;i&quot;, &quot;silent&quot;, false, &quot;Suppress all stderr output.&quot;);</span>
+<span class="nc" id="L317">        o.addOption(&quot;u&quot;, &quot;use-line-returns&quot;, false, &quot;Use embedded line returns in cells. (Only in spreadsheet mode.)&quot;);</span>
+        // o.addOption(&quot;d&quot;, &quot;debug&quot;, false, &quot;Print detected table areas instead of processing.&quot;);
+<span class="nc" id="L319">        o.addOption(Option.builder(&quot;b&quot;)</span>
+<span class="nc" id="L320">                .longOpt(&quot;batch&quot;)</span>
+<span class="nc" id="L321">                .desc(&quot;Convert all .pdfs in the provided directory.&quot;)</span>
+<span class="nc" id="L322">                .hasArg()</span>
+<span class="nc" id="L323">                .argName(&quot;DIRECTORY&quot;)</span>
+<span class="nc" id="L324">                .build());</span>
+<span class="nc" id="L325">        o.addOption(Option.builder(&quot;o&quot;)</span>
+<span class="nc" id="L326">                .longOpt(&quot;outfile&quot;)</span>
+<span class="nc" id="L327">                .desc(&quot;Write output to &lt;file&gt; instead of STDOUT. Default: -&quot;)</span>
+<span class="nc" id="L328">                .hasArg()</span>
+<span class="nc" id="L329">                .argName(&quot;OUTFILE&quot;)</span>
+<span class="nc" id="L330">                .build());</span>
+<span class="nc" id="L331">        o.addOption(Option.builder(&quot;f&quot;)</span>
+<span class="nc" id="L332">                .longOpt(&quot;format&quot;)</span>
+<span class="nc" id="L333">                .desc(&quot;Output format: (&quot; + Utils.join(&quot;,&quot;, OutputFormat.formatNames()) + &quot;). Default: CSV&quot;)</span>
+<span class="nc" id="L334">                .hasArg()</span>
+<span class="nc" id="L335">                .argName(&quot;FORMAT&quot;)</span>
+<span class="nc" id="L336">                .build());</span>
+<span class="nc" id="L337">        o.addOption(Option.builder(&quot;s&quot;)</span>
+<span class="nc" id="L338">                .longOpt(&quot;password&quot;)</span>
+<span class="nc" id="L339">                .desc(&quot;Password to decrypt document. Default is empty&quot;)</span>
+<span class="nc" id="L340">                .hasArg()</span>
+<span class="nc" id="L341">                .argName(&quot;PASSWORD&quot;)</span>
+<span class="nc" id="L342">                .build());</span>
+<span class="nc" id="L343">        o.addOption(Option.builder(&quot;c&quot;)</span>
+<span class="nc" id="L344">                .longOpt(&quot;columns&quot;)</span>
+<span class="nc" id="L345">                .desc(&quot;X coordinates of column boundaries. Example --columns 10.1,20.2,30.3. &quot;</span>
+                        + &quot;If all values are between 0-100 (inclusive) and preceded by '%', input will be taken as % of actual width of the page. &quot;
+                        + &quot;Example: --columns %25,50,80.6&quot;)
+<span class="nc" id="L348">                .hasArg()</span>
+<span class="nc" id="L349">                .argName(&quot;COLUMNS&quot;)</span>
+<span class="nc" id="L350">                .build());</span>
+<span class="nc" id="L351">        o.addOption(Option.builder(&quot;a&quot;)</span>
+<span class="nc" id="L352">                .longOpt(&quot;area&quot;)</span>
+<span class="nc" id="L353">                .desc(&quot;-a/--area = Portion of the page to analyze. Example: --area 269.875,12.75,790.5,561. &quot;</span>
+                        + &quot;Accepts top,left,bottom,right i.e. y1,x1,y2,x2 where all values are in points relative to the top left corner. &quot;
+                        + &quot;If all values are between 0-100 (inclusive) and preceded by '%', input will be taken as % of actual height or width of the page. &quot;
+                        + &quot;Example: --area %0,0,100,50. To specify multiple areas, -a option should be repeated. Default is entire page&quot;)
+<span class="nc" id="L357">                .hasArg()</span>
+<span class="nc" id="L358">                .argName(&quot;AREA&quot;)</span>
+<span class="nc" id="L359">                .build());</span>
+<span class="nc" id="L360">        o.addOption(Option.builder(&quot;p&quot;)</span>
+<span class="nc" id="L361">                .longOpt(&quot;pages&quot;)</span>
+<span class="nc" id="L362">                .desc(&quot;Comma separated list of ranges, or all. Examples: --pages 1-3,5-7, --pages 3 or --pages all. Default is --pages 1&quot;)</span>
+<span class="nc" id="L363">                .hasArg()</span>
+<span class="nc" id="L364">                .argName(&quot;PAGES&quot;)</span>
+<span class="nc" id="L365">                .build());</span>
+
+<span class="nc" id="L367">        return o;</span>
+    }
+
+    private static class TableExtractor {
+<span class="nc" id="L371">        private boolean guess = false;</span>
+<span class="nc" id="L372">        private boolean useLineReturns = false;</span>
+<span class="nc" id="L373">        private BasicExtractionAlgorithm basicExtractor = new BasicExtractionAlgorithm();</span>
+<span class="nc" id="L374">        private SpreadsheetExtractionAlgorithm spreadsheetExtractor = new SpreadsheetExtractionAlgorithm();</span>
+
+<span class="nc" id="L376">        private boolean verticalRulingPositionsRelative = false;</span>
+<span class="nc" id="L377">        private List&lt;Float&gt; verticalRulingPositions = null;</span>
+
+<span class="nc" id="L379">        private ExtractionMethod method = ExtractionMethod.BASIC;</span>
+
+<span class="nc" id="L381">        public TableExtractor() {</span>
+<span class="nc" id="L382">        }</span>
+
+        public void setVerticalRulingPositions(List&lt;Float&gt; positions) {
+<span class="nc" id="L385">            this.verticalRulingPositions = positions;</span>
+<span class="nc" id="L386">        }</span>
+
+        public void setVerticalRulingPositionsRelative(boolean relative) {
+<span class="nc" id="L389">            this.verticalRulingPositionsRelative = relative;</span>
+<span class="nc" id="L390">        }</span>
+
+        public void setGuess(boolean guess) {
+<span class="nc" id="L393">            this.guess = guess;</span>
+<span class="nc" id="L394">        }</span>
+
+        public void setUseLineReturns(boolean useLineReturns) {
+<span class="nc" id="L397">            this.useLineReturns = useLineReturns;</span>
+<span class="nc" id="L398">        }</span>
+
+        public void setMethod(ExtractionMethod method) {
+<span class="nc" id="L401">            this.method = method;</span>
+<span class="nc" id="L402">        }</span>
+
+        public List&lt;Table&gt; extractTables(Page page) {
+<span class="nc" id="L405">            ExtractionMethod effectiveMethod = this.method;</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">            if (effectiveMethod == ExtractionMethod.DECIDE) {</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">                effectiveMethod = spreadsheetExtractor.isTabular(page) ?</span>
+                        ExtractionMethod.SPREADSHEET :
+                        ExtractionMethod.BASIC;
+            }
+<span class="nc bnc" id="L411" title="All 3 branches missed.">            switch (effectiveMethod) {</span>
+                case BASIC:
+<span class="nc" id="L413">                    return extractTablesBasic(page);</span>
+                case SPREADSHEET:
+<span class="nc" id="L415">                    return extractTablesSpreadsheet(page);</span>
+                default:
+<span class="nc" id="L417">                    return new ArrayList&lt;&gt;();</span>
+            }
+        }
+
+        public List&lt;Table&gt; extractTablesBasic(Page page) {
+<span class="nc bnc" id="L422" title="All 2 branches missed.">            if (guess) {</span>
+                // guess the page areas to extract using a detection algorithm
+                // currently we only have a detector that uses spreadsheets to find table areas
+<span class="nc" id="L425">                DetectionAlgorithm detector = new NurminenDetectionAlgorithm();</span>
+<span class="nc" id="L426">                List&lt;Rectangle&gt; guesses = detector.detect(page);</span>
+<span class="nc" id="L427">                List&lt;Table&gt; tables = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L429" title="All 2 branches missed.">                for (Rectangle guessRect : guesses) {</span>
+<span class="nc" id="L430">                    Page guess = page.getArea(guessRect);</span>
+<span class="nc" id="L431">                    tables.addAll(basicExtractor.extract(guess));</span>
+<span class="nc" id="L432">                }</span>
+<span class="nc" id="L433">                return tables;</span>
+            }
+
+<span class="nc bnc" id="L436" title="All 2 branches missed.">            if (verticalRulingPositions != null) {</span>
+                List&lt;Float&gt; absoluteRulingPositions;
+
+<span class="nc bnc" id="L439" title="All 2 branches missed.">                if (this.verticalRulingPositionsRelative) {</span>
+                    // convert relative to absolute
+<span class="nc" id="L441">                    absoluteRulingPositions = new ArrayList&lt;&gt;(verticalRulingPositions.size());</span>
+<span class="nc bnc" id="L442" title="All 2 branches missed.">                    for (float relative : this.verticalRulingPositions) {</span>
+<span class="nc" id="L443">                        float absolute = (float) (relative / 100.0 * page.getWidth());</span>
+<span class="nc" id="L444">                        absoluteRulingPositions.add(absolute);</span>
+<span class="nc" id="L445">                    }</span>
+                } else {
+<span class="nc" id="L447">                    absoluteRulingPositions = this.verticalRulingPositions;</span>
+                }
+<span class="nc" id="L449">                return basicExtractor.extract(page, absoluteRulingPositions);</span>
+            }
+
+<span class="nc" id="L452">            return basicExtractor.extract(page);</span>
+        }
+
+        public List&lt;Table&gt; extractTablesSpreadsheet(Page page) {
+            // TODO add useLineReturns
+<span class="nc" id="L457">            return spreadsheetExtractor.extract(page);</span>
+        }
+    }
+
+    private void writeTables(List&lt;Table&gt; tables, Appendable out) throws IOException {
+<span class="nc" id="L462">        Writer writer = null;</span>
+<span class="nc bnc" id="L463" title="All 4 branches missed.">        switch (outputFormat) {</span>
+            case CSV:
+<span class="nc" id="L465">                writer = new CSVWriter();</span>
+<span class="nc" id="L466">                break;</span>
+            case JSON:
+<span class="nc" id="L468">                writer = new JSONWriter();</span>
+<span class="nc" id="L469">                break;</span>
+            case TSV:
+<span class="nc" id="L471">                writer = new TSVWriter();</span>
+                break;
+        }
+<span class="nc" id="L474">        writer.write(out, tables);</span>
+<span class="nc" id="L475">    }</span>
+
+    private String getOutputFilename(File pdfFile) {
+<span class="nc" id="L478">        String extension = &quot;.csv&quot;;</span>
+<span class="nc bnc" id="L479" title="All 4 branches missed.">        switch (outputFormat) {</span>
+            case CSV:
+<span class="nc" id="L481">                extension = &quot;.csv&quot;;</span>
+<span class="nc" id="L482">                break;</span>
+            case JSON:
+<span class="nc" id="L484">                extension = &quot;.json&quot;;</span>
+<span class="nc" id="L485">                break;</span>
+            case TSV:
+<span class="nc" id="L487">                extension = &quot;.tsv&quot;;</span>
+                break;
+        }
+<span class="nc" id="L490">        return pdfFile.getPath().replaceFirst(&quot;(\\.pdf|)$&quot;, extension);</span>
+    }
+
+<span class="nc" id="L493">    private enum OutputFormat {</span>
+<span class="nc" id="L494">        CSV,</span>
+<span class="nc" id="L495">        TSV,</span>
+<span class="nc" id="L496">        JSON;</span>
+
+        static String[] formatNames() {
+<span class="nc" id="L499">            OutputFormat[] values = OutputFormat.values();</span>
+<span class="nc" id="L500">            String[] rv = new String[values.length];</span>
+<span class="nc bnc" id="L501" title="All 2 branches missed.">            for (int i = 0; i &lt; values.length; i++) {</span>
+<span class="nc" id="L502">                rv[i] = values[i].name();</span>
+            }
+<span class="nc" id="L504">            return rv;</span>
+        }
+    }
+
+<span class="nc" id="L508">    private enum ExtractionMethod {</span>
+<span class="nc" id="L509">        BASIC,</span>
+<span class="nc" id="L510">        SPREADSHEET,</span>
+<span class="nc" id="L511">        DECIDE</span>
+    }
+
+    private class DebugOutput {
+        private boolean debugEnabled;
+
+<span class="nc" id="L517">        public DebugOutput(boolean debug) {</span>
+<span class="nc" id="L518">            this.debugEnabled = debug;</span>
+<span class="nc" id="L519">        }</span>
+
+        public void debug(String msg) {
+<span class="nc bnc" id="L522" title="All 2 branches missed.">            if (this.debugEnabled) {</span>
+<span class="nc" id="L523">                System.err.println(msg);</span>
+            }
+<span class="nc" id="L525">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

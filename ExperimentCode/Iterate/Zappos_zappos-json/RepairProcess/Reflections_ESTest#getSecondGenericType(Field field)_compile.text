@@ -1,0 +1,16 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java
+[GENERATED PATH] Reflections_ESTest#getSecondGenericType(Field field).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[32,19] cannot find symbol
+  symbol:   method setGenericTypes(java.lang.reflect.Field,java.lang.Class<?>[])
+  location: variable reflection of type com.zappos.json.util.Reflections
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[38,19] cannot find symbol
+  symbol:   method setGenericTypes(java.lang.reflect.Field,java.lang.Class<?>[])
+  location: variable reflection of type com.zappos.json.util.Reflections
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/Reflections_ESTest.java:[44,19] cannot find symbol
+  symbol:   method setGenericTypes(java.lang.reflect.Field,java.lang.Class<?>[])
+  location: variable reflection of type com.zappos.json.util.Reflections
+[INFO] 3 errors 
+####################
+

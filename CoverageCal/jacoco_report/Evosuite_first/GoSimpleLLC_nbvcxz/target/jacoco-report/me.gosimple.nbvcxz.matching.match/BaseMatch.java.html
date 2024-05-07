@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseMatch.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching.match</a> &gt; <span class="el_source">BaseMatch.java</span></div><h1>BaseMatch.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching.match;
+
+import me.gosimple.nbvcxz.resources.Configuration;
+
+import java.util.ResourceBundle;
+
+/**
+ * Abstract class which takes care of a lot of the boiler plate for implementing {@link Match}.
+ *
+ * @author Adam Brusselback
+ */
+public abstract class BaseMatch implements Match
+{
+    // Precomputed log values used during etropy calculation
+<span class="fc" id="L15">    protected static final double LOG_2 = Math.log(2d);</span>
+<span class="fc" id="L16">    protected static final double LOG_10 = log2(10d);</span>
+<span class="fc" id="L17">    protected static final double LOG_26 = log2(26d);</span>
+<span class="fc" id="L18">    protected static final double LOG_129 = log2(129d);</span>
+<span class="fc" id="L19">    protected static final double LOG_37200 = log2(37200d);</span>
+<span class="fc" id="L20">    protected static final double LOG_47988 = log2(47988d);</span>
+    protected final Configuration configuration;
+    private final String token;
+    private final int start_index;
+    private final int end_index;
+    private double entropy;
+
+
+    /**
+     * Create a new {@code BaseMatch}
+     *
+     * @param match         the {@code String} we are creating the {@code BaseMatch} from.
+     * @param configuration the {@link Configuration} object.
+     * @param start_index   the start index in the password for this match.
+     * @param end_index     the end index in the password for this match.
+     */
+    public BaseMatch(String match, Configuration configuration, int start_index, int end_index)
+<span class="fc" id="L37">    {</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (match == null)</span>
+        {
+<span class="nc" id="L40">            throw new IllegalArgumentException(&quot;Null String&quot;);</span>
+        }
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (match.isEmpty())</span>
+        {
+<span class="nc" id="L44">            throw new IllegalArgumentException(&quot;Empty String&quot;);</span>
+        }
+<span class="fc" id="L46">        this.token = match;</span>
+<span class="fc" id="L47">        this.configuration = configuration;</span>
+<span class="fc" id="L48">        this.start_index = start_index;</span>
+<span class="fc" id="L49">        this.end_index = end_index;</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Calculate the base 2 logarithm of a value
+     *
+     * @param value the {@code double} we are calculating the log from
+     * @return double
+     */
+    protected static double log2(double value)
+    {
+<span class="fc" id="L60">        return Math.log(value) / LOG_2;</span>
+    }
+
+    /**
+     * Calculate binomial coefficients (the number of possible &quot;choose k among n&quot;)
+     *
+     * @param n the total size of the set
+     * @param k the size of the selection
+     * @return the binomial coefficient
+     */
+    protected static long nCk(int n, int k)
+    {
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (k &gt; n)</span>
+        {
+<span class="nc" id="L74">            return 0;</span>
+        }
+<span class="fc" id="L76">        long result = 1;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (int i = 1; i &lt;= k; i++)</span>
+        {
+<span class="fc" id="L79">            result *= n--;</span>
+<span class="fc" id="L80">            result /= i;</span>
+        }
+<span class="fc" id="L82">        return result;</span>
+    }
+
+    protected void setEntropy(double entropy)
+    {
+<span class="fc" id="L87">        this.entropy = entropy;</span>
+<span class="fc" id="L88">    }</span>
+
+    @Override
+    final public double calculateEntropy()
+    {
+<span class="fc" id="L93">        return Math.max(0, entropy);</span>
+    }
+
+    @Override
+    public double getAverageEntropy()
+    {
+<span class="fc" id="L99">        return calculateEntropy() / getLength();</span>
+    }
+
+    @Override
+    public String getToken()
+    {
+<span class="fc" id="L105">        return this.token;</span>
+    }
+
+    @Override
+    public int getStartIndex()
+    {
+<span class="fc" id="L111">        return this.start_index;</span>
+    }
+
+    @Override
+    public int getEndIndex()
+    {
+<span class="fc" id="L117">        return this.end_index;</span>
+    }
+
+    @Override
+    public int getLength()
+    {
+<span class="fc" id="L123">        return this.token.length();</span>
+    }
+
+    public String getDetails()
+    {
+<span class="fc" id="L128">        ResourceBundle mainResource = configuration.getMainResource();</span>
+<span class="fc" id="L129">        StringBuilder detailBuilder = new StringBuilder();</span>
+<span class="fc" id="L130">        detailBuilder.append(mainResource.getString(&quot;main.match.matchType&quot;)).append(&quot; &quot;).append(this.getClass().getSimpleName());</span>
+<span class="fc" id="L131">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L132">        detailBuilder.append(mainResource.getString(&quot;main.entropy&quot;)).append(&quot; &quot;).append(calculateEntropy());</span>
+<span class="fc" id="L133">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L134">        detailBuilder.append(mainResource.getString(&quot;main.match.token&quot;)).append(&quot; &quot;).append(getToken());</span>
+<span class="fc" id="L135">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L136">        detailBuilder.append(mainResource.getString(&quot;main.match.startIndex&quot;)).append(&quot; &quot;).append(getStartIndex());</span>
+<span class="fc" id="L137">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L138">        detailBuilder.append(mainResource.getString(&quot;main.match.endIndex&quot;)).append(&quot; &quot;).append(getEndIndex());</span>
+<span class="fc" id="L139">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L140">        detailBuilder.append(mainResource.getString(&quot;main.match.length&quot;)).append(&quot; &quot;).append(getLength());</span>
+<span class="fc" id="L141">        return detailBuilder.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

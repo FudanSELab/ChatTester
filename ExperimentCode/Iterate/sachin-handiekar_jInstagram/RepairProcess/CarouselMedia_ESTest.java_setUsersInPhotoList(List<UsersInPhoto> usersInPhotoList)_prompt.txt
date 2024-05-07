@@ -1,0 +1,56 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetUsersInPhotoList() {
+        CarouselMedia carouselMedia = new CarouselMedia();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<UsersInPhoto> usersInPhotoList = new LinkedList<>();
+
+        UsersInPhoto user1 = new UsersInPhoto();
+        UsersInPhoto user2 = new UsersInPhoto();
+        usersInPhotoList.add(user1);
+        usersInPhotoList.add(user2);
+        carouselMedia.setUsersInPhotoList(usersInPhotoList);
+        List<UsersInPhoto> retrievedUsersInPhotoList = carouselMedia.getUsersInPhotoList();
+        assertEquals(usersInPhotoList, retrievedUsersInPhotoList);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testSetUsersInPhotoList() {
+    CarouselMedia carouselMedia = new CarouselMedia();
+
+      <Buggy Line>: diamond operator is not supported in -source 1.6
+    List<UsersInPhoto> usersInPhotoList = new LinkedList<>();
+
+    UsersInPhoto user1 = new UsersInPhoto();
+    UsersInPhoto user2 = new UsersInPhoto();
+    usersInPhotoList.add(user1);
+    usersInPhotoList.add(user2);
+    carouselMedia.setUsersInPhotoList(usersInPhotoList);
+    List<UsersInPhoto> retrievedUsersInPhotoList = carouselMedia.getUsersInPhotoList();
+    assertEquals(usersInPhotoList, retrievedUsersInPhotoList);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

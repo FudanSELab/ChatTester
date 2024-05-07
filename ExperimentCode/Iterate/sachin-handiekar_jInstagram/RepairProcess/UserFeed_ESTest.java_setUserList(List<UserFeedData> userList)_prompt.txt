@@ -1,0 +1,85 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetUserList() {
+        UserFeed userFeed = new UserFeed();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<UserFeedData> testDataList = new LinkedList<>();
+
+        testDataList.add(new UserFeedData("User1"));
+        testDataList.add(new UserFeedData("User2"));
+        testDataList.add(new UserFeedData("User3"));
+        userFeed.setUserList(testDataList);
+        List<UserFeedData> retrievedList = userFeed.getUserList();
+        assertNotNull(retrievedList);
+        assertEquals(testDataList.size(), retrievedList.size());
+        for (int i = 0; i < testDataList.size(); i++) {
+            assertEquals(testDataList.get(i).getUserName(), retrievedList.get(i).getUserName());
+        }
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# UserFeedData class
+package org.jinstagram.entity.users.feed;
+public class UserFeedData {
+public String getFullName();
+public void setFullName(String fullName);
+public String getUserName();
+public void setUserName(String userName);
+public String getFirstName();
+public void setFirstName(String firstName);
+public String getProfilePictureUrl();
+public void setProfilePictureUrl(String profilePictureUrl);
+public String getLastName();
+public void setLastName(String lastName);
+public String getId();
+public void setId(String id);
+public String getWebsite();
+public void setWebsite(String website);
+public String getBio();
+public void setBio(String bio);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testSetUserList() {
+    UserFeed userFeed = new UserFeed();
+    List<UserFeedData> testDataList = new LinkedList<UserFeedData>();
+
+   <Buggy Line>: constructor UserFeedData in class org.jinstagram.entity.users.feed.UserFeedData cannot be applied to given types;
+    testDataList.add(new UserFeedData("User1"));
+
+    testDataList.add(new UserFeedData("User2"));
+    testDataList.add(new UserFeedData("User3"));
+    userFeed.setUserList(testDataList);
+    List<UserFeedData> retrievedList = userFeed.getUserList();
+    assertNotNull(retrievedList);
+    assertEquals(testDataList.size(), retrievedList.size());
+    for (int i = 0; i < testDataList.size(); i++) {
+        assertEquals(testDataList.get(i).getUserName(), retrievedList.get(i).getUserName());
+    }
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "UserFeedData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "UserFeedData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

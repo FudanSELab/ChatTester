@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.jinstagram.realtime.SubscriptionResponseObject_ESTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in org.jinstagram.realtime.SubscriptionResponseObject_ESTest

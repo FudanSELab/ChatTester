@@ -1,0 +1,32 @@
+0-->1-->0-->compileRepair
+
+# Line class
+package technology.tabula;
+public class Line {
+public static final Character[] WHITE_SPACE_CHARS = { ' ', '\t', '\r', '\n', '\f' };
+public List<TextChunk> getTextElements();
+public void setTextElements(List<TextChunk> textChunks);
+public void addTextChunk(int i, TextChunk textChunk);
+public void addTextChunk(TextChunk textChunk);
+public String toString();
+}
+
+
+# Test Method
+@Test
+    public void setUp() {
+
+         <Buggy Line>: cannot find symbol variable "line"
+        line = new Line();
+
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Line" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Line" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

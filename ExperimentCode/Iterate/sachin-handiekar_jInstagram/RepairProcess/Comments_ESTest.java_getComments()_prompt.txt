@@ -1,0 +1,75 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetComments() {
+        Comments comments = new Comments();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<CommentData> sampleComments = new LinkedList<>();
+
+        sampleComments.add(new CommentData("User1", "Comment1"));
+        sampleComments.add(new CommentData("User2", "Comment2"));
+        comments.setComments(sampleComments);
+        List<CommentData> retrievedComments = comments.getComments();
+        assertNotNull(retrievedComments);
+        assertEquals(sampleComments.size(), retrievedComments.size());
+        for (int i = 0; i < sampleComments.size(); i++) {
+            assertEquals(sampleComments.get(i), retrievedComments.get(i));
+        }
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# CommentData class
+package org.jinstagram.entity.comments;
+public class CommentData {
+public String getCreatedTime();
+public void setCreatedTime(String createdTime);
+public String getText();
+public void setText(String text);
+public FromTagData getCommentFrom();
+public void setCommentFrom(FromTagData commentFrom);
+public String getId();
+public void setId(String id);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testGetComments() {
+    Comments comments = new Comments();
+    List<CommentData> sampleComments = new LinkedList<CommentData>();
+
+    <Buggy Line>: constructor CommentData in class org.jinstagram.entity.comments.CommentData cannot be applied to given types;
+    sampleComments.add(new CommentData("User1", "Comment1"));
+
+    sampleComments.add(new CommentData("User2", "Comment2"));
+    comments.setComments(sampleComments);
+    List<CommentData> retrievedComments = comments.getComments();
+    assertNotNull(retrievedComments);
+    assertEquals(sampleComments.size(), retrievedComments.size());
+    for (int i = 0; i < sampleComments.size(); i++) {
+        assertEquals(sampleComments.get(i), retrievedComments.get(i));
+    }
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "CommentData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "CommentData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

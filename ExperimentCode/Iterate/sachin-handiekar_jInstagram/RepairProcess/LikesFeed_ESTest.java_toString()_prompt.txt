@@ -1,0 +1,220 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        LikesFeed likesFeed = new LikesFeed();
+        Meta meta = new Meta();
+        meta.setSomeMetaInfo("Some meta info");
+        likesFeed.setMeta(meta);
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<User> userList = new ArrayList<>();
+
+        User user1 = new User();
+        user1.setUsername("User1");
+        userList.add(user1);
+        User user2 = new User();
+        user2.setUsername("User2");
+        userList.add(user2);
+        likesFeed.setUserList(userList);
+        String expected = "LikesFeed [meta=Meta{someMetaInfo='Some meta info'}, userList=[User{username='User1'}, User{username='User2'}]]";
+        String actual = likesFeed.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# Meta class
+package org.jinstagram.entity.common;
+public class Meta {
+public int getCode();
+public void setCode(int code);
+public String getErrorType();
+public void setErrorType(String errorType);
+public String getErrorMessage();
+public void setErrorMessage(String errorMessage);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testToString() {
+    LikesFeed likesFeed = new LikesFeed();
+    Meta meta = new Meta();
+
+    <Buggy Line>: cannot find symbol method "setSomeMetaInfo(java.lang.String)" in Meta
+    meta.setSomeMetaInfo("Some meta info");
+
+    likesFeed.setMeta(meta);
+    List<User> userList = new ArrayList<User>(); 
+    User user1 = new User();
+    user1.setUsername("User1");
+    userList.add(user1);
+    User user2 = new User();
+    user2.setUsername("User2");
+    userList.add(user2);
+    likesFeed.setUserList(userList);
+    String expected = "LikesFeed [meta=Meta{someMetaInfo='Some meta info'}, userList=[User{username='User1'}, User{username='User2'}]]";
+    String actual = likesFeed.toString();
+    assertEquals(expected, actual);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Meta" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Meta" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->compileRepair
+
+# Meta class
+package org.jinstagram.entity.common;
+public class Meta {
+public int getCode();
+public void setCode(int code);
+public String getErrorType();
+public void setErrorType(String errorType);
+public String getErrorMessage();
+public void setErrorMessage(String errorMessage);
+public String toString();
+}
+
+# User class
+package org.jinstagram.entity.common;
+public class User {
+public String getUserName();
+public void setUserName(String userName);
+public String getFullName();
+public void setFullName(String fullName);
+public String getProfilePictureUrl();
+public void setProfilePictureUrl(String profilePictureUrl);
+public String getBio();
+public void setBio(String bio);
+public String getWebsiteUrl();
+public void setWebsiteUrl(String websiteUrl);
+public String getId();
+public void setId(String id);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testToString() {
+    LikesFeed likesFeed = new LikesFeed();
+    Meta meta = new Meta();
+    meta.setErrorMessage("Some meta info");
+    likesFeed.setMeta(meta);
+    List<User> userList = new ArrayList<User>(); 
+    User user1 = new User();
+
+  <Buggy Line>: cannot find symbol method "setUsername(java.lang.String)" in User
+    user1.setUsername("User1");
+
+    userList.add(user1);
+    User user2 = new User();
+    user2.setUsername("User2");
+    userList.add(user2);
+    likesFeed.setUserList(userList);
+    String expected = "LikesFeed [meta=Meta{errorMessage='Some meta info'}, userList=[User{username='User1'}, User{username='User2'}]]";
+    String actual = likesFeed.toString();
+    assertEquals(expected, actual);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "User" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "User" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("LikesFeed [meta=%s, userList=%s]", meta, userList);
+}
+
+# Method Intention
+The overall intention of the toString() method in the LikesFeed class is to provide a human-readable representation of the LikesFeed object by formatting and concatenating the meta information and the list of users into a single string.
+
+# Test Method
+@Test
+public void testToString() {
+    LikesFeed likesFeed = new LikesFeed();
+    Meta meta = new Meta();
+    meta.setErrorMessage("Some meta info");
+    likesFeed.setMeta(meta);
+    List<User> userList = new ArrayList<User>(); 
+    User user1 = new User();
+    user1.setUserName("User1");
+    userList.add(user1);
+    User user2 = new User();
+    user2.setUserName("User2");
+    userList.add(user2);
+    likesFeed.setUserList(userList);
+    String expected = "LikesFeed [meta=Meta{errorMessage='Some meta info'}, userList=[User{username='User1'}, User{username='User2'}]]";
+    String actual = likesFeed.toString();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<LikesFeed [meta=Meta[{errorMessage='Some meta info'}, userList=[User{username='User1'}, User{username='User2'}]]]> but was:<LikesFeed [meta=Meta[ [code=0, errorMessage=Some meta info, errorType=null], userList=[User [bio=null, fullName=null, id=null, profilePictureUrl=null, userName=User1, websiteUrl=null], User [bio=null, fullName=null, id=null, profilePictureUrl=null, userName=User2, websiteUrl=null]]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("LikesFeed [meta=%s, userList=%s]", meta, userList);
+}
+
+# Method Intention
+The overall intention of the toString() method in the LikesFeed class is to provide a human-readable representation of the LikesFeed object by formatting and concatenating its meta data and list of users into a single string for debugging or logging purposes.
+
+# Test Method
+@Test
+public void testToString() {
+    LikesFeed likesFeed = new LikesFeed();
+    Meta meta = new Meta();
+    meta.setErrorMessage("Some meta info");
+    likesFeed.setMeta(meta);
+    List<User> userList = new ArrayList<User>(); 
+    User user1 = new User();
+    user1.setUserName("User1");
+    userList.add(user1);
+    User user2 = new User();
+    user2.setUserName("User2");
+    userList.add(user2);
+    likesFeed.setUserList(userList);
+    String expected = "LikesFeed [meta=Meta{errorMessage='Some meta info'}, userList=[User{username='User1'}, User{username='User2'}]]";
+    String actual = likesFeed.toString();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<LikesFeed [meta=Meta[{errorMessage='Some meta info'}, userList=[User{username='User1'}, User{username='User2'}]]]> but was:<LikesFeed [meta=Meta[ [code=0, errorMessage=Some meta info, errorType=null], userList=[User [bio=null, fullName=null, id=null, profilePictureUrl=null, userName=User1, websiteUrl=null], User [bio=null, fullName=null, id=null, profilePictureUrl=null, userName=User2, websiteUrl=null]]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

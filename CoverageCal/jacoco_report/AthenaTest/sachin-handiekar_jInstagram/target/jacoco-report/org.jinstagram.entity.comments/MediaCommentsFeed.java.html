@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MediaCommentsFeed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.comments</a> &gt; <span class="el_source">MediaCommentsFeed.java</span></div><h1>MediaCommentsFeed.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.comments;
+
+import com.google.gson.annotations.SerializedName;
+
+import org.jinstagram.InstagramObject;
+import org.jinstagram.entity.common.Meta;
+
+import java.util.List;
+
+<span class="fc" id="L10">public class MediaCommentsFeed extends InstagramObject{</span>
+	@SerializedName(&quot;data&quot;)
+	private List&lt;CommentData&gt; commentDataList;
+
+	@SerializedName(&quot;meta&quot;)
+	private Meta meta;
+
+	/**
+	 * @return the meta
+	 */
+	public Meta getMeta() {
+<span class="nc" id="L21">		return meta;</span>
+	}
+
+	/**
+	 * @param meta the meta to set
+	 */
+	public void setMeta(Meta meta) {
+<span class="fc" id="L28">		this.meta = meta;</span>
+<span class="fc" id="L29">	}</span>
+
+	/**
+	 * @return the commentDataList
+	 */
+	public List&lt;CommentData&gt; getCommentDataList() {
+<span class="nc" id="L35">		return commentDataList;</span>
+	}
+
+	/**
+	 * @param commentDataList the commentDataList to set
+	 */
+	public void setCommentDataList(List&lt;CommentData&gt; commentDataList) {
+<span class="nc" id="L42">		this.commentDataList = commentDataList;</span>
+<span class="nc" id="L43">	}</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L47">        return String.format(&quot;MediaCommentsFeed [commentDataList=%s, meta=%s]&quot;, commentDataList, meta);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

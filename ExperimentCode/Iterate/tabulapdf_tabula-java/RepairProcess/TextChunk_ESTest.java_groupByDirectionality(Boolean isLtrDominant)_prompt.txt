@@ -1,0 +1,100 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGroupByDirectionality() {
+
+              <Buggy Line>: no suitable constructor found for TextElement(java.lang.String,int,int,int,int)
+        TextElement textElement1 = new TextElement("Hello", 10, 20, 30, 40);
+
+        TextElement textElement2 = new TextElement("World", 50, 60, 70, 80);
+        TextElement textElement3 = new TextElement("!", 90, 100, 110, 120);
+        List<TextElement> textElements = new ArrayList<>();
+        textElements.add(textElement1);
+        textElements.add(textElement2);
+        textElements.add(textElement3);
+        TextChunk textChunk = new TextChunk(textElements);
+        TextChunk resultLtr = textChunk.groupByDirectionality(true);
+        assertNotNull(resultLtr);
+        TextChunk resultRtl = textChunk.groupByDirectionality(false);
+        assertNotNull(resultRtl);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testGroupByDirectionality() {
+
+          <Buggy Line>: no suitable constructor found for TextElement(java.lang.String,int,int,int,int)
+    TextElement textElement1 = new TextElement("Hello", 10, 20, 30, 40);
+
+    TextElement textElement2 = new TextElement("World", 50, 60, 70, 80);
+    TextElement textElement3 = new TextElement("!", 90, 100, 110, 120);
+    List<TextElement> textElements = new ArrayList<>();
+    textElements.add(textElement1);
+    textElements.add(textElement2);
+    textElements.add(textElement3);
+    TextChunk textChunk = new TextChunk(textElements);
+    TextChunk resultLtr = textChunk.groupByDirectionality(true);
+    assertNotNull(resultLtr);
+    TextChunk resultRtl = textChunk.groupByDirectionality(false);
+    assertNotNull(resultRtl);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class TextChunk {
+public TextChunk(float top, float left, float width, float height) {
+    super(top, left, width, height);
+}public TextChunk(TextElement textElement) {
+    super(textElement.y, textElement.x, textElement.width, textElement.height);
+    this.add(textElement);
+}public TextChunk(List<TextElement> textElements) {
+    this(textElements.get(0));
+    for (int i = 1; i < textElements.size(); i++) {
+        this.add(textElements.get(i));
+    }
+}
+# Focal method
+public boolean isSameChar(Character[] c) {
+    String s = this.getText();
+    List<Character> chars = Arrays.asList(c);
+    for (int i = 0; i < s.length(); i++) {
+        if (!chars.contains(s.charAt(i))) {
+            return false;
+        }
+    }
+    return true;
+}
+}
+
+# Method Intention
+The isSameChar method in the TextChunk class is intended to compare the characters in the text chunk with the provided array of characters and return true if all characters in the text chunk are present in the provided array, otherwise return false.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

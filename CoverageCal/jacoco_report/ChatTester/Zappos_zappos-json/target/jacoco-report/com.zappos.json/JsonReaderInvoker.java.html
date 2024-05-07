@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonReaderInvoker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json</a> &gt; <span class="el_source">JsonReaderInvoker.java</span></div><h1>JsonReaderInvoker.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json;
+
+import java.io.Reader;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+public class JsonReaderInvoker {
+
+  private ZapposJson zapposJson;
+
+  private Constructor&lt;?&gt; constructorWithReader;
+
+  private Method parseMethod;
+
+  public JsonReaderInvoker(ZapposJson jacinda, Class&lt;?&gt; readerClass)
+<span class="nc" id="L37">      throws Exception {</span>
+    
+<span class="nc" id="L39">    this.zapposJson = jacinda;</span>
+<span class="nc" id="L40">    this.constructorWithReader = readerClass.getConstructor(ZapposJson.class, Reader.class);</span>
+<span class="nc" id="L41">    parseMethod = readerClass.getDeclaredMethod(&quot;parse&quot;);</span>
+<span class="nc" id="L42">  }</span>
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public &lt;T&gt; T readJson(Reader reader, Class&lt;T&gt; clazz) {
+    
+    try {
+      
+<span class="nc" id="L49">      Object jsonReader = constructorWithReader.newInstance(zapposJson, reader);</span>
+<span class="nc" id="L50">      return (T) parseMethod.invoke(jsonReader);</span>
+      
+<span class="nc" id="L52">    } catch (InvocationTargetException e) {</span>
+      
+<span class="nc" id="L54">      throw new JsonException(e.getTargetException());</span>
+      
+<span class="nc" id="L56">    } catch (InstantiationException | IllegalAccessException</span>
+        | IllegalArgumentException e) {
+      
+<span class="nc" id="L59">      throw new RuntimeException(e);</span>
+    }
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

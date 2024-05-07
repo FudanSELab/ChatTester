@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SubscriptionsListResponse.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.realtime</a> &gt; <span class="el_source">SubscriptionsListResponse.java</span></div><h1>SubscriptionsListResponse.java</h1><pre class="source lang-java linenums">package org.jinstagram.realtime;
+
+import java.util.List;
+
+import org.jinstagram.entity.common.Meta;
+
+import com.google.gson.annotations.SerializedName;
+
+@Deprecated
+<span class="fc" id="L10">public class SubscriptionsListResponse {</span>
+
+    @SerializedName(&quot;meta&quot;)
+    private Meta meta;
+
+    @SerializedName(&quot;data&quot;)
+    private List&lt;SubscriptionResponseData&gt; data;
+
+    /**
+     * @return the meta
+     */
+    public Meta getMeta() {
+<span class="fc" id="L22">        return meta;</span>
+    }
+
+    /**
+     * @param meta the meta to set
+     */
+    public void setMeta(Meta meta) {
+<span class="fc" id="L29">        this.meta = meta;</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * @return the data
+     */
+    public List&lt;SubscriptionResponseData&gt; getData() {
+<span class="nc" id="L36">        return data;</span>
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public void setData(List&lt;SubscriptionResponseData&gt; data) {
+<span class="nc" id="L43">        this.data = data;</span>
+<span class="nc" id="L44">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

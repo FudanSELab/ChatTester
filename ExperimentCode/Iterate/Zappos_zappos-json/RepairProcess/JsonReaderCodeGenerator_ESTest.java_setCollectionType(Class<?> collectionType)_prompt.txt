@@ -1,0 +1,124 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetCollectionType() {
+        Class<?> expectedCollectionType = List.class;
+
+            <Buggy Line>: cannot find symbol class "AttributeInfo"
+        AttributeInfo attributeInfo = new AttributeInfo(String.class, new JsonBeanAttribute());
+
+        AttributeInfo result = attributeInfo.setCollectionType(expectedCollectionType);
+        assertEquals(expectedCollectionType, result.getCollectionType());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testSetCollectionType() {
+    Class<?> expectedCollectionType = List.class;
+
+        <Buggy Line>: cannot find symbol class "AttributeInfo"
+    AttributeInfo attributeInfo = new AttributeInfo(String.class, new JsonBeanAttribute());
+
+    AttributeInfo result = attributeInfo.setCollectionType(expectedCollectionType);
+    assertEquals(expectedCollectionType, result.getCollectionType());
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+static class AttributeInfo {
+private Class<?> collectionType;
+public AttributeInfo(Class<?> attrType, JsonBeanAttribute detail) {
+    this.attrType = attrType;
+    this.detail = detail;
+}
+# Focal method
+public AttributeInfo setCollectionType(Class<?> collectionType) {
+    this.collectionType = collectionType;
+    return this;
+}
+}
+
+# Method Intention
+The setCollectionType(Class<?> collectionType) method is intended to allow the user to specify the type of collection that the attribute represents within the AttributeInfo class.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+static class AttributeInfo {
+private Class<?> collectionType;
+public AttributeInfo(Class<?> attrType, JsonBeanAttribute detail) {
+    this.attrType = attrType;
+    this.detail = detail;
+}
+# Focal method
+public AttributeInfo setCollectionType(Class<?> collectionType) {
+    this.collectionType = collectionType;
+    return this;
+}
+}
+
+# Method Intention
+The setCollectionType(Class<?> collectionType) method is intended to allow the user to specify the type of collection that the attribute should be treated as, providing flexibility and customization in handling collections within the AttributeInfo class.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+
+# Focal Method
+static class AttributeInfo {
+private Class<?> collectionType;
+public AttributeInfo(Class<?> attrType, JsonBeanAttribute detail) {
+    this.attrType = attrType;
+    this.detail = detail;
+}
+# Focal method
+public AttributeInfo setCollectionType(Class<?> collectionType) {
+    this.collectionType = collectionType;
+    return this;
+}
+}
+
+# Method Intention
+The setCollectionType(Class<?> collectionType) method is intended to allow the user to specify the type of collection that the attribute represents within the AttributeInfo class.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

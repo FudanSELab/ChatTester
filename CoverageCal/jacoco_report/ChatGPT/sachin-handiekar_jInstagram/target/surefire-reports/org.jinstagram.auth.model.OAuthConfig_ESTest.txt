@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: org.jinstagram.auth.model.OAuthConfig_ESTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.041 s - in org.jinstagram.auth.model.OAuthConfig_ESTest

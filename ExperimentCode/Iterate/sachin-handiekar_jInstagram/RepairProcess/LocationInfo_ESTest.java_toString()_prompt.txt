@@ -1,0 +1,30 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("LocationInfo [locationData=%s]", locationData);
+}
+
+# Method Intention
+The overall intention of the toString() method in the LocationInfo class is to provide a human-readable representation of the LocationInfo object by returning a formatted string that includes the locationData information.
+
+# Test Method
+    @Test
+    public void testToString() {
+        LocationInfo locationInfo = new LocationInfo();
+        Location locationData = new Location();
+        locationData.setLatitude(40.7128);
+        locationData.setLongitude(74.0060);
+        locationInfo.setLocationData(locationData);
+        String expected = "LocationInfo [locationData=Location{latitude=40.7128, longitude=74.0060}]";
+        String actual = locationInfo.toString();
+       [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...ocationData=Location[{latitude=40.7128, longitude=74.0060}]]> but was:<...ocationData=Location[ [id=null, name=null, latitude=40.7128, longitude=74.006]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

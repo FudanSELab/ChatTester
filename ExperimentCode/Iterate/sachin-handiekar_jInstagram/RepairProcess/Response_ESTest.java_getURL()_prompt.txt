@@ -1,0 +1,189 @@
+0-->1-->0-->compileRepair
+
+
+# Focal Method
+public class Response {
+private String url;
+Response(HttpURLConnection connection) throws IOException {
+    try {
+        connection.connect();
+        url = connection.getURL().toString();
+        code = connection.getResponseCode();
+        headers = parseHeaders(connection);
+        stream = wasSuccessful() ? connection.getInputStream() : connection.getErrorStream();
+    } catch (UnknownHostException e) {
+        code = HttpStatus.NOT_FOUND.value();
+        body = EMPTY_RESPONSE;
+    }
+}
+# Focal method
+public String getURL() {
+    return url;
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetURL() {
+        HttpURLConnection mockConnection = mock(HttpURLConnection.class);
+
+       <Buggy Line>: unreported exception java.net.MalformedURLException; must be caught or declared to be thrown
+        when(mockConnection.getURL()).thenReturn(new URL("http://www.example.com"));
+
+        Response response = new Response(mockConnection);
+        String url = response.getURL();
+        assertEquals("http://www.example.com", url);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->compileRepair
+
+
+# Focal Method
+public class Response {
+private String url;
+Response(HttpURLConnection connection) throws IOException {
+    try {
+        connection.connect();
+        url = connection.getURL().toString();
+        code = connection.getResponseCode();
+        headers = parseHeaders(connection);
+        stream = wasSuccessful() ? connection.getInputStream() : connection.getErrorStream();
+    } catch (UnknownHostException e) {
+        code = HttpStatus.NOT_FOUND.value();
+        body = EMPTY_RESPONSE;
+    }
+}
+# Focal method
+public String getURL() {
+    return url;
+}
+}
+
+# Method Intention
+
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->1-->compileRepair
+
+
+# Focal Method
+public class Response {
+private String url;
+Response(HttpURLConnection connection) throws IOException {
+    try {
+        connection.connect();
+        url = connection.getURL().toString();
+        code = connection.getResponseCode();
+        headers = parseHeaders(connection);
+        stream = wasSuccessful() ? connection.getInputStream() : connection.getErrorStream();
+    } catch (UnknownHostException e) {
+        code = HttpStatus.NOT_FOUND.value();
+        body = EMPTY_RESPONSE;
+    }
+}
+# Focal method
+public String getURL() {
+    return url;
+}
+}
+
+# Method Intention
+The getURL() method in the Response class is intended to provide access to the URL associated with the HTTP connection used to create the Response object.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->2-->compileRepair
+
+
+# Focal Method
+public class Response {
+private String url;
+Response(HttpURLConnection connection) throws IOException {
+    try {
+        connection.connect();
+        url = connection.getURL().toString();
+        code = connection.getResponseCode();
+        headers = parseHeaders(connection);
+        stream = wasSuccessful() ? connection.getInputStream() : connection.getErrorStream();
+    } catch (UnknownHostException e) {
+        code = HttpStatus.NOT_FOUND.value();
+        body = EMPTY_RESPONSE;
+    }
+}
+# Focal method
+public String getURL() {
+    return url;
+}
+}
+
+# Method Intention
+The getURL() method in the Response class is intended to provide access to the URL associated with the HTTP connection used to create the Response object.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+5-->6-->3-->compileRepair
+
+
+# Focal Method
+public class Response {
+private String url;
+Response(HttpURLConnection connection) throws IOException {
+    try {
+        connection.connect();
+        url = connection.getURL().toString();
+        code = connection.getResponseCode();
+        headers = parseHeaders(connection);
+        stream = wasSuccessful() ? connection.getInputStream() : connection.getErrorStream();
+    } catch (UnknownHostException e) {
+        code = HttpStatus.NOT_FOUND.value();
+        body = EMPTY_RESPONSE;
+    }
+}
+# Focal method
+public String getURL() {
+    return url;
+}
+}
+
+# Method Intention
+The getURL() method in the Response class is intended to provide access to the URL associated with the HTTP connection used to create the Response object, allowing external code to retrieve and utilize this information as needed.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

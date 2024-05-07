@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaTimestampFormatter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json.format</a> &gt; <span class="el_source">JavaTimestampFormatter.java</span></div><h1>JavaTimestampFormatter.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json.format;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
+import com.zappos.json.ZapposJson;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+<span class="fc" id="L28">public class JavaTimestampFormatter extends AbstractValueFormatter&lt;Timestamp&gt; {</span>
+
+  @Override
+  public Timestamp cast(Object obj) {
+<span class="fc" id="L32">    return Timestamp.class.cast(obj);</span>
+  }
+  
+  @Override
+  public String format(ZapposJson zapposJson, Timestamp object) {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">    if(getPattern() != null){</span>
+<span class="nc" id="L38">      return toJsonValue(zapposJson, new SimpleDateFormat(getPattern()).format(object));</span>
+    }
+<span class="nc" id="L40">    return String.valueOf(object.getTime());</span>
+  }
+
+  @Override
+  public Timestamp parse(ZapposJson zapposJson, String string) throws Exception {
+<span class="nc bnc" id="L45" title="All 2 branches missed.">    if(getPattern() != null){</span>
+<span class="nc" id="L46">      return new Timestamp(new SimpleDateFormat(getPattern()).parse(string).getTime());</span>
+    }
+<span class="nc" id="L48">    return new Timestamp(Long.parseLong(string));</span>
+  }
+
+  @Override
+  public ValueFormatter&lt;Timestamp&gt; newInstance() {
+<span class="nc" id="L53">    return new JavaTimestampFormatter();</span>
+  }
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,110 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getMapImpl(Class<?> mapClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[23,48] cannot find symbol
+  symbol:   class Map
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[24,22] cannot find symbol
+  symbol:   class HashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[27,39] cannot find symbol
+  symbol:   class AbstractMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[28,22] cannot find symbol
+  symbol:   class HashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[31,39] cannot find symbol
+  symbol:   class ConcurrentMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[32,22] cannot find symbol
+  symbol:   class ConcurrentHashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[35,39] cannot find symbol
+  symbol:   class SortedMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[36,22] cannot find symbol
+  symbol:   class TreeMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[39,39] cannot find symbol
+  symbol:   class HashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[40,22] cannot find symbol
+  symbol:   class HashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[44,43] cannot find symbol
+  symbol:   class Map
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 11 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getMapImpl(Class<?> mapClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[31,35] cannot find symbol
+  symbol:   class ConcurrentMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[32,18] cannot find symbol
+  symbol:   class ConcurrentHashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getMapImpl(Class<?> mapClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[33,35] cannot find symbol
+  symbol:   class ConcurrentHashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[35,18] cannot find symbol
+  symbol:   class ConcurrentHashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getMapImpl(Class<?> mapClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[31,44] implClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[35,52] implClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[38,58] cannot find symbol
+  symbol:   class ConcurrentMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[39,22] cannot find symbol
+  symbol:   class ConcurrentHashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[39,64] implClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[43,50] implClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[47,52] implClass has private access in com.zappos.json.util.TypeImpl
+[INFO] 7 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getMapImpl(Class<?> mapClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[37,54] cannot find symbol
+  symbol:   class ConcurrentMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[38,18] cannot find symbol
+  symbol:   class ConcurrentHashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getMapImpl(Class<?> mapClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[42,58] cannot find symbol
+  symbol:   class ConcurrentMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[43,22] cannot find symbol
+  symbol:   class ConcurrentHashMap
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 2 errors 
+####################
+

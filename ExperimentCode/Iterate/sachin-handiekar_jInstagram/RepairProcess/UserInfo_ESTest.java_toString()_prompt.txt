@@ -1,0 +1,150 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("UserInfo [data=%s]", data);
+}
+
+# Method Intention
+The overall intention of the toString() method in the UserInfo class is to provide a human-readable representation of the UserInfo object by returning a formatted string that includes the data field.
+
+# Test Method
+    @Test
+    public void testToString() {
+        UserInfoData userInfoData = new UserInfoData();
+        userInfoData.setId("123");
+        userInfoData.setUsername("testUser");
+        UserInfo userInfo = new UserInfo();
+        userInfo.setData(userInfoData);
+        String expected = "UserInfo [data=UserInfoData{id='123', username='testUser'}]";
+        String actual = userInfo.toString();
+       [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...o [data=UserInfoData[{id='123', username='testUser'}]]> but was:<...o [data=UserInfoData[ [bio=null, counts=null, first_name=null, id=123, last_name=null, profile_picture=null, username=testUser, fullName=null, website=null, isBusiness=false]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("UserInfo [data=%s]", data);
+}
+
+# Method Intention
+The overall intention of the toString() method in the UserInfo class is to provide a human-readable representation of the UserInfo object by returning a formatted string that includes the data stored in the UserInfoData field.
+
+# Test Method
+@Test
+public void testToString() {
+    UserInfoData userInfoData = new UserInfoData();
+    userInfoData.setId("123");
+    userInfoData.setUsername("testUser");
+    UserInfo userInfo = new UserInfo();
+    userInfo.setData(userInfoData);
+    String expected = "UserInfo [data=UserInfoData{id='123', username='testUser'}]";
+    String actual = userInfo.toString();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...o [data=UserInfoData[{id='123', username='testUser'}]]> but was:<...o [data=UserInfoData[ [bio=null, counts=null, first_name=null, id=123, last_name=null, profile_picture=null, username=testUser, fullName=null, website=null, isBusiness=false]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("UserInfo [data=%s]", data);
+}
+
+# Method Intention
+The toString() method in the UserInfo class is intended to provide a human-readable representation of the UserInfo object by returning a formatted string that includes the data stored in the UserInfoData field.
+
+# Test Method
+@Test
+public void testToString() {
+    UserInfoData userInfoData = new UserInfoData();
+    userInfoData.setId("123");
+    userInfoData.setUsername("testUser");
+    UserInfo userInfo = new UserInfo();
+    userInfo.setData(userInfoData);
+    String expected = "UserInfo [data=UserInfoData{id='123', username='testUser'}]";
+    String actual = userInfo.toString();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...o [data=UserInfoData[{id='123', username='testUser'}]]> but was:<...o [data=UserInfoData[ [bio=null, counts=null, first_name=null, id=123, last_name=null, profile_picture=null, username=testUser, fullName=null, website=null, isBusiness=false]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("UserInfo [data=%s]", data);
+}
+
+# Method Intention
+The intention of the toString() method in the UserInfo class is to provide a human-readable representation of the UserInfo object by returning a formatted string that includes the data field.
+
+# Test Method
+@Test
+public void testToString() {
+    UserInfoData userInfoData = new UserInfoData();
+    userInfoData.setId("123");
+    userInfoData.setUsername("testUser");
+    UserInfo userInfo = new UserInfo();
+    userInfo.setData(userInfoData);
+    String expected = "UserInfo [data=UserInfoData{id='123', username='testUser'}]";
+    String actual = userInfo.toString();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...o [data=UserInfoData[{id='123', username='testUser'}]]> but was:<...o [data=UserInfoData[ [bio=null, counts=null, first_name=null, id=123, last_name=null, profile_picture=null, username=testUser, fullName=null, website=null, isBusiness=false]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("UserInfo [data=%s]", data);
+}
+
+# Method Intention
+The intention of the toString() method in the UserInfo class is to provide a human-readable representation of the UserInfo object by returning a formatted string that includes the data field.
+
+# Test Method
+@Test
+public void testToString() {
+    UserInfoData userInfoData = new UserInfoData();
+    userInfoData.setId("123");
+    userInfoData.setUsername("testUser");
+    UserInfo userInfo = new UserInfo();
+    userInfo.setData(userInfoData);
+    String expected = "UserInfo [data=UserInfoData{id='123', username='testUser'}]";
+    String actual = userInfo.toString();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...o [data=UserInfoData[{id='123', username='testUser'}]]> but was:<...o [data=UserInfoData[ [bio=null, counts=null, first_name=null, id=123, last_name=null, profile_picture=null, username=testUser, fullName=null, website=null, isBusiness=false]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

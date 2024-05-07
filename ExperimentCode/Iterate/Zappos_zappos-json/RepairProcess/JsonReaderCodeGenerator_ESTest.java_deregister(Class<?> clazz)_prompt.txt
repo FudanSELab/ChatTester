@@ -1,0 +1,75 @@
+0-->1-->0-->compileRepair
+
+# JsonBeanIntrospector class
+package com.zappos.json;
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda);
+public List<JsonBeanAttribute> getMutators(Class<?> clazz);
+public List<JsonBeanAttribute> getAccessors(Class<?> clazz);
+}
+
+
+# Test Method
+    @Test
+    public void testDeregister() {
+
+             <Buggy Line>: constructor JsonBeanIntrospector in class com.zappos.json.JsonBeanIntrospector cannot be applied to given types;
+        JsonReaderCodeGenerator jsonReaderCodeGenerator = new JsonReaderCodeGenerator(new ZapposJson(), new JsonBeanIntrospector());
+
+        Class<?> testClass = TestClass.class;
+        jsonReaderCodeGenerator.registerReader(testClass);
+        assertNotNull(jsonReaderCodeGenerator.getReader(testClass));
+        jsonReaderCodeGenerator.deregister(testClass);
+        assertNull(jsonReaderCodeGenerator.getReader(testClass));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "JsonBeanIntrospector" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "JsonBeanIntrospector" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# JsonBeanIntrospector class
+package com.zappos.json;
+public class JsonBeanIntrospector {
+public JsonBeanIntrospector(ZapposJson jacinda);
+public List<JsonBeanAttribute> getMutators(Class<?> clazz);
+public List<JsonBeanAttribute> getAccessors(Class<?> clazz);
+}
+
+# JsonReaderCodeGenerator class
+package com.zappos.json;
+public class JsonReaderCodeGenerator {
+public JsonReaderCodeGenerator(ZapposJson zapposJson, JsonBeanIntrospector beanIntrospector);
+}
+
+
+# Test Method
+    @Test
+    public void testDeregister() {
+
+           <Buggy Line>: constructor JsonReaderCodeGenerator in class com.zappos.json.JsonReaderCodeGenerator cannot be applied to given types;
+        JsonReaderCodeGenerator jsonReaderCodeGenerator = new JsonReaderCodeGenerator(new ZapposJson());
+
+        JsonBeanIntrospector jsonBeanIntrospector = new JsonBeanIntrospector(new ZapposJson());
+        Class<?> testClass = TestClass.class;
+        jsonReaderCodeGenerator.registerReader(testClass);
+        assertNotNull(jsonReaderCodeGenerator.getReader(testClass));
+        jsonReaderCodeGenerator.deregister(testClass);
+        assertNull(jsonReaderCodeGenerator.getReader(testClass));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "JsonReaderCodeGenerator" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "JsonReaderCodeGenerator" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

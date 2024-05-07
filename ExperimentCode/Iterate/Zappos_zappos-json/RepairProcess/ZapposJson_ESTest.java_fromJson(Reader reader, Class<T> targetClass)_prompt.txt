@@ -1,0 +1,105 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testFromJson() {
+        ZapposJson zapposJson = ZapposJson.getInstance();
+        String json = "{\"name\": \"John\", \"age\": 30}";
+        Reader reader = new StringReader(json);
+
+          <Buggy Line>: cannot find symbol class "CustomClass"
+        CustomClass result = zapposJson.fromJson(reader, CustomClass.class);
+
+        assertEquals("John", result.getName());
+        assertEquals(30, result.getAge());
+        Boolean boolResult = zapposJson.fromJson(reader, Boolean.class);
+        assertEquals(Boolean.TRUE, boolResult);
+        String stringResult = zapposJson.fromJson(reader, String.class);
+        assertEquals("John", stringResult);
+        Integer intResult = zapposJson.fromJson(reader, Integer.class);
+        assertEquals(Integer.valueOf(30), intResult);
+        TestEnum enumResult = zapposJson.fromJson(reader, TestEnum.class);
+        assertEquals(TestEnum.VALUE1, enumResult);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testFromJson() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+    String json = "{\"name\": \"John\", \"age\": 30}";
+    Reader reader = new StringReader(json);
+
+      <Buggy Line>: cannot find symbol class "CustomClass"
+    CustomClass result = zapposJson.fromJson(reader, CustomClass.class);
+
+    assertEquals("John", result.getName());
+    assertEquals(30, result.getAge());
+    Boolean boolResult = zapposJson.fromJson(reader, Boolean.class);
+    assertEquals(Boolean.TRUE, boolResult);
+    String stringResult = zapposJson.fromJson(reader, String.class);
+    assertEquals("John", stringResult);
+    Integer intResult = zapposJson.fromJson(reader, Integer.class);
+    assertEquals(Integer.valueOf(30), intResult);
+    TestEnum enumResult = zapposJson.fromJson(reader, TestEnum.class);
+    assertEquals(TestEnum.VALUE1, enumResult);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class ZapposJson {
+protected ZapposJson() {
+    addValueFormatter(Date.class, new JavaDateFormatter());
+    addValueFormatter(java.sql.Date.class, new JavaSqlDateFormatter());
+    addValueFormatter(java.sql.Timestamp.class, new JavaTimestampFormatter());
+    addValueFormatter(java.math.BigInteger.class, new BigIntegerFormatter());
+    addValueFormatter(java.math.BigDecimal.class, new BigDecimalFormatter());
+    if (Reflections.classPresent("java.time.chrono.ChronoLocalDate")) {
+        ValueFormatter<LocalDate> localDateHandler = new JavaTimeLocalDateFormatter();
+        addValueFormatter(LocalDate.class, localDateHandler);
+        ValueFormatter<Instant> instantHandler = new JavaTimeInstantFormatter();
+        addValueFormatter(Instant.class, instantHandler);
+    }
+    jsonBeanIntrospector = new JsonBeanIntrospector(this);
+    writerCodeGenerator = new JsonWriterCodeGenerator(this, jsonBeanIntrospector);
+    readerCodeGenerator = new JsonReaderCodeGenerator(this, jsonBeanIntrospector);
+}protected ZapposJson(boolean debug) {
+    this();
+    this.debug = debug;
+}
+# Focal method
+public static ZapposJson getInstance() {
+    return ZapposJsonSingleton.INSTANCE.get();
+}
+}
+
+# Method Intention
+The getInstance() method in the ZapposJson class is intended to provide a singleton instance of the ZapposJson class, ensuring that only one instance is created and allowing access to its functionality throughout the application.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

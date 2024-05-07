@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpacialMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching</a> &gt; <span class="el_source">SpacialMatcher.java</span></div><h1>SpacialMatcher.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching;
+
+import me.gosimple.nbvcxz.matching.match.Match;
+import me.gosimple.nbvcxz.matching.match.SpacialMatch;
+import me.gosimple.nbvcxz.resources.AdjacencyGraph;
+import me.gosimple.nbvcxz.resources.AdjacencyGraphUtil;
+import me.gosimple.nbvcxz.resources.Configuration;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Look for every part of the password that is spacial pattern
+ * &lt;br&gt;
+ * This will only return matches where there are at least two consecutive characters.
+ *
+ * @author Adam Brusselback
+ */
+<span class="fc" id="L22">public final class SpacialMatcher implements PasswordMatcher</span>
+{
+    public List&lt;Match&gt; match(final Configuration configuration, final String password)
+    {
+<span class="fc" id="L26">        List&lt;Match&gt; matches = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L27">        Map&lt;Integer, Set&lt;Character&gt;&gt; neighbors = new HashMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (AdjacencyGraph adjacencyGraph : configuration.getAdjacencyGraphs())</span>
+        {
+            // Get all the neighbors for each character
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            for (int i = 0; i &lt; password.length(); i++)</span>
+            {
+<span class="fc" id="L34">                neighbors.put(i, AdjacencyGraphUtil.getNeighbors(adjacencyGraph, password.charAt(i)));</span>
+            }
+
+            // Build out matches
+<span class="fc" id="L38">            StringBuilder builder = new StringBuilder();</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (int i = 0; i &lt; password.length(); i++)</span>
+            {
+<span class="fc" id="L41">                Character character = password.charAt(i);</span>
+<span class="fc" id="L42">                int neighbors_i = i + 1;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">                if (neighbors_i &lt; neighbors.size())</span>
+                {
+<span class="fc" id="L45">                    boolean added = false;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">                    for (Character neighbor : neighbors.get(neighbors_i))</span>
+                    {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                        if (neighbor.equals(character))</span>
+                        {
+<span class="fc" id="L50">                            builder.append(character);</span>
+<span class="fc" id="L51">                            added = true;</span>
+<span class="fc" id="L52">                            break;</span>
+                        }
+<span class="fc" id="L54">                    }</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">                    if (!added)</span>
+                    {
+<span class="fc" id="L57">                        builder.append(character);</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">                        if (builder.length() &gt; 2)</span>
+                        {
+<span class="nc" id="L60">                            matches.add(new SpacialMatch(builder.toString(), configuration, i - builder.length() + 1, i, adjacencyGraph, AdjacencyGraphUtil.getTurns(adjacencyGraph, builder.toString()), AdjacencyGraphUtil.getShifts(adjacencyGraph, builder.toString())));</span>
+                        }
+<span class="fc" id="L62">                        builder.setLength(0);</span>
+                    }
+
+<span class="fc" id="L65">                }</span>
+                else
+                {
+<span class="fc" id="L68">                    builder.append(character);</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">                    if (builder.length() &gt; 2)</span>
+                    {
+<span class="fc" id="L71">                        matches.add(new SpacialMatch(builder.toString(), configuration, i - builder.length() + 1, i, adjacencyGraph, AdjacencyGraphUtil.getTurns(adjacencyGraph, builder.toString()), AdjacencyGraphUtil.getShifts(adjacencyGraph, builder.toString())));</span>
+                    }
+<span class="fc" id="L73">                    builder.setLength(0);</span>
+                }
+            }
+<span class="fc" id="L76">        }</span>
+<span class="fc" id="L77">        return matches;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConfigurationBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">ConfigurationBuilder.java</span></div><h1>ConfigurationBuilder.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import me.gosimple.nbvcxz.Nbvcxz;
+import me.gosimple.nbvcxz.matching.DateMatcher;
+import me.gosimple.nbvcxz.matching.DictionaryMatcher;
+import me.gosimple.nbvcxz.matching.PasswordMatcher;
+import me.gosimple.nbvcxz.matching.RepeatMatcher;
+import me.gosimple.nbvcxz.matching.SeparatorMatcher;
+import me.gosimple.nbvcxz.matching.SequenceMatcher;
+import me.gosimple.nbvcxz.matching.SpacialMatcher;
+import me.gosimple.nbvcxz.matching.YearMatcher;
+import me.gosimple.nbvcxz.matching.match.Match;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+/**
+ * Builder class for creating {@link Configuration}.
+ *
+ * @author Adam Brusselback.
+ */
+<span class="nc" id="L28">public class ConfigurationBuilder</span>
+{
+    private static final double YEAR = 365.2422 * 24 * 60 * 60 * 1000; // Average year length
+    private static final long START = 1631678400000L; // Hash speed values were chosen: 2021-09-15
+    
+<span class="fc" id="L33">    private static final List&lt;Dictionary&gt; defaultDictionaries = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L34">    private static final List&lt;PasswordMatcher&gt; defaultPasswordMatchers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L35">    private static final List&lt;AdjacencyGraph&gt; defaultAdjacencyGraphs = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">    private static final Map&lt;Character, Character[]&gt; defaultLeetTable = new HashMap&lt;&gt;();</span>
+    
+    static 
+    {
+<span class="fc" id="L40">        defaultPasswordMatchers.add(new DateMatcher());</span>
+<span class="fc" id="L41">        defaultPasswordMatchers.add(new YearMatcher());</span>
+<span class="fc" id="L42">        defaultPasswordMatchers.add(new RepeatMatcher());</span>
+<span class="fc" id="L43">        defaultPasswordMatchers.add(new SequenceMatcher());</span>
+<span class="fc" id="L44">        defaultPasswordMatchers.add(new SpacialMatcher());</span>
+<span class="fc" id="L45">        defaultPasswordMatchers.add(new DictionaryMatcher());</span>
+<span class="fc" id="L46">        defaultPasswordMatchers.add(new SeparatorMatcher());</span>
+
+<span class="fc" id="L48">        defaultDictionaries.add(new Dictionary(&quot;passwords&quot;, DictionaryUtil.loadRankedDictionary(DictionaryUtil.passwords), false));</span>
+<span class="fc" id="L49">        defaultDictionaries.add(new Dictionary(&quot;male_names&quot;, DictionaryUtil.loadRankedDictionary(DictionaryUtil.male_names), false));</span>
+<span class="fc" id="L50">        defaultDictionaries.add(new Dictionary(&quot;female_names&quot;, DictionaryUtil.loadRankedDictionary(DictionaryUtil.female_names), false));</span>
+<span class="fc" id="L51">        defaultDictionaries.add(new Dictionary(&quot;surnames&quot;, DictionaryUtil.loadRankedDictionary(DictionaryUtil.surnames), false));</span>
+<span class="fc" id="L52">        defaultDictionaries.add(new Dictionary(&quot;english&quot;, DictionaryUtil.loadRankedDictionary(DictionaryUtil.english), false));</span>
+<span class="fc" id="L53">        defaultDictionaries.add(new Dictionary(&quot;eff_large&quot;, DictionaryUtil.loadUnrankedDictionary(DictionaryUtil.eff_large), false));</span>
+
+<span class="fc" id="L55">        defaultAdjacencyGraphs.add(new AdjacencyGraph(&quot;Qwerty&quot;, AdjacencyGraphUtil.qwerty));</span>
+<span class="fc" id="L56">        defaultAdjacencyGraphs.add(new AdjacencyGraph(&quot;Standard Keypad&quot;, AdjacencyGraphUtil.standardKeypad));</span>
+<span class="fc" id="L57">        defaultAdjacencyGraphs.add(new AdjacencyGraph(&quot;Mac Keypad&quot;, AdjacencyGraphUtil.macKeypad));</span>
+
+<span class="fc" id="L59">        defaultLeetTable.put('4', new Character[]{'a'});</span>
+<span class="fc" id="L60">        defaultLeetTable.put('@', new Character[]{'a'});</span>
+<span class="fc" id="L61">        defaultLeetTable.put('8', new Character[]{'b'});</span>
+<span class="fc" id="L62">        defaultLeetTable.put('(', new Character[]{'c'});</span>
+<span class="fc" id="L63">        defaultLeetTable.put('{', new Character[]{'c'});</span>
+<span class="fc" id="L64">        defaultLeetTable.put('[', new Character[]{'c'});</span>
+<span class="fc" id="L65">        defaultLeetTable.put('&lt;', new Character[]{'c'});</span>
+<span class="fc" id="L66">        defaultLeetTable.put('3', new Character[]{'e'});</span>
+<span class="fc" id="L67">        defaultLeetTable.put('9', new Character[]{'g'});</span>
+<span class="fc" id="L68">        defaultLeetTable.put('6', new Character[]{'g'});</span>
+<span class="fc" id="L69">        defaultLeetTable.put('&amp;', new Character[]{'g'});</span>
+<span class="fc" id="L70">        defaultLeetTable.put('#', new Character[]{'h'});</span>
+<span class="fc" id="L71">        defaultLeetTable.put('!', new Character[]{'i', 'l'});</span>
+<span class="fc" id="L72">        defaultLeetTable.put('1', new Character[]{'i', 'l'});</span>
+<span class="fc" id="L73">        defaultLeetTable.put('|', new Character[]{'i', 'l'});</span>
+<span class="fc" id="L74">        defaultLeetTable.put('0', new Character[]{'o'});</span>
+<span class="fc" id="L75">        defaultLeetTable.put('$', new Character[]{'s'});</span>
+<span class="fc" id="L76">        defaultLeetTable.put('5', new Character[]{'s'});</span>
+<span class="fc" id="L77">        defaultLeetTable.put('+', new Character[]{'t'});</span>
+<span class="fc" id="L78">        defaultLeetTable.put('7', new Character[]{'t', 'l'});</span>
+<span class="fc" id="L79">        defaultLeetTable.put('%', new Character[]{'x'});</span>
+<span class="fc" id="L80">        defaultLeetTable.put('2', new Character[]{'z'});</span>
+<span class="fc" id="L81">    }</span>
+
+    private List&lt;PasswordMatcher&gt; passwordMatchers;
+    private Map&lt;String, Long&gt; guessTypes;
+    private List&lt;Dictionary&gt; dictionaries;
+    private List&lt;AdjacencyGraph&gt; adjacencyGraphs;
+    private Map&lt;Character, Character[]&gt; leetTable;
+    private Pattern yearPattern;
+    private Double minimumEntropy;
+    private Integer maxLength;
+    private Locale locale;
+    private Boolean distanceCalc;
+    private Long combinationAlgorithmTimeout;
+    private Long crackingHardwareCost;
+
+    /**
+     * @return Includes all standard password matchers included with Nbvcxz.
+     */
+    public static List&lt;PasswordMatcher&gt; getDefaultPasswordMatchers()
+    {
+<span class="fc" id="L101">        return defaultPasswordMatchers;</span>
+    }
+
+    /**
+     * Returns the Moore's law multiplier we're using for getDefaultGuessTypes().
+     *
+     * We will only return a multiplier greater than 1 if it has been more than year since we've updated the constants.
+     * The date for this function is: 2018-08-01
+     *
+     * @return the Moore's Law multiplier
+     */
+    public static BigDecimal getMooresMultiplier()
+    {
+<span class="fc" id="L114">        double years = (System.currentTimeMillis() - START) / YEAR;</span>
+
+        // Only use the multiplier if we haven't updated the value date in over a year.
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if(years &lt;= 1d)</span>
+        {
+<span class="fc" id="L119">            years = 0;</span>
+        }
+
+        // the multiplier for Moore's law is 2 to the power of (years / 2)
+<span class="fc" id="L123">        return BigDecimal.valueOf(Math.pow(2d, years / 2d));</span>
+    }
+
+    /**
+     * This list was compiled in September 2021 using a baseline of what could be bought for roughly $20k usd for the offline attack values.
+     * &lt;p&gt;
+     * In the case this library is no longer maintained (or you choose to stay on an old version of it), we will scale the existing values by Moore's law.
+     *
+     * @param crackingHardwareCost the hardware cost (USD) to scale the guesses per second
+     * @return The default list of guess types and associated values of guesses per second.
+     */
+    public static Map&lt;String, Long&gt; getDefaultGuessTypes(Long crackingHardwareCost)
+    {
+<span class="nc" id="L136">        BigDecimal moores_multiplier = getMooresMultiplier();</span>
+<span class="nc" id="L137">        BigDecimal cost_multiplier = BigDecimal.valueOf(crackingHardwareCost).divide(BigDecimal.valueOf(getDefaultCrackingHardwareCost()), 5, RoundingMode.HALF_UP);</span>
+<span class="nc" id="L138">        Map&lt;String, Long&gt; guessTypes = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L139">        guessTypes.put(&quot;OFFLINE_MD5&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(1200000000000L))).longValue());</span>
+<span class="nc" id="L140">        guessTypes.put(&quot;OFFLINE_SHA1&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(390000000000L))).longValue());</span>
+<span class="nc" id="L141">        guessTypes.put(&quot;OFFLINE_SHA512&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(5300000000L))).longValue());</span>
+<span class="nc" id="L142">        guessTypes.put(&quot;OFFLINE_BCRYPT_5&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(4200000L))).longValue());</span>
+<span class="nc" id="L143">        guessTypes.put(&quot;OFFLINE_BCRYPT_8&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(530303L))).longValue());</span>
+<span class="nc" id="L144">        guessTypes.put(&quot;OFFLINE_BCRYPT_10&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(132575L))).longValue());</span>
+<span class="nc" id="L145">        guessTypes.put(&quot;OFFLINE_BCRYPT_12&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(33143L))).longValue());</span>
+<span class="nc" id="L146">        guessTypes.put(&quot;OFFLINE_BCRYPT_14&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(8285L))).longValue());</span>
+<span class="nc" id="L147">        guessTypes.put(&quot;OFFLINE_ARGON2_ID&quot;, cost_multiplier.multiply(moores_multiplier.multiply(BigDecimal.valueOf(6540L))).longValue());</span>
+<span class="nc" id="L148">        guessTypes.put(&quot;ONLINE_UNTHROTTLED&quot;, 600L);</span>
+<span class="nc" id="L149">        guessTypes.put(&quot;ONLINE_THROTTLED&quot;, 2L);</span>
+<span class="nc" id="L150">        return guessTypes;</span>
+    }
+
+    /**
+     * This list was compiled in August 2018 using a baseline of what could be bought for roughly $20k usd for the offline attack values.
+     * &lt;p&gt;
+     * In the case this library is no longer maintained (or you choose to stay on an old version of it), we will scale the existing values by Moore's law.
+     *
+     * @return The default list of guess types and associated values of guesses per second.
+     */
+    public static Map&lt;String, Long&gt; getDefaultGuessTypes()
+    {
+<span class="nc" id="L162">        return getDefaultGuessTypes(getDefaultCrackingHardwareCost());</span>
+    }
+
+    /**
+     * @return Returns all the dictionaries included with Nbvcxz.
+     * Namely there is a dictionary for common passwords, english male names, english female names, english surnames, and common english words.
+     */
+    public static List&lt;Dictionary&gt; getDefaultDictionaries()
+    {
+<span class="nc" id="L171">        return defaultDictionaries;</span>
+    }
+
+    /**
+     * @return Default keyboard adjacency graphs for standard querty, standard keypad, and mac keypad
+     */
+    public static List&lt;AdjacencyGraph&gt; getDefaultAdjacencyGraphs()
+    {
+<span class="fc" id="L179">        return defaultAdjacencyGraphs;</span>
+    }
+
+    /**
+     * @return The default table of common english leet substitutions
+     */
+    public static Map&lt;Character, Character[]&gt; getDefaultLeetTable()
+    {
+<span class="nc" id="L187">        return defaultLeetTable;</span>
+    }
+
+    /**
+     * @return The default pattern for years includes years 1900-2029
+     */
+    public static Pattern getDefaultYearPattern()
+    {
+<span class="nc" id="L195">        return Pattern.compile(&quot;19\\d\\d|200\\d|201\\d|202\\d&quot;);</span>
+    }
+
+    /**
+     * @return The default value for minimum entropy is 35.
+     */
+    public static double getDefaultMinimumEntropy()
+    {
+<span class="fc" id="L203">        return 35D;</span>
+    }
+
+    /**
+     * @return The default value for max length is 256.
+     * This should match the exact length your algorithm is limited to (72 for most bcrypt implementations).
+     */
+    public static int getDefaultMaxLength()
+    {
+<span class="fc" id="L212">        return 256;</span>
+    }
+
+    /**
+     * @return the default is false
+     */
+    public static Boolean getDefaultDistanceCalc()
+    {
+<span class="fc" id="L220">        return true;</span>
+    }
+
+    /**
+     * @return The default value for combination algorithm timeout is 500 (ms).
+     */
+    public static long getDefaultCombinationAlgorithmTimeout()
+    {
+<span class="fc" id="L228">        return 500L;</span>
+    }
+
+    /**
+     * @return The default value for hardware cost is 20000 usd.
+     */
+    public static long getDefaultCrackingHardwareCost()
+    {
+<span class="fc" id="L236">        return 20000;</span>
+    }
+
+    /**
+     * {@link PasswordMatcher} are what look for different patterns within the password and create an associated {@link Match} object.
+     * &lt;br&gt;
+     * Users of this library can implement their own {@link PasswordMatcher} and {@link Match} classes, here is where you would register them.
+     *
+     * @param passwordMatchers List of matchers
+     * @return Builder
+     */
+    public ConfigurationBuilder setPasswordMatchers(List&lt;PasswordMatcher&gt; passwordMatchers)
+    {
+<span class="nc" id="L249">        this.passwordMatchers = passwordMatchers;</span>
+<span class="nc" id="L250">        return this;</span>
+    }
+
+    /**
+     * Guess types are used to calculate how long an attack would take using that method using guesses/sec.
+     *
+     * @param guessTypes key is a description of the type of guess, value is how many guesses per second
+     * @return Builder
+     */
+    public ConfigurationBuilder setGuessTypes(Map&lt;String, Long&gt; guessTypes)
+    {
+<span class="nc" id="L261">        this.guessTypes = guessTypes;</span>
+<span class="nc" id="L262">        return this;</span>
+    }
+
+    /**
+     * Dictionaries are used by the {@link DictionaryMatcher} to find common words, names, and known passwords within the password.
+     *
+     * @param dictionaries List of dictionaries
+     * @return Builder
+     */
+    public ConfigurationBuilder setDictionaries(List&lt;Dictionary&gt; dictionaries)
+    {
+<span class="nc" id="L273">        this.dictionaries = dictionaries;</span>
+<span class="nc" id="L274">        return this;</span>
+    }
+
+    /**
+     * {@link AdjacencyGraph}s are used to find spacial patterns within passwords (e.g. asdfghj).
+     *
+     * @param adjacencyGraphs List of adjacencyGraphs
+     * @return Builder
+     */
+    public ConfigurationBuilder setAdjacencyGraphs(List&lt;AdjacencyGraph&gt; adjacencyGraphs)
+    {
+<span class="nc" id="L285">        this.adjacencyGraphs = adjacencyGraphs;</span>
+<span class="nc" id="L286">        return this;</span>
+    }
+
+    /**
+     * The leet table is used to check within a password for common character substitutions (e.g. s to $).
+     *
+     * @param leetTable Map for leetTable
+     * @return Builder
+     */
+    public ConfigurationBuilder setLeetTable(Map&lt;Character, Character[]&gt; leetTable)
+    {
+<span class="nc" id="L297">        this.leetTable = leetTable;</span>
+<span class="nc" id="L298">        return this;</span>
+    }
+
+    /**
+     * Year patterns are used to look for years within a password.
+     *
+     * @param yearPattern Pattern for year matching
+     * @return Builder
+     */
+    public ConfigurationBuilder setYearPattern(Pattern yearPattern)
+    {
+<span class="nc" id="L309">        this.yearPattern = yearPattern;</span>
+<span class="nc" id="L310">        return this;</span>
+    }
+
+    /**
+     * Used to check if the password is secure enough, and give feedback if not.
+     *
+     * @param minimumEntropy Value for minimumEntropy (should be a positive value)
+     * @return Builder
+     */
+    public ConfigurationBuilder setMinimumEntropy(Double minimumEntropy)
+    {
+<span class="nc" id="L321">        this.minimumEntropy = minimumEntropy;</span>
+<span class="nc" id="L322">        return this;</span>
+    }
+
+    /**
+     * Sets the minimum entropy based on time to crack, and a specific guess type.
+     * &lt;br&gt;
+     * If you are specifying a cracking hardware cost, you should set that prior to calling this.
+     *
+     * @param seconds_to_crack Value in seconds that you want to consider the minimum for a password to be considered good
+     * @param guess_type The guess type to use to figure out what the guesses per second are for this calculation
+     * @return Builder
+     */
+    public ConfigurationBuilder setMinimumEntropy(BigDecimal seconds_to_crack, String guess_type)
+    {
+        BigDecimal guesses_per_second;
+<span class="nc bnc" id="L337" title="All 2 branches missed.">        if(guessTypes != null)</span>
+<span class="nc" id="L338">            guesses_per_second = BigDecimal.valueOf(guessTypes.get(guess_type));</span>
+        else
+<span class="nc bnc" id="L340" title="All 2 branches missed.">            guesses_per_second = BigDecimal.valueOf(getDefaultGuessTypes(null != crackingHardwareCost ? crackingHardwareCost : getDefaultCrackingHardwareCost()).get(guess_type));</span>
+
+<span class="nc" id="L342">        BigDecimal guesses = guesses_per_second.multiply(seconds_to_crack);</span>
+
+<span class="nc" id="L344">        minimumEntropy = Nbvcxz.getEntropyFromGuesses(guesses);</span>
+<span class="nc" id="L345">        return this;</span>
+    }
+
+    /**
+     * Used to limit total password length to run estimation on.
+     * Information will be available in the Result if the password was longer
+     * than maxLength.
+     *
+     * This should match the exact length your algorithm is limited to (72 for most bcrypt implementations).
+     * If you arbitrarily limit the input for passwords, ensure the passed in value is either already truncated to
+     * the correct length, or this value is set to the same length you will truncate to.
+     *
+     * @param maxLength Value for maxLength (should be a positive value)
+     * @return Builder
+     */
+    public ConfigurationBuilder setMaxLength(Integer maxLength)
+    {
+<span class="nc" id="L362">        this.maxLength = maxLength;</span>
+<span class="nc" id="L363">        return this;</span>
+    }
+
+    /**
+     * Supported locales are en, and fr. &lt;br&gt;
+     * Default locale is en.
+     *
+     * @param locale Locale for localization
+     * @return Builder
+     */
+    public ConfigurationBuilder setLocale(Locale locale)
+    {
+<span class="nc" id="L375">        this.locale = locale;</span>
+<span class="nc" id="L376">        return this;</span>
+    }
+
+    /**
+     * Distance based dictionary calculations which provide support for misspelling
+     * detection, at the expense of performance.  This will slow down calculations
+     * by an order of magnitude.
+     *
+     * @param distanceCalc true to enable distance based dictionary calculations
+     * @return Builder
+     */
+    public ConfigurationBuilder setDistanceCalc(final Boolean distanceCalc)
+    {
+<span class="nc" id="L389">        this.distanceCalc = distanceCalc;</span>
+<span class="nc" id="L390">        return this;</span>
+    }
+
+    /**
+     * Timeout for the findBestCombination algorithm. If there are too many possible matches at each position of
+     * the password, the algorithm can take too long to get an answer and we must fall back to a simpler algorithm.
+     * &lt;p&gt;
+     * To disable the findBestMatches calculation and always fall back to the faster, less accurate one, set to 0.
+     *
+     * @param combinationAlgorithmTimeout The time in ms to timeout
+     * @return Builder
+     */
+    public ConfigurationBuilder setCombinationAlgorithmTimeout(final Long combinationAlgorithmTimeout)
+    {
+<span class="nc" id="L404">        this.combinationAlgorithmTimeout = combinationAlgorithmTimeout;</span>
+<span class="nc" id="L405">        return this;</span>
+    }
+
+    /**
+     * Sets the cost of cracking hardware to scale the guesses / second for the default guess types.
+     * &lt;br&gt;
+     * Does not have any affect if you manually specify the guess types.
+     * @param crackingHardwareCost The hardware cost in USD
+     * @return Builder
+     */
+    public ConfigurationBuilder setCrackingHardwareCost(final Long crackingHardwareCost)
+    {
+<span class="nc" id="L417">        this.crackingHardwareCost = crackingHardwareCost;</span>
+<span class="nc" id="L418">        return this;</span>
+    }
+
+    /**
+     * Creates the {@link Configuration} object using all values set in this builder, or default values if unset.
+     *
+     * @return Configuration object from builder
+     */
+    public Configuration createConfiguration()
+    {
+<span class="nc bnc" id="L428" title="All 2 branches missed.">        if (crackingHardwareCost == null)</span>
+        {
+<span class="nc" id="L430">            crackingHardwareCost = getDefaultCrackingHardwareCost();</span>
+        }
+<span class="nc bnc" id="L432" title="All 2 branches missed.">        if (passwordMatchers == null)</span>
+        {
+<span class="nc" id="L434">            passwordMatchers = getDefaultPasswordMatchers();</span>
+        }
+<span class="nc bnc" id="L436" title="All 2 branches missed.">        if (guessTypes == null)</span>
+        {
+<span class="nc" id="L438">            guessTypes = getDefaultGuessTypes(crackingHardwareCost);</span>
+        }
+<span class="nc bnc" id="L440" title="All 2 branches missed.">        if (dictionaries == null)</span>
+        {
+<span class="nc" id="L442">            dictionaries = getDefaultDictionaries();</span>
+        }
+<span class="nc bnc" id="L444" title="All 2 branches missed.">        if (adjacencyGraphs == null)</span>
+        {
+<span class="nc" id="L446">            adjacencyGraphs = getDefaultAdjacencyGraphs();</span>
+        }
+<span class="nc bnc" id="L448" title="All 2 branches missed.">        if (leetTable == null)</span>
+        {
+<span class="nc" id="L450">            leetTable = getDefaultLeetTable();</span>
+        }
+<span class="nc bnc" id="L452" title="All 2 branches missed.">        if (yearPattern == null)</span>
+        {
+<span class="nc" id="L454">            yearPattern = getDefaultYearPattern();</span>
+        }
+<span class="nc bnc" id="L456" title="All 2 branches missed.">        if (minimumEntropy == null)</span>
+        {
+<span class="nc" id="L458">            minimumEntropy = getDefaultMinimumEntropy();</span>
+        }
+<span class="nc bnc" id="L460" title="All 2 branches missed.">        if (maxLength == null)</span>
+        {
+<span class="nc" id="L462">            maxLength = getDefaultMaxLength();</span>
+        }
+<span class="nc bnc" id="L464" title="All 2 branches missed.">        if (locale == null)</span>
+        {
+<span class="nc" id="L466">            locale = Locale.getDefault();</span>
+        }
+<span class="nc bnc" id="L468" title="All 2 branches missed.">        if (distanceCalc == null)</span>
+        {
+<span class="nc" id="L470">            distanceCalc = getDefaultDistanceCalc();</span>
+        }
+<span class="nc bnc" id="L472" title="All 2 branches missed.">        if (combinationAlgorithmTimeout == null)</span>
+        {
+<span class="nc" id="L474">            combinationAlgorithmTimeout = getDefaultCombinationAlgorithmTimeout();</span>
+        }
+<span class="nc" id="L476">        return new Configuration(passwordMatchers, guessTypes, dictionaries, adjacencyGraphs, leetTable, yearPattern, minimumEntropy, maxLength, locale, distanceCalc, combinationAlgorithmTimeout);</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

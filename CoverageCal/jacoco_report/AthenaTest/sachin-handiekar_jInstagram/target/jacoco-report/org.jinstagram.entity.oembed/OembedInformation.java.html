@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OembedInformation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.oembed</a> &gt; <span class="el_source">OembedInformation.java</span></div><h1>OembedInformation.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.oembed;
+
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Holds information returned from the oembed API endpoint
+ * https://www.instagram.com/developer/embedding/#oembed
+ *
+ * @author Brenn Hill
+ */
+<span class="fc" id="L11">public class OembedInformation {</span>
+
+    @SerializedName(&quot;provider_url&quot;)
+    private String providerUrl;
+
+    @SerializedName(&quot;title&quot;)
+    private String title;
+
+    @SerializedName(&quot;url&quot;)
+    private String url;
+
+    @SerializedName(&quot;author_name&quot;)
+    private String authorName;
+
+    @SerializedName(&quot;height&quot;)
+    private String height;
+
+    @SerializedName(&quot;width&quot;)
+    private String width;
+
+    @SerializedName(&quot;html&quot;)
+    private String html;
+
+    @SerializedName(&quot;thumbnail_url&quot;)
+    private String thumbnailUrl;
+
+    @SerializedName(&quot;thumbnail_width&quot;)
+    private int thumbnailWidth;
+
+    @SerializedName(&quot;thumbnail_height&quot;)
+    private int thumbnailHeight;
+
+    @SerializedName(&quot;media_id&quot;)
+    private String mediaId;
+
+    @SerializedName(&quot;version&quot;)
+    private String version;
+
+    @SerializedName(&quot;author_url&quot;)
+    private String authorUrl;
+
+    @SerializedName(&quot;provider_name&quot;)
+    private String providerName;
+
+    @SerializedName(&quot;type&quot;)
+    private String type;
+
+    public String getProviderUrl() {
+<span class="nc" id="L59">        return providerUrl;</span>
+    }
+
+    public void setProviderUrl(String providerUrl) {
+<span class="nc" id="L63">        this.providerUrl = providerUrl;</span>
+<span class="nc" id="L64">    }</span>
+
+    public String getTitle() {
+<span class="nc" id="L67">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="fc" id="L71">        this.title = title;</span>
+<span class="fc" id="L72">    }</span>
+
+    public String getUrl() {
+<span class="nc" id="L75">        return url;</span>
+    }
+
+    public void setUrl(String url) {
+<span class="nc" id="L79">        this.url = url;</span>
+<span class="nc" id="L80">    }</span>
+
+    public String getAuthorName() {
+<span class="nc" id="L83">        return authorName;</span>
+    }
+
+    public void setAuthorName(String authorName) {
+<span class="fc" id="L87">        this.authorName = authorName;</span>
+<span class="fc" id="L88">    }</span>
+
+    public String getHeight() {
+<span class="nc" id="L91">        return height;</span>
+    }
+
+    public void setHeight(String height) {
+<span class="fc" id="L95">        this.height = height;</span>
+<span class="fc" id="L96">    }</span>
+
+    public String getWidth() {
+<span class="nc" id="L99">        return width;</span>
+    }
+
+    public void setWidth(String width) {
+<span class="fc" id="L103">        this.width = width;</span>
+<span class="fc" id="L104">    }</span>
+
+    public String getVersion() {
+<span class="nc" id="L107">        return version;</span>
+    }
+
+    public void setVersion(String version) {
+<span class="fc" id="L111">        this.version = version;</span>
+<span class="fc" id="L112">    }</span>
+
+    public String getAuthorUrl() {
+<span class="nc" id="L115">        return authorUrl;</span>
+    }
+
+    public void setAuthorUrl(String authorUrl) {
+<span class="nc" id="L119">        this.authorUrl = authorUrl;</span>
+<span class="nc" id="L120">    }</span>
+
+    public String getProviderName() {
+<span class="fc" id="L123">        return providerName;</span>
+    }
+
+    public void setProviderName(String providerName) {
+<span class="fc" id="L127">        this.providerName = providerName;</span>
+<span class="fc" id="L128">    }</span>
+
+    public String getType() {
+<span class="fc" id="L131">        return type;</span>
+    }
+
+    public void setType(String type) {
+<span class="fc" id="L135">        this.type = type;</span>
+<span class="fc" id="L136">    }</span>
+
+    public String getMediaId() {
+<span class="fc" id="L139">        return mediaId;</span>
+    }
+
+    public void setMediaId(String mediaId) {
+<span class="fc" id="L143">        this.mediaId = mediaId;</span>
+<span class="fc" id="L144">    }</span>
+
+<span class="nc" id="L146">    public String getHtml() { return html; }</span>
+
+<span class="fc" id="L148">    public void setHtml(final String html) { this.html = html; }</span>
+
+<span class="nc" id="L150">    public String getThumbnailUrl() { return thumbnailUrl; }</span>
+
+<span class="nc" id="L152">    public void setThumbnailUrl(final String thumbnailUrl) { this.thumbnailUrl = thumbnailUrl; }</span>
+
+<span class="fc" id="L154">    public int getThumbnailWidth() { return thumbnailWidth; }</span>
+
+<span class="fc" id="L156">    public void setThumbnailWidth(final int thumbnailWidth) { this.thumbnailWidth = thumbnailWidth; }</span>
+
+<span class="fc" id="L158">    public int getThumbnailHeight() { return thumbnailHeight; }</span>
+
+<span class="fc" id="L160">    public void setThumbnailHeight(final int thumbnailHeight) { this.thumbnailHeight = thumbnailHeight; }</span>
+
+    /*
+                 * (non-Javadoc)
+                 *
+                 * @see java.lang.Object#toString()
+                 */
+    @Override
+    public String toString() {
+<span class="nc bnc" id="L169" title="All 22 branches missed.">        return &quot;OembedInformation [&quot;</span>
+                + (providerUrl != null ? &quot;provider_url=&quot; + providerUrl + &quot;, &quot;  : &quot;&quot;)
+                + (title != null ? &quot;title=&quot; + title + &quot;, &quot; : &quot;&quot;)
+                + (url != null ? &quot;url=&quot; + url + &quot;, &quot; : &quot;&quot;)
+                + (authorName != null ? &quot;author_name=&quot; + authorName + &quot;, &quot; : &quot;&quot;)
+                + (height != null ? &quot;height=&quot; + height + &quot;, &quot; : &quot;&quot;)
+                + (width != null ? &quot;width=&quot; + width + &quot;, &quot; : &quot;&quot;)
+                + (version != null ? &quot;version=&quot; + version + &quot;, &quot; : &quot;&quot;)
+                + (authorUrl != null ? &quot;author_url=&quot; + authorUrl + &quot;, &quot; : &quot;&quot;)
+                + (providerName != null ? &quot;provider_name=&quot; + providerName + &quot;, &quot; : &quot;&quot;)
+                + (type != null ? &quot;type=&quot; + type + &quot;, &quot; : &quot;&quot;)
+                + (mediaId != null ? &quot;mediaId=&quot; + mediaId : &quot;&quot;)
+                + &quot;]&quot;;
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicExtractionAlgorithm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula.extractors</a> &gt; <span class="el_source">BasicExtractionAlgorithm.java</span></div><h1>BasicExtractionAlgorithm.java</h1><pre class="source lang-java linenums">package technology.tabula.extractors;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Arrays;
+
+import technology.tabula.Line;
+import technology.tabula.Page;
+import technology.tabula.Rectangle;
+import technology.tabula.Ruling;
+import technology.tabula.Table;
+import technology.tabula.TextChunk;
+import technology.tabula.TextElement;
+
+public class BasicExtractionAlgorithm implements ExtractionAlgorithm {
+    
+<span class="nc" id="L19">    private List&lt;Ruling&gt; verticalRulings = null;</span>
+    
+<span class="nc" id="L21">    public BasicExtractionAlgorithm() {</span>
+<span class="nc" id="L22">    }</span>
+    
+<span class="nc" id="L24">    public BasicExtractionAlgorithm(List&lt;Ruling&gt; verticalRulings) {</span>
+<span class="nc" id="L25">        this.verticalRulings = verticalRulings;</span>
+<span class="nc" id="L26">    }</span>
+    
+    public List&lt;Table&gt; extract(Page page, List&lt;Float&gt; verticalRulingPositions) {
+<span class="nc" id="L29">        List&lt;Ruling&gt; verticalRulings = new ArrayList&lt;&gt;(verticalRulingPositions.size());</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        for (Float p: verticalRulingPositions) {</span>
+<span class="nc" id="L31">            verticalRulings.add(new Ruling(page.getTop(), p, 0.0f, (float) page.getHeight()));</span>
+<span class="nc" id="L32">        }</span>
+<span class="nc" id="L33">        this.verticalRulings = verticalRulings;</span>
+<span class="nc" id="L34">        return this.extract(page);</span>
+    }
+
+    @Override
+    public List&lt;Table&gt; extract(Page page) {
+        
+<span class="nc" id="L40">        List&lt;TextElement&gt; textElements = page.getText();</span>
+        
+<span class="nc bnc" id="L42" title="All 2 branches missed.">        if (textElements.size() == 0) {</span>
+<span class="nc" id="L43">            return Arrays.asList(new Table[] { Table.empty() });</span>
+        }
+        
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        List&lt;TextChunk&gt; textChunks = this.verticalRulings == null ? TextElement.mergeWords(page.getText()) : TextElement.mergeWords(page.getText(), this.verticalRulings);</span>
+<span class="nc" id="L47">        List&lt;Line&gt; lines = TextChunk.groupByLines(textChunks);</span>
+<span class="nc" id="L48">        List&lt;Float&gt; columns = null;</span>
+        
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (this.verticalRulings != null) {</span>
+<span class="nc" id="L51">            Collections.sort(this.verticalRulings, new Comparator&lt;Ruling&gt;() {</span>
+                @Override
+                public int compare(Ruling arg0, Ruling arg1) {
+<span class="nc" id="L54">                    return Double.compare(arg0.getLeft(), arg1.getLeft());</span>
+                }
+            });
+<span class="nc" id="L57">            columns = new ArrayList&lt;&gt;(this.verticalRulings.size());</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            for (Ruling vr: this.verticalRulings) {</span>
+<span class="nc" id="L59">                columns.add(vr.getLeft());</span>
+<span class="nc" id="L60">            }</span>
+        }
+        else {
+<span class="nc" id="L63">            columns = columnPositions(lines);</span>
+        }
+        
+<span class="nc" id="L66">        Table table = new Table(this);</span>
+<span class="nc" id="L67">        table.setRect(page.getLeft(), page.getTop(), page.getWidth(), page.getHeight());</span>
+<span class="nc" id="L68">        table.setPageNumber(page.getPageNumber());</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        for (int i = 0; i &lt; lines.size(); i++) {</span>
+<span class="nc" id="L71">            Line line = lines.get(i);</span>
+<span class="nc" id="L72">            List&lt;TextChunk&gt; elements = line.getTextElements();</span>
+            
+<span class="nc" id="L74">            Collections.sort(elements, new Comparator&lt;TextChunk&gt;() {</span>
+
+				@Override
+				public int compare(TextChunk o1, TextChunk o2) {
+<span class="nc" id="L78">					return Float.compare(o1.getLeft(), o2.getLeft());</span>
+				}
+			});
+            
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            for (TextChunk tc: elements) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                if (tc.isSameChar(Line.WHITE_SPACE_CHARS)) {</span>
+<span class="nc" id="L84">                    continue;</span>
+                }
+
+<span class="nc" id="L87">                int j = 0;</span>
+<span class="nc" id="L88">                boolean found = false;</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                for(; j &lt; columns.size(); j++) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                    if (tc.getLeft() &lt;= columns.get(j)) {</span>
+<span class="nc" id="L91">                        found = true; </span>
+<span class="nc" id="L92">                        break;</span>
+                    } 
+                }
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                table.add(tc, i, found ? j : columns.size());</span>
+<span class="nc" id="L96">            }</span>
+        }
+        
+<span class="nc" id="L99">        return Arrays.asList(new Table[] { table } );</span>
+    }
+    
+    @Override
+    public String toString() {
+<span class="nc" id="L104">        return &quot;stream&quot;;</span>
+    }
+    
+    
+    /**
+     * @param lines must be an array of lines sorted by their +top+ attribute
+     * @return a list of column boundaries (x axis)
+     */
+    public static List&lt;java.lang.Float&gt; columnPositions(List&lt;Line&gt; lines) {
+
+<span class="nc" id="L114">        List&lt;Rectangle&gt; regions = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        for (TextChunk tc: lines.get(0).getTextElements()) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            if (tc.isSameChar(Line.WHITE_SPACE_CHARS)) { </span>
+<span class="nc" id="L117">                continue; </span>
+            }
+<span class="nc" id="L119">            Rectangle r = new Rectangle();</span>
+<span class="nc" id="L120">            r.setRect(tc);</span>
+<span class="nc" id="L121">            regions.add(r);</span>
+<span class="nc" id="L122">        }</span>
+        
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        for (Line l: lines.subList(1, lines.size())) {</span>
+<span class="nc" id="L125">            List&lt;TextChunk&gt; lineTextElements = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            for (TextChunk tc: l.getTextElements()) {</span>
+<span class="nc bnc" id="L127" title="All 2 branches missed.">                if (!tc.isSameChar(Line.WHITE_SPACE_CHARS)) { </span>
+<span class="nc" id="L128">                    lineTextElements.add(tc);</span>
+                }
+<span class="nc" id="L130">            }</span>
+            
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            for (Rectangle cr: regions) {</span>
+
+<span class="nc" id="L134">                List&lt;TextChunk&gt; overlaps = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                for (TextChunk te: lineTextElements) {</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">                    if (cr.horizontallyOverlaps(te)) {</span>
+<span class="nc" id="L137">                        overlaps.add(te);</span>
+                    }
+<span class="nc" id="L139">                }</span>
+                
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                for (TextChunk te: overlaps) {</span>
+<span class="nc" id="L142">                    cr.merge(te);</span>
+<span class="nc" id="L143">                }</span>
+                
+<span class="nc" id="L145">                lineTextElements.removeAll(overlaps);</span>
+<span class="nc" id="L146">            }</span>
+            
+<span class="nc bnc" id="L148" title="All 2 branches missed.">            for (TextChunk te: lineTextElements) {</span>
+<span class="nc" id="L149">                Rectangle r = new Rectangle();</span>
+<span class="nc" id="L150">                r.setRect(te);</span>
+<span class="nc" id="L151">                regions.add(r);</span>
+<span class="nc" id="L152">            }</span>
+<span class="nc" id="L153">        }</span>
+        
+<span class="nc" id="L155">        List&lt;java.lang.Float&gt; rv = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        for (Rectangle r: regions) {</span>
+<span class="nc" id="L157">            rv.add(r.getRight());</span>
+<span class="nc" id="L158">        }</span>
+        
+<span class="nc" id="L160">        Collections.sort(rv);</span>
+        
+<span class="nc" id="L162">        return rv;</span>
+        
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

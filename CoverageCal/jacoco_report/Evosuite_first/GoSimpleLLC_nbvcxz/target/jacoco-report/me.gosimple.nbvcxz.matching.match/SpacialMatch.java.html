@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpacialMatch.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching.match</a> &gt; <span class="el_source">SpacialMatch.java</span></div><h1>SpacialMatch.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching.match;
+
+import me.gosimple.nbvcxz.resources.AdjacencyGraph;
+import me.gosimple.nbvcxz.resources.Configuration;
+
+import java.util.ResourceBundle;
+
+/**
+ * @author Adam Brusselback
+ */
+public final class SpacialMatch extends BaseMatch
+{
+
+
+    private final AdjacencyGraph adjacencyGraph;
+    private final int turns;
+    private final int shiftedCount;
+
+
+    /**
+     * Create a new {@code SpacialMatch} which is a sequence of characters
+     * following themselves on the keyboard/keypad
+     *
+     * @param match          the part of the password that was matched.
+     * @param configuration  the {@link Configuration} object.
+     * @param start_index    the starting index of this {@code SpacialMatch}.
+     * @param end_index      the ending index of this {@code SpacialMatch}.
+     * @param adjacencyGraph the graph used for this {@code SpacialMatch}.
+     * @param turns          the number of turns in this {@code SpacialMatch}.
+     * @param shiftedNumber  the number of shifts in this {@code SpacialMatch}.
+     */
+    public SpacialMatch(String match, Configuration configuration, int start_index, int end_index, AdjacencyGraph adjacencyGraph, int turns, int shiftedNumber)
+    {
+<span class="fc" id="L34">        super(match, configuration, start_index, end_index);</span>
+<span class="fc" id="L35">        this.adjacencyGraph = adjacencyGraph;</span>
+<span class="fc" id="L36">        this.turns = turns;</span>
+<span class="fc" id="L37">        this.shiftedCount = shiftedNumber;</span>
+
+<span class="fc" id="L39">        super.setEntropy(this.getEntropy());</span>
+<span class="fc" id="L40">    }</span>
+
+    private double getEntropy()
+    {
+        // Size of the keyboard used
+<span class="fc" id="L45">        int size = adjacencyGraph.getKeyMap().size();</span>
+
+        // Average degree of the keyboard used
+<span class="fc" id="L48">        double avgDegree = adjacencyGraph.getAverageDegree();</span>
+
+<span class="fc" id="L50">        double entropy = 0;</span>
+        // Estimated the number of possible patterns for the token length and
+        // the number of turn
+<span class="fc" id="L53">        long possibilities = 0;</span>
+<span class="fc" id="L54">        int length = getToken().length();</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (int i = 2; i &lt;= length; i++)</span>
+        {
+<span class="fc" id="L57">            int possibleTurns = Math.min(turns, i - 1);</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            for (int j = 1; j &lt;= possibleTurns; j++)</span>
+            {
+<span class="fc" id="L60">                possibilities += nCk(i - 1, j - 1) * size * Math.pow(avgDegree, j);</span>
+            }
+        }
+<span class="fc" id="L63">        entropy += Math.max(0, log2(possibilities));</span>
+
+        // Add extra entropy for the shifted keys
+<span class="fc" id="L66">        possibilities = 0;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (shiftedCount &gt; 0)</span>
+        {
+<span class="fc" id="L69">            int unshiftedCount = length - shiftedCount;</span>
+<span class="fc" id="L70">            int min = Math.min(shiftedCount, unshiftedCount);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">            for (int i = 0; i &lt;= min; i++)</span>
+            {
+<span class="fc" id="L73">                possibilities += nCk(length, i);</span>
+            }
+        }
+<span class="fc" id="L76">        entropy += Math.max(0, log2(possibilities));</span>
+
+<span class="fc" id="L78">        return entropy;</span>
+    }
+
+
+    /**
+     * @return the {@code AdjacencyGraph} used in this {@code SpacialMatch}.
+     */
+    public AdjacencyGraph getAdjacencyGraph()
+    {
+<span class="fc" id="L87">        return adjacencyGraph;</span>
+    }
+
+
+    /**
+     * @return the number of turns the user makes on the keyboard. 'zxcv' has a
+     * turn of 1, 'zxcvfr' has a turn of 2, 'zxcvfrewq' has a turn of 3, etc.
+     */
+    public int getTurns()
+    {
+<span class="fc" id="L97">        return turns;</span>
+    }
+
+
+    /**
+     * @return the number of key that are shifted (% instead of 5, A instead of a)
+     */
+    public int getShiftedNumber()
+    {
+<span class="fc" id="L106">        return shiftedCount;</span>
+    }
+
+    public String getDetails()
+    {
+<span class="fc" id="L111">        ResourceBundle mainResource = configuration.getMainResource();</span>
+<span class="fc" id="L112">        StringBuilder detailBuilder = new StringBuilder();</span>
+<span class="fc" id="L113">        detailBuilder.append(super.getDetails());</span>
+<span class="fc" id="L114">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L115">        detailBuilder.append(mainResource.getString(&quot;main.match.spacialType&quot;)).append(&quot; &quot;).append(getAdjacencyGraph().getName());</span>
+<span class="fc" id="L116">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L117">        detailBuilder.append(mainResource.getString(&quot;main.match.turns&quot;)).append(&quot; &quot;).append(getTurns());</span>
+<span class="fc" id="L118">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="fc" id="L119">        detailBuilder.append(mainResource.getString(&quot;main.match.shifts&quot;)).append(&quot; &quot;).append(getShiftedNumber());</span>
+<span class="fc" id="L120">        return detailBuilder.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

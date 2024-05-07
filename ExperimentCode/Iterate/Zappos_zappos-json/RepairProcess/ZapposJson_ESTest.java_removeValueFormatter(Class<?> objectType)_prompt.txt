@@ -1,0 +1,174 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testRemoveValueFormatter() {
+        ZapposJson zapposJson = ZapposJson.getInstance();
+
+          <Buggy Line>: cannot find symbol class "TestValueFormatter"
+        ValueFormatter<Object> testFormatter = new TestValueFormatter();
+
+        zapposJson.addValueFormatter(Date.class, testFormatter);
+        assertNotNull(zapposJson.getValueFormatter(Date.class));
+        zapposJson.removeValueFormatter(Date.class);
+        assertNull(zapposJson.getValueFormatter(Date.class));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testRemoveValueFormatter() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+
+      <Buggy Line>: cannot find symbol class "DefaultValueFormatter"
+    ValueFormatter<Object> testFormatter = new DefaultValueFormatter();
+
+    zapposJson.addValueFormatter(Date.class, testFormatter);
+    assertNotNull(zapposJson.getValueFormatter(Date.class));
+    zapposJson.removeValueFormatter(Date.class);
+    assertNull(zapposJson.getValueFormatter(Date.class));
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class ZapposJson {
+protected final Map<Class<?>, ValueFormatter<Object>> VALUE_FORMATTERS = new ConcurrentHashMap<>();
+protected ZapposJson() {
+    addValueFormatter(Date.class, new JavaDateFormatter());
+    addValueFormatter(java.sql.Date.class, new JavaSqlDateFormatter());
+    addValueFormatter(java.sql.Timestamp.class, new JavaTimestampFormatter());
+    addValueFormatter(java.math.BigInteger.class, new BigIntegerFormatter());
+    addValueFormatter(java.math.BigDecimal.class, new BigDecimalFormatter());
+    if (Reflections.classPresent("java.time.chrono.ChronoLocalDate")) {
+        ValueFormatter<LocalDate> localDateHandler = new JavaTimeLocalDateFormatter();
+        addValueFormatter(LocalDate.class, localDateHandler);
+        ValueFormatter<Instant> instantHandler = new JavaTimeInstantFormatter();
+        addValueFormatter(Instant.class, instantHandler);
+    }
+    jsonBeanIntrospector = new JsonBeanIntrospector(this);
+    writerCodeGenerator = new JsonWriterCodeGenerator(this, jsonBeanIntrospector);
+    readerCodeGenerator = new JsonReaderCodeGenerator(this, jsonBeanIntrospector);
+}protected ZapposJson(boolean debug) {
+    this();
+    this.debug = debug;
+}
+# Focal method
+public void removeValueFormatter(Class<?> objectType) {
+    VALUE_FORMATTERS.remove(objectType);
+}
+}
+
+# Method Intention
+The removeValueFormatter(Class<?> objectType) method in the ZapposJson class is intended to remove a specific ValueFormatter associated with a given objectType from the map of VALUE_FORMATTERS.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+public class ZapposJson {
+protected final Map<Class<?>, ValueFormatter<Object>> VALUE_FORMATTERS = new ConcurrentHashMap<>();
+protected ZapposJson() {
+    addValueFormatter(Date.class, new JavaDateFormatter());
+    addValueFormatter(java.sql.Date.class, new JavaSqlDateFormatter());
+    addValueFormatter(java.sql.Timestamp.class, new JavaTimestampFormatter());
+    addValueFormatter(java.math.BigInteger.class, new BigIntegerFormatter());
+    addValueFormatter(java.math.BigDecimal.class, new BigDecimalFormatter());
+    if (Reflections.classPresent("java.time.chrono.ChronoLocalDate")) {
+        ValueFormatter<LocalDate> localDateHandler = new JavaTimeLocalDateFormatter();
+        addValueFormatter(LocalDate.class, localDateHandler);
+        ValueFormatter<Instant> instantHandler = new JavaTimeInstantFormatter();
+        addValueFormatter(Instant.class, instantHandler);
+    }
+    jsonBeanIntrospector = new JsonBeanIntrospector(this);
+    writerCodeGenerator = new JsonWriterCodeGenerator(this, jsonBeanIntrospector);
+    readerCodeGenerator = new JsonReaderCodeGenerator(this, jsonBeanIntrospector);
+}protected ZapposJson(boolean debug) {
+    this();
+    this.debug = debug;
+}
+# Focal method
+public void removeValueFormatter(Class<?> objectType) {
+    VALUE_FORMATTERS.remove(objectType);
+}
+}
+
+# Method Intention
+The removeValueFormatter(Class<?> objectType) method in the ZapposJson class is intended to remove a specific ValueFormatter associated with a given objectType from the map of VALUE_FORMATTERS, allowing for customization and modification of the formatting behavior for different object types.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+# ZapposJson class
+package com.zappos.json;
+public class ZapposJson {
+public static ZapposJson getInstance();
+public static synchronized ZapposJson getInstance(String name);
+public void register(Class<?>... classes);
+public void register(Class<?> clazz);
+public void deregister(Class<?> clazz);
+public void deregisterAll();
+public void addValueFormatter(Class<?> objectType, ValueFormatter<?> valueFormatter);
+public void removeValueFormatter(Class<?> objectType);
+public ValueFormatter<Object> getValueFormatter(Class<?> objectType);
+public synchronized void configure(ReaderConfig config, boolean value);
+public synchronized boolean is(ReaderConfig config);
+public synchronized void configure(WriterConfig config, boolean value);
+public synchronized boolean is(WriterConfig config);
+public String format(Object value);
+public String toJson(Object object);
+public void toJson(Object object, Writer writer);
+public T fromJson(String json, Class<T> targetClass);
+public T fromJson(Reader reader, Class<T> targetClass);
+}
+
+
+# Test Method
+@Test
+    public void setUp() {
+
+         <Buggy Line>: cannot find symbol variable "zapposJson"
+        zapposJson = new ZapposJson();
+
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "ZapposJson" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "ZapposJson" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

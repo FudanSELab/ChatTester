@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: me.gosimple.nbvcxz.Nbvcxz_ESTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.415 s - in me.gosimple.nbvcxz.Nbvcxz_ESTest

@@ -1,0 +1,80 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetValueFormatter() {
+        ZapposJson zapposJson = ZapposJson.getInstance();
+        zapposJson.addValueFormatter(Date.class, new JavaDateFormatter());
+
+        <Buggy Line>: cannot find symbol class "JavaSqlDateFormatter"
+        zapposJson.addValueFormatter(java.sql.Date.class, new JavaSqlDateFormatter());
+
+        zapposJson.addValueFormatter(java.sql.Timestamp.class, new JavaTimestampFormatter());
+        zapposJson.addValueFormatter(java.math.BigInteger.class, new BigIntegerFormatter());
+        zapposJson.addValueFormatter(java.math.BigDecimal.class, new BigDecimalFormatter());
+        ValueFormatter<Object> dateFormatter = zapposJson.getValueFormatter(Date.class);
+        assertNotNull(dateFormatter);
+        assertTrue(dateFormatter instanceof JavaDateFormatter);
+        ValueFormatter<Object> sqlDateFormatter = zapposJson.getValueFormatter(java.sql.Date.class);
+        assertNotNull(sqlDateFormatter);
+        assertTrue(sqlDateFormatter instanceof JavaSqlDateFormatter);
+        ValueFormatter<Object> timestampFormatter = zapposJson.getValueFormatter(java.sql.Timestamp.class);
+        assertNotNull(timestampFormatter);
+        assertTrue(timestampFormatter instanceof JavaTimestampFormatter);
+        ValueFormatter<Object> bigIntegerFormatter = zapposJson.getValueFormatter(java.math.BigInteger.class);
+        assertNotNull(bigIntegerFormatter);
+        assertTrue(bigIntegerFormatter instanceof BigIntegerFormatter);
+        ValueFormatter<Object> bigDecimalFormatter = zapposJson.getValueFormatter(java.math.BigDecimal.class);
+        assertNotNull(bigDecimalFormatter);
+        assertTrue(bigDecimalFormatter instanceof BigDecimalFormatter);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testGetValueFormatter() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+    zapposJson.addValueFormatter(Date.class, new JavaDateFormatter());
+
+    <Buggy Line>: cannot find symbol class "JavaSqlDateFormatter"
+    zapposJson.addValueFormatter(java.sql.Date.class, new JavaSqlDateFormatter());
+
+    zapposJson.addValueFormatter(java.sql.Timestamp.class, new JavaTimestampFormatter());
+    zapposJson.addValueFormatter(java.math.BigInteger.class, new BigIntegerFormatter());
+    zapposJson.addValueFormatter(java.math.BigDecimal.class, new BigDecimalFormatter());
+    ValueFormatter<Object> dateFormatter = zapposJson.getValueFormatter(Date.class);
+    assertNotNull(dateFormatter);
+    assertTrue(dateFormatter instanceof JavaDateFormatter);
+    ValueFormatter<Object> sqlDateFormatter = zapposJson.getValueFormatter(java.sql.Date.class);
+    assertNotNull(sqlDateFormatter);
+    assertTrue(sqlDateFormatter instanceof JavaSqlDateFormatter);
+    ValueFormatter<Object> timestampFormatter = zapposJson.getValueFormatter(java.sql.Timestamp.class);
+    assertNotNull(timestampFormatter);
+    assertTrue(timestampFormatter instanceof JavaTimestampFormatter);
+    ValueFormatter<Object> bigIntegerFormatter = zapposJson.getValueFormatter(java.math.BigInteger.class);
+    assertNotNull(bigIntegerFormatter);
+    assertTrue(bigIntegerFormatter instanceof BigIntegerFormatter);
+    ValueFormatter<Object> bigDecimalFormatter = zapposJson.getValueFormatter(java.math.BigDecimal.class);
+    assertNotNull(bigDecimalFormatter);
+    assertTrue(bigDecimalFormatter instanceof BigDecimalFormatter);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

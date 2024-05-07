@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DictionaryMatch.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching.match</a> &gt; <span class="el_source">DictionaryMatch.java</span></div><h1>DictionaryMatch.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching.match;
+
+import me.gosimple.nbvcxz.resources.BruteForceUtil;
+import me.gosimple.nbvcxz.resources.Configuration;
+
+import java.util.List;
+import java.util.ResourceBundle;
+
+
+/**
+ * @author Adam Brusselback
+ */
+public final class DictionaryMatch extends BaseMatch
+{
+    private final String dictionary_name;
+    private final String dictionary_value;
+    private final int rank;
+    private final boolean excluded;
+    private final List&lt;Character[]&gt; leetSubstitution;
+    private final boolean reversed;
+    private final int distance;
+
+    /**
+     * Create a new {@code DictionaryMatch}
+     *
+     * @param match            the {@code String} we are creating the {@code DictionaryMatch} from.
+     * @param configuration    the {@link Configuration} object.
+     * @param start_index      the start index in the password for this match.
+     * @param end_index        the end index in the password for this match.
+     * @param dictionary_value the dictionary value
+     * @param rank             The rank of the match in the dictionary
+     * @param leetSubstitution If leet substitution was used or not
+     * @param excluded         if the dictionary was an exclusion dictionary
+     * @param reversed         if the password was reversed to match
+     * @param dictionary_name  the name of the dictionary matched
+     * @param distance         the distance for this dictionary match
+     */
+    public DictionaryMatch(final String match, Configuration configuration, final int start_index, final int end_index, final String dictionary_value, final int rank, final List&lt;Character[]&gt; leetSubstitution, final boolean excluded, final boolean reversed, final String dictionary_name, final int distance)
+    {
+<span class="fc" id="L40">        super(match, configuration, start_index, end_index);</span>
+<span class="fc" id="L41">        this.dictionary_value = dictionary_value;</span>
+<span class="fc" id="L42">        this.rank = rank;</span>
+<span class="fc" id="L43">        this.leetSubstitution = leetSubstitution;</span>
+<span class="fc" id="L44">        this.excluded = excluded;</span>
+<span class="fc" id="L45">        this.dictionary_name = dictionary_name;</span>
+<span class="fc" id="L46">        this.reversed = reversed;</span>
+<span class="fc" id="L47">        this.distance = distance;</span>
+        // Pre calculate the entropy so it's less expensive later when calling it a ton
+        // If this is an excluded password, return with no entropy.
+<span class="fc" id="L50">        super.setEntropy(this.getEntropy());</span>
+<span class="fc" id="L51">    }</span>
+
+    private double getEntropy()
+    {
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (excluded)</span>
+        {
+<span class="fc" id="L57">            return 0d;</span>
+        }
+        else
+        {
+<span class="fc" id="L61">            return log2(rank) + uppercaseEntropy() + leetEntropy() + reversedEntropy() + distanceEntropy();</span>
+        }
+    }
+
+    /**
+     * @return the additional entropy provided by distance between the token and dictionaryValue
+     */
+    private double distanceEntropy()
+    {
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (getDistance() == 0)</span>
+        {
+<span class="fc" id="L72">            return 0d;</span>
+        }
+        else
+        {
+<span class="fc" id="L76">            int len_diff = getToken().length() - getDictionaryValue().length();</span>
+<span class="fc" id="L77">            int char_shift = getDistance() - Math.abs(len_diff);</span>
+
+<span class="fc bfc" id="L79" title="All 2 branches covered.">            if (len_diff + char_shift &lt;= 0)</span>
+            // if the length is shortened, give a little entropy
+            {
+<span class="fc" id="L82">                return 1d;</span>
+            }
+            else
+            // if the length is not shortened then we can add even more
+            {
+<span class="fc" id="L87">                return log2(BruteForceUtil.getBruteForceCardinality(getToken()) * (len_diff + char_shift));</span>
+            }
+        }
+    }
+
+    /**
+     * @return the additional entropy provided by uppercase
+     */
+    private double uppercaseEntropy()
+    {
+<span class="fc" id="L97">        String password = getToken();</span>
+<span class="fc" id="L98">        char[] password_array = password.toCharArray();</span>
+
+        // Common uppercase pattern
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (password.toLowerCase().equals(password))</span>
+        {
+<span class="fc" id="L103">            return 0d;</span>
+        }
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (password.toUpperCase().equals(password))</span>
+        {
+<span class="nc" id="L107">            return 1d;</span>
+        }
+<span class="fc" id="L109">        String first_upper = password.substring(1);</span>
+<span class="pc bpc" id="L110" title="1 of 4 branches missed.">        if (Character.isUpperCase(password_array[0]) &amp;&amp; first_upper.toLowerCase().equals(first_upper))</span>
+        {
+<span class="nc" id="L112">            return 1d;</span>
+        }
+<span class="fc" id="L114">        String last_upper = password.substring(0, password.length() - 2);</span>
+<span class="pc bpc" id="L115" title="3 of 4 branches missed.">        if (Character.isUpperCase(password_array[password.length() - 1]) &amp;&amp; last_upper.toLowerCase().equals(last_upper))</span>
+        {
+<span class="nc" id="L117">            return 1d;</span>
+        }
+
+        // Count the number of upper case characters
+<span class="fc" id="L121">        int upperCount = 0;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (char c : password_array)</span>
+        {
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            if (Character.isUpperCase(c))</span>
+            {
+<span class="fc" id="L126">                upperCount++;</span>
+            }
+        }
+
+        // Count the number of lower case characters
+<span class="fc" id="L131">        int lowerCount = 0;</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        for (char c : password_array)</span>
+        {
+<span class="fc bfc" id="L134" title="All 2 branches covered.">            if (Character.isLowerCase(c))</span>
+            {
+<span class="fc" id="L136">                lowerCount++;</span>
+            }
+        }
+
+        // Calculate all the possibilies
+<span class="fc" id="L141">        int possiblities = 0;</span>
+<span class="fc" id="L142">        int totalCase = upperCount + lowerCount;</span>
+<span class="fc" id="L143">        int minCase = Math.min(upperCount, lowerCount);</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        for (int i = 0; i &lt;= minCase; i++)</span>
+        {
+<span class="fc" id="L146">            possiblities += nCk(totalCase, i);</span>
+        }
+
+<span class="fc" id="L149">        return Math.max(log2(possiblities), 1);</span>
+    }
+
+    /**
+     * @return the additional entropy provided by leet formatting
+     */
+    private double leetEntropy()
+    {
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (!isLeet())</span>
+        {
+<span class="fc" id="L159">            return 0d;</span>
+        }
+
+<span class="fc" id="L162">        int possibilities = 0;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        for (Character[] sub : leetSubstitution)</span>
+        {
+<span class="fc" id="L165">            char original = sub[0];</span>
+<span class="fc" id="L166">            char newChar = sub[1];</span>
+<span class="fc" id="L167">            int substitutionCount = 0;</span>
+<span class="fc" id="L168">            int unSubstitutionCount = 0;</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">            for (char c : getToken().toCharArray())</span>
+            {
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">                if (c == newChar)</span>
+                {
+<span class="nc" id="L173">                    substitutionCount++;</span>
+                }
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">                if (c == original)</span>
+                {
+<span class="nc" id="L177">                    unSubstitutionCount++;</span>
+                }
+            }
+<span class="fc" id="L180">            int totalSub = substitutionCount + unSubstitutionCount;</span>
+<span class="fc" id="L181">            int minSub = Math.min(substitutionCount, unSubstitutionCount);</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            for (int i = 0; i &lt;= minSub; i++)</span>
+            {
+<span class="fc" id="L184">                possibilities += nCk(totalSub, i);</span>
+            }
+<span class="fc" id="L186">        }</span>
+
+<span class="fc" id="L188">        return Math.max(1, log2(possibilities)); // 1 bit of entropy (instead of 0)</span>
+        // for single-letter substitution
+        // like 4pple -&gt; apple
+    }
+
+    /**
+     * Returns an extra bit of entropy if it was a reverse match, because it would likely double the key space to check.
+     *
+     * @return the extra entropy bits if it's reversed
+     */
+    private double reversedEntropy()
+    {
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        if (isReversed())</span>
+        {
+<span class="fc" id="L202">            return 1D;</span>
+        }
+        else
+        {
+<span class="fc" id="L206">            return 0D;</span>
+        }
+    }
+
+
+    /**
+     * @return the rank of the password in the dictionary
+     */
+    public int getRank()
+    {
+<span class="fc" id="L216">        return rank;</span>
+    }
+
+
+    /**
+     * @return true if the password is written in leet, false otherwise
+     */
+    public boolean isLeet()
+    {
+<span class="fc bfc" id="L225" title="All 2 branches covered.">        return leetSubstitution.size() &gt; 0;</span>
+    }
+
+    /**
+     * @return the dictionary name that created this match
+     */
+    public String getDictionaryName()
+    {
+<span class="fc" id="L233">        return dictionary_name;</span>
+    }
+
+
+    /**
+     * @return the {@code ArrayList} of the leet substitution
+     */
+    public List&lt;Character[]&gt; getLeetSubstitution()
+    {
+<span class="fc" id="L242">        return leetSubstitution;</span>
+    }
+
+    /**
+     * @return true if the reversed password matches the dictionary entry
+     */
+    public boolean isReversed()
+    {
+<span class="fc" id="L250">        return reversed;</span>
+    }
+
+    /**
+     * @return the distance from the dictionary entry the match was made with
+     */
+    public int getDistance()
+    {
+<span class="fc" id="L258">        return distance;</span>
+    }
+
+    /**
+     * @return the value in the dictionary that the token matched (may not match exactly)
+     */
+    public String getDictionaryValue()
+    {
+<span class="fc" id="L266">        return dictionary_value;</span>
+    }
+
+    public String getDetails()
+    {
+<span class="nc" id="L271">        ResourceBundle mainResource = configuration.getMainResource();</span>
+<span class="nc" id="L272">        StringBuilder detailBuilder = new StringBuilder();</span>
+<span class="nc" id="L273">        detailBuilder.append(super.getDetails());</span>
+<span class="nc" id="L274">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L275">        detailBuilder.append(mainResource.getString(&quot;main.match.dictionary&quot;)).append(&quot; &quot;).append(getDictionaryName());</span>
+<span class="nc" id="L276">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L277">        detailBuilder.append(mainResource.getString(&quot;main.match.dictionaryValue&quot;)).append(&quot; &quot;).append(getDictionaryValue());</span>
+<span class="nc" id="L278">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L279">        detailBuilder.append(mainResource.getString(&quot;main.match.rank&quot;)).append(&quot; &quot;).append(getRank());</span>
+<span class="nc" id="L280">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L281">        detailBuilder.append(mainResource.getString(&quot;main.match.length&quot;)).append(&quot; &quot;).append(getLength());</span>
+<span class="nc" id="L282">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L283">        detailBuilder.append(mainResource.getString(&quot;main.match.leetSub&quot;)).append(&quot; &quot;).append(isLeet());</span>
+<span class="nc" id="L284">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L285">        detailBuilder.append(mainResource.getString(&quot;main.match.reversed&quot;)).append(&quot; &quot;).append(isReversed());</span>
+<span class="nc" id="L286">        detailBuilder.append(&quot;\n&quot;);</span>
+<span class="nc" id="L287">        detailBuilder.append(mainResource.getString(&quot;main.match.distance&quot;)).append(&quot; &quot;).append(getDistance());</span>
+<span class="nc" id="L288">        return detailBuilder.toString();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

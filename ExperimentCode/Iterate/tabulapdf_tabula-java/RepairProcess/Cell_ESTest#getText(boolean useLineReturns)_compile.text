@@ -1,0 +1,95 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java
+[GENERATED PATH] Cell_ESTest#getText(boolean useLineReturns).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[28,29] no suitable constructor found for TextChunk(java.lang.String,int,int)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[29,29] no suitable constructor found for TextChunk(java.lang.String,int,int)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java
+[GENERATED PATH] Cell_ESTest#getText(boolean useLineReturns).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[32,39] incompatible types: java.lang.String cannot be converted to float
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[34,39] incompatible types: java.lang.String cannot be converted to float
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java
+[GENERATED PATH] Cell_ESTest#getText(boolean useLineReturns).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[34,39] incompatible types: java.lang.String cannot be converted to float
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[36,39] incompatible types: java.lang.String cannot be converted to float
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java
+[GENERATED PATH] Cell_ESTest#getText(boolean useLineReturns).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[36,28] no suitable constructor found for TextChunk(java.lang.String,int,int)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[37,28] no suitable constructor found for TextChunk(java.lang.String,int,int)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[38,28] no suitable constructor found for TextChunk(java.lang.String,int,int)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java
+[GENERATED PATH] Cell_ESTest#getText(boolean useLineReturns).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[40,28] no suitable constructor found for TextChunk(java.lang.String,double)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[41,28] no suitable constructor found for TextChunk(java.lang.String,double)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Cell_ESTest.java:[42,28] no suitable constructor found for TextChunk(java.lang.String,double)
+    constructor technology.tabula.TextChunk.TextChunk(float,float,float,float) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (actual and formal argument lists differ in length)
+[INFO] 3 errors 
+####################
+

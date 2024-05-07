@@ -1,0 +1,128 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        Point2D point = new Point2D.Double(3.5, 4.2);
+
+         <Buggy Line>: package PolygonVertex does not exist
+        PolygonVertex.Direction direction = PolygonVertex.Direction.NORTH;
+
+        PolygonVertex vertex = new PolygonVertex(point, direction);
+        String expected = "PolygonVertex[point=java.awt.geom.Point2D$Double[x=3.5,y=4.2],direction=NORTH]";
+        String actual = vertex.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testToString() {
+    Point2D point = new Point2D.Double(3.5, 4.2);
+
+     <Buggy Line>: package PolygonVertex does not exist
+    PolygonVertex.Direction direction = PolygonVertex.Direction.NORTH;
+
+    PolygonVertex vertex = new PolygonVertex(point, direction);
+    String expected = "PolygonVertex[point=java.awt.geom.Point2D$Double[x=3.5,y=4.2],direction=NORTH]";
+    String actual = vertex.toString();
+    assertEquals(expected, actual);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+static class PolygonVertex {
+Point2D point;Direction direction;
+public PolygonVertex(Point2D point, Direction direction) {
+    this.direction = direction;
+    this.point = point;
+}
+# Focal method
+@Override
+public String toString() {
+    return String.format("%s[point=%s,direction=%s]", this.getClass().getName(), this.point.toString(), this.direction.toString());
+}
+}
+
+# Method Intention
+The intention of the toString() method in the PolygonVertex class is to provide a string representation of the object that includes the class name, the point coordinates, and the direction of the vertex.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+static class PolygonVertex {
+Point2D point;Direction direction;
+public PolygonVertex(Point2D point, Direction direction) {
+    this.direction = direction;
+    this.point = point;
+}
+# Focal method
+@Override
+public String toString() {
+    return String.format("%s[point=%s,direction=%s]", this.getClass().getName(), this.point.toString(), this.direction.toString());
+}
+}
+
+# Method Intention
+The overall intention of the toString() method in the PolygonVertex class is to provide a string representation of the object that includes the class name, the point coordinates, and the direction of the vertex.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+
+# Focal Method
+static class PolygonVertex {
+Point2D point;Direction direction;
+public PolygonVertex(Point2D point, Direction direction) {
+    this.direction = direction;
+    this.point = point;
+}
+# Focal method
+@Override
+public String toString() {
+    return String.format("%s[point=%s,direction=%s]", this.getClass().getName(), this.point.toString(), this.direction.toString());
+}
+}
+
+# Method Intention
+The overall intention of the toString() method in the PolygonVertex class is to provide a human-readable representation of the object's state by returning a formatted string containing the class name, point coordinates, and direction.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

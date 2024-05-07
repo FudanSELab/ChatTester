@@ -1,0 +1,150 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public String getExtractionMethod() {
+    return extractionMethod;
+}
+
+# Method Intention
+The getExtractionMethod() method is intended to provide access to the extraction method used in the Table class, allowing external classes to retrieve and potentially utilize this information for further processing or analysis.
+
+# Test Method
+    @Test
+    public void testGetExtractionMethod() {
+        ExtractionAlgorithm extractionAlgorithm = new SpreadsheetExtractionAlgorithm();
+        Table table = new Table(extractionAlgorithm);
+        String extractionMethod = table.getExtractionMethod();
+       [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<[SpreadsheetExtractionAlgorithm]> but was:<[lattice]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public String getExtractionMethod() {
+    return extractionMethod;
+}
+
+# Method Intention
+The getExtractionMethod() method is intended to provide access to the extraction method used in the Table class, allowing users to retrieve and potentially utilize information about the specific extraction algorithm employed in the object.
+
+# Test Method
+@Test
+public void testGetExtractionMethod() {
+    ExtractionAlgorithm extractionAlgorithm = new SpreadsheetExtractionAlgorithm();
+    Table table = new Table(extractionAlgorithm);
+    String extractionMethod = table.getExtractionMethod();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<[SpreadsheetExtractionAlgorithm]> but was:<[lattice]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public String getExtractionMethod() {
+    return extractionMethod;
+}
+
+# Method Intention
+The getExtractionMethod() method is intended to provide access to the extraction method used in the Table class, allowing external classes to retrieve and potentially utilize this information for further processing or analysis.
+
+# Test Method
+@Test
+public void testGetExtractionMethod() {
+    ExtractionAlgorithm extractionAlgorithm = new SpreadsheetExtractionAlgorithm();
+    Table table = new Table(extractionAlgorithm);
+    String extractionMethod = table.getExtractionMethod();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<[SpreadsheetExtractionAlgorithm]> but was:<[lattice]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public String getExtractionMethod() {
+    return extractionMethod;
+}
+
+# Method Intention
+The getExtractionMethod() method is intended to provide access to the extraction method used in the Table class, allowing users to retrieve and potentially utilize information about the specific method employed for data extraction.
+
+# Test Method
+@Test
+public void testGetExtractionMethod() {
+    ExtractionAlgorithm extractionAlgorithm = new SpreadsheetExtractionAlgorithm();
+    Table table = new Table(extractionAlgorithm);
+    String extractionMethod = table.getExtractionMethod();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<[SpreadsheetExtractionAlgorithm]> but was:<[lattice]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public String getExtractionMethod() {
+    return extractionMethod;
+}
+
+# Method Intention
+The getExtractionMethod() method is intended to provide access to the extraction method used in the Table class, allowing users to retrieve information about how data was extracted from the table.
+
+# Test Method
+@Test
+public void testGetExtractionMethod() {
+    ExtractionAlgorithm extractionAlgorithm = new SpreadsheetExtractionAlgorithm();
+    Table table = new Table(extractionAlgorithm);
+    String extractionMethod = table.getExtractionMethod();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<[SpreadsheetExtractionAlgorithm]> but was:<[lattice]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+5-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public String getExtractionMethod() {
+    return extractionMethod;
+}
+
+# Method Intention
+The getExtractionMethod() method is intended to provide access to the extraction method used in the Table class, allowing users to retrieve and potentially utilize information about the specific algorithm or process employed for data extraction.
+
+# Test Method
+@Test
+public void testGetExtractionMethod() {
+    ExtractionAlgorithm extractionAlgorithm = new SpreadsheetExtractionAlgorithm();
+    Table table = new Table(extractionAlgorithm);
+    String extractionMethod = table.getExtractionMethod();
+   [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<[SpreadsheetExtractionAlgorithm]> but was:<[lattice]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

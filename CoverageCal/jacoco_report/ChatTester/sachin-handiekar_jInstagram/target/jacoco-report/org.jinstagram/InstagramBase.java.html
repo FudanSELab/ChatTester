@@ -1,0 +1,1070 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstagramBase.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram</a> &gt; <span class="el_source">InstagramBase.java</span></div><h1>InstagramBase.java</h1><pre class="source lang-java linenums">package org.jinstagram;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import org.apache.commons.lang3.StringUtils;
+import org.jinstagram.entity.comments.MediaCommentResponse;
+import org.jinstagram.entity.comments.MediaCommentsFeed;
+import org.jinstagram.entity.common.InstagramErrorResponse;
+import org.jinstagram.entity.common.Pagination;
+import org.jinstagram.entity.likes.LikesFeed;
+import org.jinstagram.entity.locations.LocationInfo;
+import org.jinstagram.entity.locations.LocationSearchFeed;
+import org.jinstagram.entity.media.MediaInfoFeed;
+import org.jinstagram.entity.relationships.RelationshipFeed;
+import org.jinstagram.entity.tags.TagInfoFeed;
+import org.jinstagram.entity.tags.TagMediaFeed;
+import org.jinstagram.entity.tags.TagSearchFeed;
+import org.jinstagram.entity.users.basicinfo.UserInfo;
+import org.jinstagram.entity.users.feed.MediaFeed;
+import org.jinstagram.entity.users.feed.UserFeed;
+import org.jinstagram.exceptions.InstagramException;
+import org.jinstagram.http.Request;
+import org.jinstagram.http.Response;
+import org.jinstagram.http.URLUtils;
+import org.jinstagram.http.Verbs;
+import org.jinstagram.model.Methods;
+import org.jinstagram.model.QueryParam;
+import org.jinstagram.model.Relationship;
+import org.jinstagram.utils.LogHelper;
+import org.jinstagram.utils.PaginationHelper;
+import org.jinstagram.utils.Preconditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.Proxy;
+import java.net.SocketException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.String.format;
+
+/**
+ * Instagram base class that performs no authentication
+ */
+public abstract class InstagramBase implements InstagramClient {
+
+    protected static final String USER_ID_CANNOT_BE_NULL_OR_EMPTY = &quot;UserId cannot be null or empty.&quot;;
+<span class="nc" id="L52">    protected static final Logger logger = LoggerFactory.getLogger(InstagramBase.class);</span>
+
+    protected final InstagramConfig config;
+    private Proxy requestProxy;
+
+    public InstagramBase() {
+<span class="nc" id="L58">        this(new InstagramConfig());</span>
+<span class="nc" id="L59">    }</span>
+    
+<span class="nc" id="L61">    public InstagramBase(InstagramConfig config) {</span>
+<span class="nc" id="L62">        Preconditions.checkNotNull(config, &quot;config cannot be null&quot;);</span>
+<span class="nc" id="L63">        this.config = config;</span>
+<span class="nc" id="L64">    }</span>
+
+    /**
+     * @param requestProxy
+     *            the proxy to set
+     */
+    public void setRequestProxy(Proxy requestProxy) {
+<span class="nc" id="L71">        this.requestProxy = requestProxy;</span>
+<span class="nc" id="L72">    }</span>
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserInfo(java.lang.String)
+     */
+    @Override
+    public UserInfo getUserInfo(String userId) throws InstagramException {
+
+<span class="nc" id="L80">        logger.info(&quot;Getting user info for : &quot; + userId);</span>
+
+<span class="nc" id="L82">        Preconditions.checkEmptyString(userId, USER_ID_CANNOT_BE_NULL_OR_EMPTY);</span>
+
+<span class="nc" id="L84">        String apiMethod = format(Methods.USERS_WITH_ID, userId);</span>
+
+<span class="nc" id="L86">        return createInstagramObject(Verbs.GET, UserInfo.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getCurrentUserInfo()
+     */
+    @Override
+    public UserInfo getCurrentUserInfo() throws InstagramException {
+<span class="nc" id="L94">        LogHelper.logEntrance(logger, &quot;getCurrentUserInfo&quot;, null);</span>
+
+<span class="nc" id="L96">        logger.info(&quot;Getting current user info...&quot;);</span>
+
+<span class="nc" id="L98">        return createInstagramObject(Verbs.GET, UserInfo.class, Methods.USERS_SELF, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFeeds()
+     */
+    @Override
+    @Deprecated
+    public MediaFeed getUserFeeds() throws InstagramException {
+<span class="nc" id="L107">        LogHelper.logEntrance(logger, &quot;getUserFeeds&quot;, null);</span>
+
+<span class="nc" id="L109">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.USERS_SELF_FEED, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserRecentMedia()
+     */
+    @Override
+    public MediaFeed getUserRecentMedia() throws InstagramException {
+<span class="nc" id="L117">        LogHelper.logEntrance(logger, &quot;getUserRecentMedia&quot;, null);</span>
+<span class="nc" id="L118">        logger.info(&quot;Getting current user recent media...&quot;);</span>
+
+<span class="nc" id="L120">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.USERS_SELF_RECENT_MEDIA, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserRecentMedia(int, java.lang.String, java.lang.String)
+     */
+    @Override
+    public MediaFeed getUserRecentMedia(int count, String minId, String maxId) throws InstagramException {
+<span class="nc" id="L128">        LogHelper.logEntrance(logger, &quot;getUserRecentMedia&quot;,</span>
+                &quot;[ count : &quot; + count + &quot;, minId : &quot; + minId + &quot;, maxId : &quot; + maxId + &quot;]&quot;);
+<span class="nc" id="L130">        logger.info(&quot;Getting current user recent media...&quot;);</span>
+
+<span class="nc" id="L132">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (maxId != null) {</span>
+<span class="nc" id="L135">            params.put(QueryParam.MAX_ID, String.valueOf(maxId));</span>
+        }
+
+<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (minId != null) {</span>
+<span class="nc" id="L139">            params.put(QueryParam.MIN_ID, String.valueOf(minId));</span>
+        }
+
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (count != 0) {</span>
+<span class="nc" id="L143">            params.put(QueryParam.COUNT, String.valueOf(count));</span>
+        }
+
+<span class="nc" id="L146">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.USERS_SELF_RECENT_MEDIA, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFeeds(java.lang.String, java.lang.String, long)
+     */
+    @Override
+    @Deprecated
+    public MediaFeed getUserFeeds(String maxId, String minId, long count) throws InstagramException {
+<span class="nc" id="L155">        LogHelper.logEntrance(logger, &quot;getUserFeeds&quot;,</span>
+                &quot;[ maxId : &quot; + maxId + &quot;, minId : &quot; + minId + &quot;, count : &quot; + count + &quot;]&quot;);
+
+<span class="nc" id="L158">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        if (maxId != null) {</span>
+<span class="nc" id="L161">            params.put(QueryParam.MAX_ID, String.valueOf(maxId));</span>
+        }
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        if (minId != null) {</span>
+<span class="nc" id="L165">            params.put(QueryParam.MIN_ID, String.valueOf(minId));</span>
+        }
+
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (count != 0) {</span>
+<span class="nc" id="L169">            params.put(QueryParam.COUNT, String.valueOf(count));</span>
+        }
+
+<span class="nc" id="L172">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.USERS_SELF_FEED, params);</span>
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaFeed(java.lang.String)
+     */
+    @Override
+    public MediaFeed getRecentMediaFeed(String userId) throws InstagramException {
+<span class="nc" id="L181">        Preconditions.checkEmptyString(userId, USER_ID_CANNOT_BE_NULL_OR_EMPTY);</span>
+
+<span class="nc" id="L183">        String methodName = format(Methods.USERS_RECENT_MEDIA, userId);</span>
+
+<span class="nc" id="L185">        return createInstagramObject(Verbs.GET, MediaFeed.class, methodName, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaFeed(java.lang.String, int, java.lang.String, java.lang.String, java.util.Date, java.util.Date)
+     */
+    @Override
+    public MediaFeed getRecentMediaFeed(String userId, int count, String minId, String maxId, Date maxTimeStamp,
+            Date minTimeStamp) throws InstagramException {
+<span class="nc" id="L194">        Preconditions.checkEmptyString(userId, USER_ID_CANNOT_BE_NULL_OR_EMPTY);</span>
+<span class="nc" id="L195">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        if (maxId != null) {</span>
+<span class="nc" id="L198">            params.put(QueryParam.MAX_ID, String.valueOf(maxId));</span>
+        }
+
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (minId != null) {</span>
+<span class="nc" id="L202">            params.put(QueryParam.MIN_ID, String.valueOf(minId));</span>
+        }
+
+<span class="nc bnc" id="L205" title="All 2 branches missed.">        if (count != 0) {</span>
+<span class="nc" id="L206">            params.put(QueryParam.COUNT, String.valueOf(count));</span>
+        }
+
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (maxTimeStamp != null) {</span>
+<span class="nc" id="L210">            params.put(QueryParam.MAX_TIMESTAMP, String.valueOf(maxTimeStamp.getTime() / 1000));</span>
+        }
+
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        if (minTimeStamp != null) {</span>
+<span class="nc" id="L214">            params.put(QueryParam.MIN_TIMESTAMP, String.valueOf(minTimeStamp.getTime() / 1000));</span>
+        }
+
+<span class="nc" id="L217">        String methodName = format(Methods.USERS_RECENT_MEDIA, userId);</span>
+
+<span class="nc" id="L219">        return createInstagramObject(Verbs.GET, MediaFeed.class, methodName, params);</span>
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaNextPage(org.jinstagram.entity.common.Pagination)
+     */
+    @Override
+    public MediaFeed getRecentMediaNextPage(Pagination pagination) throws InstagramException {
+<span class="nc" id="L228">        PaginationHelper.Page page = PaginationHelper.parseNextUrl(pagination, config.getApiURL());</span>
+<span class="nc" id="L229">        return createInstagramObject(Verbs.GET, MediaFeed.class,</span>
+<span class="nc" id="L230">                page.getMethodName(), page.getRawMethodName(), page.getQueryStringParams());</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFeedInfoNextPage(org.jinstagram.entity.common.Pagination)
+     */
+    @Override
+    public UserFeed getUserFeedInfoNextPage(Pagination pagination) throws InstagramException {
+<span class="nc" id="L238">        PaginationHelper.Page page = PaginationHelper.parseNextUrl(pagination, config.getApiURL());</span>
+<span class="nc" id="L239">        return createInstagramObject(Verbs.GET, UserFeed.class,</span>
+<span class="nc" id="L240">                page.getMethodName(), page.getQueryStringParams());</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getTagMediaInfoNextPage(org.jinstagram.entity.common.Pagination)
+     */
+    @Override
+    public TagMediaFeed getTagMediaInfoNextPage(Pagination pagination) throws InstagramException {
+<span class="nc" id="L248">        PaginationHelper.Page page = PaginationHelper.parseNextUrl(pagination,config.getApiURL());</span>
+<span class="nc" id="L249">        return createInstagramObject(Verbs.GET, TagMediaFeed.class,</span>
+<span class="nc" id="L250">                page.getMethodName(), page.getRawMethodName(), page.getQueryStringParams());</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserLikedMediaFeed()
+     */
+    @Override
+    public MediaFeed getUserLikedMediaFeed() throws InstagramException {
+
+<span class="nc" id="L259">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.USERS_SELF_LIKED_MEDIA, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserLikedMediaFeed(long, int)
+     */
+    @Override
+    public MediaFeed getUserLikedMediaFeed(long maxLikeId, int count) throws InstagramException {
+<span class="nc" id="L267">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L269" title="All 2 branches missed.">        if (maxLikeId &gt; 0) {</span>
+<span class="nc" id="L270">            params.put(QueryParam.MAX_LIKE_ID, String.valueOf(maxLikeId));</span>
+        }
+
+<span class="nc bnc" id="L273" title="All 2 branches missed.">        if (count &gt; 0) {</span>
+<span class="nc" id="L274">            params.put(QueryParam.COUNT, String.valueOf(count));</span>
+        }
+
+<span class="nc" id="L277">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.USERS_SELF_LIKED_MEDIA, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchUser(java.lang.String)
+     */
+    @Override
+    public UserFeed searchUser(String query) throws InstagramException {
+<span class="nc" id="L285">        Preconditions.checkNotNull(query, &quot;search query cannot be null.&quot;);</span>
+
+<span class="nc" id="L287">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L288">        params.put(QueryParam.SEARCH_QUERY, query);</span>
+
+<span class="nc" id="L290">        return createInstagramObject(Verbs.GET, UserFeed.class, Methods.USERS_SEARCH, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchUser(java.lang.String, int)
+     */
+    @Override
+    public UserFeed searchUser(String query, int count) throws InstagramException {
+<span class="nc" id="L298">        Preconditions.checkNotNull(query, &quot;search query cannot be null.&quot;);</span>
+
+<span class="nc" id="L300">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L301">        params.put(QueryParam.SEARCH_QUERY, query);</span>
+
+<span class="nc bnc" id="L303" title="All 2 branches missed.">        if (count &gt; 0) {</span>
+<span class="nc" id="L304">            params.put(QueryParam.COUNT, String.valueOf(count));</span>
+        }
+
+<span class="nc" id="L307">        return createInstagramObject(Verbs.GET, UserFeed.class, Methods.USERS_SEARCH, params);</span>
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFollowList(java.lang.String)
+     */
+    @Override
+    public UserFeed getUserFollowList(String userId) throws InstagramException {
+<span class="nc" id="L316">        return getUserFollowListNextPage(userId, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFollowListNextPage(java.lang.String, java.lang.String)
+     */
+    @Override
+    public UserFeed getUserFollowListNextPage(String userId, String cursor) throws InstagramException {
+<span class="nc" id="L324">        Preconditions.checkEmptyString(userId, USER_ID_CANNOT_BE_NULL_OR_EMPTY);</span>
+
+<span class="nc" id="L326">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;(1);</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        if (cursor != null)</span>
+<span class="nc" id="L328">            params.put(&quot;cursor&quot;, cursor);</span>
+
+<span class="nc" id="L330">        String apiMethod = format(Methods.USERS_ID_FOLLOWS, userId);</span>
+<span class="nc" id="L331">        return createInstagramObject(Verbs.GET, UserFeed.class, apiMethod, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFollowListNextPage(org.jinstagram.entity.common.Pagination)
+     */
+    @Override
+    public UserFeed getUserFollowListNextPage(Pagination pagination) throws InstagramException {
+<span class="nc" id="L339">        return getUserFeedInfoNextPage(pagination);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFollowedByList(java.lang.String)
+     */
+    @Override
+    public UserFeed getUserFollowedByList(String userId) throws InstagramException {
+<span class="nc" id="L347">        return getUserFollowedByListNextPage(userId, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFollowedByListNextPage(java.lang.String, java.lang.String)
+     */
+    @Override
+    public UserFeed getUserFollowedByListNextPage(String userId, String cursor) throws InstagramException {
+<span class="nc" id="L355">        Preconditions.checkEmptyString(userId, USER_ID_CANNOT_BE_NULL_OR_EMPTY);</span>
+
+<span class="nc" id="L357">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;(1);</span>
+<span class="nc bnc" id="L358" title="All 2 branches missed.">        if (cursor != null)</span>
+<span class="nc" id="L359">            params.put(&quot;cursor&quot;, cursor);</span>
+
+<span class="nc" id="L361">        String apiMethod = format(Methods.USERS_ID_FOLLOWED_BY, userId);</span>
+<span class="nc" id="L362">        return createInstagramObject(Verbs.GET, UserFeed.class, apiMethod, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserFollowedByListNextPage(org.jinstagram.entity.common.Pagination)
+     */
+    @Override
+    public UserFeed getUserFollowedByListNextPage(Pagination pagination) throws InstagramException {
+<span class="nc" id="L370">        return getUserFeedInfoNextPage(pagination);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserRequestedBy()
+     */
+    @Override
+    public UserFeed getUserRequestedBy() throws InstagramException {
+<span class="nc" id="L378">        return createInstagramObject(Verbs.GET, UserFeed.class, Methods.USERS_SELF_REQUESTED_BY, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserRelationship(java.lang.String)
+     */
+    @Override
+    public RelationshipFeed getUserRelationship(String userId) throws InstagramException {
+<span class="nc" id="L386">        Preconditions.checkEmptyString(userId, USER_ID_CANNOT_BE_NULL_OR_EMPTY);</span>
+
+<span class="nc" id="L388">        String apiMethod = format(Methods.USERS_ID_RELATIONSHIP, userId);</span>
+<span class="nc" id="L389">        return createInstagramObject(Verbs.GET, RelationshipFeed.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#setUserRelationship(java.lang.String, org.jinstagram.model.Relationship)
+     */
+    @Override
+    public RelationshipFeed setUserRelationship(String userId, Relationship relationship) throws InstagramException {
+<span class="nc" id="L397">        Preconditions.checkEmptyString(userId, USER_ID_CANNOT_BE_NULL_OR_EMPTY);</span>
+<span class="nc" id="L398">        Preconditions.checkNotNull(relationship, &quot;relationship cannot be null.&quot;);</span>
+
+<span class="nc" id="L400">        String apiMethod = format(Methods.USERS_ID_RELATIONSHIP, userId);</span>
+<span class="nc" id="L401">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L403">        params.put(QueryParam.ACTION, relationship.toString());</span>
+
+<span class="nc" id="L405">        return createInstagramObject(Verbs.POST, RelationshipFeed.class, apiMethod, params);</span>
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getMediaInfo(java.lang.String)
+     */
+    @Override
+    public MediaInfoFeed getMediaInfo(String mediaId) throws InstagramException {
+<span class="nc" id="L414">        Preconditions.checkNotNull(mediaId, &quot;mediaId cannot be null.&quot;);</span>
+
+<span class="nc" id="L416">        String apiMethod = format(Methods.MEDIA_BY_ID, mediaId);</span>
+
+<span class="nc" id="L418">        return createInstagramObject(Verbs.GET, MediaInfoFeed.class, apiMethod, null);</span>
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getMediaInfoByShortcode(java.lang.String)
+     */
+    @Override
+    public MediaInfoFeed getMediaInfoByShortcode(String shortcode) throws InstagramException {
+<span class="nc" id="L427">        Preconditions.checkNotNull(shortcode, &quot;shortcode cannot be null.&quot;);</span>
+
+<span class="nc" id="L429">        String apiMethod = format(Methods.MEDIA_BY_SHORTCODE, shortcode);</span>
+
+<span class="nc" id="L431">        return createInstagramObject(Verbs.GET, MediaInfoFeed.class, apiMethod, null);</span>
+
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchMedia(double, double)
+     */
+    @Override
+    public MediaFeed searchMedia(double latitude, double longitude) throws InstagramException {
+<span class="nc" id="L440">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L442">        params.put(QueryParam.LATITUDE, Double.toString(latitude));</span>
+<span class="nc" id="L443">        params.put(QueryParam.LONGITUDE, Double.toString(longitude));</span>
+
+<span class="nc" id="L445">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.MEDIA_SEARCH, params);</span>
+    }
+    
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchMedia(double, double, int)
+     */
+    @Override
+    public MediaFeed searchMedia(double latitude, double longitude,  int distance)
+            throws InstagramException {
+<span class="nc" id="L454">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L456">        params.put(QueryParam.LATITUDE, Double.toString(latitude));</span>
+<span class="nc" id="L457">        params.put(QueryParam.LONGITUDE, Double.toString(longitude));</span>
+
+<span class="nc" id="L459">        params.put(QueryParam.DISTANCE, String.valueOf(distance));</span>
+
+<span class="nc" id="L461">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.MEDIA_SEARCH, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchMedia(double, double, java.util.Date, java.util.Date, int)
+     */
+    @Override
+    public MediaFeed searchMedia(double latitude, double longitude, Date maxTimeStamp, Date minTimeStamp, int distance)
+            throws InstagramException {
+<span class="nc" id="L470">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L472">        params.put(QueryParam.LATITUDE, Double.toString(latitude));</span>
+<span class="nc" id="L473">        params.put(QueryParam.LONGITUDE, Double.toString(longitude));</span>
+
+<span class="nc bnc" id="L475" title="All 2 branches missed.">        if (maxTimeStamp != null) {</span>
+<span class="nc" id="L476">            params.put(QueryParam.MAX_TIMESTAMP, String.valueOf(maxTimeStamp.getTime() / 1000));</span>
+        }
+
+<span class="nc bnc" id="L479" title="All 2 branches missed.">        if (minTimeStamp != null) {</span>
+<span class="nc" id="L480">            params.put(QueryParam.MIN_TIMESTAMP, String.valueOf(minTimeStamp.getTime() / 1000));</span>
+        }
+
+<span class="nc" id="L483">        params.put(QueryParam.DISTANCE, String.valueOf(distance));</span>
+
+<span class="nc" id="L485">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.MEDIA_SEARCH, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getPopularMedia()
+     */
+    @Override
+    @Deprecated
+    public MediaFeed getPopularMedia() throws InstagramException {
+<span class="nc" id="L494">        return createInstagramObject(Verbs.GET, MediaFeed.class, Methods.MEDIA_POPULAR, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getMediaComments(java.lang.String)
+     */
+    @Override
+    public MediaCommentsFeed getMediaComments(String mediaId) throws InstagramException {
+<span class="nc" id="L502">        String apiMethod = format(Methods.MEDIA_COMMENTS, mediaId);</span>
+
+<span class="nc" id="L504">        return createInstagramObject(Verbs.GET, MediaCommentsFeed.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#setMediaComments(java.lang.String, java.lang.String)
+     */
+    @Override
+    public MediaCommentResponse setMediaComments(String mediaId, String text) throws InstagramException {
+<span class="nc" id="L512">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L514">        params.put(QueryParam.TEXT, text);</span>
+
+<span class="nc" id="L516">        String apiMethod = format(Methods.MEDIA_COMMENTS, mediaId);</span>
+<span class="nc" id="L517">        return createInstagramObject(Verbs.POST, MediaCommentResponse.class, apiMethod, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#deleteMediaCommentById(java.lang.String, java.lang.String)
+     */
+    @Override
+    public MediaCommentResponse deleteMediaCommentById(String mediaId, String commentId) throws InstagramException {
+<span class="nc" id="L525">        String apiMethod = format(Methods.DELETE_MEDIA_COMMENTS, mediaId, commentId);</span>
+<span class="nc" id="L526">        return createInstagramObject(Verbs.DELETE, MediaCommentResponse.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getUserLikes(java.lang.String)
+     */
+    @Override
+    public LikesFeed getUserLikes(String mediaId) throws InstagramException {
+<span class="nc" id="L534">        String apiMethod = format(Methods.LIKES_BY_MEDIA_ID, mediaId);</span>
+
+<span class="nc" id="L536">        return createInstagramObject(Verbs.GET, LikesFeed.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#setUserLike(java.lang.String)
+     */
+    @Override
+    public LikesFeed setUserLike(String mediaId) throws InstagramException {
+<span class="nc" id="L544">        String apiMethod = format(Methods.LIKES_BY_MEDIA_ID, mediaId);</span>
+<span class="nc" id="L545">        return createInstagramObject(Verbs.POST, LikesFeed.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#deleteUserLike(java.lang.String)
+     */
+    @Override
+    public LikesFeed deleteUserLike(String mediaId) throws InstagramException {
+<span class="nc" id="L553">        String apiMethod = format(Methods.LIKES_BY_MEDIA_ID, mediaId);</span>
+
+<span class="nc" id="L555">        return createInstagramObject(Verbs.DELETE, LikesFeed.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getTagInfo(java.lang.String)
+     */
+    @Override
+    public TagInfoFeed getTagInfo(String tagName) throws InstagramException {
+<span class="nc" id="L563">        String apiMethod = format(Methods.TAGS_BY_NAME, URLUtils.encodeURIComponent(tagName));</span>
+<span class="nc" id="L564">        String rawApiMethod = format(Methods.TAGS_BY_NAME, tagName);</span>
+<span class="nc" id="L565">        return createInstagramObject(Verbs.GET, TagInfoFeed.class, apiMethod, rawApiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaTags(java.lang.String)
+     */
+    @Override
+    public TagMediaFeed getRecentMediaTags(String tagName) throws InstagramException {
+<span class="nc" id="L573">        return getRecentMediaTags(tagName, 0);</span>
+    }
+
+	/* (non-Javadoc)
+	 * @see org.jinstagram.InstagramClient#getRecentMediaFeedTags(java.lang.String)
+	 */
+	@Override
+	public MediaFeed getRecentMediaFeedTags(String tagName) throws InstagramException {
+<span class="nc" id="L581">		return getRecentMediaFeedTags(tagName, 0);</span>
+	}
+
+	/* (non-Javadoc)
+		 * @see org.jinstagram.InstagramClient#getRecentMediaTags(java.lang.String, long)
+		 */
+    @Override
+    public TagMediaFeed getRecentMediaTags(String tagName, long count) throws InstagramException {
+<span class="nc" id="L589">        return getRecentMediaTags(tagName, null, null, count);</span>
+    }
+
+	/* (non-Javadoc)
+	 * @see org.jinstagram.InstagramClient#getRecentMediaFeedTags(java.lang.String, long)
+	 */
+	@Override
+	public MediaFeed getRecentMediaFeedTags(String tagName, long count) throws InstagramException {
+<span class="nc" id="L597">		return getRecentMediaFeedTags(tagName, null, null, count);</span>
+	}
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaTags(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public TagMediaFeed getRecentMediaTags(String tagName, String minTagId, String maxTagId) throws InstagramException {
+<span class="nc" id="L605">        return getRecentMediaTags(tagName, minTagId, maxTagId, 0);</span>
+    }
+
+	/* (non-Javadoc)
+	 * @see org.jinstagram.InstagramClient#getRecentMediaFeedTags(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public MediaFeed getRecentMediaFeedTags(String tagName, String minTagId, String maxTagId) throws InstagramException {
+<span class="nc" id="L613">		return getRecentMediaFeedTags(tagName, minTagId, maxTagId, 0);</span>
+	}
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaTags(java.lang.String, java.lang.String, java.lang.String, long)
+     */
+    @Override
+    public TagMediaFeed getRecentMediaTags(String tagName, String minTagId, String maxTagId, long count)
+            throws InstagramException {
+<span class="nc" id="L622">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L624" title="All 2 branches missed.">        if (!StringUtils.isEmpty(minTagId))</span>
+<span class="nc" id="L625">            params.put(QueryParam.MIN_TAG_ID, String.valueOf(minTagId));</span>
+
+<span class="nc bnc" id="L627" title="All 2 branches missed.">        if (!StringUtils.isEmpty(maxTagId))</span>
+<span class="nc" id="L628">            params.put(QueryParam.MAX_TAG_ID, String.valueOf(maxTagId));</span>
+
+<span class="nc bnc" id="L630" title="All 2 branches missed.">        if (count != 0) {</span>
+<span class="nc" id="L631">            params.put(QueryParam.COUNT, String.valueOf(count));</span>
+        }
+
+<span class="nc" id="L634">        String apiMethod = format(Methods.TAGS_RECENT_MEDIA, URLUtils.encodeURIComponent(tagName));</span>
+<span class="nc" id="L635">        String rawApiMethod = format(Methods.TAGS_RECENT_MEDIA, tagName);</span>
+
+<span class="nc" id="L637">        return createInstagramObject(Verbs.GET, TagMediaFeed.class, apiMethod, rawApiMethod, params);</span>
+    }
+
+	/* (non-Javadoc)
+	 * @see org.jinstagram.InstagramClient#getRecentMediaFeedTags(java.lang.String, java.lang.String, java.lang.String, long)
+	 */
+	@Override
+	public MediaFeed getRecentMediaFeedTags(String tagName, String minTagId, String maxTagId, long count)
+			throws InstagramException {
+<span class="nc" id="L646">		Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L648" title="All 2 branches missed.">		if (!StringUtils.isEmpty(minTagId))</span>
+<span class="nc" id="L649">			params.put(QueryParam.MIN_TAG_ID, String.valueOf(minTagId));</span>
+
+<span class="nc bnc" id="L651" title="All 2 branches missed.">		if (!StringUtils.isEmpty(maxTagId))</span>
+<span class="nc" id="L652">			params.put(QueryParam.MAX_TAG_ID, String.valueOf(maxTagId));</span>
+
+<span class="nc bnc" id="L654" title="All 2 branches missed.">		if (count != 0) {</span>
+<span class="nc" id="L655">			params.put(QueryParam.COUNT, String.valueOf(count));</span>
+		}
+
+<span class="nc" id="L658">		String apiMethod = format(Methods.TAGS_RECENT_MEDIA, URLUtils.encodeURIComponent(tagName));</span>
+<span class="nc" id="L659">		String rawApiMethod = format(Methods.TAGS_RECENT_MEDIA, tagName);</span>
+
+<span class="nc" id="L661">		return createInstagramObject(Verbs.GET, MediaFeed.class, apiMethod, rawApiMethod, params);</span>
+	}
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaTagsByRegularIds(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    @Deprecated
+    public TagMediaFeed getRecentMediaTagsByRegularIds(String tagName, String minId, String maxId)
+            throws InstagramException {
+<span class="nc" id="L671">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L673" title="All 2 branches missed.">        if (!StringUtils.isEmpty(minId))</span>
+<span class="nc" id="L674">            params.put(QueryParam.MIN_ID, String.valueOf(minId));</span>
+
+<span class="nc bnc" id="L676" title="All 2 branches missed.">        if (!StringUtils.isEmpty(maxId))</span>
+<span class="nc" id="L677">            params.put(QueryParam.MAX_ID, String.valueOf(maxId));</span>
+
+<span class="nc" id="L679">        String apiMethod = format(Methods.TAGS_RECENT_MEDIA, URLUtils.encodeURIComponent(tagName));</span>
+<span class="nc" id="L680">        String rawApiMethod = format(Methods.TAGS_RECENT_MEDIA, tagName);</span>
+<span class="nc" id="L681">        return createInstagramObject(Verbs.GET, TagMediaFeed.class, apiMethod, rawApiMethod, params);</span>
+    }
+
+	/* (non-Javadoc)
+	 * @see org.jinstagram.InstagramClient#getRecentMediaFeedTagsByRegularIds(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public MediaFeed getRecentMediaFeedTagsByRegularIds(String tagName, String minId, String maxId)
+			throws InstagramException {
+<span class="nc" id="L690">		Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L692" title="All 2 branches missed.">		if (!StringUtils.isEmpty(minId))</span>
+<span class="nc" id="L693">			params.put(QueryParam.MIN_ID, String.valueOf(minId));</span>
+
+<span class="nc bnc" id="L695" title="All 2 branches missed.">		if (!StringUtils.isEmpty(maxId))</span>
+<span class="nc" id="L696">			params.put(QueryParam.MAX_ID, String.valueOf(maxId));</span>
+
+<span class="nc" id="L698">		String apiMethod = format(Methods.TAGS_RECENT_MEDIA, URLUtils.encodeURIComponent(tagName));</span>
+<span class="nc" id="L699">		String rawApiMethod = format(Methods.TAGS_RECENT_MEDIA, tagName);</span>
+<span class="nc" id="L700">		return createInstagramObject(Verbs.GET, MediaFeed.class, apiMethod, rawApiMethod, params);</span>
+	}
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchTags(java.lang.String)
+     */
+    @Override
+    public TagSearchFeed searchTags(String tagName) throws InstagramException {
+<span class="nc" id="L708">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L710">        params.put(QueryParam.SEARCH_QUERY, tagName);</span>
+
+<span class="nc" id="L712">        return createInstagramObject(Verbs.GET, TagSearchFeed.class, Methods.TAGS_SEARCH, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getLocationInfo(java.lang.String)
+     */
+    @Override
+    public LocationInfo getLocationInfo(String locationId) throws InstagramException {
+<span class="nc" id="L720">        String apiMethod = format(Methods.LOCATIONS_BY_ID, locationId);</span>
+
+<span class="nc" id="L722">        return createInstagramObject(Verbs.GET, LocationInfo.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaByLocation(java.lang.String)
+     */
+    @Override
+    public MediaFeed getRecentMediaByLocation(String locationId) throws InstagramException {
+<span class="nc" id="L730">        String apiMethod = format(Methods.LOCATIONS_RECENT_MEDIA_BY_ID, locationId);</span>
+
+<span class="nc" id="L732">        return createInstagramObject(Verbs.GET, MediaFeed.class, apiMethod, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaByLocation(java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public MediaFeed getRecentMediaByLocation(String locationId, String minId, String maxId) throws InstagramException {
+<span class="nc" id="L740">    	return getRecentMediaByLocation(locationId, minId, maxId, null, null);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#getRecentMediaByLocation(java.lang.String, java.lang.String, java.lang.String, java.util.Date, java.util.Date)
+     */
+    @Override
+    @Deprecated
+    public MediaFeed getRecentMediaByLocation(String locationId, String minId, String maxId, Date maxTimeStamp,
+            Date minTimeStamp) throws InstagramException {
+<span class="nc" id="L750">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc bnc" id="L752" title="All 2 branches missed.">        if (maxTimeStamp != null) {</span>
+<span class="nc" id="L753">            params.put(QueryParam.MAX_TIMESTAMP, String.valueOf(maxTimeStamp.getTime() / 1000));</span>
+        }
+
+<span class="nc bnc" id="L756" title="All 2 branches missed.">        if (minTimeStamp != null) {</span>
+<span class="nc" id="L757">            params.put(QueryParam.MIN_TIMESTAMP, String.valueOf(minTimeStamp.getTime() / 1000));</span>
+        }
+
+<span class="nc bnc" id="L760" title="All 2 branches missed.">        if (minId != null)</span>
+<span class="nc" id="L761">            params.put(QueryParam.MIN_ID, minId);</span>
+
+<span class="nc bnc" id="L763" title="All 2 branches missed.">        if (maxId != null)</span>
+<span class="nc" id="L764">            params.put(QueryParam.MAX_ID, maxId);</span>
+
+<span class="nc" id="L766">        String apiMethod = format(Methods.LOCATIONS_RECENT_MEDIA_BY_ID, locationId);</span>
+
+<span class="nc" id="L768">        return createInstagramObject(Verbs.GET, MediaFeed.class, apiMethod, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchLocation(double, double)
+     */
+    @Override
+    public LocationSearchFeed searchLocation(double latitude, double longitude) throws InstagramException {
+<span class="nc" id="L776">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L778">        params.put(QueryParam.LATITUDE, Double.toString(latitude));</span>
+<span class="nc" id="L779">        params.put(QueryParam.LONGITUDE, Double.toString(longitude));</span>
+
+<span class="nc" id="L781">        return createInstagramObject(Verbs.GET, LocationSearchFeed.class, Methods.LOCATIONS_SEARCH, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchLocation(double, double, int)
+     */
+    @Override
+    public LocationSearchFeed searchLocation(double latitude, double longitude, int distance)
+            throws InstagramException {
+<span class="nc" id="L790">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L792">        params.put(QueryParam.LATITUDE, Double.toString(latitude));</span>
+<span class="nc" id="L793">        params.put(QueryParam.LONGITUDE, Double.toString(longitude));</span>
+<span class="nc" id="L794">        params.put(QueryParam.DISTANCE, Integer.toString(distance));</span>
+
+<span class="nc" id="L796">        return createInstagramObject(Verbs.GET, LocationSearchFeed.class, Methods.LOCATIONS_SEARCH, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchFoursquareVenue(java.lang.String)
+     */
+    @Override
+    public LocationSearchFeed searchFoursquareVenue(String foursquareId) throws InstagramException {
+<span class="nc" id="L804">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L806">        params.put(QueryParam.FOURSQUARE_V2_ID, foursquareId);</span>
+
+<span class="nc" id="L808">        return createInstagramObject(Verbs.GET, LocationSearchFeed.class, Methods.LOCATIONS_SEARCH, params);</span>
+    }
+
+    /* (non-Javadoc)
+     * @see org.jinstagram.InstagramClient#searchFacebookPlace(java.lang.String)
+     */
+    @Override
+    public LocationSearchFeed searchFacebookPlace(String facebookPlacesId) throws InstagramException {
+<span class="nc" id="L816">        Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+
+<span class="nc" id="L818">        params.put(QueryParam.FACEBOOK_PLACES_ID, facebookPlacesId);</span>
+
+<span class="nc" id="L820">        return createInstagramObject(Verbs.GET, LocationSearchFeed.class, Methods.LOCATIONS_SEARCH, params);</span>
+    }
+
+    /**
+     * Create a instagram object based on class-name and response.
+     *
+     * This method must be used when signing requests if the methodName
+     * could contain characters that required URI encoding
+     *
+     * @param verbs
+     *            HTTP State
+     * @param clazz
+     * @param methodName
+     * @param rawMethodName
+     * @param params
+     * @return
+     * @throws InstagramException
+     */
+    protected &lt;T extends InstagramObject&gt; T createInstagramObject(Verbs verbs, Class&lt;T&gt; clazz, String methodName,
+            String rawMethodName, Map&lt;String, String&gt; params) throws InstagramException {
+        Response response;
+        String jsonResponseBody;
+        try {
+<span class="nc" id="L843">            response = getApiResponse(verbs, methodName, rawMethodName, params);</span>
+
+<span class="nc bnc" id="L845" title="All 4 branches missed.">	        if (config.isRetryOnServerError() &amp;&amp; wasResponseAnError(response)) {</span>
+<span class="nc" id="L846">		        Exception responseException = testResponseBody(response);</span>
+
+<span class="nc" id="L848">		        int numberOfRetries = 2;</span>
+<span class="nc" id="L849">		        int retryAttemptNumber = 0;</span>
+<span class="nc bnc" id="L850" title="All 4 branches missed.">		        while (responseException != null &amp;&amp; retryAttemptNumber &lt; numberOfRetries) {</span>
+<span class="nc" id="L851">			        try { Thread.sleep(1000); } catch (InterruptedException e) { /* ignore */ }</span>
+			        // Retry request
+<span class="nc" id="L853">			        logger.warn(&quot;(Retry #{}) Retrying request for {}&quot;, retryAttemptNumber, response.getURL());</span>
+<span class="nc" id="L854">			        response = getApiResponse(verbs, methodName, rawMethodName, params);</span>
+<span class="nc" id="L855">			        responseException = testResponseBody(response);</span>
+<span class="nc" id="L856">			        retryAttemptNumber++;</span>
+		        }
+	        }
+
+<span class="nc" id="L860">			jsonResponseBody = response.getBody();</span>
+<span class="nc" id="L861">            LogHelper.prettyPrintJSONResponse(logger, jsonResponseBody);</span>
+<span class="nc" id="L862">        } catch (IOException e) {</span>
+<span class="nc" id="L863">            throw new InstagramException(&quot;IOException while retrieving data&quot;, e);</span>
+<span class="nc" id="L864">        }</span>
+
+<span class="nc" id="L866">        Map&lt;String, String&gt; responseHeaders = response.getHeaders();</span>
+<span class="nc bnc" id="L867" title="All 4 branches missed.">        if (response.getCode() &gt;= 200 &amp;&amp; response.getCode() &lt; 300) {</span>
+<span class="nc" id="L868">	        T object = createObjectFromResponse(clazz, jsonResponseBody);</span>
+<span class="nc" id="L869">            object.setHeaders(responseHeaders);</span>
+<span class="nc" id="L870">            return object;</span>
+        }
+
+<span class="nc" id="L873">        throw handleInstagramError(response.getCode(), jsonResponseBody, responseHeaders);</span>
+    }
+
+	private Exception testResponseBody(Response response) {
+<span class="nc" id="L877">		Exception capturedException = null;</span>
+<span class="nc" id="L878">		int code = response.getCode();</span>
+
+		try {
+			// get response entity, attempt parse as JSON.
+<span class="nc" id="L882">			String jsonString = response.getBody();</span>
+<span class="nc" id="L883">			new Gson().fromJson(jsonString, JsonObject.class);</span>
+<span class="nc" id="L884">		} catch (IllegalStateException e) {</span>
+			// this indicates a socket error (e.g. connection reset) when attempting
+			// to read HTTP response entity, capture the latest exception to be thrown
+			// at the end
+<span class="nc" id="L888">			capturedException = e;</span>
+<span class="nc bnc" id="L889" title="All 2 branches missed.">			if (e.getCause() instanceof SocketException) {</span>
+<span class="nc" id="L890">				logger.warn(</span>
+<span class="nc" id="L891">						format(&quot;Socket error with HTTP response (code %d).&quot;, code),</span>
+<span class="nc" id="L892">						e.getCause());</span>
+			} else {
+<span class="nc" id="L894">				logger.warn(</span>
+<span class="nc" id="L895">						format(&quot;IllegalState exception with HTTP response (code %d).&quot;, code),</span>
+<span class="nc" id="L896">						e.getCause());</span>
+			}
+<span class="nc" id="L898">		} catch (JsonSyntaxException e) {</span>
+			// HTTP response body contained malformed JSON
+<span class="nc" id="L900">			logger.warn(</span>
+<span class="nc" id="L901">					format(&quot;HTTP response body contained malformed JSON (code %d).&quot;, code),</span>
+<span class="nc" id="L902">					response.getCode());</span>
+<span class="nc" id="L903">			capturedException = e;</span>
+<span class="nc" id="L904">		}</span>
+
+<span class="nc" id="L906">		return capturedException;</span>
+	}
+
+	private boolean wasResponseAnError(Response response) {
+<span class="nc bnc" id="L910" title="All 6 branches missed.">		return (response.getCode() &gt;= 200 &amp;&amp; response.getCode() &lt; 300) || response.getCode() &gt;= 500;</span>
+	}
+
+    /**
+     * Create a instagram object based on class-name and response.
+     *
+     * If using signed requests this is only safe if there are no characters
+     * requiring URI encoding in the methodName
+     *
+     * @param verbs
+     *            HTTP State
+     * @param clazz
+     * @param methodName
+     * @param params
+     * @return
+     * @throws InstagramException
+     */
+    protected &lt;T extends InstagramObject&gt; T createInstagramObject(Verbs verbs, Class&lt;T&gt; clazz, String methodName,
+            Map&lt;String, String&gt; params) throws InstagramException {
+<span class="nc" id="L929">        return createInstagramObject(verbs, clazz, methodName, methodName, params);</span>
+    }
+
+    @Deprecated
+    protected InstagramException handleInstagramError(Response response) throws InstagramException {
+<span class="nc" id="L934">        Gson gson = new Gson();</span>
+        final InstagramErrorResponse error;
+<span class="nc" id="L936">        String responseBody = response.getBody();</span>
+        try {
+<span class="nc bnc" id="L938" title="All 2 branches missed.">            if (response.getCode() == 400) {</span>
+<span class="nc" id="L939">                error = InstagramErrorResponse.parse(gson, responseBody);</span>
+<span class="nc" id="L940">                error.setHeaders(response.getHeaders());</span>
+<span class="nc" id="L941">                error.throwException();</span>
+            }
+            // sending too many requests too quickly;
+            // limited to 5000 requests per hour per access_token or client_id
+            // overall. (according to spec)
+<span class="nc bnc" id="L946" title="All 2 branches missed.">            else if (response.getCode() == 503) {</span>
+<span class="nc" id="L947">                error = InstagramErrorResponse.parse(gson, responseBody);</span>
+<span class="nc" id="L948">                error.setHeaders(response.getHeaders());</span>
+<span class="nc" id="L949">                error.throwException();</span>
+            }
+<span class="nc" id="L951">        } catch (JsonSyntaxException e) {</span>
+<span class="nc" id="L952">            throw new InstagramException(&quot;Failed to decode error response &quot; + responseBody, e, response.getHeaders());</span>
+<span class="nc" id="L953">        }</span>
+<span class="nc" id="L954">        throw new InstagramException(&quot;Unknown error response code: &quot; + response.getCode() + &quot; &quot; + responseBody,</span>
+<span class="nc" id="L955">                response.getHeaders());</span>
+    }
+
+    protected InstagramException handleInstagramError(long responseCode, String responseBody,
+            Map&lt;String, String&gt; responseHeaders) throws InstagramException {
+<span class="nc" id="L960">        Gson gson = new Gson();</span>
+        final InstagramErrorResponse error;
+        try {
+<span class="nc bnc" id="L963" title="All 2 branches missed.">            if (responseCode == 400) {</span>
+<span class="nc" id="L964">                error = InstagramErrorResponse.parse(gson, responseBody);</span>
+<span class="nc" id="L965">                error.setHeaders(responseHeaders);</span>
+<span class="nc" id="L966">                error.throwException();</span>
+            }
+            // sending too many requests too quickly;
+            // limited to 5000 requests per hour per access_token or client_id
+            // overall. (according to spec)
+<span class="nc bnc" id="L971" title="All 2 branches missed.">            else if (responseCode == 429) {</span>
+<span class="nc" id="L972">                error = InstagramErrorResponse.parse(gson, responseBody);</span>
+<span class="nc" id="L973">                error.setHeaders(responseHeaders);</span>
+<span class="nc" id="L974">                error.throwException();</span>
+            }
+<span class="nc" id="L976">        } catch (JsonSyntaxException e) {</span>
+<span class="nc" id="L977">            throw new InstagramException(&quot;Failed to decode error response &quot; + responseBody, e, responseHeaders);</span>
+<span class="nc" id="L978">        }</span>
+<span class="nc" id="L979">        throw new InstagramException(&quot;Unknown error response code: &quot; + responseCode + &quot; &quot; + responseBody,</span>
+                responseHeaders);
+    }
+
+    /**
+     * Get response from Instagram.
+     *
+     * @param verb
+     *            HTTP Verb
+     * @param methodName
+     *            Instagram API Method
+     * @param rawMethodName
+     *            Unencoded Instagram API Method
+     * @param params
+     *            parameters which would be sent with the request.
+     * @return Response object.
+     */
+    protected Response getApiResponse(Verbs verb, String methodName, String rawMethodName, Map&lt;String, String&gt; params) throws IOException {
+<span class="nc" id="L997">        Request request=request(verb, methodName, rawMethodName, params);</span>
+<span class="nc" id="L998">        logger.debug(&quot;Sending request to Instagram...&quot;);</span>
+<span class="nc" id="L999">        Response response=request.send();</span>
+<span class="nc" id="L1000">        return response;</span>
+    }
+    
+    protected Request request(Verbs verb, String methodName, String rawMethodName, Map&lt;String, String&gt; params) throws InstagramException {
+<span class="nc" id="L1004">        String apiResourceUrl = config.getApiURL() + methodName;</span>
+<span class="nc" id="L1005">        Request request = new Request(verb, apiResourceUrl);</span>
+
+<span class="nc" id="L1007">        logger.debug(&quot;Creating request for Instagram -  &quot; + request.getUrl());</span>
+
+<span class="nc" id="L1009">        configureConnectionSettings(request, config);</span>
+
+<span class="nc bnc" id="L1011" title="All 2 branches missed.">        if (requestProxy != null) {</span>
+<span class="nc" id="L1012">            request.setProxy(requestProxy);</span>
+        }
+
+        // Additional parameters in url
+<span class="nc bnc" id="L1016" title="All 2 branches missed.">        if (params != null) {</span>
+            
+<span class="nc" id="L1018">            params.remove(QueryParam.SIGNATURE); // needs to be recalculated last for every request</span>
+            
+<span class="nc bnc" id="L1020" title="All 2 branches missed.">            for (Map.Entry&lt;String, String&gt; entry : params.entrySet()) {</span>
+<span class="nc bnc" id="L1021" title="All 2 branches missed.">                if (verb == Verbs.GET) {</span>
+<span class="nc" id="L1022">                    request.addQuerystringParameter(entry.getKey(), entry.getValue());</span>
+                } else {
+<span class="nc" id="L1024">                    request.addBodyParameter(entry.getKey(), entry.getValue());</span>
+                }
+<span class="nc" id="L1026">            }</span>
+        }
+        
+<span class="nc" id="L1029">        return request;</span>
+    }
+
+    /**
+     * Configure the request with the connection settings of config
+     * @param request OAuthRequest object
+     * @param config InstagramConfig object
+     */
+    public static void configureConnectionSettings(final Request request, final InstagramConfig config) {
+<span class="nc" id="L1038">        request.setConnectTimeout(config.getConnectionTimeoutMills(), TimeUnit.MILLISECONDS);</span>
+<span class="nc" id="L1039">        request.setReadTimeout(config.getReadTimeoutMills(), TimeUnit.MILLISECONDS);</span>
+
+        // #51 Connection Keep Alive
+<span class="nc" id="L1042">        request.setConnectionKeepAlive(config.isConnectionKeepAlive());</span>
+<span class="nc" id="L1043">    }</span>
+
+    /**
+     * Creates an object from the JSON response and the class which the object
+     * would be mapped to.
+     *
+     * @param clazz
+     *            a class instance
+     * @param response
+     *            a JSON feed
+     * @return a object of type &lt;T&gt;
+     * @throws InstagramException
+     *             if any error occurs.
+     */
+    public static &lt;T&gt; T createObjectFromResponse(Class&lt;T&gt; clazz, final String response) throws InstagramException {
+<span class="nc" id="L1058">        Gson gson = new Gson();</span>
+        T object;
+
+        try {
+<span class="nc" id="L1062">	        object = gson.fromJson(response, clazz);</span>
+<span class="nc" id="L1063">        } catch (Exception e) {</span>
+<span class="nc" id="L1064">            throw new InstagramException(&quot;Error parsing json to object type &quot; + clazz.getName(), e);</span>
+<span class="nc" id="L1065">        }</span>
+
+<span class="nc" id="L1067">        return object;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,30 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("CommentData [commentFrom=%s, createdTime=%s, id=%s, text=%s]", commentFrom, createdTime, id, text);
+}
+
+# Method Intention
+The intention of the toString() method in the CommentData class is to provide a formatted string representation of the CommentData object, including its attributes such as commentFrom, createdTime, id, and text, for easy debugging and logging purposes.
+
+# Test Method
+    @Test
+    public void testToString() {
+        CommentData commentData = new CommentData();
+        commentData.setCommentFrom(new FromTagData());
+        commentData.setCreatedTime("2022-01-01");
+        commentData.setId("123456");
+        commentData.setText("This is a test comment");
+        String expected = "CommentData [commentFrom=FromTagData@<hashcode>, createdTime=2022-01-01, id=123456, text=This is a test comment]";
+        String actual = commentData.toString();
+       [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...mentFrom=FromTagData[@<hashcode>], createdTime=2022-0...> but was:<...mentFrom=FromTagData[ [fullName=null, id=null, profilePicture=null, username=null]], createdTime=2022-0...> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NurminenDetectionAlgorithm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula.detectors</a> &gt; <span class="el_source">NurminenDetectionAlgorithm.java</span></div><h1>NurminenDetectionAlgorithm.java</h1><pre class="source lang-java linenums">package technology.tabula.detectors;
+
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.*;
+
+import org.apache.pdfbox.contentstream.operator.Operator;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.pdfparser.PDFStreamParser;
+import org.apache.pdfbox.pdfwriter.ContentStreamWriter;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDStream;
+import org.apache.pdfbox.rendering.ImageType;
+
+import technology.tabula.Line;
+import technology.tabula.Page;
+import technology.tabula.Rectangle;
+import technology.tabula.Ruling;
+import technology.tabula.TextChunk;
+import technology.tabula.TextElement;
+import technology.tabula.Utils;
+import technology.tabula.extractors.SpreadsheetExtractionAlgorithm;
+
+/**
+ * Created by matt on 2015-12-17.
+ * &lt;p&gt;
+ * Attempt at an implementation of the table finding algorithm described by
+ * Anssi Nurminen's master's thesis:
+ * http://dspace.cc.tut.fi/dpub/bitstream/handle/123456789/21520/Nurminen.pdf?sequence=3
+ */
+<span class="nc" id="L36">public class NurminenDetectionAlgorithm implements DetectionAlgorithm {</span>
+
+    private static final int GRAYSCALE_INTENSITY_THRESHOLD = 25;
+    private static final int HORIZONTAL_EDGE_WIDTH_MINIMUM = 50;
+    private static final int VERTICAL_EDGE_HEIGHT_MINIMUM = 10;
+    private static final int CELL_CORNER_DISTANCE_MAXIMUM = 10;
+    private static final float POINT_SNAP_DISTANCE_THRESHOLD = 8f;
+    private static final float TABLE_PADDING_AMOUNT = 1.0f;
+    private static final int REQUIRED_TEXT_LINES_FOR_EDGE = 4;
+    private static final int REQUIRED_CELLS_FOR_TABLE = 4;
+    private static final float IDENTICAL_TABLE_OVERLAP_RATIO = 0.9f;
+
+    /**
+     * Helper class that encapsulates a text edge
+     */
+    private static final class TextEdge extends Line2D.Float {
+        // types of text edges
+        public static final int LEFT = 0;
+        public static final int MID = 1;
+        public static final int RIGHT = 2;
+        public static final int NUM_TYPES = 3;
+
+        public int intersectingTextRowCount;
+
+        public TextEdge(float x1, float y1, float x2, float y2) {
+<span class="nc" id="L61">            super(x1, y1, x2, y2);</span>
+<span class="nc" id="L62">            this.intersectingTextRowCount = 0;</span>
+<span class="nc" id="L63">        }</span>
+    }
+
+    /**
+     * Helper container for all text edges on a page
+     */
+    private static final class TextEdges extends ArrayList&lt;List&lt;TextEdge&gt;&gt; {
+        public TextEdges(List&lt;TextEdge&gt; leftEdges, List&lt;TextEdge&gt; midEdges, List&lt;TextEdge&gt; rightEdges) {
+<span class="nc" id="L71">            super(3);</span>
+<span class="nc" id="L72">            this.add(leftEdges);</span>
+<span class="nc" id="L73">            this.add(midEdges);</span>
+<span class="nc" id="L74">            this.add(rightEdges);</span>
+<span class="nc" id="L75">        }</span>
+    }
+
+    /**
+     * Helper container for relevant text edge info
+     */
+    private static final class RelevantEdges {
+        public int edgeType;
+        public int edgeCount;
+
+<span class="nc" id="L85">        public RelevantEdges(int edgeType, int edgeCount) {</span>
+<span class="nc" id="L86">            this.edgeType = edgeType;</span>
+<span class="nc" id="L87">            this.edgeCount = edgeCount;</span>
+<span class="nc" id="L88">        }</span>
+    }
+
+    @Override
+    public List&lt;Rectangle&gt; detect(Page page) {
+
+        // get horizontal &amp; vertical lines
+        // we get these from an image of the PDF and not the PDF itself because sometimes there are invisible PDF
+        // instructions that are interpreted incorrectly as visible elements - we really want to capture what a
+        // person sees when they look at the PDF
+        BufferedImage image;
+<span class="nc" id="L99">        PDPage pdfPage = page.getPDPage();</span>
+        try {
+<span class="nc" id="L101">            image = Utils.pageConvertToImage(page.getPDDoc(), pdfPage, 144, ImageType.GRAY);</span>
+<span class="nc" id="L102">        } catch (IOException e) {</span>
+<span class="nc" id="L103">            return new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L104">        }</span>
+
+<span class="nc" id="L106">        List&lt;Ruling&gt; horizontalRulings = this.getHorizontalRulings(image);</span>
+
+        // now check the page for vertical lines, but remove the text first to make things less confusing
+<span class="nc" id="L109">        PDDocument removeTextDocument = null;</span>
+        try {
+<span class="nc" id="L111">            removeTextDocument = this.removeText(pdfPage);</span>
+<span class="nc" id="L112">            pdfPage = removeTextDocument.getPage(0);</span>
+<span class="nc" id="L113">            image = Utils.pageConvertToImage(removeTextDocument, pdfPage, 144, ImageType.GRAY);</span>
+<span class="nc" id="L114">        } catch (Exception e) {</span>
+<span class="nc" id="L115">            return new ArrayList&lt;&gt;();</span>
+        } finally {
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if (removeTextDocument != null) {</span>
+                try {
+<span class="nc" id="L119">                    removeTextDocument.close();</span>
+<span class="nc" id="L120">                } catch (IOException e) {</span>
+                    // TODO Auto-generated catch block
+<span class="nc" id="L122">                    e.printStackTrace();</span>
+<span class="nc" id="L123">                }</span>
+            }
+        }
+
+<span class="nc" id="L127">        List&lt;Ruling&gt; verticalRulings = this.getVerticalRulings(image);</span>
+
+<span class="nc" id="L129">        List&lt;Ruling&gt; allEdges = new ArrayList&lt;&gt;(horizontalRulings);</span>
+<span class="nc" id="L130">        allEdges.addAll(verticalRulings);</span>
+
+<span class="nc" id="L132">        List&lt;Rectangle&gt; tableAreas = new ArrayList&lt;&gt;();</span>
+
+        // if we found some edges, try to find some tables based on them
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if (allEdges.size() &gt; 0) {</span>
+            // now we need to snap edge endpoints to a grid
+<span class="nc" id="L137">            Utils.snapPoints(allEdges, POINT_SNAP_DISTANCE_THRESHOLD, POINT_SNAP_DISTANCE_THRESHOLD);</span>
+
+            // normalize the rulings to make sure snapping didn't create any wacky non-horizontal/vertical rulings
+<span class="nc bnc" id="L140" title="All 2 branches missed.">            for (List&lt;Ruling&gt; rulings : Arrays.asList(horizontalRulings, verticalRulings)) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                for (Iterator&lt;Ruling&gt; iterator = rulings.iterator(); iterator.hasNext(); ) {</span>
+<span class="nc" id="L142">                    Ruling ruling = iterator.next();</span>
+
+<span class="nc" id="L144">                    ruling.normalize();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                    if (ruling.oblique()) {</span>
+<span class="nc" id="L146">                        iterator.remove();</span>
+                    }
+<span class="nc" id="L148">                }</span>
+<span class="nc" id="L149">            }</span>
+
+            // merge the edge lines into rulings - this makes finding edges between crossing points in the next step easier
+            // we use a larger pixel expansion than the normal spreadsheet extraction method to cover gaps in the
+            // edge detection/pixel snapping steps
+<span class="nc" id="L154">            horizontalRulings = Ruling.collapseOrientedRulings(horizontalRulings, 5);</span>
+<span class="nc" id="L155">            verticalRulings = Ruling.collapseOrientedRulings(verticalRulings, 5);</span>
+
+            // use the rulings and points to find cells
+<span class="nc" id="L158">            List&lt;? extends Rectangle&gt; cells = SpreadsheetExtractionAlgorithm.findCells(horizontalRulings, verticalRulings);</span>
+
+            // then use those cells to make table areas
+<span class="nc" id="L161">            tableAreas = this.getTableAreasFromCells(cells);</span>
+        }
+
+        // next find any vertical rulings that intersect tables - sometimes these won't have completely been captured as
+        // cells if there are missing horizontal lines (which there often are)
+        // let's assume though that these lines should be part of the table
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        for (Line2D.Float verticalRuling : verticalRulings) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">            for (Rectangle tableArea : tableAreas) {</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">                if (verticalRuling.intersects(tableArea) &amp;&amp;</span>
+<span class="nc bnc" id="L170" title="All 4 branches missed.">                        !(tableArea.contains(verticalRuling.getP1()) &amp;&amp; tableArea.contains(verticalRuling.getP2()))) {</span>
+
+<span class="nc" id="L172">                    tableArea.setTop((float) Math.floor(Math.min(tableArea.getTop(), verticalRuling.getY1())));</span>
+<span class="nc" id="L173">                    tableArea.setBottom((float) Math.ceil(Math.max(tableArea.getBottom(), verticalRuling.getY2())));</span>
+<span class="nc" id="L174">                    break;</span>
+                }
+<span class="nc" id="L176">            }</span>
+<span class="nc" id="L177">        }</span>
+
+        // the tabula Page coordinate space is half the size of the PDFBox image coordinate space
+        // so halve the table area size before proceeding and add a bit of padding to make sure we capture everything
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (Rectangle area : tableAreas) {</span>
+<span class="nc" id="L182">            area.x = (float) Math.floor(area.x / 2) - TABLE_PADDING_AMOUNT;</span>
+<span class="nc" id="L183">            area.y = (float) Math.floor(area.y / 2) - TABLE_PADDING_AMOUNT;</span>
+<span class="nc" id="L184">            area.width = (float) Math.ceil(area.width / 2) + TABLE_PADDING_AMOUNT;</span>
+<span class="nc" id="L185">            area.height = (float) Math.ceil(area.height / 2) + TABLE_PADDING_AMOUNT;</span>
+<span class="nc" id="L186">        }</span>
+
+        // we're going to want halved horizontal lines later too
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        for (Line2D.Float ruling : horizontalRulings) {</span>
+<span class="nc" id="L190">            ruling.x1 = ruling.x1 / 2;</span>
+<span class="nc" id="L191">            ruling.y1 = ruling.y1 / 2;</span>
+<span class="nc" id="L192">            ruling.x2 = ruling.x2 / 2;</span>
+<span class="nc" id="L193">            ruling.y2 = ruling.y2 / 2;</span>
+<span class="nc" id="L194">        }</span>
+
+        // now look at text rows to help us find more tables and flesh out existing ones
+<span class="nc" id="L197">        List&lt;TextChunk&gt; textChunks = TextElement.mergeWords(page.getText());</span>
+<span class="nc" id="L198">        List&lt;Line&gt; lines = TextChunk.groupByLines(textChunks);</span>
+
+        // first look for text rows that intersect an existing table - those lines should probably be part of the table
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        for (Line textRow : lines) {</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">            for (Rectangle tableArea : tableAreas) {</span>
+<span class="nc bnc" id="L203" title="All 4 branches missed.">                if (!tableArea.contains(textRow) &amp;&amp; textRow.intersects(tableArea)) {</span>
+<span class="nc" id="L204">                    tableArea.setLeft((float) Math.floor(Math.min(textRow.getLeft(), tableArea.getLeft())));</span>
+<span class="nc" id="L205">                    tableArea.setRight((float) Math.ceil(Math.max(textRow.getRight(), tableArea.getRight())));</span>
+                }
+<span class="nc" id="L207">            }</span>
+<span class="nc" id="L208">        }</span>
+
+        // get rid of tables that DO NOT intersect any text areas - these are likely graphs or some sort of graphic
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        for (Iterator&lt;Rectangle&gt; iterator = tableAreas.iterator(); iterator.hasNext(); ) {</span>
+<span class="nc" id="L212">            Rectangle table = iterator.next();</span>
+
+<span class="nc" id="L214">            boolean intersectsText = false;</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">            for (Line textRow : lines) {</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">                if (table.intersects(textRow)) {</span>
+<span class="nc" id="L217">                    intersectsText = true;</span>
+<span class="nc" id="L218">                    break;</span>
+                }
+<span class="nc" id="L220">            }</span>
+
+<span class="nc bnc" id="L222" title="All 2 branches missed.">            if (!intersectsText) {</span>
+<span class="nc" id="L223">                iterator.remove();</span>
+            }
+<span class="nc" id="L225">        }</span>
+
+        // lastly, there may be some tables that don't have any vertical rulings at all
+        // we'll use text edges we've found to try and guess which text rows are part of a table
+
+        // in his thesis nurminen goes through every row to try to assign a probability that the line is in a table
+        // we're going to try a general heuristic instead, trying to find what type of edge (left/right/mid) intersects
+        // the most text rows, and then use that magic number of &quot;relevant&quot; edges to decide what text rows should be
+        // part of a table.
+
+        boolean foundTable;
+
+        do {
+<span class="nc" id="L238">            foundTable = false;</span>
+
+            // get rid of any text lines contained within existing tables, this allows us to find more tables
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            for (Iterator&lt;Line&gt; iterator = lines.iterator(); iterator.hasNext(); ) {</span>
+<span class="nc" id="L242">                Line textRow = iterator.next();</span>
+<span class="nc bnc" id="L243" title="All 2 branches missed.">                for (Rectangle table : tableAreas) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">                    if (table.contains(textRow)) {</span>
+<span class="nc" id="L245">                        iterator.remove();</span>
+<span class="nc" id="L246">                        break;</span>
+                    }
+<span class="nc" id="L248">                }</span>
+<span class="nc" id="L249">            }</span>
+
+            // get text edges from remaining lines in the document
+<span class="nc" id="L252">            TextEdges textEdges = this.getTextEdges(lines);</span>
+<span class="nc" id="L253">            List&lt;TextEdge&gt; leftTextEdges = textEdges.get(TextEdge.LEFT);</span>
+<span class="nc" id="L254">            List&lt;TextEdge&gt; midTextEdges = textEdges.get(TextEdge.MID);</span>
+<span class="nc" id="L255">            List&lt;TextEdge&gt; rightTextEdges = textEdges.get(TextEdge.RIGHT);</span>
+
+            // find the relevant text edges (the ones we think define where a table is)
+<span class="nc" id="L258">            RelevantEdges relevantEdgeInfo = this.getRelevantEdges(textEdges, lines);</span>
+
+            // we found something relevant so let's look for rows that fit our criteria
+<span class="nc bnc" id="L261" title="All 2 branches missed.">            if (relevantEdgeInfo.edgeType != -1) {</span>
+<span class="nc" id="L262">                List&lt;TextEdge&gt; relevantEdges = null;</span>
+<span class="nc bnc" id="L263" title="All 4 branches missed.">                switch (relevantEdgeInfo.edgeType) {</span>
+                    case TextEdge.LEFT:
+<span class="nc" id="L265">                        relevantEdges = leftTextEdges;</span>
+<span class="nc" id="L266">                        break;</span>
+                    case TextEdge.MID:
+<span class="nc" id="L268">                        relevantEdges = midTextEdges;</span>
+<span class="nc" id="L269">                        break;</span>
+                    case TextEdge.RIGHT:
+<span class="nc" id="L271">                        relevantEdges = rightTextEdges;</span>
+                        break;
+                }
+
+<span class="nc" id="L275">                Rectangle table = this.getTableFromText(lines, relevantEdges, relevantEdgeInfo.edgeCount, horizontalRulings);</span>
+
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                if (table != null) {</span>
+<span class="nc" id="L278">                    foundTable = true;</span>
+<span class="nc" id="L279">                    tableAreas.add(table);</span>
+                }
+            }
+<span class="nc bnc" id="L282" title="All 2 branches missed.">        } while (foundTable);</span>
+
+        // create a set of our current tables that will eliminate duplicate tables
+<span class="nc" id="L285">        Set&lt;Rectangle&gt; tableSet = new TreeSet&lt;&gt;(new Comparator&lt;Rectangle&gt;() {</span>
+            @Override
+            public int compare(Rectangle o1, Rectangle o2) {
+<span class="nc bnc" id="L288" title="All 2 branches missed.">                if (o1.equals(o2)) {</span>
+<span class="nc" id="L289">                    return 0;</span>
+                }
+
+                // o1 is &quot;equal&quot; to o2 if o2 contains all of o1
+<span class="nc bnc" id="L293" title="All 2 branches missed.">                if (o2.contains(o1)) {</span>
+<span class="nc" id="L294">                    return 0;</span>
+                }
+
+<span class="nc bnc" id="L297" title="All 2 branches missed.">                if (o1.contains(o2)) {</span>
+<span class="nc" id="L298">                    return 0;</span>
+                }
+
+                // otherwise see if these tables are &quot;mostly&quot; the same
+<span class="nc" id="L302">                float overlap = o1.overlapRatio(o2);</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">                if (overlap &gt;= IDENTICAL_TABLE_OVERLAP_RATIO) {</span>
+<span class="nc" id="L304">                    return 0;</span>
+                } else {
+<span class="nc" id="L306">                    return 1;</span>
+                }
+            }
+        });
+
+<span class="nc" id="L311">        tableSet.addAll(tableAreas);</span>
+
+<span class="nc" id="L313">        return new ArrayList&lt;&gt;(tableSet);</span>
+    }
+
+    private Rectangle getTableFromText(List&lt;Line&gt; lines,
+                                       List&lt;TextEdge&gt; relevantEdges,
+                                       int relevantEdgeCount,
+                                       List&lt;Ruling&gt; horizontalRulings) {
+
+<span class="nc" id="L321">        Rectangle table = new Rectangle();</span>
+
+<span class="nc" id="L323">        Line prevRow = null;</span>
+<span class="nc" id="L324">        Line firstTableRow = null;</span>
+<span class="nc" id="L325">        Line lastTableRow = null;</span>
+
+<span class="nc" id="L327">        int tableSpaceCount = 0;</span>
+<span class="nc" id="L328">        float totalRowSpacing = 0;</span>
+
+        // go through the lines and find the ones that have the correct count of the relevant edges
+<span class="nc bnc" id="L331" title="All 2 branches missed.">        for (Line textRow : lines) {</span>
+<span class="nc" id="L332">            int numRelevantEdges = 0;</span>
+
+<span class="nc bnc" id="L334" title="All 4 branches missed.">            if (firstTableRow != null &amp;&amp; tableSpaceCount &gt; 0) {</span>
+                // check to make sure this text row is within a line or so of the other lines already added
+                // if it's not, we should stop the table here
+<span class="nc" id="L337">                float tableLineThreshold = (totalRowSpacing / tableSpaceCount) * 2.5f;</span>
+<span class="nc" id="L338">                float lineDistance = textRow.getTop() - prevRow.getTop();</span>
+
+<span class="nc bnc" id="L340" title="All 2 branches missed.">                if (lineDistance &gt; tableLineThreshold) {</span>
+<span class="nc" id="L341">                    lastTableRow = prevRow;</span>
+<span class="nc" id="L342">                    break;</span>
+                }
+            }
+
+            // for larger tables, be a little lenient on the number of relevant rows the text intersects
+            // for smaller tables, not so much - otherwise we'll end up treating paragraphs as tables too
+<span class="nc" id="L348">            int relativeEdgeDifferenceThreshold = 1;</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">            if (relevantEdgeCount &lt;= 3) {</span>
+<span class="nc" id="L350">                relativeEdgeDifferenceThreshold = 0;</span>
+            }
+
+<span class="nc bnc" id="L353" title="All 2 branches missed.">            for (TextEdge edge : relevantEdges) {</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">                if (textRow.intersectsLine(edge)) {</span>
+<span class="nc" id="L355">                    numRelevantEdges++;</span>
+                }
+<span class="nc" id="L357">            }</span>
+
+            // see if we have a candidate text row
+<span class="nc bnc" id="L360" title="All 2 branches missed.">            if (numRelevantEdges &gt;= (relevantEdgeCount - relativeEdgeDifferenceThreshold)) {</span>
+                // keep track of table row spacing
+<span class="nc bnc" id="L362" title="All 4 branches missed.">                if (prevRow != null &amp;&amp; firstTableRow != null) {</span>
+<span class="nc" id="L363">                    tableSpaceCount++;</span>
+<span class="nc" id="L364">                    totalRowSpacing += (textRow.getTop() - prevRow.getTop());</span>
+                }
+
+                // row is part of a table
+<span class="nc bnc" id="L368" title="All 2 branches missed.">                if (table.getArea() == 0) {</span>
+<span class="nc" id="L369">                    firstTableRow = textRow;</span>
+<span class="nc" id="L370">                    table.setRect(textRow);</span>
+                } else {
+<span class="nc" id="L372">                    table.setLeft(Math.min(table.getLeft(), textRow.getLeft()));</span>
+<span class="nc" id="L373">                    table.setBottom(Math.max(table.getBottom(), textRow.getBottom()));</span>
+<span class="nc" id="L374">                    table.setRight(Math.max(table.getRight(), textRow.getRight()));</span>
+                }
+            } else {
+                // no dice
+                // if we're at the end of the table, save the last row
+<span class="nc bnc" id="L379" title="All 4 branches missed.">                if (firstTableRow != null &amp;&amp; lastTableRow == null) {</span>
+<span class="nc" id="L380">                    lastTableRow = prevRow;</span>
+                }
+            }
+
+<span class="nc" id="L384">            prevRow = textRow;</span>
+<span class="nc" id="L385">        }</span>
+
+        // if we don't have a table now, we won't after the next step either
+<span class="nc bnc" id="L388" title="All 2 branches missed.">        if (table.getArea() == 0) {</span>
+<span class="nc" id="L389">            return null;</span>
+        }
+
+<span class="nc bnc" id="L392" title="All 2 branches missed.">        if (lastTableRow == null) {</span>
+            // takes care of one-row tables or tables that end at the bottom of a page
+<span class="nc" id="L394">            lastTableRow = prevRow;</span>
+        }
+
+        // use the average row height and nearby horizontal lines to extend the table area
+        float avgRowHeight;
+<span class="nc bnc" id="L399" title="All 2 branches missed.">        if (tableSpaceCount &gt; 0) {</span>
+<span class="nc" id="L400">            avgRowHeight = totalRowSpacing / tableSpaceCount;</span>
+        } else {
+<span class="nc" id="L402">            avgRowHeight = lastTableRow.height;</span>
+        }
+
+<span class="nc" id="L405">        float rowHeightThreshold = avgRowHeight * 1.5f;</span>
+
+        // check lines after the bottom of the table
+<span class="nc bnc" id="L408" title="All 2 branches missed.">        for (Line2D.Float ruling : horizontalRulings) {</span>
+
+<span class="nc bnc" id="L410" title="All 2 branches missed.">            if (ruling.getY1() &lt; table.getBottom()) {</span>
+<span class="nc" id="L411">                continue;</span>
+            }
+
+<span class="nc" id="L414">            float distanceFromTable = (float) ruling.getY1() - table.getBottom();</span>
+<span class="nc bnc" id="L415" title="All 2 branches missed.">            if (distanceFromTable &lt;= rowHeightThreshold) {</span>
+                // use this ruling to help define the table
+<span class="nc" id="L417">                table.setBottom((float) Math.max(table.getBottom(), ruling.getY1()));</span>
+<span class="nc" id="L418">                table.setLeft((float) Math.min(table.getLeft(), ruling.getX1()));</span>
+<span class="nc" id="L419">                table.setRight((float) Math.max(table.getRight(), ruling.getX2()));</span>
+            } else {
+                // no use checking any further
+                break;
+            }
+<span class="nc" id="L424">        }</span>
+
+        // do the same for lines at the top, but make the threshold greater since table headings tend to be
+        // larger to fit up to three-ish rows of text (at least but we don't want to grab too much)
+<span class="nc" id="L428">        rowHeightThreshold = avgRowHeight * 3.8f;</span>
+
+<span class="nc bnc" id="L430" title="All 2 branches missed.">        for (int i = horizontalRulings.size() - 1; i &gt;= 0; i--) {</span>
+<span class="nc" id="L431">            Line2D.Float ruling = horizontalRulings.get(i);</span>
+
+<span class="nc bnc" id="L433" title="All 2 branches missed.">            if (ruling.getY1() &gt; table.getTop()) {</span>
+<span class="nc" id="L434">                continue;</span>
+            }
+
+<span class="nc" id="L437">            float distanceFromTable = table.getTop() - (float) ruling.getY1();</span>
+<span class="nc bnc" id="L438" title="All 2 branches missed.">            if (distanceFromTable &lt;= rowHeightThreshold) {</span>
+<span class="nc" id="L439">                table.setTop((float) Math.min(table.getTop(), ruling.getY1()));</span>
+<span class="nc" id="L440">                table.setLeft((float) Math.min(table.getLeft(), ruling.getX1()));</span>
+<span class="nc" id="L441">                table.setRight((float) Math.max(table.getRight(), ruling.getX2()));</span>
+            } else {
+                break;
+            }
+        }
+
+        // add a bit of padding since the halved horizontal lines are a little fuzzy anyways
+<span class="nc" id="L448">        table.setTop((float) Math.floor(table.getTop()) - TABLE_PADDING_AMOUNT);</span>
+<span class="nc" id="L449">        table.setBottom((float) Math.ceil(table.getBottom()) + TABLE_PADDING_AMOUNT);</span>
+<span class="nc" id="L450">        table.setLeft((float) Math.floor(table.getLeft()) - TABLE_PADDING_AMOUNT);</span>
+<span class="nc" id="L451">        table.setRight((float) Math.ceil(table.getRight()) + TABLE_PADDING_AMOUNT);</span>
+
+<span class="nc" id="L453">        return table;</span>
+    }
+
+    private RelevantEdges getRelevantEdges(TextEdges textEdges, List&lt;Line&gt; lines) {
+<span class="nc" id="L457">        List&lt;TextEdge&gt; leftTextEdges = textEdges.get(TextEdge.LEFT);</span>
+<span class="nc" id="L458">        List&lt;TextEdge&gt; midTextEdges = textEdges.get(TextEdge.MID);</span>
+<span class="nc" id="L459">        List&lt;TextEdge&gt; rightTextEdges = textEdges.get(TextEdge.RIGHT);</span>
+
+        // first we'll find the number of lines each type of edge crosses
+<span class="nc" id="L462">        int[][] edgeCountsPerLine = new int[lines.size()][TextEdge.NUM_TYPES];</span>
+
+<span class="nc bnc" id="L464" title="All 2 branches missed.">        for (TextEdge edge : leftTextEdges) {</span>
+<span class="nc" id="L465">            edgeCountsPerLine[edge.intersectingTextRowCount - 1][TextEdge.LEFT]++;</span>
+<span class="nc" id="L466">        }</span>
+
+<span class="nc bnc" id="L468" title="All 2 branches missed.">        for (TextEdge edge : midTextEdges) {</span>
+<span class="nc" id="L469">            edgeCountsPerLine[edge.intersectingTextRowCount - 1][TextEdge.MID]++;</span>
+<span class="nc" id="L470">        }</span>
+
+<span class="nc bnc" id="L472" title="All 2 branches missed.">        for (TextEdge edge : rightTextEdges) {</span>
+<span class="nc" id="L473">            edgeCountsPerLine[edge.intersectingTextRowCount - 1][TextEdge.RIGHT]++;</span>
+<span class="nc" id="L474">        }</span>
+
+        // now let's find the relevant edge type and the number of those edges we should look for
+        // we'll only take a minimum of two edges to look for tables
+<span class="nc" id="L478">        int relevantEdgeType = -1;</span>
+<span class="nc" id="L479">        int relevantEdgeCount = 0;</span>
+<span class="nc bnc" id="L480" title="All 2 branches missed.">        for (int i = edgeCountsPerLine.length - 1; i &gt; 2; i--) {</span>
+<span class="nc bnc" id="L481" title="All 6 branches missed.">            if (edgeCountsPerLine[i][TextEdge.LEFT] &gt; 2 &amp;&amp;</span>
+                    edgeCountsPerLine[i][TextEdge.LEFT] &gt;= edgeCountsPerLine[i][TextEdge.RIGHT] &amp;&amp;
+                    edgeCountsPerLine[i][TextEdge.LEFT] &gt;= edgeCountsPerLine[i][TextEdge.MID]) {
+<span class="nc" id="L484">                relevantEdgeCount = edgeCountsPerLine[i][TextEdge.LEFT];</span>
+<span class="nc" id="L485">                relevantEdgeType = TextEdge.LEFT;</span>
+<span class="nc" id="L486">                break;</span>
+            }
+
+<span class="nc bnc" id="L489" title="All 6 branches missed.">            if (edgeCountsPerLine[i][TextEdge.RIGHT] &gt; 1 &amp;&amp;</span>
+                    edgeCountsPerLine[i][TextEdge.RIGHT] &gt;= edgeCountsPerLine[i][TextEdge.LEFT] &amp;&amp;
+                    edgeCountsPerLine[i][TextEdge.RIGHT] &gt;= edgeCountsPerLine[i][TextEdge.MID]) {
+<span class="nc" id="L492">                relevantEdgeCount = edgeCountsPerLine[i][TextEdge.RIGHT];</span>
+<span class="nc" id="L493">                relevantEdgeType = TextEdge.RIGHT;</span>
+<span class="nc" id="L494">                break;</span>
+            }
+
+<span class="nc bnc" id="L497" title="All 6 branches missed.">            if (edgeCountsPerLine[i][TextEdge.MID] &gt; 1 &amp;&amp;</span>
+                    edgeCountsPerLine[i][TextEdge.MID] &gt;= edgeCountsPerLine[i][TextEdge.RIGHT] &amp;&amp;
+                    edgeCountsPerLine[i][TextEdge.MID] &gt;= edgeCountsPerLine[i][TextEdge.LEFT]) {
+<span class="nc" id="L500">                relevantEdgeCount = edgeCountsPerLine[i][TextEdge.MID];</span>
+<span class="nc" id="L501">                relevantEdgeType = TextEdge.MID;</span>
+<span class="nc" id="L502">                break;</span>
+            }
+        }
+
+<span class="nc" id="L506">        return new RelevantEdges(relevantEdgeType, relevantEdgeCount);</span>
+    }
+
+    private TextEdges getTextEdges(List&lt;Line&gt; lines) {
+
+        // get all text edges (lines that align with the left, middle and right of chunks of text) that extend
+        // uninterrupted over at least REQUIRED_TEXT_LINES_FOR_EDGE lines of text
+<span class="nc" id="L513">        List&lt;TextEdge&gt; leftTextEdges = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L514">        List&lt;TextEdge&gt; midTextEdges = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L515">        List&lt;TextEdge&gt; rightTextEdges = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L517">        Map&lt;Integer, List&lt;TextChunk&gt;&gt; currLeftEdges = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L518">        Map&lt;Integer, List&lt;TextChunk&gt;&gt; currMidEdges = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L519">        Map&lt;Integer, List&lt;TextChunk&gt;&gt; currRightEdges = new HashMap&lt;&gt;();</span>
+
+
+<span class="nc" id="L522">        int numOfLines = lines.size();</span>
+<span class="nc bnc" id="L523" title="All 2 branches missed.">        for (Line textRow : lines) {</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">            for (TextChunk text : textRow.getTextElements()) {</span>
+<span class="nc" id="L525">                Integer left = (int) Math.floor(text.getLeft());</span>
+<span class="nc" id="L526">                Integer right = (int) Math.floor(text.getRight());</span>
+<span class="nc" id="L527">                Integer mid = left + ((right - left) / 2);</span>
+
+                // first put this chunk into any edge buckets it belongs to
+<span class="nc" id="L530">                List&lt;TextChunk&gt; leftEdge = currLeftEdges.computeIfAbsent(left, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L531">                leftEdge.add(text);</span>
+
+<span class="nc" id="L533">                List&lt;TextChunk&gt; midEdge = currMidEdges.computeIfAbsent(mid, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L534">                midEdge.add(text);</span>
+
+<span class="nc" id="L536">                List&lt;TextChunk&gt; rightEdge = currRightEdges.computeIfAbsent(right, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L537">                rightEdge.add(text);</span>
+
+                // now see if this text chunk blows up any other edges
+<span class="nc" id="L540">                leftTextEdges.addAll(</span>
+<span class="nc" id="L541">                        calculateExtendedEdges(numOfLines, currLeftEdges, left, right)</span>
+                );
+
+<span class="nc" id="L544">                midTextEdges.addAll(</span>
+<span class="nc" id="L545">                        calculateExtendedEdges(numOfLines, currMidEdges, left, right, mid, 2)</span>
+                );
+
+<span class="nc" id="L548">                rightTextEdges.addAll(</span>
+<span class="nc" id="L549">                        calculateExtendedEdges(numOfLines, currRightEdges, left, right)</span>
+                );
+<span class="nc" id="L551">            }</span>
+<span class="nc" id="L552">        }</span>
+
+        // add the leftovers
+<span class="nc" id="L555">        leftTextEdges.addAll(</span>
+<span class="nc" id="L556">                calculateLeftoverEdges(numOfLines, currLeftEdges)</span>
+        );
+
+<span class="nc" id="L559">        midTextEdges.addAll(</span>
+<span class="nc" id="L560">                calculateLeftoverEdges(numOfLines, currMidEdges)</span>
+        );
+
+<span class="nc" id="L563">        rightTextEdges.addAll(</span>
+<span class="nc" id="L564">                calculateLeftoverEdges(numOfLines, currRightEdges)</span>
+        );
+
+<span class="nc" id="L567">        return new TextEdges(leftTextEdges, midTextEdges, rightTextEdges);</span>
+    }
+
+    private Set&lt;TextEdge&gt; calculateLeftoverEdges(int numOfLines, Map&lt;Integer, List&lt;TextChunk&gt;&gt; currDirectedEdges) {
+<span class="nc" id="L571">        Set&lt;TextEdge&gt; leftoverEdges = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L572" title="All 2 branches missed.">        for (Integer key : currDirectedEdges.keySet()) {</span>
+<span class="nc" id="L573">            List&lt;TextChunk&gt; edgeChunks = currDirectedEdges.get(key);</span>
+<span class="nc bnc" id="L574" title="All 2 branches missed.">            if (edgeChunks.size() &gt;= REQUIRED_TEXT_LINES_FOR_EDGE) {</span>
+<span class="nc" id="L575">                TextEdge edge = getEdgeFromChunks(numOfLines, key, edgeChunks);</span>
+
+<span class="nc" id="L577">                leftoverEdges.add(edge);</span>
+            }
+<span class="nc" id="L579">        }</span>
+<span class="nc" id="L580">        return leftoverEdges;</span>
+    }
+
+    private TextEdge getEdgeFromChunks(int numOfLines, Integer key, List&lt;TextChunk&gt; edgeChunks) {
+<span class="nc" id="L584">        TextChunk first = edgeChunks.get(0);</span>
+<span class="nc" id="L585">        TextChunk last = edgeChunks.get(edgeChunks.size() - 1);</span>
+
+<span class="nc" id="L587">        TextEdge edge = new TextEdge(key, first.getTop(), key, last.getBottom());</span>
+<span class="nc" id="L588">        edge.intersectingTextRowCount = Math.min(edgeChunks.size(), numOfLines);</span>
+<span class="nc" id="L589">        return edge;</span>
+    }
+
+
+    private Collection&lt;TextEdge&gt; calculateExtendedEdges(Integer numOfLines, Map&lt;Integer, List&lt;TextChunk&gt;&gt; currDirectedEdges, Integer left, Integer right) {
+<span class="nc" id="L594">        return calculateExtendedEdges(numOfLines, currDirectedEdges, left, right, null, null);</span>
+    }
+
+    private Collection&lt;TextEdge&gt; calculateExtendedEdges(Integer numOfLines, Map&lt;Integer, List&lt;TextChunk&gt;&gt; currDirectedEdges, Integer left, Integer right, Integer mid, Integer minDistToMid) {
+<span class="nc" id="L598">        Set&lt;TextEdge&gt; extendedEdges = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L599">        Iterator&lt;Map.Entry&lt;Integer, List&lt;TextChunk&gt;&gt;&gt; edgeIterator = currDirectedEdges.entrySet().iterator();</span>
+<span class="nc bnc" id="L600" title="All 2 branches missed.">        while (edgeIterator.hasNext()) {</span>
+<span class="nc" id="L601">            Map.Entry&lt;Integer, List&lt;TextChunk&gt;&gt; entry = edgeIterator.next();</span>
+<span class="nc" id="L602">            Integer key = entry.getKey();</span>
+
+            // if mid and minDistToMid are set, we calculate if the distance to mid is actually above,
+            // otherwise we ignore it
+<span class="nc bnc" id="L606" title="All 6 branches missed.">            boolean hasMinDistToMid = mid == null || minDistToMid == null || Math.abs(key - mid) &gt; minDistToMid;</span>
+
+<span class="nc bnc" id="L608" title="All 6 branches missed.">            if (key &gt; left &amp;&amp; key &lt; right &amp;&amp; hasMinDistToMid) {</span>
+<span class="nc" id="L609">                edgeIterator.remove();</span>
+<span class="nc" id="L610">                List&lt;TextChunk&gt; edgeChunks = entry.getValue();</span>
+<span class="nc bnc" id="L611" title="All 2 branches missed.">                if (edgeChunks.size() &gt;= REQUIRED_TEXT_LINES_FOR_EDGE) {</span>
+<span class="nc" id="L612">                    TextEdge edge = getEdgeFromChunks(numOfLines, key, edgeChunks);</span>
+<span class="nc" id="L613">                    extendedEdges.add(edge);</span>
+                }
+            }
+<span class="nc" id="L616">        }</span>
+<span class="nc" id="L617">        return extendedEdges;</span>
+    }
+
+    private List&lt;Rectangle&gt; getTableAreasFromCells(List&lt;? extends Rectangle&gt; cells) {
+<span class="nc" id="L621">        List&lt;List&lt;Rectangle&gt;&gt; cellGroups = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L622" title="All 2 branches missed.">        for (Rectangle cell : cells) {</span>
+<span class="nc" id="L623">            boolean addedToGroup = false;</span>
+
+            cellCheck:
+<span class="nc bnc" id="L626" title="All 2 branches missed.">            for (List&lt;Rectangle&gt; cellGroup : cellGroups) {</span>
+<span class="nc bnc" id="L627" title="All 2 branches missed.">                for (Rectangle groupCell : cellGroup) {</span>
+<span class="nc" id="L628">                    Point2D[] groupCellCorners = groupCell.getPoints();</span>
+<span class="nc" id="L629">                    Point2D[] candidateCorners = cell.getPoints();</span>
+
+<span class="nc bnc" id="L631" title="All 2 branches missed.">                    for (Point2D candidateCorner : candidateCorners) {</span>
+<span class="nc bnc" id="L632" title="All 2 branches missed.">                        for (Point2D groupCellCorner : groupCellCorners) {</span>
+<span class="nc bnc" id="L633" title="All 2 branches missed.">                            if (candidateCorner.distance(groupCellCorner) &lt; CELL_CORNER_DISTANCE_MAXIMUM) {</span>
+<span class="nc" id="L634">                                cellGroup.add(cell);</span>
+<span class="nc" id="L635">                                addedToGroup = true;</span>
+<span class="nc" id="L636">                                break cellCheck;</span>
+                            }
+                        }
+                    }
+<span class="nc" id="L640">                }</span>
+<span class="nc" id="L641">            }</span>
+
+<span class="nc bnc" id="L643" title="All 2 branches missed.">            if (!addedToGroup) {</span>
+<span class="nc" id="L644">                ArrayList&lt;Rectangle&gt; cellGroup = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L645">                cellGroup.add(cell);</span>
+<span class="nc" id="L646">                cellGroups.add(cellGroup);</span>
+            }
+<span class="nc" id="L648">        }</span>
+
+        // create table areas based on cell group
+<span class="nc" id="L651">        List&lt;Rectangle&gt; tableAreas = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L652" title="All 2 branches missed.">        for (List&lt;Rectangle&gt; cellGroup : cellGroups) {</span>
+            // less than four cells should not make a table
+<span class="nc bnc" id="L654" title="All 2 branches missed.">            if (cellGroup.size() &lt; REQUIRED_CELLS_FOR_TABLE) {</span>
+<span class="nc" id="L655">                continue;</span>
+            }
+
+<span class="nc" id="L658">            float top = Float.MAX_VALUE;</span>
+<span class="nc" id="L659">            float left = Float.MAX_VALUE;</span>
+<span class="nc" id="L660">            float bottom = Float.MIN_VALUE;</span>
+<span class="nc" id="L661">            float right = Float.MIN_VALUE;</span>
+
+<span class="nc bnc" id="L663" title="All 2 branches missed.">            for (Rectangle cell : cellGroup) {</span>
+<span class="nc bnc" id="L664" title="All 2 branches missed.">                if (cell.getTop() &lt; top) top = cell.getTop();</span>
+<span class="nc bnc" id="L665" title="All 2 branches missed.">                if (cell.getLeft() &lt; left) left = cell.getLeft();</span>
+<span class="nc bnc" id="L666" title="All 2 branches missed.">                if (cell.getBottom() &gt; bottom) bottom = cell.getBottom();</span>
+<span class="nc bnc" id="L667" title="All 2 branches missed.">                if (cell.getRight() &gt; right) right = cell.getRight();</span>
+<span class="nc" id="L668">            }</span>
+
+<span class="nc" id="L670">            tableAreas.add(new Rectangle(top, left, right - left, bottom - top));</span>
+<span class="nc" id="L671">        }</span>
+
+<span class="nc" id="L673">        return tableAreas;</span>
+    }
+
+    private List&lt;Ruling&gt; getHorizontalRulings(BufferedImage image) {
+
+        // get all horizontal edges, which we'll define as a change in grayscale colour
+        // along a straight line of a certain length
+<span class="nc" id="L680">        ArrayList&lt;Ruling&gt; horizontalRulings = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L682">        Raster r = image.getRaster();</span>
+<span class="nc" id="L683">        int width = r.getWidth();</span>
+<span class="nc" id="L684">        int height = r.getHeight();</span>
+
+<span class="nc bnc" id="L686" title="All 2 branches missed.">        for (int x = 0; x &lt; width; x++) {</span>
+
+<span class="nc" id="L688">            int[] lastPixel = r.getPixel(x, 0, (int[]) null);</span>
+
+<span class="nc bnc" id="L690" title="All 2 branches missed.">            for (int y = 1; y &lt; height - 1; y++) {</span>
+
+<span class="nc" id="L692">                int[] currPixel = r.getPixel(x, y, (int[]) null);</span>
+
+<span class="nc" id="L694">                int diff = Math.abs(currPixel[0] - lastPixel[0]);</span>
+<span class="nc bnc" id="L695" title="All 2 branches missed.">                if (diff &gt; GRAYSCALE_INTENSITY_THRESHOLD) {</span>
+                    // we hit what could be a line
+                    // don't bother scanning it if we've hit a pixel in the line before
+<span class="nc" id="L698">                    boolean alreadyChecked = false;</span>
+<span class="nc bnc" id="L699" title="All 2 branches missed.">                    for (Line2D.Float line : horizontalRulings) {</span>
+<span class="nc bnc" id="L700" title="All 6 branches missed.">                        if (y == line.getY1() &amp;&amp; x &gt;= line.getX1() &amp;&amp; x &lt;= line.getX2()) {</span>
+<span class="nc" id="L701">                            alreadyChecked = true;</span>
+<span class="nc" id="L702">                            break;</span>
+                        }
+<span class="nc" id="L704">                    }</span>
+
+<span class="nc bnc" id="L706" title="All 2 branches missed.">                    if (alreadyChecked) {</span>
+<span class="nc" id="L707">                        lastPixel = currPixel;</span>
+<span class="nc" id="L708">                        continue;</span>
+                    }
+
+<span class="nc" id="L711">                    int lineX = x + 1;</span>
+
+<span class="nc bnc" id="L713" title="All 2 branches missed.">                    while (lineX &lt; width) {</span>
+<span class="nc" id="L714">                        int[] linePixel = r.getPixel(lineX, y, (int[]) null);</span>
+<span class="nc" id="L715">                        int[] abovePixel = r.getPixel(lineX, y - 1, (int[]) null);</span>
+
+<span class="nc bnc" id="L717" title="All 2 branches missed.">                        if (Math.abs(linePixel[0] - abovePixel[0]) &lt;= GRAYSCALE_INTENSITY_THRESHOLD</span>
+<span class="nc bnc" id="L718" title="All 2 branches missed.">                                || Math.abs(currPixel[0] - linePixel[0]) &gt; GRAYSCALE_INTENSITY_THRESHOLD) {</span>
+<span class="nc" id="L719">                            break;</span>
+                        }
+
+<span class="nc" id="L722">                        lineX++;</span>
+<span class="nc" id="L723">                    }</span>
+
+<span class="nc" id="L725">                    int endX = lineX - 1;</span>
+<span class="nc" id="L726">                    int lineWidth = endX - x;</span>
+<span class="nc bnc" id="L727" title="All 2 branches missed.">                    if (lineWidth &gt; HORIZONTAL_EDGE_WIDTH_MINIMUM) {</span>
+<span class="nc" id="L728">                        horizontalRulings.add(new Ruling(new Point2D.Float(x, y), new Point2D.Float(endX, y)));</span>
+                    }
+                }
+
+<span class="nc" id="L732">                lastPixel = currPixel;</span>
+            }
+        }
+
+<span class="nc" id="L736">        return horizontalRulings;</span>
+    }
+
+    private List&lt;Ruling&gt; getVerticalRulings(BufferedImage image) {
+
+        // get all vertical edges, which we'll define as a change in grayscale colour
+        // along a straight line of a certain length
+<span class="nc" id="L743">        ArrayList&lt;Ruling&gt; verticalRulings = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L745">        Raster r = image.getRaster();</span>
+<span class="nc" id="L746">        int width = r.getWidth();</span>
+<span class="nc" id="L747">        int height = r.getHeight();</span>
+
+<span class="nc bnc" id="L749" title="All 2 branches missed.">        for (int y = 0; y &lt; height; y++) {</span>
+
+<span class="nc" id="L751">            int[] lastPixel = r.getPixel(0, y, (int[]) null);</span>
+
+<span class="nc bnc" id="L753" title="All 2 branches missed.">            for (int x = 1; x &lt; width - 1; x++) {</span>
+
+<span class="nc" id="L755">                int[] currPixel = r.getPixel(x, y, (int[]) null);</span>
+
+<span class="nc" id="L757">                int diff = Math.abs(currPixel[0] - lastPixel[0]);</span>
+<span class="nc bnc" id="L758" title="All 2 branches missed.">                if (diff &gt; GRAYSCALE_INTENSITY_THRESHOLD) {</span>
+                    // we hit what could be a line
+                    // don't bother scanning it if we've hit a pixel in the line before
+<span class="nc" id="L761">                    boolean alreadyChecked = false;</span>
+<span class="nc bnc" id="L762" title="All 2 branches missed.">                    for (Line2D.Float line : verticalRulings) {</span>
+<span class="nc bnc" id="L763" title="All 6 branches missed.">                        if (x == line.getX1() &amp;&amp; y &gt;= line.getY1() &amp;&amp; y &lt;= line.getY2()) {</span>
+<span class="nc" id="L764">                            alreadyChecked = true;</span>
+<span class="nc" id="L765">                            break;</span>
+                        }
+<span class="nc" id="L767">                    }</span>
+
+<span class="nc bnc" id="L769" title="All 2 branches missed.">                    if (alreadyChecked) {</span>
+<span class="nc" id="L770">                        lastPixel = currPixel;</span>
+<span class="nc" id="L771">                        continue;</span>
+                    }
+
+<span class="nc" id="L774">                    int lineY = y + 1;</span>
+
+<span class="nc bnc" id="L776" title="All 2 branches missed.">                    while (lineY &lt; height) {</span>
+<span class="nc" id="L777">                        int[] linePixel = r.getPixel(x, lineY, (int[]) null);</span>
+<span class="nc" id="L778">                        int[] leftPixel = r.getPixel(x - 1, lineY, (int[]) null);</span>
+
+<span class="nc bnc" id="L780" title="All 2 branches missed.">                        if (Math.abs(linePixel[0] - leftPixel[0]) &lt;= GRAYSCALE_INTENSITY_THRESHOLD</span>
+<span class="nc bnc" id="L781" title="All 2 branches missed.">                                || Math.abs(currPixel[0] - linePixel[0]) &gt; GRAYSCALE_INTENSITY_THRESHOLD) {</span>
+<span class="nc" id="L782">                            break;</span>
+                        }
+
+<span class="nc" id="L785">                        lineY++;</span>
+<span class="nc" id="L786">                    }</span>
+
+<span class="nc" id="L788">                    int endY = lineY - 1;</span>
+<span class="nc" id="L789">                    int lineLength = endY - y;</span>
+<span class="nc bnc" id="L790" title="All 2 branches missed.">                    if (lineLength &gt; VERTICAL_EDGE_HEIGHT_MINIMUM) {</span>
+<span class="nc" id="L791">                        verticalRulings.add(new Ruling(new Point2D.Float(x, y), new Point2D.Float(x, endY)));</span>
+                    }
+                }
+
+<span class="nc" id="L795">                lastPixel = currPixel;</span>
+            }
+        }
+
+<span class="nc" id="L799">        return verticalRulings;</span>
+    }
+
+
+    // taken from http://www.docjar.com/html/api/org/apache/pdfbox/examples/util/RemoveAllText.java.html
+    private PDDocument removeText(PDPage page) throws IOException {
+
+<span class="nc" id="L806">        PDFStreamParser parser = new PDFStreamParser(page);</span>
+<span class="nc" id="L807">        parser.parse();</span>
+<span class="nc" id="L808">        List&lt;Object&gt; tokens = parser.getTokens();</span>
+<span class="nc" id="L809">        List&lt;Object&gt; newTokens = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L810" title="All 2 branches missed.">        for (Object token : tokens) {</span>
+<span class="nc bnc" id="L811" title="All 2 branches missed.">            if (token instanceof Operator) {</span>
+<span class="nc" id="L812">                Operator op = (Operator) token;</span>
+<span class="nc bnc" id="L813" title="All 4 branches missed.">                if (op.getName().equals(&quot;TJ&quot;) || op.getName().equals(&quot;Tj&quot;)) {</span>
+                    //remove the one argument to this operator
+<span class="nc" id="L815">                    newTokens.remove(newTokens.size() - 1);</span>
+<span class="nc" id="L816">                    continue;</span>
+                }
+            }
+<span class="nc" id="L819">            newTokens.add(token);</span>
+<span class="nc" id="L820">        }</span>
+
+<span class="nc" id="L822">        PDDocument document = new PDDocument();</span>
+<span class="nc" id="L823">        PDPage newPage = document.importPage(page);</span>
+<span class="nc" id="L824">        newPage.setResources(page.getResources());</span>
+
+<span class="nc" id="L826">        PDStream newContents = new PDStream(document);</span>
+<span class="nc" id="L827">        OutputStream out = newContents.createOutputStream(COSName.FLATE_DECODE);</span>
+<span class="nc" id="L828">        ContentStreamWriter writer = new ContentStreamWriter(out);</span>
+<span class="nc" id="L829">        writer.writeTokens(newTokens);</span>
+<span class="nc" id="L830">        out.close();</span>
+<span class="nc" id="L831">        newPage.setContents(newContents);</span>
+<span class="nc" id="L832">        return document;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,38 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java
+[GENERATED PATH] LikesFeed_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java:[30,45] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java
+[GENERATED PATH] LikesFeed_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java:[30,9] cannot find symbol
+  symbol:   method setSomeMetaInfo(java.lang.String)
+  location: variable meta of type org.jinstagram.entity.common.Meta
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java:[36,10] cannot find symbol
+  symbol:   method setUsername(java.lang.String)
+  location: variable user1 of type org.jinstagram.entity.common.User
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java:[39,10] cannot find symbol
+  symbol:   method setUsername(java.lang.String)
+  location: variable user2 of type org.jinstagram.entity.common.User
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java
+[GENERATED PATH] LikesFeed_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java:[39,10] cannot find symbol
+  symbol:   method setUsername(java.lang.String)
+  location: variable user1 of type org.jinstagram.entity.common.User
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/likes/LikesFeed_ESTest.java:[42,10] cannot find symbol
+  symbol:   method setUsername(java.lang.String)
+  location: variable user2 of type org.jinstagram.entity.common.User
+[INFO] 2 errors 
+####################
+

@@ -1,0 +1,39 @@
+0-->1-->0-->compileRepair
+
+# FromTagData class
+package org.jinstagram.entity.common;
+public class FromTagData {
+public String getUsername();
+public void setUsername(String username);
+public String getId();
+public void setId(String id);
+public String getProfilePicture();
+public void setProfilePicture(String profilePicture);
+public String getFullName();
+public void setFullName(String fullName);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testSetFrom() {
+        Caption caption = new Caption();
+        FromTagData fromTagData = new FromTagData();
+
+       <Buggy Line>: cannot find symbol method "setSomeValue(java.lang.String)" in FromTagData
+        fromTagData.setSomeValue("Some value");
+
+        caption.setFrom(fromTagData);
+        assertEquals(fromTagData, caption.getFrom());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "FromTagData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "FromTagData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

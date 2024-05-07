@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RectangularTextContainer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">RectangularTextContainer.java</span></div><h1>RectangularTextContainer.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class RectangularTextContainer&lt;T extends Rectangle &amp; HasText&gt; extends Rectangle implements HasText {
+
+<span class="fc" id="L9">	protected List&lt;T&gt; textElements = new ArrayList&lt;&gt;();</span>
+
+	protected RectangularTextContainer(float top, float left, float width, float height) {
+<span class="fc" id="L12">		super(top, left, width, height);</span>
+<span class="fc" id="L13">	}</span>
+
+	public RectangularTextContainer&lt;T&gt; merge(RectangularTextContainer&lt;T&gt; other) {
+<span class="pc bpc" id="L16" title="1 of 2 branches missed.">		if (compareTo(other) &lt; 0) {</span>
+<span class="nc" id="L17">			this.getTextElements().addAll(other.getTextElements());</span>
+		} else {
+<span class="fc" id="L19">			this.getTextElements().addAll(0, other.getTextElements());</span>
+		}
+<span class="fc" id="L21">		super.merge(other);</span>
+<span class="fc" id="L22">		return this;</span>
+	}
+
+	public List&lt;T&gt; getTextElements() {
+<span class="fc" id="L26">		return textElements;</span>
+	}
+
+	public void setTextElements(List&lt;T&gt; textElements) {
+<span class="nc" id="L30">		this.textElements = textElements;</span>
+<span class="nc" id="L31">	}</span>
+
+	@Override
+	public String getText() {
+<span class="fc" id="L35">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override
+	public String getText(boolean useLineReturns) {
+<span class="nc" id="L40">		throw new UnsupportedOperationException();</span>
+	}
+
+	@Override public String toString() {
+<span class="nc" id="L44">		StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L45">		String s = super.toString();</span>
+<span class="nc" id="L46">		sb.append(s.substring(0, s.length() - 1));</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		sb.append(String.format(&quot;,text=%s]&quot;, this.getText() == null ? &quot;null&quot; : &quot;\&quot;&quot; + this.getText() + &quot;\&quot;&quot;));</span>
+<span class="nc" id="L48">		return sb.toString();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

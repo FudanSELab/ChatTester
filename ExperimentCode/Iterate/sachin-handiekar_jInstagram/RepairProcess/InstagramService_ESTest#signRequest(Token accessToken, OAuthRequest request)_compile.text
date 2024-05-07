@@ -1,0 +1,146 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[34,29] no suitable constructor found for Token(java.lang.String)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[38,28] constructor InstagramApi in class org.jinstagram.auth.InstagramApi cannot be applied to given types;
+  required: no arguments
+  found: java.lang.String,java.lang.String
+  reason: actual and formal argument lists differ in length
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[36,25] no suitable constructor found for Token(java.lang.String)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[38,45] cannot find symbol
+  symbol:   variable Verb
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[39,24] constructor InstagramApi in class org.jinstagram.auth.InstagramApi cannot be applied to given types;
+  required: no arguments
+  found: java.lang.String,java.lang.String
+  reason: actual and formal argument lists differ in length
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[39,25] no suitable constructor found for Token(java.lang.String)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[41,45] cannot find symbol
+  symbol:   variable Verb
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[42,24] constructor InstagramApi in class org.jinstagram.auth.InstagramApi cannot be applied to given types;
+  required: no arguments
+  found: java.lang.String,java.lang.String
+  reason: actual and formal argument lists differ in length
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[41,66] cannot find symbol
+  symbol:   variable mockApi
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[41,75] cannot find symbol
+  symbol:   variable mockConfig
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[42,22] cannot find symbol
+  symbol:   variable mockToken
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[44,38] cannot find symbol
+  symbol:   variable mockToken
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[44,49] cannot find symbol
+  symbol:   variable mockRequest
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[46,24] cannot find symbol
+  symbol:   variable mockRequest
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[INFO] 6 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[46,23] no suitable constructor found for Token(java.lang.String)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[47,49] cannot find symbol
+  symbol:   variable Verb
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[50,41] constructor InstagramService in class org.jinstagram.auth.oauth.InstagramService cannot be applied to given types;
+  required: org.jinstagram.auth.InstagramApi,org.jinstagram.auth.model.OAuthConfig
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[54,74] cannot find symbol
+  symbol:   variable OAuthConstants
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[INFO] 4 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[39,49] cannot find symbol
+  symbol:   variable Verb
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[47,76] cannot find symbol
+  symbol:   variable OAuthConstants
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[36,29] no suitable constructor found for Token(java.lang.String)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor org.jinstagram.auth.model.Token.Token(java.lang.String,java.lang.String,java.lang.String) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[37,49] cannot find symbol
+  symbol:   variable Verb
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[38,28] constructor InstagramApi in class org.jinstagram.auth.InstagramApi cannot be applied to given types;
+  required: no arguments
+  found: java.lang.String,java.lang.String
+  reason: actual and formal argument lists differ in length
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java
+[GENERATED PATH] InstagramService_ESTest#signRequest(Token accessToken, OAuthRequest request).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[39,49] cannot find symbol
+  symbol:   variable Verb
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/auth/oauth/InstagramService_ESTest.java:[47,76] cannot find symbol
+  symbol:   variable OAuthConstants
+  location: class org.jinstagram.auth.oauth.InstagramService_ESTest
+[INFO] 2 errors 
+####################
+

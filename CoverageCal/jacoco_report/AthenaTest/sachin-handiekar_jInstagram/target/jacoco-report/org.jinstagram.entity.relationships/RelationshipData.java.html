@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RelationshipData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.relationships</a> &gt; <span class="el_source">RelationshipData.java</span></div><h1>RelationshipData.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.relationships;
+
+import com.google.gson.annotations.SerializedName;
+
+<span class="fc" id="L5">public class RelationshipData {</span>
+	
+	@SerializedName(&quot;incoming_status&quot;)
+	private String incomingStatus;
+
+	@SerializedName(&quot;outgoing_status&quot;)
+	private String outgoingStatus;
+
+	@SerializedName(&quot;target_user_is_private&quot;)
+	private boolean targetUserPrivate;
+	
+	/**
+	 * @return the outgoingStatus
+	 */
+	public String getOutgoingStatus() {
+<span class="nc" id="L20">		return outgoingStatus;</span>
+	}
+
+	/**
+	 * @param outgoingStatus the outgoingStatus to set
+	 */
+	public void setOutgoingStatus(String outgoingStatus) {
+<span class="nc" id="L27">		this.outgoingStatus = outgoingStatus;</span>
+<span class="nc" id="L28">	}</span>
+
+	/**
+	 * @param target_user_is_private set user is locked or not
+	 */
+	public void setTargetUserPrivate(boolean targetUserPrivate){
+<span class="nc" id="L34">		this.targetUserPrivate = targetUserPrivate;</span>
+<span class="nc" id="L35">	}</span>
+	/**
+	 * @return the target_user_is_private boolean
+	 */
+	public boolean isTargetUserPrivate(){
+<span class="nc" id="L40">		return targetUserPrivate;</span>
+	}
+	/**
+	 * @return the incomingStatus
+	 */
+	public String getIncomingStatus() {
+<span class="nc" id="L46">		return incomingStatus;</span>
+	}
+
+	/**
+	 * @param incomingStatus the incomingStatus to set
+	 */
+	public void setIncomingStatus(String incomingStatus) {
+<span class="nc" id="L53">		this.incomingStatus = incomingStatus;</span>
+<span class="nc" id="L54">	}</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L58">        return String.format(&quot;RelationshipData [incomingStatus=%s, outgoingStatus=%s]&quot;, incomingStatus, outgoingStatus);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

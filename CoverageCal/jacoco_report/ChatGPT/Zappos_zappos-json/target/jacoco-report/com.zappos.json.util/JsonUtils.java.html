@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json.util</a> &gt; <span class="el_source">JsonUtils.java</span></div><h1>JsonUtils.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ *
+ * Copyright (c) 2013, 2015 EclipseSource.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the &quot;Software&quot;), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package com.zappos.json.util;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
+import com.zappos.json.JsonConfig.WriterConfig;
+import com.zappos.json.ZapposJson;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+<span class="nc" id="L50">public class JsonUtils {</span>
+  
+  /*
+   * Source: GSON
+   * From RFC 4627, &quot;All Unicode characters may be placed within the
+   * quotation marks except for the characters that must be escaped:
+   * quotation mark, reverse solidus, and the control characters
+   * (U+0000 through U+001F).&quot;
+   *
+   * We also escape '\u2028' and '\u2029', which JavaScript interprets as
+   * newline characters. This prevents eval() from failing with a syntax
+   * error. http://code.google.com/p/google-gson/issues/detail?id=341
+   */
+  private static final String[] REPLACEMENT_CHARS;
+  private static final String[] HTML_SAFE_REPLACEMENT_CHARS;
+  static {
+<span class="fc" id="L66">    REPLACEMENT_CHARS = new String[128];</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">    for (int i = 0; i &lt;= 0x1f; i++) {</span>
+<span class="fc" id="L68">      REPLACEMENT_CHARS[i] = String.format(&quot;\\u%04x&quot;, (int) i);</span>
+    }
+<span class="fc" id="L70">    REPLACEMENT_CHARS['&quot;'] = &quot;\\\&quot;&quot;;</span>
+<span class="fc" id="L71">    REPLACEMENT_CHARS['\\'] = &quot;\\\\&quot;;</span>
+<span class="fc" id="L72">    REPLACEMENT_CHARS['\t'] = &quot;\\t&quot;;</span>
+<span class="fc" id="L73">    REPLACEMENT_CHARS['\b'] = &quot;\\b&quot;;</span>
+<span class="fc" id="L74">    REPLACEMENT_CHARS['\n'] = &quot;\\n&quot;;</span>
+<span class="fc" id="L75">    REPLACEMENT_CHARS['\r'] = &quot;\\r&quot;;</span>
+<span class="fc" id="L76">    REPLACEMENT_CHARS['\f'] = &quot;\\f&quot;;</span>
+<span class="fc" id="L77">    HTML_SAFE_REPLACEMENT_CHARS = REPLACEMENT_CHARS.clone();</span>
+<span class="fc" id="L78">    HTML_SAFE_REPLACEMENT_CHARS['&lt;'] = &quot;\\u003c&quot;;</span>
+<span class="fc" id="L79">    HTML_SAFE_REPLACEMENT_CHARS['&gt;'] = &quot;\\u003e&quot;;</span>
+<span class="fc" id="L80">    HTML_SAFE_REPLACEMENT_CHARS['&amp;'] = &quot;\\u0026&quot;;</span>
+<span class="fc" id="L81">    HTML_SAFE_REPLACEMENT_CHARS['='] = &quot;\\u003d&quot;;</span>
+<span class="fc" id="L82">    HTML_SAFE_REPLACEMENT_CHARS['\''] = &quot;\\u0027&quot;;</span>
+<span class="fc" id="L83">  }</span>
+  
+  public static void escape(ZapposJson zapposJson, CharSequence value, Writer writer) throws IOException {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">    String[] replacements = (zapposJson.is(WriterConfig.WRITE_HTML_SAFE)) ? </span>
+        HTML_SAFE_REPLACEMENT_CHARS : REPLACEMENT_CHARS;
+<span class="fc" id="L88">    int last = 0;</span>
+<span class="fc" id="L89">    int length = value.length();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">    for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L91">      char c = value.charAt(i);</span>
+      String replacement;
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">      if (c &lt; 128) {</span>
+<span class="fc" id="L94">        replacement = replacements[c];</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (replacement == null) {</span>
+<span class="fc" id="L96">          continue;</span>
+        }
+<span class="nc bnc" id="L98" title="All 2 branches missed.">      } else if (c == '\u2028') {</span>
+<span class="nc" id="L99">        replacement = &quot;\\u2028&quot;;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">      } else if (c == '\u2029') {</span>
+<span class="nc" id="L101">        replacement = &quot;\\u2029&quot;;</span>
+      } else {
+        continue;
+      }
+<span class="nc bnc" id="L105" title="All 2 branches missed.">      if (last &lt; i) {</span>
+<span class="nc" id="L106">        writer.write(value.toString(), last, i - last);</span>
+      }
+<span class="nc" id="L108">      writer.write(replacement);</span>
+<span class="nc" id="L109">      last = i + 1;</span>
+    }
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">    if (last &lt; length) {</span>
+<span class="fc" id="L112">      writer.write(value.toString(), last, length - last);</span>
+    }
+<span class="fc" id="L114">  }</span>
+  
+  public static String escape(ZapposJson zapposJson, CharSequence value) {
+<span class="nc" id="L117">    StringWriter writer = new StringWriter();</span>
+    try{
+<span class="nc" id="L119">      escape(zapposJson, value, writer);</span>
+<span class="nc" id="L120">    }catch(IOException e){}</span>
+<span class="nc" id="L121">    return writer.toString();</span>
+  }
+  
+  public static void unescape(ZapposJson zapposJson, CharSequence value, Writer writer) throws IOException {
+<span class="nc" id="L125">    boolean inescape = false;</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">    for(int i = 0; i &lt; value.length(); i++){</span>
+<span class="nc" id="L127">      char c = value.charAt(i);</span>
+<span class="nc bnc" id="L128" title="All 4 branches missed.">      if(c != '\\' &amp;&amp; !inescape) {</span>
+<span class="nc" id="L129">        writer.append(c);</span>
+<span class="nc" id="L130">        continue;</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">      }else if( c == '\\'){</span>
+<span class="nc" id="L132">        inescape = true;</span>
+<span class="nc" id="L133">        continue;</span>
+      }
+      
+<span class="nc bnc" id="L136" title="All 7 branches missed.">      switch(c){</span>
+        case 'u':
+<span class="nc" id="L138">          writer.append(String.valueOf(Integer.parseInt(value.subSequence(i, 4).toString(), 16)));</span>
+<span class="nc" id="L139">          i += 4;</span>
+<span class="nc" id="L140">          break;</span>
+        case 't':
+<span class="nc" id="L142">          writer.append('\t');</span>
+<span class="nc" id="L143">          break;</span>
+        case 'b':
+<span class="nc" id="L145">          writer.append('\b');</span>
+<span class="nc" id="L146">          break;</span>
+        case 'n':
+<span class="nc" id="L148">          writer.append('\n');</span>
+<span class="nc" id="L149">          break;</span>
+        case 'r':
+<span class="nc" id="L151">          writer.append('\r');</span>
+<span class="nc" id="L152">          break;</span>
+        case 'f':
+<span class="nc" id="L154">          writer.append('\f');</span>
+<span class="nc" id="L155">          break;</span>
+        case '\n':
+        case '\'':
+        case '&quot;':
+        case '\\':
+        default: 
+<span class="nc" id="L161">          writer.append(c);</span>
+      }
+<span class="nc" id="L163">      inescape = false;</span>
+    }
+<span class="nc" id="L165">  }</span>
+  
+  public static String unescape(ZapposJson zapposJson, CharSequence value) {
+<span class="nc" id="L168">    StringWriter writer = new StringWriter();</span>
+    try{
+<span class="nc" id="L170">      unescape(zapposJson, value, writer);</span>
+<span class="nc" id="L171">    }catch(IOException e){}</span>
+<span class="nc" id="L172">    return writer.toString();</span>
+  }
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

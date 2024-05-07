@@ -1,0 +1,52 @@
+0-->1-->0-->compileRepair
+
+# Caption class
+package org.jinstagram.entity.common;
+public class Caption {
+public String getCreatedTime();
+public void setCreatedTime(String createdTime);
+public String getText();
+public void setText(String text);
+public FromTagData getFrom();
+public void setFrom(FromTagData from);
+public String getId();
+public void setId(String id);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        MediaFeedData mediaFeedData = new MediaFeedData();
+
+        <Buggy Line>: constructor Caption in class org.jinstagram.entity.common.Caption cannot be applied to given types;
+        mediaFeedData.setCaption(new Caption("Test Caption"));
+
+        mediaFeedData.setComments(new Comments(5));
+        mediaFeedData.setCreatedTime("2022-01-01");
+        mediaFeedData.setId("123456");
+        mediaFeedData.setImageFilter("Normal");
+        mediaFeedData.setImages(new Images("image_url"));
+        mediaFeedData.setLikes(new Likes(10));
+        mediaFeedData.setLink("https://example.com");
+        mediaFeedData.setLocation(new Location("Test Location"));
+        mediaFeedData.setTags(List.of("tag1", "tag2"));
+        mediaFeedData.setType("image");
+        mediaFeedData.setUser(new User("testuser"));
+        mediaFeedData.setUserHasLiked(true);
+        mediaFeedData.setUsersInPhotoList(List.of(new UsersInPhoto("user1"), new UsersInPhoto("user2")));
+        String expected = "MediaFeedData [caption=Test Caption, comments=5, createdTime=2022-01-01, id=123456, imageFilter=Normal, images=image_url, likes=10, link=https://example.com, location=Test Location, tags=[tag1, tag2], type=image, user=testuser, userHasLiked=true, usersInPhoto=[UsersInPhoto{name='user1'}, UsersInPhoto{name='user2'}]]";
+        String actual = mediaFeedData.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Caption" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Caption" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

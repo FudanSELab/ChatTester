@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FeedbackUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">FeedbackUtil.java</span></div><h1>FeedbackUtil.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import me.gosimple.nbvcxz.matching.match.DateMatch;
+import me.gosimple.nbvcxz.matching.match.DictionaryMatch;
+import me.gosimple.nbvcxz.matching.match.Match;
+import me.gosimple.nbvcxz.matching.match.RepeatMatch;
+import me.gosimple.nbvcxz.matching.match.SequenceMatch;
+import me.gosimple.nbvcxz.matching.match.SpacialMatch;
+import me.gosimple.nbvcxz.matching.match.YearMatch;
+import me.gosimple.nbvcxz.scoring.Result;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * @author Adam Brusselback.
+ */
+<span class="nc" id="L19">public class FeedbackUtil</span>
+{
+    /**
+     * @param result result object
+     * @return feedback object
+     */
+    public static Feedback getFeedback(final Result result)
+    {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (result.isMinimumEntropyMet())</span>
+        {
+<span class="nc" id="L29">            return new Feedback(result.getConfiguration(), &quot;main.feedback.minimumMet&quot;);</span>
+        }
+
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (result.getPassword().length() == 0)</span>
+        {
+<span class="nc" id="L34">            return getDefaultFeedback(result.getConfiguration());</span>
+        }
+
+<span class="nc" id="L37">        Match longestMatch = null;</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        for (Match match : result.getMatches())</span>
+        {
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            if (longestMatch == null)</span>
+            {
+<span class="nc" id="L42">                longestMatch = match;</span>
+            }
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">            if (match.getLength() &gt; longestMatch.getLength())</span>
+            {
+<span class="nc" id="L47">                longestMatch = match;</span>
+            }
+<span class="nc" id="L49">        }</span>
+
+
+<span class="nc" id="L52">        return getMatchFeedback(result, longestMatch);</span>
+    }
+
+    private static Feedback getMatchFeedback(final Result result, final Match match)
+    {
+<span class="nc" id="L57">        Configuration configuration = result.getConfiguration();</span>
+
+        String warning;
+<span class="nc" id="L60">        final List&lt;String&gt; suggestions = new ArrayList&lt;&gt;();</span>
+
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (match instanceof DateMatch)</span>
+        {
+<span class="nc" id="L65">            return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.date.warning.dates&quot;, &quot;feedback.date.suggestions.avoidDates&quot;, &quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+        }
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (match instanceof YearMatch)</span>
+        {
+<span class="nc" id="L69">            return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.year.warning.recentYears&quot;, &quot;feedback.year.suggestions.avoidYears&quot;, &quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+        }
+<span class="nc bnc" id="L71" title="All 4 branches missed.">        if (match instanceof RepeatMatch &amp;&amp; RepeatMatch.class.cast(match).getRepeatingCharacters().length() == 1)</span>
+        {
+<span class="nc" id="L73">            return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.repeat.warning.likeAAA&quot;, &quot;feedback.repeat.suggestions.avoidRepeated&quot;, &quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+        }
+<span class="nc bnc" id="L75" title="All 4 branches missed.">        if (match instanceof RepeatMatch &amp;&amp; RepeatMatch.class.cast(match).getRepeatingCharacters().length() != 1)</span>
+        {
+<span class="nc" id="L77">            return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.repeat.warning.likeABCABCABC&quot;, &quot;feedback.repeat.suggestions.avoidRepeated&quot;, &quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+        }
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (match instanceof SequenceMatch)</span>
+        {
+<span class="nc" id="L81">            return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.sequence.warning.sequenceWarning&quot;, &quot;feedback.sequence.suggestions.avoidSequences&quot;, &quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+        }
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (match instanceof SpacialMatch)</span>
+        {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">            if (SpacialMatch.class.cast(match).getTurns() &gt; 0)</span>
+            {
+<span class="nc" id="L87">                return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.spatial.warning.shortKeyboardPatterns&quot;, &quot;feedback.spatial.suggestions.UseLongerKeyboardPattern&quot;, &quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+            }
+            else
+            {
+<span class="nc" id="L91">                return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.spatial.warning.straightRowsOfKeys&quot;, &quot;feedback.spatial.suggestions.UseLongerKeyboardPattern&quot;, &quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+            }
+        }
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (match instanceof DictionaryMatch)</span>
+        {
+<span class="nc" id="L96">            DictionaryMatch dictionaryMatch = DictionaryMatch.class.cast(match);</span>
+<span class="nc" id="L97">            String dictionaryName = dictionaryMatch.getDictionaryName();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            for (Dictionary dictionary : result.getConfiguration().getDictionaries())</span>
+            {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">                if (dictionary.getDictionaryName().equals(dictionaryName))</span>
+                {
+<span class="nc bnc" id="L102" title="All 2 branches missed.">                    if (dictionary.isExclusion())</span>
+                    {
+<span class="nc" id="L104">                        return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.dictionary.warning.passwords.notAllowed&quot;, &quot;feedback.dictionary.suggestions.passwords.notAllowed&quot;);</span>
+                    }
+                }
+<span class="nc" id="L107">            }</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (dictionaryMatch.getRank() &lt;= 10)</span>
+            {
+<span class="nc" id="L110">                warning = &quot;feedback.dictionary.warning.passwords.top10&quot;;</span>
+            }
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            else if (dictionaryMatch.getRank() &lt;= 100)</span>
+            {
+<span class="nc" id="L114">                warning = &quot;feedback.dictionary.warning.passwords.top100&quot;;</span>
+            }
+            else
+            {
+<span class="nc" id="L118">                warning = &quot;feedback.dictionary.warning.passwords.veryCommon&quot;;</span>
+            }
+
+            // A generic suggestion in lieu of other more specific suggestions.
+<span class="nc" id="L122">            suggestions.add(&quot;feedback.extra.suggestions.addAnotherWord&quot;);</span>
+
+<span class="nc bnc" id="L124" title="All 2 branches missed.">            if (dictionaryMatch.isReversed())</span>
+            {
+<span class="nc" id="L126">                suggestions.add(&quot;feedback.dictionary.suggestions.reversed&quot;);</span>
+            }
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            if (dictionaryMatch.isLeet())</span>
+            {
+<span class="nc" id="L131">                suggestions.add(&quot;feedback.dictionary.suggestions.leet&quot;);</span>
+            }
+
+<span class="nc" id="L134">            double capitalizationFraction = CharacterCaseUtil.fractionOfStringUppercase(result.getPassword());</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (capitalizationFraction &gt; 0.8d)</span>
+            {
+                // Nearly all characters were capitalized.
+<span class="nc" id="L138">                suggestions.add(&quot;feedback.dictionary.suggestions.allUppercase&quot;);</span>
+            }
+<span class="nc bnc" id="L140" title="All 4 branches missed.">            else if (capitalizationFraction &gt; 0.0d &amp;&amp; capitalizationFraction &lt;= 0.2d)</span>
+            {
+                // Only a few characters were capitalized.
+<span class="nc" id="L143">                suggestions.add(&quot;feedback.dictionary.suggestions.capitalization&quot;);</span>
+            }
+
+<span class="nc" id="L146">            return new Feedback(configuration, &quot;main.feedback.insecure&quot;, warning, suggestions.toArray(new String[suggestions.size()]));</span>
+
+        }
+<span class="nc" id="L149">        return getDefaultFeedback(configuration);</span>
+    }
+
+    private static Feedback getDefaultFeedback(final Configuration configuration)
+    {
+<span class="nc" id="L154">        return new Feedback(configuration, &quot;main.feedback.insecure&quot;, &quot;feedback.default.suggestions.useFewWords&quot;, &quot;feedback.default.suggestions.noNeedSymbols&quot;);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

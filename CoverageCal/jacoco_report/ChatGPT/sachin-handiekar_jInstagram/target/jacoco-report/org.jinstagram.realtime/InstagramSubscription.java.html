@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstagramSubscription.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.realtime</a> &gt; <span class="el_source">InstagramSubscription.java</span></div><h1>InstagramSubscription.java</h1><pre class="source lang-java linenums">package org.jinstagram.realtime;
+
+import static org.jinstagram.Instagram.configureConnectionSettings;
+
+import org.jinstagram.InstagramConfig;
+import org.jinstagram.auth.model.OAuthConstants;
+import org.jinstagram.auth.model.OAuthRequest;
+import org.jinstagram.exceptions.InstagramException;
+import org.jinstagram.http.Response;
+import org.jinstagram.http.Verbs;
+import org.jinstagram.model.Methods;
+import org.jinstagram.utils.Preconditions;
+
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@Deprecated
+public class InstagramSubscription {
+
+	private final Map&lt;String, String&gt; params;
+<span class="fc" id="L24">	private InstagramConfig config = new InstagramConfig();</span>
+
+	/**
+	 * Default constructor
+	 */
+<span class="fc" id="L29">	public InstagramSubscription() {</span>
+<span class="fc" id="L30">		this.params = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L31">		this.params.put(Constants.CALLBACK_URL, OAuthConstants.OUT_OF_BAND);</span>
+<span class="fc" id="L32">	}</span>
+
+	/**
+	 * Configures the callback url
+	 *
+	 * @param callback The callback for your application
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription callback(String callback) {
+<span class="nc" id="L41">		Preconditions.checkValidUrl(callback, &quot;Invalid Callback Url&quot;);</span>
+
+<span class="nc" id="L43">		this.params.put(Constants.CALLBACK_URL, callback);</span>
+
+<span class="nc" id="L45">		return this;</span>
+	}
+
+	/**
+	 * Configures the clientId
+	 *
+	 * @param clientId The clientId for your application
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription clientId(String clientId) {
+<span class="nc" id="L55">		Preconditions.checkEmptyString(clientId, &quot;Invalid 'clientId' key&quot;);</span>
+
+<span class="nc" id="L57">		this.params.put(Constants.CLIENT_ID, clientId);</span>
+		
+<span class="nc" id="L59">		return this;</span>
+	}
+
+	/**
+	 * Configure the clientSecret
+	 * @param clientSecret The clientSecret for your application
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription clientSecret(String clientSecret) {
+<span class="nc" id="L68">		Preconditions.checkEmptyString(clientSecret, &quot;Invalid 'clientSecret' key&quot;);</span>
+
+<span class="nc" id="L70">		this.params.put(Constants.CLIENT_SECRET, clientSecret);</span>
+		
+<span class="nc" id="L72">		return this;</span>
+	}
+
+	/**
+	 * Configure the subscription type
+	 * @param type The subscription type for your usage
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription object(SubscriptionType type) {
+
+<span class="nc" id="L82">		this.params.put(Constants.SUBSCRIPTION_TYPE, type.toString());</span>
+	
+<span class="nc" id="L84">		return this;</span>
+	}
+
+    /**
+     * Configures the target id for the subscription, if any. In case of a a real-time tag update, this
+     * defines the target tag to use.
+     *
+     * @param objectId the object to target for this real-time subscription
+     * @return the {@link InstagramSubscription} instance for method chaining
+     */
+    public InstagramSubscription objectId(String objectId) {
+<span class="nc" id="L95">    	this.params.put(Constants.OBJECT_ID, objectId);</span>
+<span class="nc" id="L96">        return this;</span>
+    }
+
+    /**
+     * Configure the verifyToken for the subscription
+     * 
+     * @param verifyToken The token for the subscription
+     * @return the {@link InstagramSubscription} instance for method chaining
+     */
+	public InstagramSubscription verifyToken(String verifyToken) {
+<span class="fc" id="L106">		Preconditions.checkEmptyString(verifyToken, &quot;Invalid 'verifyToken' key&quot;);</span>
+
+<span class="fc" id="L108">		this.params.put(Constants.VERIFY_TOKEN, verifyToken);</span>
+
+<span class="fc" id="L110">		return this;</span>
+	}
+
+	/**
+	 * Configure the aspect for the subscription
+	 * 
+	 * @param aspect The aspect of the subscription
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription aspect(String aspect) {
+<span class="nc" id="L120">		Preconditions.checkEmptyString(aspect, &quot;Invalid 'aspect' key&quot;);</span>
+		
+<span class="nc" id="L122">		this.params.put(Constants.ASPECT, aspect);</span>
+
+<span class="nc" id="L124">		return this;</span>
+	}
+	
+	/**
+	 * Configure the latitude for geography subscription
+	 * @param latitude The latitude for geography subscription
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription latitute(String latitude){
+<span class="nc" id="L133">		Preconditions.checkValidLatLong(latitude, &quot;Invalid 'lat' key&quot;);</span>
+		
+<span class="nc" id="L135">		this.params.put(Constants.LATITUDE, latitude);</span>
+		
+<span class="nc" id="L137">		return this;</span>
+	}
+	
+	/**
+	 * Configure the longitude for geography subscription
+	 * @param longitude The longitude for geography subscription
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription longitude(String longitude){
+<span class="nc" id="L146">		Preconditions.checkValidLatLong(longitude, &quot;Invalid 'lng' key&quot;);</span>
+		
+<span class="nc" id="L148">		this.params.put(Constants.LONGITUDE, longitude);</span>
+		
+<span class="nc" id="L150">		return this;</span>
+	}
+	
+	/**
+	 * Configure the radius for geography subscription
+	 * @param radius The radius for geography subscription in metre
+	 * @return the {@link InstagramSubscription} instance for method chaining
+	 */
+	public InstagramSubscription radius(String radius){
+<span class="nc" id="L159">		Preconditions.checkValidRadius(radius, &quot;Invalid 'radius' key&quot;);</span>
+		
+<span class="nc" id="L161">		this.params.put(Constants.RADIUS, radius);</span>
+		
+<span class="nc" id="L163">		return this;</span>
+	}
+
+	/**
+	 * Configure the connection configuration
+	 */
+	public InstagramSubscription requestConfiguration(final InstagramConfig config){
+<span class="nc bnc" id="L170" title="All 2 branches missed.">		if(config != null) {</span>
+<span class="nc" id="L171">			this.config = config;</span>
+		}
+<span class="nc" id="L173">		return this;</span>
+	}
+    
+    /**
+     * Creates a subscription with the current state of this instance.
+     * &lt;p/&gt;
+     * The {@link SubscriptionResponse} holds the result of the subscription such as the identifier
+     * of the subscription that can be used later to {@linkplain #deleteSubscription(String) delete it}.
+     *
+     * @return the result of the subscription
+     * @throws InstagramException
+     */
+	public SubscriptionResponse createSubscription() throws InstagramException {
+<span class="nc" id="L186">		String callback = params.get(Constants.CALLBACK_URL);</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">		if(callback == null){</span>
+<span class="nc" id="L188">			callback = &quot;&quot;;</span>
+		}
+<span class="nc" id="L190">		Preconditions.checkEmptyString(callback, &quot;You must provide a callback url&quot;);</span>
+
+<span class="nc" id="L192">        final OAuthRequest request = prepareOAuthRequest(Verbs.POST);</span>
+<span class="nc" id="L193">		request.addBodyParameter(Constants.ASPECT, &quot;media&quot;);</span>
+		
+<span class="nc bnc" id="L195" title="All 2 branches missed.">		for(Map.Entry&lt;String, String&gt; entry: this.params.entrySet()){</span>
+<span class="nc" id="L196">			request.addBodyParameter(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L197">		}</span>
+
+        try {
+<span class="nc" id="L200">            final Response response = request.send();</span>
+<span class="nc" id="L201">            return getSubscriptionResponse(response.getBody());</span>
+<span class="nc" id="L202">        } catch (IOException e) {</span>
+<span class="nc" id="L203">            throw new InstagramException(&quot;Failed to create subscription&quot;, e);</span>
+        }
+	}
+
+    /**
+     * Deletes a subscription with the specified identifier.
+     *
+     * @param id the id of the subscription to remove
+     */
+    public SubscriptionResponse deleteSubscription(String id) throws InstagramException {
+<span class="nc" id="L213">        final OAuthRequest request = prepareOAuthRequest(Verbs.DELETE);</span>
+<span class="nc" id="L214">        request.addQuerystringParameter(&quot;id&quot;, id);</span>
+
+        try {
+<span class="nc" id="L217">            final Response response = request.send();</span>
+<span class="nc" id="L218">            return getSubscriptionResponse(response.getBody());</span>
+<span class="nc" id="L219">        } catch (IOException e) {</span>
+<span class="nc" id="L220">            throw new InstagramException(&quot;Failed to delete subscription with id [&quot;+id+&quot;]&quot;, e);</span>
+        }
+    }
+
+    /**
+     * Deletes all the known subscription.
+     *
+     * @return the response of this request, holding mainly the code
+     */
+	public SubscriptionResponse deleteAllSubscription() throws InstagramException {
+<span class="nc" id="L230">        final OAuthRequest request = prepareOAuthRequest(Verbs.DELETE);</span>
+<span class="nc" id="L231">		request.addQuerystringParameter(Constants.SUBSCRIPTION_TYPE, &quot;all&quot;);</span>
+
+        try {
+<span class="nc" id="L234">            final Response response = request.send();</span>
+<span class="nc" id="L235">            return getSubscriptionResponse(response.getBody());</span>
+<span class="nc" id="L236">        } catch (IOException e) {</span>
+<span class="nc" id="L237">            throw new InstagramException(&quot;Failed to delete all subscriptions&quot;, e);</span>
+        }
+	}
+
+    /**
+     * Returns the currently active subscription.
+     *
+     * @return the active subscription
+     */
+	public SubscriptionsListResponse getSubscriptionList() throws InstagramException {
+<span class="nc" id="L247">		final OAuthRequest request = prepareOAuthRequest(Verbs.GET);</span>
+
+        try {
+<span class="nc" id="L250">            final Response response = request.send();</span>
+<span class="nc" id="L251">            return getSubscriptionsListResponse(response.getBody());</span>
+<span class="nc" id="L252">        } catch (IOException e) {</span>
+<span class="nc" id="L253">            throw new InstagramException(&quot;Failed to get subscription list&quot;, e);</span>
+        }
+	}
+
+    private OAuthRequest prepareOAuthRequest(Verbs verb) {
+<span class="nc" id="L258">    	String clientId = params.get(Constants.CLIENT_ID);</span>
+<span class="nc" id="L259">        Preconditions.checkEmptyString(clientId, &quot;You must provide a clientId key&quot;);</span>
+  
+<span class="nc" id="L261">        String clientSecret = params.get(Constants.CLIENT_SECRET);</span>
+<span class="nc" id="L262">        Preconditions.checkEmptyString(clientSecret, &quot;You must provide a clientSecret&quot;);</span>
+        
+<span class="nc" id="L264">        final OAuthRequest request = new OAuthRequest(verb, config.getApiURL() + Methods.SUBSCRIPTIONS);</span>
+        // Add the oauth parameter in the body
+<span class="nc" id="L266">        request.addQuerystringParameter(Constants.CLIENT_ID, clientId);</span>
+<span class="nc" id="L267">        request.addQuerystringParameter(Constants.CLIENT_SECRET, clientSecret);</span>
+<span class="nc" id="L268">        configureConnectionSettings(request, config);</span>
+        
+<span class="nc" id="L270">        return request;</span>
+    }
+
+    private SubscriptionResponse getSubscriptionResponse(String jsonBody) throws InstagramException {
+<span class="nc" id="L274">        Gson gson = new Gson();</span>
+        SubscriptionResponse response;
+
+        try {
+<span class="nc" id="L278">            response = gson.fromJson(jsonBody, SubscriptionResponse.class);</span>
+<span class="nc" id="L279">        } catch (Exception e) {</span>
+<span class="nc" id="L280">            throw new InstagramException(&quot;Error parsing json to object type &quot;);</span>
+<span class="nc" id="L281">        }</span>
+
+<span class="nc" id="L283">        return response;</span>
+    }
+
+    private SubscriptionsListResponse getSubscriptionsListResponse(String jsonBody) throws InstagramException {
+<span class="nc" id="L287">        Gson gson = new Gson();</span>
+<span class="nc" id="L288">        SubscriptionsListResponse response = null;</span>
+
+        try {
+<span class="nc" id="L291">            response = gson.fromJson(jsonBody, SubscriptionsListResponse.class);</span>
+<span class="nc" id="L292">        } catch (Exception e) {</span>
+<span class="nc" id="L293">            throw new InstagramException(&quot;Error parsing json to object type &quot;);</span>
+<span class="nc" id="L294">        }</span>
+
+<span class="nc" id="L296">        return response;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L301">        StringBuilder builder = new StringBuilder();</span>
+<span class="nc" id="L302">        builder.append(&quot;InstagramSubscription [&quot;);</span>
+        
+<span class="nc bnc" id="L304" title="All 2 branches missed.">        for(Map.Entry&lt;String, String&gt; entry: this.params.entrySet()){</span>
+<span class="nc" id="L305">        	builder.append(entry.getKey()).append('=').append(entry.getValue()).append(',');</span>
+<span class="nc" id="L306">        }</span>
+<span class="nc" id="L307">        int lastIndexOfComma = builder.lastIndexOf(&quot;,&quot;);</span>
+<span class="nc" id="L308">        builder.replace(lastIndexOfComma, lastIndexOfComma + 1, &quot;&quot;);</span>
+        
+<span class="nc" id="L310">        builder.append(&quot;]&quot;);</span>
+<span class="nc" id="L311">        return builder.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

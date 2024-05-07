@@ -1,0 +1,50 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java
+[GENERATED PATH] PaginationHelper_ESTest#parseNextUrl(Pagination pagination, String apiUrl).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java:[32,9] cannot find symbol
+  symbol:   class Page
+  location: class org.jinstagram.utils.PaginationHelper_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java
+[GENERATED PATH] PaginationHelper_ESTest#parseNextUrl(Pagination pagination, String apiUrl).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java:[33,5] cannot find symbol
+  symbol:   class Page
+  location: class org.jinstagram.utils.PaginationHelper_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java
+[GENERATED PATH] PaginationHelper_ESTest#parseNextUrl(Pagination pagination, String apiUrl).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java:[35,5] cannot find symbol
+  symbol:   class Page
+  location: class org.jinstagram.utils.PaginationHelper_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java
+[GENERATED PATH] PaginationHelper_ESTest#parseNextUrl(Pagination pagination, String apiUrl).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java:[39,9] cannot find symbol
+  symbol:   class Page
+  location: class org.jinstagram.utils.PaginationHelper_ESTest
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java
+[GENERATED PATH] PaginationHelper_ESTest#parseNextUrl(Pagination pagination, String apiUrl).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/utils/PaginationHelper_ESTest.java:[41,9] cannot find symbol
+  symbol:   class Page
+  location: class org.jinstagram.utils.PaginationHelper_ESTest
+[INFO] 1 error
+####################
+

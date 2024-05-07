@@ -1,0 +1,50 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java
+[GENERATED PATH] JavaTimeLocalDateFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java:[42,50] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeLocalDateFormatter
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java
+[GENERATED PATH] JavaTimeLocalDateFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java:[45,80] cannot find symbol
+  symbol:   method getFormatter()
+  location: interface com.zappos.json.format.ValueFormatter<java.time.LocalDate>
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java
+[GENERATED PATH] JavaTimeLocalDateFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java:[46,80] cannot find symbol
+  symbol:   method getPattern()
+  location: interface com.zappos.json.format.ValueFormatter<java.time.LocalDate>
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java
+[GENERATED PATH] JavaTimeLocalDateFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java:[48,80] cannot find symbol
+  symbol:   method getFormatter()
+  location: interface com.zappos.json.format.ValueFormatter<java.time.LocalDate>
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java
+[GENERATED PATH] JavaTimeLocalDateFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeLocalDateFormatter_ESTest.java:[50,80] cannot find symbol
+  symbol:   method getDateTimeFormatter()
+  location: interface com.zappos.json.format.ValueFormatter<java.time.LocalDate>
+[INFO] 1 error
+####################
+

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnforceSignedHeaderUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.utils</a> &gt; <span class="el_source">EnforceSignedHeaderUtils.java</span></div><h1>EnforceSignedHeaderUtils.java</h1><pre class="source lang-java linenums">package org.jinstagram.utils;
+
+import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.lang.NullPointerException;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
+import org.jinstagram.exceptions.InstagramException;
+
+@Deprecated
+<span class="nc" id="L15">public class EnforceSignedHeaderUtils {</span>
+
+    public static final String ENFORCE_SIGNED_HEADER = &quot;X-Insta-Forwarded-For&quot;;
+    
+    private static final String HMAC_SHA256 = &quot;HmacSHA256&quot;;
+
+    @Deprecated
+    public static String signature(String clientSecret, String message) throws InstagramException {
+        try {
+<span class="nc" id="L24">            SecretKeySpec keySpec = new SecretKeySpec(clientSecret.getBytes(Charset.forName(&quot;UTF-8&quot;)), HMAC_SHA256);</span>
+<span class="nc" id="L25">            Mac mac = Mac.getInstance(HMAC_SHA256);</span>
+<span class="nc" id="L26">            mac.init(keySpec);</span>
+<span class="nc" id="L27">            byte[] result = mac.doFinal(message.getBytes(Charset.forName(&quot;UTF-8&quot;)));</span>
+<span class="nc" id="L28">            return Hex.encodeHexString(result);</span>
+<span class="nc" id="L29">        } catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L30">            throw new InstagramException(&quot;Invalid algorithm name!&quot;, e);</span>
+<span class="nc" id="L31">        } catch (InvalidKeyException e) {</span>
+<span class="nc" id="L32">            throw new InstagramException(&quot;Invalid key: &quot; + clientSecret, e);</span>
+<span class="nc" id="L33">        } catch (NullPointerException e) {</span>
+<span class="nc" id="L34">            throw new InstagramException(&quot;Key is null!&quot;, e);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

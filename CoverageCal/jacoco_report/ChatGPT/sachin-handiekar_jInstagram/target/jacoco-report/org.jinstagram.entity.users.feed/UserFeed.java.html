@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserFeed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.users.feed</a> &gt; <span class="el_source">UserFeed.java</span></div><h1>UserFeed.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.users.feed;
+
+import com.google.gson.annotations.SerializedName;
+
+import org.jinstagram.InstagramObject;
+import org.jinstagram.entity.common.Meta;
+import org.jinstagram.entity.common.Pagination;
+
+import java.util.List;
+
+<span class="fc" id="L11">public class UserFeed extends InstagramObject{</span>
+	@SerializedName(&quot;meta&quot;)
+	private Meta meta;
+
+	@SerializedName(&quot;pagination&quot;)
+	private Pagination pagination;
+
+	@SerializedName(&quot;data&quot;)
+	private List&lt;UserFeedData&gt; userList;
+
+	/**
+	 * @return the meta
+	 */
+	public Meta getMeta() {
+<span class="fc" id="L25">		return meta;</span>
+	}
+
+	/**
+	 * @param meta the meta to set
+	 */
+	public void setMeta(Meta meta) {
+<span class="fc" id="L32">		this.meta = meta;</span>
+<span class="fc" id="L33">	}</span>
+
+	/**
+	 * @return the pagination
+	 */
+	public Pagination getPagination() {
+<span class="fc" id="L39">		return pagination;</span>
+	}
+
+	/**
+	 * @param pagination the pagination to set
+	 */
+	public void setPagination(Pagination pagination) {
+<span class="fc" id="L46">		this.pagination = pagination;</span>
+<span class="fc" id="L47">	}</span>
+
+	/**
+	 * @return the userList
+	 */
+	public List&lt;UserFeedData&gt; getUserList() {
+<span class="nc" id="L53">		return userList;</span>
+	}
+
+	/**
+	 * @param userList the userList to set
+	 */
+	public void setUserList(List&lt;UserFeedData&gt; userList) {
+<span class="nc" id="L60">		this.userList = userList;</span>
+<span class="nc" id="L61">	}</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L65">        return String.format(&quot;UserFeed [meta=%s, pagination=%s, userList=%s]&quot;, meta, pagination, userList);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

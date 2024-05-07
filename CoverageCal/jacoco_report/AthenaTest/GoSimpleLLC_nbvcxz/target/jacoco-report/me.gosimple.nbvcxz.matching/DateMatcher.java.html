@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DateMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching</a> &gt; <span class="el_source">DateMatcher.java</span></div><h1>DateMatcher.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching;
+
+import me.gosimple.nbvcxz.matching.match.DateMatch;
+import me.gosimple.nbvcxz.matching.match.Match;
+import me.gosimple.nbvcxz.resources.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Extract all the possible dates from a password.
+ *
+ * @author Adam Brusselback
+ */
+<span class="fc" id="L17">public final class DateMatcher implements PasswordMatcher</span>
+{
+
+<span class="fc" id="L20">    private static final Pattern DATE_WITHOUT_SEPARATOR = Pattern.compile(&quot;^\\d{6,8}$&quot;);</span>
+<span class="fc" id="L21">    private static final Pattern DATE_WITH_SEPARATOR_YEAR_SUFFIX = Pattern.compile(&quot;&quot;</span>
+            + &quot;^(\\d{1,2})&quot;                        // Day (or month)
+            + &quot;(\\s|-|/|\\\\|_|\\.)&quot;              // Separator
+            + &quot;(\\d{1,2})&quot;                        // Month (or day)
+            + &quot;\\2&quot;                               // Same separator
+            + &quot;(19\\d{2}|200\\d|201\\d|\\d{2})$&quot;); // Year
+<span class="fc" id="L27">    private static final Pattern DATE_WITH_SEPARATOR_YEAR_PREFIX = Pattern.compile(&quot;&quot;</span>
+            + &quot;^(19\\d{2}|200\\d|201\\d|\\d{2})&quot;   // Year
+            + &quot;(\\s|-|/|\\\\|_|\\.)&quot;              // Separator
+            + &quot;(\\d{1,2})&quot;                        // Day (or month)
+            + &quot;\\2&quot;                               // Same separator
+            + &quot;(\\d{1,2})$&quot;);                      // Month (or day)
+
+    /**
+     * Extract all the possible dates without separator from a password
+     *
+     * @param password the password that is analyzed
+     * @return the list of all the date without separator found
+     */
+    private static ArrayList&lt;DateMatch&gt; matchDatesWithoutSeparator(Configuration configuration, String password)
+    {
+
+        // Initialize the list of matching dates
+<span class="nc" id="L44">        ArrayList&lt;DateMatch&gt; dateMatches = new ArrayList&lt;&gt;();</span>
+
+        // Create all possible subsequences of the password
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        for (int start = 0; start &lt; password.length(); start++)</span>
+        {
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            for (int end = start + 4; end &lt;= password.length(); end++)</span>
+            {
+
+                // Get the subsequence
+<span class="nc" id="L53">                String passwordChunk = password.substring(start, end);</span>
+
+                // Quick verfication that it is made of numbers
+<span class="nc bnc" id="L56" title="All 2 branches missed.">                if (DATE_WITHOUT_SEPARATOR.matcher(passwordChunk).find())</span>
+                {
+
+                    // Extract the possible combinaison of dateAndMonth/year from the
+                    // subsequence (eg: 121234 =&gt; 1212/34 and 12/1234)
+<span class="nc" id="L61">                    ArrayList&lt;PartialDateSplit&gt; possiblePartialSplit = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L62">                    int chunkLength = passwordChunk.length();</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                    if (chunkLength &lt;= 6)</span>
+                    {
+                        // start with a 2 digits year
+<span class="nc" id="L66">                        possiblePartialSplit.add(new PartialDateSplit(</span>
+<span class="nc" id="L67">                                passwordChunk.substring(2),</span>
+<span class="nc" id="L68">                                passwordChunk.substring(0, 2)</span>
+                        ));
+                        // end with a 2 digits year
+<span class="nc" id="L71">                        possiblePartialSplit.add(new PartialDateSplit(</span>
+<span class="nc" id="L72">                                passwordChunk.substring(0, chunkLength - 2),</span>
+<span class="nc" id="L73">                                passwordChunk.substring(chunkLength - 2, chunkLength)</span>
+                        ));
+                    }
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                    if (chunkLength &gt;= 6)</span>
+                    {
+                        // start with a 4 digits year
+<span class="nc" id="L79">                        possiblePartialSplit.add(new PartialDateSplit(</span>
+<span class="nc" id="L80">                                passwordChunk.substring(4),</span>
+<span class="nc" id="L81">                                passwordChunk.substring(0, 4)</span>
+                        ));
+                        // end with a 4 digits year
+<span class="nc" id="L84">                        possiblePartialSplit.add(new PartialDateSplit(</span>
+<span class="nc" id="L85">                                passwordChunk.substring(0, chunkLength - 4),</span>
+<span class="nc" id="L86">                                passwordChunk.substring(chunkLength - 4, chunkLength)</span>
+                        ));
+                    }
+
+                    // For each dateAndMonth/year extract the different possible full date
+                    // (eg: 123/1998 =&gt; 1/23/1998 and 12/3/1998)
+<span class="nc" id="L92">                    ArrayList&lt;FullDateSplit&gt; possibleFullSplit = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                    for (PartialDateSplit split : possiblePartialSplit)</span>
+                    {
+<span class="nc" id="L95">                        int dateAndMonthLength = split.dateAndMonth.length();</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                        if (dateAndMonthLength == 2)</span>
+                        {
+<span class="nc" id="L98">                            possibleFullSplit.add(new FullDateSplit(</span>
+<span class="nc" id="L99">                                    split.dateAndMonth.substring(0, 1),</span>
+<span class="nc" id="L100">                                    split.dateAndMonth.substring(1, 2),</span>
+                                    split.year
+                            ));
+                        }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                        else if (dateAndMonthLength == 3)</span>
+                        {
+<span class="nc" id="L106">                            possibleFullSplit.add(new FullDateSplit(</span>
+<span class="nc" id="L107">                                    split.dateAndMonth.substring(0, 1),</span>
+<span class="nc" id="L108">                                    split.dateAndMonth.substring(1, 3),</span>
+                                    split.year
+                            ));
+<span class="nc" id="L111">                            possibleFullSplit.add(new FullDateSplit(</span>
+<span class="nc" id="L112">                                    split.dateAndMonth.substring(0, 2),</span>
+<span class="nc" id="L113">                                    split.dateAndMonth.substring(2, 3),</span>
+                                    split.year
+                            ));
+                        }
+<span class="nc bnc" id="L117" title="All 2 branches missed.">                        else if (dateAndMonthLength == 4)</span>
+                        {
+<span class="nc" id="L119">                            possibleFullSplit.add(new FullDateSplit(</span>
+<span class="nc" id="L120">                                    split.dateAndMonth.substring(0, 2),</span>
+<span class="nc" id="L121">                                    split.dateAndMonth.substring(2, 4),</span>
+                                    split.year
+                            ));
+                        }
+<span class="nc" id="L125">                    }</span>
+
+                    // Add to the final date list all the valid dates
+<span class="nc bnc" id="L128" title="All 2 branches missed.">                    for (FullDateSplit split : possibleFullSplit)</span>
+                    {
+<span class="nc" id="L130">                        ValidDateSplit vSplit = isDateValid(split.date, split.month, split.year);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">                        if (vSplit != null)</span>
+                        {
+<span class="nc" id="L133">                            dateMatches.add(new DateMatch(passwordChunk, configuration, vSplit.date, vSplit.month, vSplit.year, &quot;&quot;, start, end - 1));</span>
+                        }
+<span class="nc" id="L135">                    }</span>
+
+                }
+            }
+        }
+
+<span class="nc" id="L141">        return dateMatches;</span>
+
+    }
+
+    /**
+     * Extract all the possible dates with a separator
+     * (&quot;-&quot;, &quot;/&quot;, &quot; &quot;, &quot;\&quot;, &quot;_&quot; or &quot;.&quot;) from a password
+     *
+     * @param password the password that is analyzed
+     * @return the list of all the date with separator found
+     */
+    private static ArrayList&lt;DateMatch&gt; matchDatesWithSeparator(Configuration configuration, String password)
+    {
+
+        // Initialize the list of matching dates
+<span class="nc" id="L156">        ArrayList&lt;DateMatch&gt; dateMatches = new ArrayList&lt;&gt;();</span>
+
+        // Create all possible subsequences of the password
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        for (int start = 0; start &lt; password.length(); start++)</span>
+        {
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            for (int end = start + 6; end &lt;= password.length(); end++)</span>
+            {
+
+                // Get the subsequence
+<span class="nc" id="L165">                String passwordChunk = password.substring(start, end);</span>
+
+                // Extract the date (if there is one) with the year as prefix
+<span class="nc" id="L168">                Matcher m1 = DATE_WITH_SEPARATOR_YEAR_SUFFIX.matcher(passwordChunk);</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">                if (m1.matches())</span>
+                {
+<span class="nc" id="L171">                    ValidDateSplit split = isDateValid(m1.group(1), m1.group(3), m1.group(4));</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">                    if (split != null)</span>
+                    {
+<span class="nc" id="L174">                        dateMatches.add(new DateMatch(passwordChunk, configuration, split.date, split.month, split.year, m1.group(2), start, end - 1));</span>
+                    }
+                }
+
+                // Extract the date (if there is one) with the year as suffix
+<span class="nc" id="L179">                Matcher m2 = DATE_WITH_SEPARATOR_YEAR_PREFIX.matcher(passwordChunk);</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">                if (m2.matches())</span>
+                {
+<span class="nc" id="L182">                    ValidDateSplit split = isDateValid(m2.group(4), m2.group(3), m2.group(1));</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">                    if (split != null)</span>
+                    {
+<span class="nc" id="L185">                        dateMatches.add(new DateMatch(passwordChunk, configuration, split.date, split.month, split.year, m2.group(2), start, end - 1));</span>
+                    }
+                }
+
+            }
+        }
+
+<span class="nc" id="L192">        return dateMatches;</span>
+
+    }
+
+    /**
+     * Verify that a date is valid. Year must be
+     * two digit or four digit and between 1900 and 2029.
+     *
+     * @param day   the day of the date
+     * @param month the moth of the date
+     * @param year  the year of the date
+     * @return a valid date split object containing the date information if the
+     * date is valid and {@code null} if the date is not valid.
+     */
+    private static ValidDateSplit isDateValid(String day, String month, String year)
+    {
+        try
+        {
+<span class="nc" id="L210">            int dayInt = Integer.parseInt(day);</span>
+<span class="nc" id="L211">            int monthInt = Integer.parseInt(month);</span>
+<span class="nc" id="L212">            int yearInt = Integer.parseInt(year);</span>
+<span class="nc bnc" id="L213" title="All 16 branches missed.">            if (</span>
+                    dayInt &lt;= 0 || dayInt &gt; 31 ||
+                            monthInt &lt;= 0 || monthInt &gt; 12 ||
+                            yearInt &lt;= 0 || (yearInt &gt;= 100 &amp;&amp; (yearInt &lt; 1900 || yearInt &gt; 2019))
+                    )
+            {
+<span class="nc" id="L219">                return null;</span>
+            }
+<span class="nc" id="L221">            return new ValidDateSplit(dayInt, monthInt, yearInt);</span>
+        }
+<span class="nc" id="L223">        catch (NumberFormatException e)</span>
+        {
+<span class="nc" id="L225">            return null;</span>
+        }
+    }
+
+    public List&lt;Match&gt; match(final Configuration configuration, final String password)
+    {
+
+<span class="nc" id="L232">        List&lt;Match&gt; dateMatches = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L233">        dateMatches.addAll(matchDatesWithoutSeparator(configuration, password));</span>
+<span class="nc" id="L234">        dateMatches.addAll(matchDatesWithSeparator(configuration, password));</span>
+
+<span class="nc" id="L236">        return dateMatches;</span>
+    }
+
+    // Represent a partial match during the parsing (contains the date and month
+    // concatenated and the year)
+    private static class PartialDateSplit
+    {
+        public final String dateAndMonth;
+        public final String year;
+
+        public PartialDateSplit(String dateAndMonth, String year)
+<span class="nc" id="L247">        {</span>
+<span class="nc" id="L248">            this.dateAndMonth = dateAndMonth;</span>
+<span class="nc" id="L249">            this.year = year;</span>
+<span class="nc" id="L250">        }</span>
+    }
+
+    // Represent a complete match during the parsing (date, month and year)
+    private static class FullDateSplit
+    {
+        public final String date;
+        public final String month;
+        public final String year;
+
+        public FullDateSplit(String date, String month, String year)
+<span class="nc" id="L261">        {</span>
+<span class="nc" id="L262">            this.date = date;</span>
+<span class="nc" id="L263">            this.month = month;</span>
+<span class="nc" id="L264">            this.year = year;</span>
+<span class="nc" id="L265">        }</span>
+    }
+
+    // Represent a valid and parsed match (date, month and year as
+    // &lt;code&gt;int&lt;/code&gt;)
+    private static class ValidDateSplit
+    {
+        public final int date;
+        public final int month;
+        public final int year;
+
+        public ValidDateSplit(int date, int month, int year)
+<span class="nc" id="L277">        {</span>
+<span class="nc" id="L278">            this.date = date;</span>
+<span class="nc" id="L279">            this.month = month;</span>
+<span class="nc" id="L280">            this.year = year;</span>
+<span class="nc" id="L281">        }</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

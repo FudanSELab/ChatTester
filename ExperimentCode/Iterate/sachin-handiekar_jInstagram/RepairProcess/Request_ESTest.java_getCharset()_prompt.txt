@@ -1,0 +1,53 @@
+0-->1-->0-->compileRepair
+
+# Request class
+package org.jinstagram.http;
+public class Request {
+public Request(Verbs verb, String url);
+public Response send() throws IOException;
+public void addHeader(String key, String value);
+public void addBodyParameter(String key, String value);
+public void addQuerystringParameter(String key, String value);
+public void addPayload(String payload);
+public Map<String, String> getQueryStringParams();
+public Map<String, String> getBodyParams();
+public String getUrl();
+public String getSanitizedUrl();
+public String getBodyContents();
+public Verbs getVerb();
+public Map<String, String> getHeaders();
+public String getCharset();
+public void setConnectTimeout(int duration, TimeUnit unit);
+public int getConnectTimeoutInMillis();
+public void setReadTimeout(int duration, TimeUnit unit);
+public int getReadTimeoutInMillis();
+public void setCharset(String charsetName);
+public void setConnectionKeepAlive(boolean connectionKeepAlive);
+public boolean getConnectionKeepAlive();
+public void setProxy(Proxy proxy);
+public Proxy getProxy();
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testGetCharset_DefaultCharset() {
+        Request request = new Request(Verbs.GET, "https://example.com");
+
+         <Buggy Line>: cannot find symbol variable "Charset"
+        String expectedCharset = Charset.defaultCharset().name();
+
+        String actualCharset = request.getCharset();
+        assertEquals(expectedCharset, actualCharset);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Request" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Request" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

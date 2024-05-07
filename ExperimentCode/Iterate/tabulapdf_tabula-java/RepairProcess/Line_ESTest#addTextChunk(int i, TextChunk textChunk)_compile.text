@@ -1,0 +1,10 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java
+[GENERATED PATH] Line_ESTest#addTextChunk(int i, TextChunk textChunk).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[29,9] cannot find symbol
+  symbol:   variable line
+  location: class technology.tabula.Line_ESTest
+[INFO] 1 error
+####################
+

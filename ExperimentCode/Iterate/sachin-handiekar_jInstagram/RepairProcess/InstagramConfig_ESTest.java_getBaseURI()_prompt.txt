@@ -1,0 +1,45 @@
+0-->1-->0-->compileRepair
+
+# InstagramConfig class
+package org.jinstagram;
+public class InstagramConfig {
+public InstagramConfig();
+public String getBaseURI();
+public void setBaseURI(String baseURI);
+public String getVersion();
+public void setVersion(String version);
+public String getApiURL();
+public int getConnectionTimeoutMills();
+public void setConnectionTimeoutMills(int connectionTimeoutMills);
+public int getReadTimeoutMills();
+public void setReadTimeoutMills(int readTimeoutMills);
+public boolean isConnectionKeepAlive();
+public void setConnectionKeepAlive(boolean connectionKeepAlive);
+public boolean isEnforceSignedRequest();
+public void setEnforceSignedRequest(boolean enforceSignedRequest);
+public boolean isRetryOnServerError();
+public void setRetryOnServerError(boolean retryOnServerError);
+}
+
+
+# Test Method
+    @Test
+    public void testGetBaseURI() {
+        InstagramConfig instagramConfig = new InstagramConfig();
+
+         <Buggy Line>: cannot find symbol variable "Constants"
+        String expectedBaseURI = Constants.BASE_URI;
+
+        String actualBaseURI = instagramConfig.getBaseURI();
+        assertEquals(expectedBaseURI, actualBaseURI);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "InstagramConfig" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "InstagramConfig" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

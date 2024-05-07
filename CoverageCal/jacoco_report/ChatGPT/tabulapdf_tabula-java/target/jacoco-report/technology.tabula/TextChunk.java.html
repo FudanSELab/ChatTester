@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextChunk.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">TextChunk.java</span></div><h1>TextChunk.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.text.Normalizer;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class TextChunk extends RectangularTextContainer&lt;TextElement&gt; {
+<span class="fc" id="L12">    public static final TextChunk EMPTY = new TextChunk(0, 0, 0, 0);</span>
+//    List&lt;TextElement&gt; textElements = new ArrayList&lt;&gt;();
+
+    public TextChunk(float top, float left, float width, float height) {
+<span class="fc" id="L16">        super(top, left, width, height);</span>
+<span class="fc" id="L17">    }</span>
+
+    public TextChunk(TextElement textElement) {
+<span class="nc" id="L20">        super(textElement.y, textElement.x, textElement.width, textElement.height);</span>
+<span class="nc" id="L21">        this.add(textElement);</span>
+<span class="nc" id="L22">    }</span>
+
+    public TextChunk(List&lt;TextElement&gt; textElements) {
+<span class="nc" id="L25">        this(textElements.get(0));</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        for (int i = 1; i &lt; textElements.size(); i++) {</span>
+<span class="nc" id="L27">            this.add(textElements.get(i));</span>
+        }
+<span class="nc" id="L29">    }</span>
+
+<span class="fc" id="L31">    private enum DirectionalityOptions {</span>
+<span class="fc" id="L32">        LTR, NONE, RTL</span>
+    }
+
+    // I hate Java so bad.
+    // we're making this HashMap static! which requires really funky initialization per http://stackoverflow.com/questions/6802483/how-to-directly-initialize-a-hashmap-in-a-literal-way/6802502#6802502
+    private static HashMap&lt;Byte, DirectionalityOptions&gt; directionalities;
+
+    static {
+<span class="fc" id="L40">        directionalities = new HashMap&lt;&gt;();</span>
+        // BCT = bidirectional character type
+<span class="fc" id="L42">        directionalities.put(java.lang.Character.DIRECTIONALITY_ARABIC_NUMBER, DirectionalityOptions.LTR);               // Weak BCT    &quot;AN&quot; in the Unicode specification.</span>
+<span class="fc" id="L43">        directionalities.put(java.lang.Character.DIRECTIONALITY_BOUNDARY_NEUTRAL, DirectionalityOptions.NONE);            // Weak BCT    &quot;BN&quot; in the Unicode specification.</span>
+<span class="fc" id="L44">        directionalities.put(java.lang.Character.DIRECTIONALITY_COMMON_NUMBER_SEPARATOR, DirectionalityOptions.LTR);     // Weak BCT    &quot;CS&quot; in the Unicode specification.</span>
+<span class="fc" id="L45">        directionalities.put(java.lang.Character.DIRECTIONALITY_EUROPEAN_NUMBER, DirectionalityOptions.LTR);             // Weak BCT    &quot;EN&quot; in the Unicode specification.</span>
+<span class="fc" id="L46">        directionalities.put(java.lang.Character.DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR, DirectionalityOptions.LTR);   // Weak BCT    &quot;ES&quot; in the Unicode specification.</span>
+<span class="fc" id="L47">        directionalities.put(java.lang.Character.DIRECTIONALITY_EUROPEAN_NUMBER_TERMINATOR, DirectionalityOptions.LTR);  // Weak BCT    &quot;ET&quot; in the Unicode specification.</span>
+<span class="fc" id="L48">        directionalities.put(java.lang.Character.DIRECTIONALITY_LEFT_TO_RIGHT, DirectionalityOptions.LTR);              // Strong BCT  &quot;L&quot; in the Unicode specification.</span>
+<span class="fc" id="L49">        directionalities.put(java.lang.Character.DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING, DirectionalityOptions.LTR);     // Strong BCT  &quot;LRE&quot; in the Unicode specification.</span>
+<span class="fc" id="L50">        directionalities.put(java.lang.Character.DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE, DirectionalityOptions.LTR);      // Strong BCT  &quot;LRO&quot; in the Unicode specification.</span>
+<span class="fc" id="L51">        directionalities.put(java.lang.Character.DIRECTIONALITY_NONSPACING_MARK, DirectionalityOptions.NONE);             // Weak BCT    &quot;NSM&quot; in the Unicode specification.</span>
+<span class="fc" id="L52">        directionalities.put(java.lang.Character.DIRECTIONALITY_OTHER_NEUTRALS, DirectionalityOptions.NONE);              // Neutral BCT &quot;ON&quot; in the Unicode specification.</span>
+<span class="fc" id="L53">        directionalities.put(java.lang.Character.DIRECTIONALITY_PARAGRAPH_SEPARATOR, DirectionalityOptions.NONE);         // Neutral BCT &quot;B&quot; in the Unicode specification.</span>
+<span class="fc" id="L54">        directionalities.put(java.lang.Character.DIRECTIONALITY_POP_DIRECTIONAL_FORMAT, DirectionalityOptions.NONE);      // Weak BCT    &quot;PDF&quot; in the Unicode specification.</span>
+<span class="fc" id="L55">        directionalities.put(java.lang.Character.DIRECTIONALITY_RIGHT_TO_LEFT, DirectionalityOptions.RTL);              // Strong BCT  &quot;R&quot; in the Unicode specification.</span>
+<span class="fc" id="L56">        directionalities.put(java.lang.Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC, DirectionalityOptions.RTL);       // Strong BCT  &quot;AL&quot; in the Unicode specification.</span>
+<span class="fc" id="L57">        directionalities.put(java.lang.Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING, DirectionalityOptions.RTL);    // Strong BCT  &quot;RLE&quot; in the Unicode specification.</span>
+<span class="fc" id="L58">        directionalities.put(java.lang.Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE, DirectionalityOptions.RTL);     // Strong BCT  &quot;RLO&quot; in the Unicode specification.</span>
+<span class="fc" id="L59">        directionalities.put(java.lang.Character.DIRECTIONALITY_SEGMENT_SEPARATOR, DirectionalityOptions.RTL);          // Neutral BCT &quot;S&quot; in the Unicode specification.</span>
+<span class="fc" id="L60">        directionalities.put(java.lang.Character.DIRECTIONALITY_UNDEFINED, DirectionalityOptions.NONE);                   // Undefined BCT.</span>
+<span class="fc" id="L61">        directionalities.put(java.lang.Character.DIRECTIONALITY_WHITESPACE, DirectionalityOptions.NONE);                  // Neutral BCT &quot;WS&quot; in the Unicode specification.</span>
+<span class="fc" id="L62">    }</span>
+
+    /**
+     * Splits a TextChunk into N TextChunks, where each chunk is of a single directionality, and
+     * then reverse the RTL ones.
+     * what we're doing here is *reversing* the Unicode bidi algorithm
+     * in the language of that algorithm, each chunk is a (maximal) directional run.
+     * We attach whitespace to the beginning of non-RTL
+     **/
+    public TextChunk groupByDirectionality(Boolean isLtrDominant) {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (this.getTextElements().size() &lt;= 0) {</span>
+<span class="nc" id="L73">            throw new IllegalArgumentException();</span>
+        }
+
+<span class="nc" id="L76">        ArrayList&lt;ArrayList&lt;TextElement&gt;&gt; chunks = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L77">        ArrayList&lt;TextElement&gt; buff = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L78">        DirectionalityOptions buffDirectionality = DirectionalityOptions.NONE; // the directionality of the characters in buff;</span>
+
+<span class="nc bnc" id="L80" title="All 2 branches missed.">        for (TextElement te : this.getTextElements()) {</span>
+            //TODO: we need to loop over the textelement characters
+            //      because it is possible for a textelement to contain multiple characters?
+
+
+            // System.out.println(te.getText() + &quot; is &quot; + Character.getDirectionality(te.getText().charAt(0) ) + &quot; &quot; + directionalities.get(Character.getDirectionality(te.getText().charAt(0) )));
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (buff.size() == 0) {</span>
+<span class="nc" id="L87">                buff.add(te);</span>
+<span class="nc" id="L88">                buffDirectionality = directionalities.get(Character.getDirectionality(te.getText().charAt(0)));</span>
+            } else {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                if (buffDirectionality == DirectionalityOptions.NONE) {</span>
+<span class="nc" id="L91">                    buffDirectionality = directionalities.get(Character.getDirectionality(te.getText().charAt(0)));</span>
+                }
+<span class="nc" id="L93">                DirectionalityOptions teDirectionality = directionalities.get(Character.getDirectionality(te.getText().charAt(0)));</span>
+
+<span class="nc bnc" id="L95" title="All 4 branches missed.">                if (teDirectionality == buffDirectionality || teDirectionality == DirectionalityOptions.NONE) {</span>
+<span class="nc bnc" id="L96" title="All 6 branches missed.">                    if (Character.getDirectionality(te.getText().charAt(0)) == java.lang.Character.DIRECTIONALITY_WHITESPACE &amp;&amp; (buffDirectionality == (isLtrDominant ? DirectionalityOptions.RTL : DirectionalityOptions.LTR))) {</span>
+<span class="nc" id="L97">                        buff.add(0, te);</span>
+                    } else {
+<span class="nc" id="L99">                        buff.add(te);</span>
+                    }
+                } else {
+                    // finish this chunk
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                    if (buffDirectionality == DirectionalityOptions.RTL) {</span>
+<span class="nc" id="L104">                        Collections.reverse(buff);</span>
+                    }
+<span class="nc" id="L106">                    chunks.add(buff);</span>
+
+                    // and start a new one
+<span class="nc" id="L109">                    buffDirectionality = directionalities.get(Character.getDirectionality(te.getText().charAt(0)));</span>
+<span class="nc" id="L110">                    buff = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L111">                    buff.add(te);</span>
+                }
+            }
+<span class="nc" id="L114">        }</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (buffDirectionality == DirectionalityOptions.RTL) {</span>
+<span class="nc" id="L116">            Collections.reverse(buff);</span>
+        }
+<span class="nc" id="L118">        chunks.add(buff);</span>
+<span class="nc" id="L119">        ArrayList&lt;TextElement&gt; everything = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (!isLtrDominant) {</span>
+<span class="nc" id="L121">            Collections.reverse(chunks);</span>
+        }
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        for (ArrayList&lt;TextElement&gt; group : chunks) {</span>
+<span class="nc" id="L124">            everything.addAll(group);</span>
+<span class="nc" id="L125">        }</span>
+<span class="nc" id="L126">        return new TextChunk(everything);</span>
+    }
+
+    @Override public int isLtrDominant() {
+<span class="nc" id="L130">        int ltrCnt = 0;</span>
+<span class="nc" id="L131">        int rtlCnt = 0;</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        for (int i = 0; i &lt; this.getTextElements().size(); i++) {</span>
+<span class="nc" id="L133">            String elementText = this.getTextElements().get(i).getText();</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">            for (int j = 0; j &lt; elementText.length(); j++) {</span>
+<span class="nc" id="L135">                byte dir = Character.getDirectionality(elementText.charAt(j));</span>
+<span class="nc bnc" id="L136" title="All 6 branches missed.">                if ((dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT) ||</span>
+                        (dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING) ||
+                        (dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE)) {
+<span class="nc" id="L139">                    ltrCnt++;</span>
+<span class="nc bnc" id="L140" title="All 8 branches missed.">                } else if ((dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT) ||</span>
+                        (dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) ||
+                        (dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING) ||
+                        (dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE)) {
+<span class="nc" id="L144">                    rtlCnt++;</span>
+                }
+            }
+        }
+<span class="nc" id="L148">        return java.lang.Integer.compare(ltrCnt, rtlCnt); // 1 is LTR, 0 is neutral, -1 is RTL</span>
+    }
+
+
+    public TextChunk merge(TextChunk other) {
+<span class="fc" id="L153">        super.merge(other);</span>
+<span class="fc" id="L154">        return this;</span>
+    }
+
+    public void add(TextElement textElement) {
+<span class="nc" id="L158">        this.textElements.add(textElement);</span>
+<span class="nc" id="L159">        this.merge(textElement);</span>
+<span class="nc" id="L160">    }</span>
+
+    public void add(List&lt;TextElement&gt; elements) {
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        for (TextElement te : elements) {</span>
+<span class="nc" id="L164">            this.add(te);</span>
+<span class="nc" id="L165">        }</span>
+<span class="nc" id="L166">    }</span>
+
+    @Override
+    public String getText() {
+<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (this.textElements.size() == 0) {</span>
+<span class="fc" id="L171">            return &quot;&quot;;</span>
+        }
+
+<span class="nc" id="L174">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        for (TextElement te : this.textElements) {</span>
+<span class="nc" id="L176">            sb.append(te.getText());</span>
+<span class="nc" id="L177">        }</span>
+<span class="nc" id="L178">        return Normalizer.normalize(sb.toString(), Normalizer.Form.NFKC).trim();</span>
+    }
+
+    @Override
+    public String getText(boolean useLineReturns) {
+<span class="nc" id="L183">        return getText();</span>
+    }
+
+    /**
+     * Returns true if text contained in this TextChunk is the same repeated character
+     */
+    public boolean isSameChar(Character c) {
+<span class="nc" id="L190">        return isSameChar(new Character[]{c});</span>
+    }
+
+    public boolean isSameChar(Character[] c) {
+<span class="nc" id="L194">        String s = this.getText();</span>
+<span class="nc" id="L195">        List&lt;Character&gt; chars = Arrays.asList(c);</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        for (int i = 0; i &lt; s.length(); i++) {</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">            if (!chars.contains(s.charAt(i))) {</span>
+<span class="nc" id="L198">                return false;</span>
+            }
+        }
+<span class="nc" id="L201">        return true;</span>
+    }
+
+    /**
+     * Splits a TextChunk in two, at the position of the i-th TextElement
+     */
+    public TextChunk[] splitAt(int i) {
+<span class="nc bnc" id="L208" title="All 4 branches missed.">        if (i &lt; 1 || i &gt;= this.getTextElements().size()) {</span>
+<span class="nc" id="L209">            throw new IllegalArgumentException();</span>
+        }
+
+<span class="nc" id="L212">      return new TextChunk[]{</span>
+<span class="nc" id="L213">              new TextChunk(this.getTextElements().subList(0, i)),</span>
+<span class="nc" id="L214">              new TextChunk(this.getTextElements().subList(i, this.getTextElements().size()))</span>
+      };
+    }
+
+    /**
+     * Removes runs of identical TextElements in this TextChunk
+     * For example, if the TextChunk contains this string of characters: &quot;1234xxxxx56xx&quot;
+     * and c == 'x' and minRunLength == 4, this method will return a list of TextChunk
+     * such that: [&quot;1234&quot;, &quot;56xx&quot;]
+     */
+    public List&lt;TextChunk&gt; squeeze(Character c, int minRunLength) {
+<span class="fc" id="L225">        Character currentChar, lastChar = null;</span>
+<span class="fc" id="L226">        int subSequenceLength = 0, subSequenceStart = 0;</span>
+        TextChunk[] t;
+<span class="fc" id="L228">        List&lt;TextChunk&gt; rv = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">        for (int i = 0; i &lt; this.getTextElements().size(); i++) {</span>
+<span class="nc" id="L231">            TextElement textElement = this.getTextElements().get(i);</span>
+<span class="nc" id="L232">            String text = textElement.getText();</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">            if (text.length() &gt; 1) {</span>
+<span class="nc" id="L234">                currentChar = text.trim().charAt(0);</span>
+            } else {
+<span class="nc" id="L236">                currentChar = text.charAt(0);</span>
+            }
+
+
+<span class="nc bnc" id="L240" title="All 6 branches missed.">            if (lastChar != null &amp;&amp; currentChar.equals(c) &amp;&amp; lastChar.equals(currentChar)) {</span>
+<span class="nc" id="L241">                subSequenceLength++;</span>
+            } else {
+<span class="nc bnc" id="L243" title="All 8 branches missed.">                if (((lastChar != null &amp;&amp; !lastChar.equals(currentChar)) || i + 1 == this.getTextElements().size()) &amp;&amp; subSequenceLength &gt;= minRunLength) {</span>
+
+<span class="nc bnc" id="L245" title="All 4 branches missed.">                    if (subSequenceStart == 0 &amp;&amp; subSequenceLength &lt;= this.getTextElements().size() - 1) {</span>
+<span class="nc" id="L246">                        t = this.splitAt(subSequenceLength);</span>
+                    } else {
+<span class="nc" id="L248">                        t = this.splitAt(subSequenceStart);</span>
+<span class="nc" id="L249">                        rv.add(t[0]);</span>
+                    }
+<span class="nc" id="L251">                    rv.addAll(t[1].squeeze(c, minRunLength)); // Lo and behold, recursion.</span>
+<span class="nc" id="L252">                    break;</span>
+
+                }
+<span class="nc" id="L255">                subSequenceLength = 1;</span>
+<span class="nc" id="L256">                subSequenceStart = i;</span>
+            }
+<span class="nc" id="L258">            lastChar = currentChar;</span>
+        }
+
+
+<span class="pc bpc" id="L262" title="1 of 2 branches missed.">        if (rv.isEmpty()) { // no splits occurred, hence this.squeeze() == [this]</span>
+<span class="pc bpc" id="L263" title="1 of 4 branches missed.">            if (subSequenceLength &gt;= minRunLength &amp;&amp; subSequenceLength &lt; this.textElements.size()) {</span>
+<span class="nc" id="L264">                TextChunk[] chunks = this.splitAt(subSequenceStart);</span>
+<span class="nc" id="L265">                rv.add(chunks[0]);</span>
+<span class="nc" id="L266">            } else {</span>
+<span class="fc" id="L267">                rv.add(this);</span>
+            }
+        }
+
+<span class="fc" id="L271">        return rv;</span>
+
+    }
+
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L278">        final int prime = 31;</span>
+<span class="fc" id="L279">        int result = super.hashCode();</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        result = prime * result</span>
+<span class="fc" id="L281">                + ((textElements == null) ? 0 : textElements.hashCode());</span>
+<span class="fc" id="L282">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L287" title="All 2 branches covered.">        if (this == obj)</span>
+<span class="fc" id="L288">            return true;</span>
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">        if (!super.equals(obj))</span>
+<span class="fc" id="L290">            return false;</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">        if (getClass() != obj.getClass())</span>
+<span class="nc" id="L292">            return false;</span>
+<span class="nc" id="L293">        TextChunk other = (TextChunk) obj;</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">        if (textElements == null) {</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">          return other.textElements == null;</span>
+<span class="nc" id="L296">        } else return textElements.equals(other.textElements);</span>
+    }
+
+    public static boolean allSameChar(List&lt;TextChunk&gt; textChunks) {
+        /* the previous, far more elegant version of this method failed when there was an empty TextChunk in textChunks.
+         * so I rewrote it in an ugly way. but it works!
+         * it would be good for this to get rewritten eventually
+         * the purpose is basically just to return true iff there are 2+ TextChunks and they're identical.
+         * -Jeremy 5/13/2016
+         */
+
+<span class="nc bnc" id="L307" title="All 2 branches missed.">        if (textChunks.size() == 1) return false;</span>
+<span class="nc" id="L308">        boolean hasHadAtLeastOneNonEmptyTextChunk = false;</span>
+<span class="nc" id="L309">        char first = '\u0000';</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">        for (TextChunk tc : textChunks) {</span>
+<span class="nc bnc" id="L311" title="All 2 branches missed.">            if (tc.getText().length() == 0) {</span>
+<span class="nc" id="L312">                continue;</span>
+            }
+<span class="nc bnc" id="L314" title="All 2 branches missed.">            if (first == '\u0000') {</span>
+<span class="nc" id="L315">                first = tc.getText().charAt(0);</span>
+            } else {
+<span class="nc" id="L317">                hasHadAtLeastOneNonEmptyTextChunk = true;</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">                if (!tc.isSameChar(first)) return false;</span>
+            }
+<span class="nc" id="L320">        }</span>
+<span class="nc" id="L321">        return hasHadAtLeastOneNonEmptyTextChunk;</span>
+    }
+
+    public static List&lt;Line&gt; groupByLines(List&lt;TextChunk&gt; textChunks) {
+<span class="nc" id="L325">        List&lt;Line&gt; lines = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L327" title="All 2 branches missed.">        if (textChunks.size() == 0) {</span>
+<span class="nc" id="L328">            return lines;</span>
+        }
+
+<span class="nc" id="L331">        float bbwidth = Rectangle.boundingBoxOf(textChunks).width;</span>
+
+<span class="nc" id="L333">        Line l = new Line();</span>
+<span class="nc" id="L334">        l.addTextChunk(textChunks.get(0));</span>
+<span class="nc" id="L335">        textChunks.remove(0);</span>
+<span class="nc" id="L336">        lines.add(l);</span>
+
+<span class="nc" id="L338">        Line last = lines.get(lines.size() - 1);</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">        for (TextChunk te : textChunks) {</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">            if (last.verticalOverlapRatio(te) &lt; 0.1) {</span>
+<span class="nc bnc" id="L341" title="All 4 branches missed.">                if (last.width / bbwidth &gt; 0.9 &amp;&amp; TextChunk.allSameChar(last.getTextElements())) {</span>
+<span class="nc" id="L342">                    lines.remove(lines.size() - 1);</span>
+                }
+<span class="nc" id="L344">                lines.add(new Line());</span>
+<span class="nc" id="L345">                last = lines.get(lines.size() - 1);</span>
+            }
+<span class="nc" id="L347">            last.addTextChunk(te);</span>
+<span class="nc" id="L348">        }</span>
+
+<span class="nc bnc" id="L350" title="All 4 branches missed.">        if (last.width / bbwidth &gt; 0.9 &amp;&amp; TextChunk.allSameChar(last.getTextElements())) {</span>
+<span class="nc" id="L351">            lines.remove(lines.size() - 1);</span>
+        }
+
+<span class="nc" id="L354">        List&lt;Line&gt; rv = new ArrayList&lt;&gt;(lines.size());</span>
+
+<span class="nc bnc" id="L356" title="All 2 branches missed.">        for (Line line : lines) {</span>
+<span class="nc" id="L357">            rv.add(Line.removeRepeatedCharacters(line, ' ', 3));</span>
+<span class="nc" id="L358">        }</span>
+
+<span class="nc" id="L360">        return rv;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

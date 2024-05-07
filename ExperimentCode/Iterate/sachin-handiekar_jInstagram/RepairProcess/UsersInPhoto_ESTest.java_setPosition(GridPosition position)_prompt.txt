@@ -1,0 +1,34 @@
+0-->1-->0-->compileRepair
+
+# GridPosition class
+package org.jinstagram.entity.common;
+public class GridPosition {
+public double getX();
+public void setX(double x);
+public double getY();
+public void setY(double y);
+}
+
+
+# Test Method
+    @Test
+    public void testSetPosition() {
+        UsersInPhoto usersInPhoto = new UsersInPhoto();
+
+           <Buggy Line>: constructor GridPosition in class org.jinstagram.entity.common.GridPosition cannot be applied to given types;
+        GridPosition expectedPosition = new GridPosition(2, 3);
+
+        usersInPhoto.setPosition(expectedPosition);
+        GridPosition actualPosition = usersInPhoto.getPosition();
+        assertEquals(expectedPosition, actualPosition);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "GridPosition" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "GridPosition" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

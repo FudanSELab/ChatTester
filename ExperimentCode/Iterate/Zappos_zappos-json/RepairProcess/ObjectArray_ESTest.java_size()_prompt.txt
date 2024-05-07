@@ -1,0 +1,23 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public int size() {
+    return size;
+}
+
+# Method Intention
+The size() method in the ObjectArray class is intended to return the current size of the array, providing information on the number of elements stored within the array.
+
+# Test Method
+    @Test
+    public void testSize() {
+        ObjectArray objectArray = new ObjectArray();
+       [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.NullPointerException None " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

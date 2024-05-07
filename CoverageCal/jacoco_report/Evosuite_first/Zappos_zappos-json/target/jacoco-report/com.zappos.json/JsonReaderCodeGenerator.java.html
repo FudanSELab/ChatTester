@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonReaderCodeGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json</a> &gt; <span class="el_source">JsonReaderCodeGenerator.java</span></div><h1>JsonReaderCodeGenerator.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json;
+
+import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+
+import com.zappos.json.annot.JsonEnum.EnumValue;
+import com.zappos.json.util.Reflections;
+import com.zappos.json.util.Strings;
+import com.zappos.json.util.TypeImpl;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+public class JsonReaderCodeGenerator {
+
+<span class="fc" id="L44">  private final Map&lt;Class&lt;?&gt;, JsonReaderInvoker&gt; JSON_READER_INVOKERS = new ConcurrentHashMap&lt;&gt;();</span>
+  
+  private ZapposJson zapposJson;
+  
+  private JsonBeanIntrospector beanIntrospector;
+  
+<span class="fc" id="L50">  public JsonReaderCodeGenerator(ZapposJson zapposJson, JsonBeanIntrospector beanIntrospector){</span>
+<span class="fc" id="L51">    this.zapposJson = zapposJson;</span>
+<span class="fc" id="L52">    this.beanIntrospector = beanIntrospector;</span>
+<span class="fc" id="L53">  }</span>
+  
+  protected JsonReaderInvoker getReader(Class&lt;?&gt; clazz){
+<span class="fc" id="L56">    return JSON_READER_INVOKERS.get(clazz);</span>
+  }
+  
+  protected synchronized void deregisterAll(){
+<span class="nc" id="L60">    JSON_READER_INVOKERS.clear();</span>
+<span class="nc" id="L61">  }</span>
+  
+  protected void deregister(Class&lt;?&gt; clazz){
+<span class="nc" id="L64">    synchronized(clazz){</span>
+<span class="nc" id="L65">      JSON_READER_INVOKERS.remove(clazz);</span>
+<span class="nc" id="L66">    }</span>
+<span class="nc" id="L67">  }</span>
+  
+  protected JsonReaderInvoker registerReader(Class&lt;?&gt; clazz)
+      throws Exception {
+<span class="fc" id="L71">    synchronized(clazz){</span>
+<span class="fc" id="L72">      JsonReaderInvoker readerInvoker = JSON_READER_INVOKERS.get(clazz);</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">      if (readerInvoker != null) {</span>
+<span class="nc" id="L74">        return readerInvoker;</span>
+      }
+  
+<span class="fc" id="L77">      StringBuilder methodBody = new StringBuilder();</span>
+<span class="fc" id="L78">      methodBody.append(&quot;{\n&quot;);</span>
+<span class="nc" id="L79">      List&lt;PathAndCode&gt; pathAndCodes = generateJsonReaderBody(clazz);</span>
+  
+      /*
+       * Compiler will optimize if(String.equals) when the number of conditions &lt;= 16
+       */
+<span class="nc bnc" id="L84" title="All 2 branches missed.">      if (pathAndCodes.size() &gt; 16</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">          &amp;&amp; new HashSet&lt;&gt;(pathAndCodes).size() == pathAndCodes.size()) {</span>
+  
+<span class="nc" id="L87">        methodBody.append(&quot;int pathHash = getPath($1).hashCode();\n&quot;);</span>
+<span class="nc" id="L88">        methodBody.append(&quot;switch(pathHash){\n&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        for (PathAndCode pathAndCode : pathAndCodes) {</span>
+<span class="nc" id="L90">          methodBody.append(&quot;case &quot;)</span>
+<span class="nc" id="L91">              .append(String.valueOf(pathAndCode.getPath().hashCode()))</span>
+<span class="nc" id="L92">              .append(&quot;:\n{&quot;).append(pathAndCode.getCode()).append(&quot;\n}&quot;);</span>
+<span class="nc" id="L93">        }</span>
+<span class="nc" id="L94">        methodBody.append(&quot;}\n&quot;);</span>
+  
+      } else {
+  
+<span class="nc" id="L98">        int i = 0;</span>
+<span class="nc" id="L99">        methodBody.append(&quot;String path = getPath($1);\n&quot;);</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (PathAndCode pathAndCode : pathAndCodes) {</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">          if (i == 0) {</span>
+<span class="nc" id="L102">            methodBody.append(&quot;if&quot;);</span>
+          } else {
+<span class="nc" id="L104">            methodBody.append(&quot;else if&quot;);</span>
+          }
+<span class="nc" id="L106">          methodBody.append(&quot;(\&quot;&quot; + pathAndCode.getPath() + &quot;\&quot;.equals(path)){\n&quot;);</span>
+<span class="nc" id="L107">          methodBody.append(pathAndCode.getCode());</span>
+<span class="nc" id="L108">          methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L109">          i++;</span>
+<span class="nc" id="L110">        }</span>
+  
+      }
+<span class="nc" id="L113">      methodBody.append(&quot;return $2;\n}&quot;);</span>
+<span class="nc" id="L114">      zapposJson.debug(&quot;\nReader code for \&quot;@\&quot;\n=========\n@\n=========\n&quot;, clazz, methodBody);</span>
+<span class="nc" id="L115">      ClassPool classPool = ClassPool.getDefault();</span>
+<span class="nc" id="L116">      classPool.importPackage(&quot;java.util&quot;);</span>
+<span class="nc" id="L117">      classPool.importPackage(&quot;java.math&quot;);</span>
+<span class="nc" id="L118">      CtClass jsonCtClass = classPool.get(JsonReader.class.getName());</span>
+  
+<span class="nc" id="L120">      String randomName = Strings.randomAlphabetic(16);</span>
+<span class="nc" id="L121">      jsonCtClass.setName(randomName + &quot;_JSON_Reader&quot;);</span>
+<span class="nc" id="L122">      CtMethod ctMethod = jsonCtClass.getDeclaredMethod(&quot;createObject&quot;,</span>
+<span class="nc" id="L123">          new CtClass[] { classPool.get(int.class.getName()),</span>
+<span class="nc" id="L124">              classPool.get(Map.class.getName()) });</span>
+<span class="nc" id="L125">      ctMethod.setBody(methodBody.toString());</span>
+<span class="nc" id="L126">      readerInvoker = new JsonReaderInvoker(zapposJson, jsonCtClass.toClass());</span>
+<span class="nc" id="L127">      JSON_READER_INVOKERS.put(clazz, readerInvoker);</span>
+      
+<span class="nc" id="L129">      return readerInvoker;</span>
+    }
+  }
+  
+  
+  private List&lt;PathAndCode&gt; generateJsonReaderBody(Class&lt;?&gt; clazz) throws Exception {
+
+<span class="fc" id="L136">    List&lt;PathAndCode&gt; pathAndCodes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L137">    Map&lt;String, TypeInfo&gt; typeInfos = new HashMap&lt;&gt;();</span>
+
+<span class="nc" id="L139">    traverseObjectTree(clazz, new String[JsonReader.MAX_OBJECT_TREE_DEEP], 1, typeInfos);</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">    for (Map.Entry&lt;String, TypeInfo&gt; entry : typeInfos.entrySet()) {</span>
+
+<span class="nc" id="L143">      zapposJson.debug(&quot;Path: @, Mapping: @&quot;, entry.getKey(), entry.getValue());</span>
+
+<span class="nc" id="L145">      String path = entry.getKey();</span>
+<span class="nc" id="L146">      TypeInfo typeInfo = entry.getValue();</span>
+<span class="nc" id="L147">      String typeName = typeInfo.getType().getName();</span>
+
+<span class="nc" id="L149">      String code = typeName + &quot; __o = new &quot; + typeName + &quot;();\n&quot;;</span>
+
+<span class="nc bnc" id="L151" title="All 2 branches missed.">      for (AttributeInfo attrInfo: typeInfo.getAttributeInfos()) {</span>
+        
+<span class="nc" id="L153">        Method writeMethod = attrInfo.getDetail().getMethod();</span>
+<span class="nc" id="L154">        String jsonKey = attrInfo.getDetail().getJsonKey();</span>
+<span class="nc" id="L155">        String writeMethodName = writeMethod.getName();</span>
+<span class="nc" id="L156">        String valueName = Character.toLowerCase(writeMethodName.charAt(3))</span>
+<span class="nc" id="L157">            + writeMethodName.substring(4);</span>
+<span class="nc" id="L158">        String tmpValueName = &quot;_&quot; + valueName;</span>
+<span class="nc" id="L159">        Class&lt;?&gt; attrType = attrInfo.getAttributeType();</span>
+<span class="nc" id="L160">        code += &quot;Object &quot; + tmpValueName + &quot; = $2.get(\&quot;&quot; + jsonKey + &quot;\&quot;);\n&quot;;</span>
+<span class="nc" id="L161">        code += &quot;if(&quot; + tmpValueName + &quot; != null){\n&quot;;</span>
+
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        if (attrType.isArray()</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">            || attrInfo.getArrayType() == 1) { /* native array type */</span>
+          /*
+           * Note: javassist doesn't understand syntax after Java 1.4
+           */
+<span class="nc bnc" id="L168" title="All 2 branches missed.">          Class&lt;?&gt; componentType = (attrInfo.getArrayType() == 1) ? attrType : attrType.getComponentType();</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">          if(componentType == byte.class){</span>
+<span class="nc" id="L170">            code += &quot;byte &quot;+valueName+&quot;[] =  javax.xml.bind.DatatypeConverter.parseBase64Binary((String)&quot;+tmpValueName+&quot;);\n&quot;;</span>
+          }else{
+<span class="nc" id="L172">            code += generateArrayFromListCode(attrInfo.getDetail(), componentType, valueName, tmpValueName);</span>
+          }
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        } else if (Iterable.class.isAssignableFrom(attrType)</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">            || attrInfo.getArrayType() == 2) { /* collection type */</span>
+<span class="nc" id="L176">          Class&lt;?&gt; collectionType = null;</span>
+<span class="nc" id="L177">          Class&lt;?&gt; componentType = null;</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">          if (attrInfo.getArrayType() == 2) {</span>
+            /* collection of object */
+<span class="nc" id="L180">            componentType = attrType;</span>
+<span class="nc" id="L181">            collectionType = attrInfo.getCollectionType();</span>
+          } else {
+<span class="nc" id="L183">            componentType = Reflections.getFirstGenericParameterType(writeMethod);</span>
+<span class="nc" id="L184">            collectionType = attrType;</span>
+          }
+<span class="nc" id="L186">          code += generateCollectionCode(attrInfo.getDetail(), collectionType, componentType, valueName, tmpValueName);</span>
+          
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        } else if (Map.class.isAssignableFrom(attrType)) { /* map type */</span>
+          
+<span class="nc" id="L190">          Class&lt;?&gt; componentType = Reflections.getSecondGenericParameterType(writeMethod);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">          if (componentType == null) {</span>
+<span class="nc" id="L192">            throw new RuntimeException(&quot;Cannot find type of Map&quot;);</span>
+          }
+          
+<span class="nc" id="L195">          Class&lt;?&gt; mapType = attrType;</span>
+<span class="nc" id="L196">          JsonType jsonType = JsonType.toJsonType(componentType);</span>
+          
+<span class="nc" id="L198">          TypeImpl typeImpl = TypeImpl.getMapImpl(mapType);</span>
+<span class="nc" id="L199">          code += &quot;Map &quot; + tmpValueName + &quot;_map = (Map)&quot; + tmpValueName + &quot;;\n&quot;;</span>
+<span class="nc" id="L200">          code += typeImpl.getInfClass().getName() + &quot; &quot; + valueName</span>
+<span class="nc" id="L201">                    + &quot; = new &quot; + typeImpl.getImplClass().getName() + &quot;();\n&quot;;</span>
+<span class="nc" id="L202">          code += &quot;Iterator &quot; + tmpValueName + &quot;_iter = &quot; + tmpValueName + &quot;_map.keySet().iterator();\n&quot;;</span>
+<span class="nc" id="L203">          code += &quot;while(&quot; + tmpValueName + &quot;_iter.hasNext()){\n&quot;;</span>
+<span class="nc" id="L204">          code += &quot;String _key = (String)&quot; + tmpValueName + &quot;_iter.next();\n&quot;;</span>
+<span class="nc" id="L205">          code += &quot;Object _m1 = &quot; + tmpValueName + &quot;_map.get(_key);\n&quot;;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">          if(jsonType == JsonType.OBJECT){</span>
+            //TODO: change this!!! it's bad...
+            /* This one does the trick but it is going to be slow to convert json -&gt; map -&gt; json */
+//            code += &quot;System.out.println(\&quot;=======&gt;0:\&quot;+zapposJson.toJson((Map)_m1));\n&quot;;
+<span class="nc" id="L210">            code += &quot;Object _m2 = zapposJson.fromJson(zapposJson.toJson((Map)_m1), &quot;+componentType.getName()+&quot;.class);\n&quot;;</span>
+//            code += &quot;System.out.println(\&quot;=======&gt;1:\&quot;+_m1);\n&quot;;
+//            code += &quot;System.out.println(\&quot;=======&gt;2:\&quot;+zapposJson.toJson((Map)_m1));\n&quot;;
+<span class="nc bnc" id="L213" title="All 2 branches missed.">          }else if(jsonType == JsonType.ARRAY){</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            if(componentType.isArray()){</span>
+<span class="nc" id="L215">              componentType = componentType.getComponentType();</span>
+<span class="nc" id="L216">              code += generateArrayFromListCode(attrInfo.getDetail(), componentType, &quot;_m2&quot;, &quot;_m1&quot;);</span>
+            }else{
+<span class="nc" id="L218">              throw new RuntimeException(&quot;Map of collection not support&quot;);</span>
+            }
+          }else{
+<span class="nc" id="L221">            code += generateTypeConversionCode(attrInfo.getDetail(), componentType, &quot;_m2&quot;, &quot;_m1&quot;);</span>
+          }
+<span class="nc" id="L223">          code += valueName + &quot;.put(_key, _m2);\n&quot;;</span>
+<span class="nc" id="L224">          code += &quot;}\n&quot;;</span>
+          
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        } else if(attrInfo.getDetail().getFormatterClass() != null){</span>
+            
+<span class="nc" id="L228">            String formatterClassName = attrInfo.getDetail().getFormatterClass().getName();</span>
+<span class="nc" id="L229">            String formatterVar = Strings.randomAlphabetic(6)+&quot;_fmt&quot;;</span>
+<span class="nc" id="L230">            code += formatterClassName + &quot; &quot; + formatterVar + &quot; = new &quot; + formatterClassName + &quot;();\n&quot;;</span>
+            
+<span class="nc bnc" id="L232" title="All 2 branches missed.">            if(attrInfo.getDetail().getFormatterPattern() != null){</span>
+<span class="nc" id="L233">              code += formatterVar + &quot;.setPattern(\&quot;&quot; + attrInfo.getDetail().getFormatterPattern() + &quot;\&quot;);\n&quot;;</span>
+            }
+            
+<span class="nc" id="L236">            code += attrType.getName() + &quot; &quot; + valueName + &quot; = (&quot; + attrType.getName()</span>
+              + &quot;)&quot; + formatterVar + &quot;.parse(zapposJson, String.valueOf(&quot; + tmpValueName + &quot;));\n&quot;;
+            
+<span class="nc" id="L239">        } else {</span>
+          
+<span class="nc" id="L241">          code += generateTypeConversionCode(attrInfo.getDetail(), attrType, valueName, tmpValueName);</span>
+          
+        }
+        
+<span class="nc" id="L245">        code += &quot;__o.&quot; + writeMethodName + &quot;(&quot; + valueName + &quot;);\n&quot;;</span>
+<span class="nc" id="L246">        code += &quot;};\n&quot;;</span>
+        
+<span class="nc" id="L248">      }</span>
+
+<span class="nc" id="L250">      code += &quot;return __o;\n&quot;;</span>
+
+<span class="nc" id="L252">      pathAndCodes.add(new PathAndCode(path, code));</span>
+      
+<span class="nc" id="L254">    }</span>
+
+<span class="nc" id="L256">    return pathAndCodes;</span>
+
+  }
+  
+  private void traverseObjectTree(Class&lt;?&gt; clazz, String paths[], int level,
+      Map&lt;String, TypeInfo&gt; typeInfos) throws Exception {
+
+<span class="nc" id="L263">    List&lt;JsonBeanAttribute&gt; attributes = beanIntrospector.getMutators(clazz);</span>
+    
+<span class="nc bnc" id="L265" title="All 2 branches missed.">    for (JsonBeanAttribute beanAttr: attributes) {</span>
+
+<span class="nc" id="L267">      Method writeMethod = beanAttr.getMethod();</span>
+<span class="nc" id="L268">      String jsonKey = beanAttr.getJsonKey();</span>
+<span class="nc" id="L269">      Class&lt;?&gt; attrType = writeMethod.getParameterTypes()[0];</span>
+<span class="nc" id="L270">      JsonType jsonType = JsonType.toJsonType(attrType);</span>
+
+<span class="nc" id="L272">      boolean arrayOfObject = false;</span>
+<span class="nc bnc" id="L273" title="All 2 branches missed.">      if (attrType.isArray()) {</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">        if (JsonType.toJsonType(attrType.getComponentType()) == JsonType.OBJECT) {</span>
+<span class="nc" id="L275">          arrayOfObject = true;</span>
+<span class="nc" id="L276">          attrType = attrType.getComponentType();</span>
+        }
+      }
+
+<span class="nc" id="L280">      Class&lt;?&gt; collectionType = null;</span>
+<span class="nc" id="L281">      boolean collectionOfObject = false;</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">      if (Iterable.class.isAssignableFrom(attrType)) {</span>
+<span class="nc" id="L283">        Class&lt;?&gt; genericType = Reflections.getFirstGenericParameterType(writeMethod);</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">        if (genericType != null) {</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">          if (JsonType.toJsonType(genericType) == JsonType.OBJECT) {</span>
+<span class="nc" id="L286">            collectionType = attrType;</span>
+<span class="nc" id="L287">            collectionOfObject = true;</span>
+<span class="nc" id="L288">            attrType = genericType;</span>
+          }
+        }else{
+<span class="nc" id="L291">          throw new JsonException(&quot;Unknown type of collection&quot;);</span>
+        }
+      }
+ 
+<span class="nc bnc" id="L295" title="All 2 branches missed.">      if (Map.class.isAssignableFrom(attrType)) {</span>
+<span class="nc" id="L296">        Class&lt;?&gt; genericTypes[] = Reflections.getGenericParameterTypes(writeMethod);</span>
+<span class="nc bnc" id="L297" title="All 4 branches missed.">        if (genericTypes != null &amp;&amp; genericTypes.length == 2) {</span>
+<span class="nc bnc" id="L298" title="All 2 branches missed.">          if (genericTypes[0] != String.class) {</span>
+<span class="nc" id="L299">            throw new JsonException(&quot;Map key must be string&quot;);</span>
+          }
+        }else{
+<span class="nc" id="L302">          throw new JsonException(&quot;Unknown type of map&quot;);</span>
+        }
+      }
+      
+<span class="nc bnc" id="L306" title="All 4 branches missed.">      if ((jsonType == JsonType.OBJECT &amp;&amp; !Map.class.isAssignableFrom(attrType)</span>
+<span class="nc bnc" id="L307" title="All 6 branches missed.">          &amp;&amp; zapposJson.getValueFormatter(attrType) == null) || arrayOfObject</span>
+          || collectionOfObject) {
+<span class="nc" id="L309">        paths[level] = jsonKey;</span>
+<span class="nc" id="L310">        String path = getObjectAccessPath(paths, level);</span>
+<span class="nc" id="L311">        TypeInfo typeInfo = getTypeInfo(typeInfos, path, clazz);</span>
+<span class="nc" id="L312">        AttributeInfo attrInfo = typeInfo.addAttributeInfo(attrType, beanAttr);</span>
+<span class="nc bnc" id="L313" title="All 2 branches missed.">        if (arrayOfObject) {</span>
+<span class="nc" id="L314">          attrInfo.setArrayType(1);</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">        } else if (collectionOfObject) {</span>
+<span class="nc" id="L316">          attrInfo.setArrayType(2).setCollectionType(collectionType);</span>
+        }
+<span class="nc" id="L318">        traverseObjectTree(attrType, paths, level + 1, typeInfos);</span>
+<span class="nc" id="L319">      } else {</span>
+<span class="nc" id="L320">        String path = getObjectAccessPath(paths, level);</span>
+<span class="nc" id="L321">        TypeInfo typeInfo = getTypeInfo(typeInfos, path, clazz);</span>
+<span class="nc" id="L322">        typeInfo.addAttributeInfo(attrType, beanAttr);</span>
+      }
+<span class="nc" id="L324">    }</span>
+
+<span class="nc" id="L326">  }</span>
+
+  /**
+   * 
+   * @param paths
+   * @param level
+   * @return
+   */
+  private String getObjectAccessPath(String paths[], int level) {
+
+<span class="nc bnc" id="L336" title="All 2 branches missed.">    if (level == 1)</span>
+<span class="nc" id="L337">      return &quot;&quot;;</span>
+<span class="nc" id="L338">    String path = paths[1];</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">    for (int i = 2; i &lt; level; i++) {</span>
+<span class="nc" id="L340">      path = path + &quot;.&quot; + paths[i];</span>
+    }
+
+<span class="nc" id="L343">    return path;</span>
+
+  }
+
+  /**
+   * Get the TypeInfo object from specified path or return the new one if it does not exist.
+   * @param typeMaps
+   * @param path
+   * @param superType
+   * @return
+   */
+  private TypeInfo getTypeInfo(Map&lt;String, TypeInfo&gt; typeMaps, String path, Class&lt;?&gt; superType) {
+
+<span class="nc" id="L356">    TypeInfo typeInfo = typeMaps.get(path);</span>
+<span class="nc bnc" id="L357" title="All 2 branches missed.">    if (typeInfo == null) {</span>
+<span class="nc" id="L358">      typeInfo = new TypeInfo(superType);</span>
+<span class="nc" id="L359">      typeMaps.put(path, typeInfo);</span>
+    }
+
+<span class="nc" id="L362">    return typeInfo;</span>
+
+  }
+  
+  /**
+   * 
+   * @param collectionType
+   * @param componentType
+   * @param valueName
+   * @param tmpValueName
+   * @return
+   */
+  private String generateCollectionCode(JsonBeanAttribute beanAttr, Class&lt;?&gt; collectionType, Class&lt;?&gt; componentType,
+      String valueName, String tmpValueName){
+    
+<span class="nc bnc" id="L377" title="All 2 branches missed.">    if (componentType == null) {</span>
+<span class="nc" id="L378">      throw new RuntimeException(&quot;Cannot find type of Collection&quot;);</span>
+    }
+<span class="nc" id="L380">    String code = &quot;&quot;;</span>
+<span class="nc" id="L381">    TypeImpl typeImpl = TypeImpl.getIterableImpl(collectionType);</span>
+<span class="nc" id="L382">    code += &quot;List &quot; + tmpValueName + &quot;_list = (List)&quot; + tmpValueName + &quot;;\n&quot;;</span>
+<span class="nc" id="L383">    code += typeImpl.getInfClass().getName() + &quot; &quot; + valueName</span>
+<span class="nc" id="L384">        + &quot; = new &quot; + typeImpl.getImplClass().getName() + &quot;();\n&quot;;</span>
+<span class="nc" id="L385">    code += &quot;for(int _i = 0; _i &lt; &quot; + tmpValueName + &quot;_list.size(); _i++){\n&quot;;</span>
+<span class="nc" id="L386">    code += &quot;Object _l1 = &quot; + tmpValueName + &quot;_list.get(_i);\n&quot;;</span>
+<span class="nc" id="L387">    code += generateTypeConversionCode(beanAttr, componentType, &quot;_l2&quot;, &quot;_l1&quot;);</span>
+<span class="nc" id="L388">    code += valueName + &quot;.add(_l2);\n&quot;;</span>
+<span class="nc" id="L389">    code += &quot;}\n&quot;;</span>
+<span class="nc" id="L390">    return code;</span>
+  }
+  
+  /**
+   * 
+   * @param attrType
+   * @param valueName
+   * @param tmpValueName
+   * @return
+   */
+  private String generateArrayFromListCode(JsonBeanAttribute beanAttr, Class&lt;?&gt; attrType, 
+      String valueName, String tmpValueName) {
+
+<span class="nc" id="L403">    String code = &quot;&quot;;</span>
+<span class="nc" id="L404">    code += &quot;List &quot; + tmpValueName + &quot;_list = (List)&quot; + tmpValueName + &quot;;\n&quot;;</span>
+<span class="nc" id="L405">    code += attrType.getName() + &quot; &quot; + valueName + &quot;[] = new &quot;</span>
+<span class="nc" id="L406">            + attrType.getName() + &quot;[&quot; + tmpValueName + &quot;_list.size()];\n&quot;;</span>
+<span class="nc" id="L407">    code += &quot;for(int _i = 0; _i &lt; &quot; + tmpValueName + &quot;_list.size(); _i++){\n&quot;;</span>
+<span class="nc" id="L408">    code += &quot;Object _l1 = &quot; + tmpValueName + &quot;_list.get(_i);\n&quot;;</span>
+<span class="nc" id="L409">    code += generateTypeConversionCode(beanAttr, attrType, &quot;_l2&quot;, &quot;_l1&quot;);</span>
+<span class="nc" id="L410">    code += valueName + &quot;[_i] = _l2;\n&quot;;</span>
+<span class="nc" id="L411">    code += &quot;}\n&quot;;</span>
+<span class="nc" id="L412">    code += &quot;&quot;;</span>
+<span class="nc" id="L413">    return code;</span>
+
+  }
+
+  /**
+   * 
+   * @param attrType
+   * @param valueName
+   * @param tmpValueName
+   * @return
+   */
+  private String generateTypeConversionCode(JsonBeanAttribute beanAttr, Class&lt;?&gt; attrType, 
+      String valueName, String tmpValueName) {
+
+<span class="nc" id="L427">    String valueDeclaration = null;</span>
+
+<span class="nc bnc" id="L429" title="All 2 branches missed.">    if (attrType.isPrimitive()) {</span>
+
+<span class="nc bnc" id="L431" title="All 2 branches missed.">      if (attrType == boolean.class) {</span>
+<span class="nc" id="L432">        valueDeclaration = &quot;boolean @ = ((Boolean)@).booleanValue();\n&quot;;</span>
+<span class="nc bnc" id="L433" title="All 2 branches missed.">      } else if (attrType == char.class) {</span>
+<span class="nc" id="L434">        valueDeclaration = &quot;char @ = new Character((String)@).charValue();\n&quot;;</span>
+<span class="nc bnc" id="L435" title="All 2 branches missed.">      } else if (attrType == byte.class) {</span>
+<span class="nc" id="L436">        valueDeclaration = &quot;byte @ = Byte.parseByte((String)@);\n&quot;;</span>
+<span class="nc bnc" id="L437" title="All 2 branches missed.">      } else if (attrType == short.class) {</span>
+<span class="nc" id="L438">        valueDeclaration = &quot;short @ = Short.parseShort((String)@);\n&quot;;</span>
+<span class="nc bnc" id="L439" title="All 2 branches missed.">      } else if (attrType == int.class) {</span>
+<span class="nc" id="L440">        valueDeclaration = &quot;int @ = Integer.parseInt((String)@);\n&quot;;</span>
+<span class="nc bnc" id="L441" title="All 2 branches missed.">      } else if (attrType == long.class) {</span>
+<span class="nc" id="L442">        valueDeclaration = &quot;long @ = Long.parseLong((String)@);\n&quot;;</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">      } else if (attrType == float.class) {</span>
+<span class="nc" id="L444">        valueDeclaration = &quot;float @ = Float.parseFloat((String)@);\n&quot;;</span>
+<span class="nc bnc" id="L445" title="All 2 branches missed.">      } else if (attrType == double.class) {</span>
+<span class="nc" id="L446">        valueDeclaration = &quot;double @ = Double.parseDouble((String)@);\n&quot;;</span>
+      }
+
+<span class="nc bnc" id="L449" title="All 2 branches missed.">    } else if (Number.class.isAssignableFrom(attrType)) {</span>
+
+<span class="nc bnc" id="L451" title="All 16 branches missed.">      if (attrType == Byte.class || attrType == Short.class</span>
+          || attrType == Integer.class || attrType == Long.class
+          || attrType == Float.class || attrType == Double.class
+          || attrType == BigDecimal.class || attrType == BigInteger.class) {
+<span class="nc" id="L455">        valueDeclaration = attrType.getName() + &quot; @ = new &quot; + attrType.getName() + &quot;((String)@);\n&quot;;</span>
+      } else {
+        // TODO: make it better
+<span class="nc" id="L458">        valueDeclaration = attrType.getName() + &quot; @ = (&quot; + attrType.getName()</span>
+<span class="nc" id="L459">            + &quot;)zapposJson.getValueFormatter(&quot; + attrType.getName()</span>
+            + &quot;.class).parse(zapposJson, (String)@);\n&quot;;
+      }
+
+<span class="nc bnc" id="L463" title="All 2 branches missed.">    } else if (attrType == Boolean.class) {</span>
+      /* No need to parse. The type is already Boolean */
+<span class="nc" id="L465">      valueDeclaration = &quot;Boolean @ =  (Boolean)@;\n&quot;;</span>
+
+<span class="nc bnc" id="L467" title="All 2 branches missed.">    } else if (attrType == Character.class) {</span>
+<span class="nc" id="L468">      valueDeclaration = &quot;Character @ = new Character((String)@);\n&quot;;</span>
+
+<span class="nc bnc" id="L470" title="All 2 branches missed.">    } else if (attrType == String.class) {</span>
+      /* No need to parse. The type is already String */
+<span class="nc" id="L472">      valueDeclaration = &quot;String @ =  (String)@;\n&quot;;</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">    } else if (attrType.isEnum()){</span>
+<span class="nc" id="L474">      valueDeclaration = attrType.getName() + &quot; @ = &quot; + attrType.getCanonicalName();</span>
+<span class="nc bnc" id="L475" title="All 4 branches missed.">      if(beanAttr.getEnumValue() == null || beanAttr.getEnumValue() == EnumValue.STRING){ </span>
+<span class="nc" id="L476">        valueDeclaration += &quot;.valueOf(String.valueOf(@));\n&quot;;</span>
+      }else{
+<span class="nc" id="L478">        valueDeclaration += &quot;.values()[Integer.parseInt((String)@)];\n&quot;;</span>
+      }
+    } else {
+      // object?
+<span class="nc bnc" id="L482" title="All 2 branches missed.">      if (zapposJson.getValueFormatter(attrType) != null) {</span>
+<span class="nc" id="L483">        valueDeclaration = attrType.getName() + &quot; @ = (&quot; + attrType.getName()</span>
+<span class="nc" id="L484">            + &quot;)zapposJson.getValueFormatter(&quot; + attrType.getName()</span>
+            + &quot;.class).parse(zapposJson, String.valueOf(@));\n&quot;;
+      } else {
+<span class="nc" id="L487">        valueDeclaration = attrType.getName() + &quot; @ = (&quot; + attrType.getName() + &quot;)@;\n&quot;;</span>
+      }
+
+    }
+
+<span class="nc" id="L492">    return Strings.format(valueDeclaration, valueName, tmpValueName);</span>
+  }
+  
+  /**
+   * POJO bean storing attribute path and generated Java code.
+   * @author hussachai
+   *
+   */
+  static class PathAndCode {
+    
+    /**
+     * Attribute path. The nested property name that is separated by dot notation.
+     */
+    private String path;
+
+    /**
+     * Generated Java code for reading a value from JSON to a target type.
+     */
+    private String code;
+
+<span class="fc" id="L512">    public PathAndCode(String path, String code) {</span>
+<span class="fc" id="L513">      this.path = path;</span>
+<span class="fc" id="L514">      this.code = code;</span>
+<span class="fc" id="L515">    }</span>
+
+    public String getPath() {
+<span class="fc" id="L518">      return path;</span>
+    }
+
+    public String getCode() {
+<span class="fc" id="L522">      return code;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L527">      final int prime = 31;</span>
+<span class="nc" id="L528">      int result = 1;</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">      result = prime * result + ((path == null) ? 0 : path.hashCode());</span>
+<span class="nc" id="L530">      return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L535" title="1 of 2 branches missed.">      if (this == obj)</span>
+<span class="nc" id="L536">        return true;</span>
+<span class="pc bpc" id="L537" title="1 of 2 branches missed.">      if (obj == null)</span>
+<span class="nc" id="L538">        return false;</span>
+<span class="pc bpc" id="L539" title="1 of 2 branches missed.">      if (getClass() != obj.getClass())</span>
+<span class="nc" id="L540">        return false;</span>
+<span class="fc" id="L541">      PathAndCode other = (PathAndCode) obj;</span>
+<span class="pc bpc" id="L542" title="1 of 2 branches missed.">      if (path == null) {</span>
+<span class="nc bnc" id="L543" title="All 2 branches missed.">        if (other.path != null)</span>
+<span class="nc" id="L544">          return false;</span>
+<span class="pc bpc" id="L545" title="1 of 2 branches missed.">      } else if (!path.equals(other.path))</span>
+<span class="fc" id="L546">        return false;</span>
+<span class="nc" id="L547">      return true;</span>
+    }
+
+  }
+
+  /**
+   * 
+   * @author hussachai
+   *
+   */
+  static class TypeInfo {
+
+    private Class&lt;?&gt; type;
+
+<span class="fc" id="L561">    private List&lt;AttributeInfo&gt; attrInfos = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L563">    public TypeInfo(Class&lt;?&gt; type) {</span>
+<span class="fc" id="L564">      this.type = type;</span>
+<span class="fc" id="L565">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L569">      return type.getSimpleName() + attrInfos;</span>
+    }
+
+    public Class&lt;?&gt; getType() {
+<span class="fc" id="L573">      return type;</span>
+    }
+
+    public AttributeInfo addAttributeInfo(Class&lt;?&gt; type, JsonBeanAttribute detail) {
+<span class="fc" id="L577">      AttributeInfo attrMapping = new AttributeInfo(type, detail);</span>
+<span class="fc" id="L578">      attrInfos.add(attrMapping);</span>
+<span class="fc" id="L579">      return attrMapping;</span>
+    }
+    
+    public List&lt;AttributeInfo&gt; getAttributeInfos() {
+<span class="fc" id="L583">      return attrInfos;</span>
+    }
+
+  }
+
+  /**
+   * 
+   * @author hussachai
+   *
+   */
+  static class AttributeInfo {
+
+    private Class&lt;?&gt; attrType;
+
+    /**
+     * 0 for not an array, 1 for native, 2 for
+     * collection
+     */
+<span class="fc" id="L601">    private int arrayType = 0; </span>
+    
+    private Class&lt;?&gt; collectionType;
+    
+    private JsonBeanAttribute detail;
+    
+<span class="fc" id="L607">    public AttributeInfo(Class&lt;?&gt; attrType, JsonBeanAttribute detail) {</span>
+<span class="fc" id="L608">      this.attrType = attrType;</span>
+<span class="fc" id="L609">      this.detail = detail;</span>
+<span class="fc" id="L610">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L614">      return attrType.getSimpleName() + &quot;#&quot; + detail.toString() + &quot;-&gt;&quot; + detail.getJsonKey();</span>
+    }
+
+    public JsonBeanAttribute getDetail(){
+<span class="fc" id="L618">      return detail;</span>
+    }
+    
+    public AttributeInfo setArrayType(int arrayType) {
+<span class="fc" id="L622">      this.arrayType = arrayType;</span>
+<span class="fc" id="L623">      return this;</span>
+    }
+
+    public int getArrayType() {
+<span class="fc" id="L627">      return arrayType;</span>
+    }
+
+    public AttributeInfo setCollectionType(Class&lt;?&gt; collectionType) {
+<span class="fc" id="L631">      this.collectionType = collectionType;</span>
+<span class="fc" id="L632">      return this;</span>
+    }
+
+    public Class&lt;?&gt; getCollectionType() {
+<span class="nc" id="L636">      return collectionType;</span>
+    }
+
+    public Class&lt;?&gt; getAttributeType() {
+<span class="fc" id="L640">      return attrType;</span>
+    }
+    
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

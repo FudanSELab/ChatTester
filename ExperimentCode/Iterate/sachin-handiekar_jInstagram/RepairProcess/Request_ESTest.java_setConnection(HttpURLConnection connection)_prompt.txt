@@ -1,0 +1,58 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetConnection() {
+        Verbs verb = Verbs.GET;
+        String url = "http://example.com";
+        Request request = new Request(verb, url);
+
+          <Buggy Line>: no suitable method found for openConnection(no arguments)
+        HttpURLConnection mockConnection = new MockURL().openConnection();
+
+        request.setConnection(mockConnection);
+        assertEquals(mockConnection, request.getConnection());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "MockURL" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "MockURL" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testSetConnection() {
+    Verbs verb = Verbs.GET;
+    String url = "http://example.com";
+    Request request = new Request(verb, url);
+    HttpURLConnection mockConnection = new MockURL() {
+
+      <Buggy Line>: method does not override or implement a method from a supertype
+        @Override
+
+        public HttpURLConnection openConnection() {
+            return new HttpURLConnection() {
+            };
+        }
+    }.openConnection();
+    request.setConnection(mockConnection);
+    assertEquals(mockConnection, request.getConnection());
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "MockURL" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "MockURL" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

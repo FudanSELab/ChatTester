@@ -1,0 +1,28 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetData() {
+        TagMediaFeed tagMediaFeed = new TagMediaFeed();
+        MediaFeedData media1 = new MediaFeedData();
+        MediaFeedData media2 = new MediaFeedData();
+
+       <Buggy Line>: diamond operator is not supported in -source 1.6
+        tagMediaFeed.setData(new LinkedList<>());
+
+        tagMediaFeed.getData().add(media1);
+        tagMediaFeed.getData().add(media2);
+        List<MediaFeedData> retrievedData = tagMediaFeed.getData();
+        assertNotNull(retrievedData);
+        assertEquals(2, retrievedData.size());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,16 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/common/Images_ESTest.java
+[GENERATED PATH] Images_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/common/Images_ESTest.java:[24,22] cannot find symbol
+  symbol:   method setUrl(java.lang.String)
+  location: variable lowResolution of type org.jinstagram.entity.common.ImageData
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/common/Images_ESTest.java:[26,27] cannot find symbol
+  symbol:   method setUrl(java.lang.String)
+  location: variable standardResolution of type org.jinstagram.entity.common.ImageData
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/common/Images_ESTest.java:[28,18] cannot find symbol
+  symbol:   method setUrl(java.lang.String)
+  location: variable thumbnail of type org.jinstagram.entity.common.ImageData
+[INFO] 3 errors 
+####################
+

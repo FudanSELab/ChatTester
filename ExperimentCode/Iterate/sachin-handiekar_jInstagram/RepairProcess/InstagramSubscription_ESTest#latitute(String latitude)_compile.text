@@ -1,0 +1,13 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java
+[GENERATED PATH] InstagramSubscription_ESTest#latitute(String latitude).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[26,21] cannot find symbol
+  symbol:   method latitude(java.lang.String)
+  location: variable subscription of type org.jinstagram.realtime.InstagramSubscription
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/realtime/InstagramSubscription_ESTest.java:[28,44] cannot find symbol
+  symbol:   method getParams()
+  location: variable subscription of type org.jinstagram.realtime.InstagramSubscription
+[INFO] 2 errors 
+####################
+

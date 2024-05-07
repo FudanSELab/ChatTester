@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectArray.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json.util</a> &gt; <span class="el_source">ObjectArray.java</span></div><h1>ObjectArray.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json.util;
+
+import java.util.Arrays;
+
+/**
+ * Trimmed version of ArrayList
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+<span class="fc" id="L26">public class ObjectArray {</span>
+
+<span class="fc" id="L28">  private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};</span>
+
+  private static final int DEFAULT_CAPACITY = 10;
+
+  private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
+  transient Object[] elementData;
+
+<span class="fc" id="L36">  transient int modCount = 0;</span>
+
+  private int size;
+
+  private void ensureExplicitCapacity(int minCapacity) {
+<span class="nc" id="L41">    modCount++;</span>
+    // overflow-conscious code
+<span class="nc bnc" id="L43" title="All 2 branches missed.">    if (minCapacity - elementData.length &gt; 0)</span>
+<span class="nc" id="L44">      grow(minCapacity);</span>
+<span class="nc" id="L45">  }</span>
+
+  private void ensureCapacityInternal(int minCapacity) {
+<span class="nc bnc" id="L48" title="All 2 branches missed.">    if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {</span>
+<span class="nc" id="L49">      minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);</span>
+    }
+
+<span class="nc" id="L52">    ensureExplicitCapacity(minCapacity);</span>
+<span class="nc" id="L53">  }</span>
+
+  private void grow(int minCapacity) {
+    // overflow-conscious code
+<span class="nc" id="L57">    int oldCapacity = elementData.length;</span>
+<span class="nc" id="L58">    int newCapacity = oldCapacity + (oldCapacity &gt;&gt; 1);</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">    if (newCapacity - minCapacity &lt; 0)</span>
+<span class="nc" id="L60">      newCapacity = minCapacity;</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">    if (newCapacity - MAX_ARRAY_SIZE &gt; 0)</span>
+<span class="nc" id="L62">      newCapacity = hugeCapacity(minCapacity);</span>
+    // minCapacity is usually close to size, so this is a win:
+<span class="nc" id="L64">    elementData = Arrays.copyOf(elementData, newCapacity);</span>
+<span class="nc" id="L65">  }</span>
+
+  private static int hugeCapacity(int minCapacity) {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">    if (minCapacity &lt; 0) // overflow</span>
+<span class="nc" id="L69">      throw new OutOfMemoryError();</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">    return (minCapacity &gt; MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;</span>
+  }
+
+  public boolean add(Object e) {
+<span class="nc" id="L74">    ensureCapacityInternal(size + 1); // Increments modCount!!</span>
+<span class="nc" id="L75">    elementData[size++] = e;</span>
+<span class="nc" id="L76">    return true;</span>
+  }
+
+  public Object get(int index) {
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">    if (index &gt;= size)</span>
+<span class="fc" id="L81">      throw new IndexOutOfBoundsException(</span>
+          &quot;Index: &quot; + index + &quot;, Size: &quot; + size);
+<span class="nc" id="L83">    return elementData[index];</span>
+  }
+
+  public int size() {
+<span class="nc" id="L87">    return size;</span>
+  }
+
+  public Object[] toArray() {
+<span class="nc" id="L91">    return Arrays.copyOf(elementData, size);</span>
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public &lt;T&gt; T[] toArray(T[] a) {
+<span class="nc" id="L96">    return (T[]) Arrays.copyOf(elementData, size, a.getClass());</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

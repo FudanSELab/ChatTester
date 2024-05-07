@@ -1,0 +1,32 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testAppendParametersToQueryString() {
+        String url = "https://example.com/api";
+
+           <Buggy Line>: diamond operator is not supported in -source 1.6
+        Map<String, String> params = new HashMap<>();
+
+        params.put("param1", "value1");
+        params.put("param2", "value2");
+        String result = URLUtils.appendParametersToQueryString(url, params);
+        assert result.contains(url);
+        assert result.contains("param1=value1");
+        assert result.contains("param2=value2");
+        if (url.contains("?")) {
+            assert result.contains("&");
+        } else {
+            assert result.contains("?");
+        }
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RectangleSpatialIndex.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">RectangleSpatialIndex.java</span></div><h1>RectangleSpatialIndex.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.index.strtree.STRtree;
+
+<span class="nc" id="L9">public class RectangleSpatialIndex&lt;T extends Rectangle&gt; {</span>
+    
+
+<span class="nc" id="L12">    private final STRtree si = new STRtree();</span>
+<span class="nc" id="L13">    private final List&lt;T&gt; rectangles = new ArrayList&lt;&gt;();</span>
+
+    public void add(T te) {
+<span class="nc" id="L16">        rectangles.add(te);</span>
+<span class="nc" id="L17">        si.insert(new Envelope(te.getLeft(), te.getRight(), te.getBottom(), te.getTop()), te);</span>
+<span class="nc" id="L18">    }</span>
+    
+    public List&lt;T&gt; contains(Rectangle r) {
+<span class="nc" id="L21">        List&lt;T&gt; intersection = si.query(new Envelope(r.getLeft(), r.getRight(), r.getTop(), r.getBottom()));</span>
+<span class="nc" id="L22">        List&lt;T&gt; rv = new ArrayList&lt;T&gt;();</span>
+
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        for (T ir: intersection) {</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">            if (r.contains(ir)) {</span>
+<span class="nc" id="L26">                rv.add(ir);</span>
+            }
+<span class="nc" id="L28">        }</span>
+
+<span class="nc" id="L30">        Utils.sort(rv, Rectangle.ILL_DEFINED_ORDER);</span>
+<span class="nc" id="L31">        return rv;</span>
+    }
+    
+    public List&lt;T&gt; intersects(Rectangle r) {
+<span class="nc" id="L35">      return si.query(new Envelope(r.getLeft(), r.getRight(), r.getTop(), r.getBottom()));</span>
+    }
+    
+    /**
+     * Minimum bounding box of all the Rectangles contained on this RectangleSpatialIndex
+     * 
+     * @return a Rectangle
+     */
+    public Rectangle getBounds() {
+<span class="nc" id="L44">        return Rectangle.boundingBoxOf(rectangles);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TagMediaFeed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.tags</a> &gt; <span class="el_source">TagMediaFeed.java</span></div><h1>TagMediaFeed.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.tags;
+
+import com.google.gson.annotations.SerializedName;
+
+import org.jinstagram.InstagramObject;
+import org.jinstagram.entity.common.Meta;
+import org.jinstagram.entity.common.Pagination;
+import org.jinstagram.entity.users.feed.MediaFeedData;
+import org.jinstagram.entity.users.feed.MediaFeed;
+
+import java.util.List;
+
+/**
+ * @deprecated This model is deprecated in favor of {@link MediaFeed}. {@link MediaFeed}
+ * generalizes the media returned for both users and tags. In the next major version release
+ * ({@code 2.0}), {@link TagMediaFeed} will be removed.
+ */
+@Deprecated
+<span class="fc" id="L19">public class TagMediaFeed extends InstagramObject{</span>
+	@SerializedName(&quot;data&quot;)
+	private List&lt;MediaFeedData&gt; data;
+
+	@SerializedName(&quot;meta&quot;)
+	private Meta meta;
+
+	@SerializedName(&quot;pagination&quot;)
+	private Pagination pagination;
+
+	/**
+	 * @return the pagination
+	 */
+	public Pagination getPagination() {
+<span class="fc" id="L33">		return pagination;</span>
+	}
+
+	/**
+	 * @param pagination the pagination to set
+	 */
+	public void setPagination(Pagination pagination) {
+<span class="nc" id="L40">		this.pagination = pagination;</span>
+<span class="nc" id="L41">	}</span>
+
+	/**
+	 * @return the meta
+	 */
+	public Meta getMeta() {
+<span class="fc" id="L47">		return meta;</span>
+	}
+
+	/**
+	 * @param meta the meta to set
+	 */
+	public void setMeta(Meta meta) {
+<span class="fc" id="L54">		this.meta = meta;</span>
+<span class="fc" id="L55">	}</span>
+
+	/**
+	 * @return the data
+	 */
+	public List&lt;MediaFeedData&gt; getData() {
+<span class="fc" id="L61">		return data;</span>
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public void setData(List&lt;MediaFeedData&gt; data) {
+<span class="fc" id="L68">		this.data = data;</span>
+<span class="fc" id="L69">	}</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L73">        return String.format(&quot;TagMediaFeed [data=%s, meta=%s, pagination=%s]&quot;, data, meta, pagination);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

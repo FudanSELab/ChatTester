@@ -1,0 +1,47 @@
+0-->1-->0-->compileRepair
+
+# ZapposJson class
+package com.zappos.json;
+public class ZapposJson {
+public static ZapposJson getInstance();
+public static synchronized ZapposJson getInstance(String name);
+public void register(Class<?>... classes);
+public void register(Class<?> clazz);
+public void deregister(Class<?> clazz);
+public void deregisterAll();
+public void addValueFormatter(Class<?> objectType, ValueFormatter<?> valueFormatter);
+public void removeValueFormatter(Class<?> objectType);
+public ValueFormatter<Object> getValueFormatter(Class<?> objectType);
+public synchronized void configure(ReaderConfig config, boolean value);
+public synchronized boolean is(ReaderConfig config);
+public synchronized void configure(WriterConfig config, boolean value);
+public synchronized boolean is(WriterConfig config);
+public String format(Object value);
+public String toJson(Object object);
+public void toJson(Object object, Writer writer);
+public T fromJson(String json, Class<T> targetClass);
+public T fromJson(Reader reader, Class<T> targetClass);
+}
+
+
+# Test Method
+    @Test
+    public void testUnescape() {
+
+          <Buggy Line>: constructor ZapposJson in class com.zappos.json.ZapposJson cannot be applied to given types;
+        ZapposJson zapposJson = new ZapposJson();
+
+        CharSequence value = "This is a \\\"test\\\" string";
+        String unescapedValue = JsonUtils.unescape(zapposJson, value);
+        assertEquals("This is a \"test\" string", unescapedValue);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "ZapposJson" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "ZapposJson" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

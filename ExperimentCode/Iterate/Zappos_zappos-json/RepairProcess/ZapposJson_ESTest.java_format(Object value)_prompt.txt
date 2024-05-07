@@ -1,0 +1,95 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testFormat() {
+        ZapposJson zapposJson = ZapposJson.getInstance();
+
+        <Buggy Line>: cannot find symbol class "IntegerFormatter"
+        zapposJson.addValueFormatter(Integer.class, new IntegerFormatter());
+
+        String formattedValue1 = zapposJson.format(42);
+        assertEquals("42", formattedValue1);
+        String formattedValue2 = zapposJson.format("Hello");
+        assertEquals("Hello", formattedValue2);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testFormat() {
+    ZapposJson zapposJson = ZapposJson.getInstance();
+
+    <Buggy Line>: cannot find symbol class "DefaultFormatter"
+    zapposJson.addValueFormatter(Integer.class, new DefaultFormatter());
+
+    String formattedValue1 = zapposJson.format(42);
+    assertEquals("42", formattedValue1);
+    String formattedValue2 = zapposJson.format("Hello");
+    assertEquals("Hello", formattedValue2);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class ZapposJson {
+protected final Map<Class<?>, ValueFormatter<Object>> VALUE_FORMATTERS = new ConcurrentHashMap<>();
+protected ZapposJson() {
+    addValueFormatter(Date.class, new JavaDateFormatter());
+    addValueFormatter(java.sql.Date.class, new JavaSqlDateFormatter());
+    addValueFormatter(java.sql.Timestamp.class, new JavaTimestampFormatter());
+    addValueFormatter(java.math.BigInteger.class, new BigIntegerFormatter());
+    addValueFormatter(java.math.BigDecimal.class, new BigDecimalFormatter());
+    if (Reflections.classPresent("java.time.chrono.ChronoLocalDate")) {
+        ValueFormatter<LocalDate> localDateHandler = new JavaTimeLocalDateFormatter();
+        addValueFormatter(LocalDate.class, localDateHandler);
+        ValueFormatter<Instant> instantHandler = new JavaTimeInstantFormatter();
+        addValueFormatter(Instant.class, instantHandler);
+    }
+    jsonBeanIntrospector = new JsonBeanIntrospector(this);
+    writerCodeGenerator = new JsonWriterCodeGenerator(this, jsonBeanIntrospector);
+    readerCodeGenerator = new JsonReaderCodeGenerator(this, jsonBeanIntrospector);
+}protected ZapposJson(boolean debug) {
+    this();
+    this.debug = debug;
+}
+# Focal method
+public String format(Object value) {
+    ValueFormatter<Object> valueFormatter = VALUE_FORMATTERS.get(value.getClass());
+    if (valueFormatter != null) {
+        return valueFormatter.format(this, value);
+    } else {
+        return value.toString();
+    }
+}
+}
+
+# Method Intention
+The overall intention of the format(Object value) method is to provide a way to format different types of objects using specific ValueFormatters based on their class, falling back to the default toString() method if no specific formatter is found.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

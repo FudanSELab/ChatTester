@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: technology.tabula.extractors.BasicExtractionAlgorithm_ESTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in technology.tabula.extractors.BasicExtractionAlgorithm_ESTest

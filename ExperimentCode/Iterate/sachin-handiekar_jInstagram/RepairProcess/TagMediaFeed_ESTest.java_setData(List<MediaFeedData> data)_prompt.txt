@@ -1,0 +1,60 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetData() {
+        TagMediaFeed tagMediaFeed = new TagMediaFeed();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<MediaFeedData> testData = new LinkedList<>();
+
+        MediaFeedData mediaFeedData1 = new MediaFeedData();
+        MediaFeedData mediaFeedData2 = new MediaFeedData();
+        testData.add(mediaFeedData1);
+        testData.add(mediaFeedData2);
+        tagMediaFeed.setData(testData);
+        List<MediaFeedData> retrievedData = tagMediaFeed.getData();
+        assertEquals("Data field should contain 2 MediaFeedData objects", 2, retrievedData.size());
+        assertTrue("Data field should contain mediaFeedData1", retrievedData.contains(mediaFeedData1));
+        assertTrue("Data field should contain mediaFeedData2", retrievedData.contains(mediaFeedData2));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testSetData() {
+    TagMediaFeed tagMediaFeed = new TagMediaFeed();
+
+      <Buggy Line>: diamond operator is not supported in -source 1.6
+    List<MediaFeedData> testData = new LinkedList<>();
+
+    MediaFeedData mediaFeedData1 = new MediaFeedData();
+    MediaFeedData mediaFeedData2 = new MediaFeedData();
+    testData.add(mediaFeedData1);
+    testData.add(mediaFeedData2);
+    tagMediaFeed.setData(testData);
+    List<MediaFeedData> retrievedData = tagMediaFeed.getData();
+    assertEquals("Data field should contain 2 MediaFeedData objects", 2, retrievedData.size());
+    assertTrue("Data field should contain mediaFeedData1", retrievedData.contains(mediaFeedData1));
+    assertTrue("Data field should contain mediaFeedData2", retrievedData.contains(mediaFeedData2));
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

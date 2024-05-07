@@ -1,0 +1,36 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+@Override
+public String toString() {
+    return String.format("Videos [lowResolution=%s, standardResolution=%s]", lowResolution, standardResolution);
+}
+
+# Method Intention
+The overall intention of the toString() method in the Videos class is to provide a formatted string representation of the Videos object, specifically displaying the details of the low resolution and standard resolution video data.
+
+# Test Method
+    @Test
+    public void testToString() {
+        Videos videos = new Videos();
+        VideoData lowResolution = new VideoData();
+        lowResolution.setUrl("low_res_url");
+        lowResolution.setWidth(480);
+        lowResolution.setHeight(360);
+        VideoData standardResolution = new VideoData();
+        standardResolution.setUrl("std_res_url");
+        standardResolution.setWidth(1280);
+        standardResolution.setHeight(720);
+        videos.setLowResolution(lowResolution);
+        videos.setStandardResolution(standardResolution);
+        String expected = "Videos [lowResolution=VideoData{url='low_res_url', width=480, height=360}, standardResolution=VideoData{url='std_res_url', width=1280, height=720}]";
+        String actual = videos.toString();
+       [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " org.junit.ComparisonFailure expected:<...Resolution=VideoData[{url='low_res_url', width=480, height=360}, standardResolution=VideoData{url='std_res_url', width=1280, height=720}]]> but was:<...Resolution=VideoData[ [videoWidth=480, videoHeight=360, videoUrl=low_res_url], standardResolution=VideoData [videoWidth=1280, videoHeight=720, videoUrl=std_res_url]]]> " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

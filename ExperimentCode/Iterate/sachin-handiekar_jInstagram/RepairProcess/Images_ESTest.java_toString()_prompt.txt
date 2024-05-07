@@ -1,0 +1,45 @@
+0-->1-->0-->compileRepair
+
+# ImageData class
+package org.jinstagram.entity.common;
+public class ImageData {
+public String getImageUrl();
+public void setImageUrl(String imageUrl);
+public int getImageWidth();
+public void setImageWidth(int imageWidth);
+public int getImageHeight();
+public void setImageHeight(int imageHeight);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        Images images = new Images();
+        ImageData lowResolution = new ImageData();
+
+      <Buggy Line>: cannot find symbol method "setUrl(java.lang.String)" in ImageData
+        lowResolution.setUrl("http://example.com/lowres.jpg");
+
+        ImageData standardResolution = new ImageData();
+        standardResolution.setUrl("http://example.com/standardres.jpg");
+        ImageData thumbnail = new ImageData();
+        thumbnail.setUrl("http://example.com/thumbnail.jpg");
+        images.setLowResolution(lowResolution);
+        images.setStandardResolution(standardResolution);
+        images.setThumbnail(thumbnail);
+        String expected = "Images [lowResolution=ImageData{url='http://example.com/lowres.jpg'}, standardResolution=ImageData{url='http://example.com/standardres.jpg'}, thumbnail=ImageData{url='http://example.com/thumbnail.jpg'}]";
+        String actual = images.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "ImageData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "ImageData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

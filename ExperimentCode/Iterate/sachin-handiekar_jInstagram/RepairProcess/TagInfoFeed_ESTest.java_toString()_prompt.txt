@@ -1,0 +1,42 @@
+0-->1-->0-->compileRepair
+
+# Meta class
+package org.jinstagram.entity.common;
+public class Meta {
+public int getCode();
+public void setCode(int code);
+public String getErrorType();
+public void setErrorType(String errorType);
+public String getErrorMessage();
+public void setErrorMessage(String errorMessage);
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        TagInfoFeed tagInfoFeed = new TagInfoFeed();
+        Meta meta = new Meta();
+
+      <Buggy Line>: cannot find symbol method "setSomeValue(java.lang.String)" in Meta
+        meta.setSomeValue("someMetaValue");
+
+        tagInfoFeed.setMeta(meta);
+        TagInfoData tagInfoData = new TagInfoData();
+        tagInfoData.setSomeData("someTagInfoData");
+        tagInfoFeed.setTagInfo(tagInfoData);
+        String expected = "TagInfoFeed [meta=Meta{someValue='someMetaValue'}, tagInfo=TagInfoData{someData='someTagInfoData'}]";
+        String actual = tagInfoFeed.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Meta" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Meta" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

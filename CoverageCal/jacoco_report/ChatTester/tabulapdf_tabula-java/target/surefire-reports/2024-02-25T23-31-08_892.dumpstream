@@ -1,0 +1,3 @@
+# Created at 2024-02-25T23:31:09.961
+2024-02-25 23:31:09.960 java[90254:8853531] WARNING: Secure coding is not enabled for restorable state! Enable secure coding by implementing NSApplicationDelegate.applicationSupportsSecureRestorableState: and returning YES.
+

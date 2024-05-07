@@ -1,0 +1,157 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetPattern() {
+        AbstractValueFormatter formatter = new AbstractValueFormatter() {
+            @Override
+            public String formatObject(ZapposJson zapposJson, Object object) {
+                return null;
+            }
+            @Override
+
+              <Buggy Line>: cannot find symbol class "T"
+            public ValueFormatter<T> setPattern(String pattern) {
+
+                return null;
+            }
+            @Override
+            public String toJsonValue(ZapposJson zapposJson, String value) {
+                return null;
+            }
+            @Override
+            public void setJsString(boolean jsString) {
+            }
+            @Override
+            public boolean isJsString() {
+                return false;
+            }
+        };
+        String expectedPattern = "testPattern";
+        formatter.setPattern(expectedPattern);
+        String actualPattern = formatter.getPattern();
+        assertEquals(expectedPattern, actualPattern);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testGetPattern() {
+
+       <Buggy Line>: <anonymous com.zappos.json.format.AbstractValueFormatter_ESTest$1> is not abstract and does not override abstract method newInstance() in com.zappos.json.format.ValueFormatter
+    AbstractValueFormatter formatter = new AbstractValueFormatter() {
+
+        @Override
+        public String formatObject(ZapposJson zapposJson, Object object) {
+            return null;
+        }
+        @Override
+        public <T> ValueFormatter<T> setPattern(String pattern) {
+            return null;
+        }
+        @Override
+        public String toJsonValue(ZapposJson zapposJson, String value) {
+            return null;
+        }
+        @Override
+        public void setJsString(boolean jsString) {
+        }
+        @Override
+        public boolean isJsString() {
+            return false;
+        }
+    };
+    String expectedPattern = "testPattern";
+    formatter.setPattern(expectedPattern);
+    String actualPattern = formatter.getPattern();
+    assertEquals(expectedPattern, actualPattern);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public  abstract class AbstractValueFormatter {
+private String pattern;
+# Focal method
+@Override
+public ValueFormatter<T> setPattern(String pattern) {
+    this.pattern = pattern;
+    return this;
+}
+}
+
+# Method Intention
+The setPattern(String pattern) method in the AbstractValueFormatter class is intended to allow subclasses to set a specific pattern for formatting values, providing flexibility and customization for formatting output.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+public  abstract class AbstractValueFormatter {
+private String pattern;
+# Focal method
+@Override
+public ValueFormatter<T> setPattern(String pattern) {
+    this.pattern = pattern;
+    return this;
+}
+}
+
+# Method Intention
+The setPattern(String pattern) method in the AbstractValueFormatter class is intended to allow subclasses to set a specific pattern for formatting values, providing flexibility and customization for formatting output.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+
+# Focal Method
+public  abstract class AbstractValueFormatter {
+private String pattern;
+# Focal method
+@Override
+public ValueFormatter<T> setPattern(String pattern) {
+    this.pattern = pattern;
+    return this;
+}
+}
+
+# Method Intention
+The setPattern(String pattern) method in the AbstractValueFormatter class is intended to allow subclasses to set a specific pattern for formatting values, providing flexibility and customization for formatting output.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

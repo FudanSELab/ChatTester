@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DictionaryBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.resources</a> &gt; <span class="el_source">DictionaryBuilder.java</span></div><h1>DictionaryBuilder.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.resources;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Dictionary builder class to help properly build dictionaries.
+ */
+<span class="fc" id="L10">public class DictionaryBuilder</span>
+{
+    private String dictionary_name;
+<span class="fc" id="L13">    private Map&lt;String, Integer&gt; dictonary = new HashMap&lt;&gt;();</span>
+    private boolean exclusion;
+
+    /**
+     * Set the dictionary name
+     *
+     * @param dictionary_name unique name of dictionary.
+     * @return the builder
+     */
+    public DictionaryBuilder setDictionaryName(final String dictionary_name)
+    {
+<span class="fc" id="L24">        this.dictionary_name = dictionary_name;</span>
+<span class="fc" id="L25">        return this;</span>
+    }
+
+    /**
+     * Set if exclusion dictionary or not.
+     *
+     * @param exclusion {@code true} when desiring to disallow any password contained in this dictionary; {@code false} otherwise.
+     * @return the builder
+     */
+    public DictionaryBuilder setExclusion(final boolean exclusion)
+    {
+<span class="fc" id="L36">        this.exclusion = exclusion;</span>
+<span class="fc" id="L37">        return this;</span>
+    }
+
+    /**
+     * Add word to dictionary.
+     *
+     * @param word key to add to the dictionary, will be lowercased.
+     * @param rank the rank of the word in the dictionary.
+     *             Should increment from most common to least common if ranked.
+     *             If unranked, an example would be if there were 500 values in the dictionary, every word should have a rank of 250.
+     *             If exclusion dictionary, rank is unimportant (set to 0).
+     * @return the builder
+     */
+    public DictionaryBuilder addWord(final String word, final int rank)
+    {
+<span class="fc" id="L52">        this.dictonary.put(word.toLowerCase(), rank);</span>
+<span class="fc" id="L53">        return this;</span>
+    }
+
+    /**
+     * Add a Collection of words to dictionary. All words will be added to dictionary using the same rank.
+     * @param words the collection of keys to be added to dictionary
+     * @param rank the rank of the word in the dictionary.
+     *             Should increment from most common to least common if ranked.
+     *             If unranked, an example would be if there were 500 values in the dictionary, every word should have a rank of 250.
+     *             If exclusion dictionary, rank is unimportant (set to 0).
+     * @return the builder
+     */
+    public DictionaryBuilder addWords(final Collection&lt;String&gt; words, final int rank)
+    {
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        for(final String word: words)</span>
+        {
+<span class="fc" id="L69">            addWord(word, rank);</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">        return this;</span>
+    }
+
+    /**
+     * Creates the dictionary.
+     *
+     * @return the dictionary
+     */
+    public Dictionary createDictionary()
+    {
+<span class="fc" id="L81">        return new Dictionary(dictionary_name, dictonary, exclusion);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

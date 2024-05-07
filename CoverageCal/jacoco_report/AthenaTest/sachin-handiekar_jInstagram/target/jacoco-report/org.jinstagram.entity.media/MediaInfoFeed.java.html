@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MediaInfoFeed.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.media</a> &gt; <span class="el_source">MediaInfoFeed.java</span></div><h1>MediaInfoFeed.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.media;
+
+import com.google.gson.annotations.SerializedName;
+
+import org.jinstagram.InstagramObject;
+import org.jinstagram.entity.common.Meta;
+import org.jinstagram.entity.users.feed.MediaFeedData;
+
+<span class="fc" id="L9">public class MediaInfoFeed extends InstagramObject{</span>
+	@SerializedName(&quot;data&quot;)
+	private MediaFeedData data;
+
+	@SerializedName(&quot;meta&quot;)
+	private Meta meta;
+
+	/**
+	 * @return the meta
+	 */
+	public Meta getMeta() {
+<span class="nc" id="L20">		return meta;</span>
+	}
+
+	/**
+	 * @param meta the meta to set
+	 */
+	public void setMeta(Meta meta) {
+<span class="nc" id="L27">		this.meta = meta;</span>
+<span class="nc" id="L28">	}</span>
+
+	/**
+	 * @return the data
+	 */
+	public MediaFeedData getData() {
+<span class="nc" id="L34">		return data;</span>
+	}
+
+	/**
+	 * @param data the data to set
+	 */
+	public void setData(MediaFeedData data) {
+<span class="fc" id="L41">		this.data = data;</span>
+<span class="fc" id="L42">	}</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L46">        return String.format(&quot;MediaInfoFeed [data=%s, meta=%s]&quot;, data, meta);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

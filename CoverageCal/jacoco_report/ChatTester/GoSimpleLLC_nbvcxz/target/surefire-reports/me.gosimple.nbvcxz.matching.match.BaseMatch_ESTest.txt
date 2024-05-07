@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: me.gosimple.nbvcxz.matching.match.BaseMatch_ESTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s - in me.gosimple.nbvcxz.matching.match.BaseMatch_ESTest

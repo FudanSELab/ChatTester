@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MapUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.utils</a> &gt; <span class="el_source">MapUtils.java</span></div><h1>MapUtils.java</h1><pre class="source lang-java linenums">package org.jinstagram.utils;
+
+import org.jinstagram.http.URLUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+/**
+ * Utils for {@link Map} manipulation
+ */
+<span class="nc" id="L15">public class MapUtils {</span>
+
+    /**
+     * Sorts a Map
+     *
+     * @param map unsorted map
+     * @return sorted map
+     */
+    public static Map&lt;String, String&gt; sort(Map&lt;String, String&gt; map) {
+<span class="fc" id="L24">        Preconditions.checkNotNull(map, &quot;Cannot sort a null object.&quot;);</span>
+
+<span class="fc" id="L26">        Map&lt;String, String&gt; sorted = new LinkedHashMap&lt;String, String&gt;();</span>
+
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (String key : getSortedKeys(map)) {</span>
+<span class="fc" id="L29">            sorted.put(key, map.get(key));</span>
+<span class="fc" id="L30">        }</span>
+
+<span class="fc" id="L32">        return sorted;</span>
+    }
+
+    /*package private*/ static List&lt;String&gt; getSortedKeys(Map&lt;String, String&gt; map) {
+<span class="fc" id="L36">        List&lt;String&gt; keys = new ArrayList&lt;String&gt;(map.keySet());</span>
+
+<span class="fc" id="L38">        Collections.sort(keys);</span>
+
+<span class="fc" id="L40">        return keys;</span>
+    }
+
+    /**
+     * Form-urlDecodes and appends all keys from the source {@link Map} to the
+     * target {@link Map}
+     *
+     * @param source Map from where the keys get copied and decoded
+     * @param target Map where the decoded keys are copied to
+     */
+    public static void decodeAndAppendEntries(Map&lt;String, String&gt; source,
+                                              Map&lt;String, String&gt; target) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        for (Entry&lt;String, String&gt; entry : source.entrySet()) {</span>
+<span class="nc" id="L53">            target.put(URLUtils.percentEncode(entry.getKey()),</span>
+<span class="nc" id="L54">                    URLUtils.percentEncode(entry.getValue()));</span>
+<span class="nc" id="L55">        }</span>
+<span class="nc" id="L56">    }</span>
+
+    public static &lt;K, V&gt; String toString(Map&lt;K, V&gt; map) {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        if (map == null) {</span>
+<span class="nc" id="L60">            return &quot;&quot;;</span>
+        }
+<span class="nc bnc" id="L62" title="All 2 branches missed.">        if (map.isEmpty()) {</span>
+<span class="nc" id="L63">            return &quot;{}&quot;;</span>
+        }
+
+<span class="nc" id="L66">        StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        for (Map.Entry&lt;K, V&gt; entry : map.entrySet()) {</span>
+<span class="nc" id="L68">            result.append(</span>
+<span class="nc" id="L69">                    String.format(&quot;, %s -&gt; %s &quot;, entry.getKey().toString(), entry.getValue().toString()));</span>
+<span class="nc" id="L70">        }</span>
+<span class="nc" id="L71">        return &quot;{&quot; + result.substring(1) + &quot;}&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

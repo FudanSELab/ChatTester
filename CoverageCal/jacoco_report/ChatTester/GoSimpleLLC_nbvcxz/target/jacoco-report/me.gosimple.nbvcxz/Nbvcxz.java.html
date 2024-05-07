@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Nbvcxz.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz</a> &gt; <span class="el_source">Nbvcxz.java</span></div><h1>Nbvcxz.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz;
+
+import me.gosimple.nbvcxz.matching.PasswordMatcher;
+import me.gosimple.nbvcxz.matching.match.BruteForceMatch;
+import me.gosimple.nbvcxz.matching.match.Match;
+import me.gosimple.nbvcxz.resources.*;
+import me.gosimple.nbvcxz.scoring.Result;
+import me.gosimple.nbvcxz.scoring.TimeEstimate;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.*;
+import java.util.concurrent.TimeoutException;
+
+/**
+ * This class allows you to do estimates on passwords.  It can be instantiated and configured once, and the same
+ * instance should be used for subsequent password estimates.
+ *
+ * @author Adam Brusselback
+ */
+public class Nbvcxz
+{
+<span class="fc" id="L23">    private static StartIndexComparator comparator = new StartIndexComparator();</span>
+    private Configuration configuration;
+
+    /**
+     * Creates new instance with a default configuration.
+     */
+    public Nbvcxz()
+<span class="fc" id="L30">    {</span>
+<span class="fc" id="L31">        this.configuration = new ConfigurationBuilder().createConfiguration();</span>
+<span class="fc" id="L32">    }</span>
+
+    /**
+     * Creates a new instance with a custom configuration.
+     *
+     * @param configuration a {@code Configuration} to be used in all estimates.
+     */
+    public Nbvcxz(Configuration configuration)
+<span class="fc" id="L40">    {</span>
+<span class="fc" id="L41">        this.configuration = configuration;</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Creates a brute force match for a portion of the password.
+     *
+     * @param password      the password to create brute match for
+     * @param configuration the configuration
+     * @param index         the index of the password part that needs a {@code BruteForceMatch}
+     * @return a {@code Match} object
+     */
+    private static Match createBruteForceMatch(final Configuration configuration, final String password, final int index)
+    {
+<span class="nc" id="L54">        return new BruteForceMatch(password.charAt(index), configuration, index);</span>
+    }
+
+    /**
+     * Returns the truncated password based on the max length.
+     *
+     * @param configuration
+     * @param password
+     * @return {@code String} of the truncated password
+     */
+    private static String getTruncatedPassword(final Configuration configuration, final String password)
+    {
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (configuration.getMaxLength().compareTo(password.length()) &gt; 0)</span>
+<span class="fc" id="L67">            return password;</span>
+        else
+<span class="nc" id="L69">            return password.substring(0, configuration.getMaxLength());</span>
+    }
+
+    /**
+     * Gets the entropy from the number of guesses passed in.
+     *
+     * @param guesses a {@code BigDecimal} representing the number of guesses.
+     * @return entropy {@code Double} that is calculated based on the guesses.
+     */
+    public static Double getEntropyFromGuesses(final BigDecimal guesses)
+    {
+<span class="nc" id="L80">        Double guesses_tmp = guesses.doubleValue();</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        guesses_tmp = guesses_tmp.isInfinite() ? Double.MAX_VALUE : guesses_tmp;</span>
+<span class="nc" id="L82">        return Math.log(guesses_tmp) / Math.log(2);</span>
+    }
+
+    /**
+     * Gets the number of guesses from the entropy passed in.
+     *
+     * @param entropy a {@code Double} representing the number of guesses.
+     * @return guesses {@code BigDecimal} that is calculated based on the entropy.
+     */
+    public static BigDecimal getGuessesFromEntropy(final Double entropy)
+    {
+<span class="nc" id="L93">        final Double guesses_tmp = Math.pow(2, entropy);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        return BigDecimal.valueOf(guesses_tmp.isInfinite() ? Double.MAX_VALUE : guesses_tmp).setScale(0, RoundingMode.HALF_UP);</span>
+    }
+
+    /**
+     * Console application which will run with default configurations.
+     *
+     * @param args arguments which are ignored!
+     */
+    public static void main(String... args)
+    {
+<span class="fc" id="L104">        Configuration configuration = new ConfigurationBuilder().createConfiguration();</span>
+<span class="fc" id="L105">        Nbvcxz nbvcxz = new Nbvcxz(configuration);</span>
+<span class="fc" id="L106">        ResourceBundle resourceBundle = ResourceBundle.getBundle(&quot;main&quot;, nbvcxz.getConfiguration().getLocale());</span>
+<span class="fc" id="L107">        Scanner scanner = new Scanner(System.in);</span>
+
+        String input;
+
+        while (true)
+        {
+<span class="fc" id="L113">            System.out.println(resourceBundle.getString(&quot;main.startPrompt&quot;));</span>
+<span class="fc" id="L114">            System.out.println(resourceBundle.getString(&quot;main.enterCommand&quot;));</span>
+<span class="fc" id="L115">            input = scanner.nextLine();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (&quot;q&quot;.equals(input))</span>
+            {
+<span class="nc" id="L118">                break;</span>
+            }
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">            if (&quot;g&quot;.equals(input))</span>
+            {
+<span class="fc" id="L122">                System.out.println(resourceBundle.getString(&quot;main.generatorType&quot;));</span>
+<span class="fc" id="L123">                input = scanner.nextLine();</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">                if (&quot;p&quot;.equals(input))</span>
+                {
+<span class="fc" id="L126">                    System.out.println(resourceBundle.getString(&quot;main.delimiterPrompt&quot;));</span>
+<span class="fc" id="L127">                    String delimiter = scanner.nextLine();</span>
+<span class="fc" id="L128">                    System.out.println(resourceBundle.getString(&quot;main.wordsPrompt&quot;));</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">                    while (!scanner.hasNextInt())</span>
+                    {
+<span class="nc" id="L131">                        scanner.next();</span>
+                    }
+<span class="fc" id="L133">                    int words = scanner.nextInt();</span>
+<span class="fc" id="L134">                    scanner.nextLine();</span>
+<span class="nc" id="L135">                    printGenerationInfo(nbvcxz, Generator.generatePassphrase(delimiter, words));</span>
+                }
+<span class="nc bnc" id="L137" title="All 2 branches missed.">                if (&quot;r&quot;.equals(input))</span>
+                {
+<span class="nc" id="L139">                    System.out.println(resourceBundle.getString(&quot;main.randomType&quot;));</span>
+<span class="nc" id="L140">                    Generator.CharacterTypes characterTypes = null;</span>
+<span class="nc" id="L141">                    input = scanner.nextLine();</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">                    if (&quot;1&quot;.equals(input))</span>
+                    {
+<span class="nc" id="L144">                        characterTypes = Generator.CharacterTypes.ALPHA;</span>
+                    }
+<span class="nc bnc" id="L146" title="All 2 branches missed.">                    if (&quot;2&quot;.equals(input))</span>
+                    {
+<span class="nc" id="L148">                        characterTypes = Generator.CharacterTypes.ALPHANUMERIC;</span>
+                    }
+<span class="nc bnc" id="L150" title="All 2 branches missed.">                    if (&quot;3&quot;.equals(input))</span>
+                    {
+<span class="nc" id="L152">                        characterTypes = Generator.CharacterTypes.ALPHANUMERICSYMBOL;</span>
+                    }
+<span class="nc bnc" id="L154" title="All 2 branches missed.">                    if (&quot;4&quot;.equals(input))</span>
+                    {
+<span class="nc" id="L156">                        characterTypes = Generator.CharacterTypes.NUMERIC;</span>
+                    }
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                    if (characterTypes == null)</span>
+                    {
+<span class="nc" id="L160">                        continue;</span>
+                    }
+<span class="nc" id="L162">                    System.out.println(resourceBundle.getString(&quot;main.lengthPrompt&quot;));</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">                    while (!scanner.hasNextInt())</span>
+                    {
+<span class="nc" id="L165">                        scanner.next();</span>
+                    }
+<span class="nc" id="L167">                    int length = scanner.nextInt();</span>
+<span class="nc" id="L168">                    scanner.nextLine();</span>
+<span class="nc" id="L169">                    printGenerationInfo(nbvcxz, Generator.generateRandomPassword(characterTypes, length));</span>
+                }
+            }
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            if (&quot;e&quot;.equals(input))</span>
+            {
+<span class="nc" id="L174">                System.out.println(resourceBundle.getString(&quot;main.estimatePrompt&quot;));</span>
+<span class="nc" id="L175">                String password = scanner.nextLine();</span>
+<span class="nc" id="L176">                printEstimationInfo(nbvcxz, password);</span>
+<span class="nc" id="L177">            }</span>
+        }
+<span class="nc" id="L179">        System.out.println(resourceBundle.getString(&quot;main.quitPrompt&quot;) + &quot; &quot;);</span>
+
+<span class="nc" id="L181">    }</span>
+
+    private static void printGenerationInfo(final Nbvcxz nbvcxz, final String password)
+    {
+<span class="nc" id="L185">        ResourceBundle resourceBundle = ResourceBundle.getBundle(&quot;main&quot;, nbvcxz.getConfiguration().getLocale());</span>
+<span class="nc" id="L186">        System.out.println(&quot;----------------------------------------------------------&quot;);</span>
+<span class="nc" id="L187">        System.out.println(resourceBundle.getString(&quot;main.password&quot;) + &quot; &quot; + password);</span>
+<span class="nc" id="L188">        System.out.println(&quot;----------------------------------------------------------&quot;);</span>
+
+<span class="nc" id="L190">    }</span>
+
+    private static void printEstimationInfo(final Nbvcxz nbvcxz, final String password)
+    {
+<span class="nc" id="L194">        ResourceBundle resourceBundle = ResourceBundle.getBundle(&quot;main&quot;, nbvcxz.getConfiguration().getLocale());</span>
+
+<span class="nc" id="L196">        long start = System.currentTimeMillis();</span>
+<span class="nc" id="L197">        Result result = nbvcxz.estimate(password);</span>
+<span class="nc" id="L198">        long end = System.currentTimeMillis();</span>
+
+<span class="nc" id="L200">        System.out.println(&quot;----------------------------------------------------------&quot;);</span>
+<span class="nc" id="L201">        System.out.println(resourceBundle.getString(&quot;main.timeToCalculate&quot;) + &quot; &quot; + (end - start) + &quot; ms&quot;);</span>
+<span class="nc" id="L202">        System.out.println(resourceBundle.getString(&quot;main.password&quot;) + &quot; &quot; + result.getPassword());</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        if (result.isTruncated()) {</span>
+<span class="nc" id="L204">            System.out.println(resourceBundle.getString(&quot;main.fullPassword&quot;) + &quot; &quot; + result.getFullPassword());</span>
+        }
+<span class="nc" id="L206">        System.out.println(resourceBundle.getString(&quot;main.entropy&quot;) + &quot; &quot; + result.getEntropy());</span>
+<span class="nc" id="L207">        Feedback feedback = FeedbackUtil.getFeedback(result);</span>
+<span class="nc" id="L208">        System.out.println(resourceBundle.getString(feedback.getResult()));</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">        if (feedback.getWarning() != null)</span>
+        {
+<span class="nc" id="L211">            System.out.println(resourceBundle.getString(&quot;main.feedback.warning&quot;) + &quot; &quot; + feedback.getWarning());</span>
+        }
+<span class="nc bnc" id="L213" title="All 2 branches missed.">        for (String suggestion : feedback.getSuggestion())</span>
+        {
+<span class="nc" id="L215">            System.out.println(resourceBundle.getString(&quot;main.feedback.suggestion&quot;) + &quot; &quot; + suggestion);</span>
+<span class="nc" id="L216">        }</span>
+
+<span class="nc" id="L218">        List&lt;Map.Entry&lt;String, Long&gt;&gt; sortedList = new ArrayList&lt;&gt;(result.getConfiguration().getGuessTypes().entrySet());</span>
+<span class="nc" id="L219">        Collections.sort(sortedList, new Comparator&lt;Map.Entry&lt;String, Long&gt;&gt;() {</span>
+            @Override
+            public int compare(Map.Entry&lt;String, Long&gt; stringLongEntry, Map.Entry&lt;String, Long&gt; t1) {
+<span class="nc" id="L222">                return stringLongEntry.getValue().compareTo(t1.getValue());</span>
+            }
+        });
+
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        for (Map.Entry&lt;String, Long&gt; guessType : sortedList)</span>
+        {
+<span class="nc" id="L228">            System.out.println(resourceBundle.getString(&quot;main.timeToCrack&quot;) + &quot; &quot; + guessType.getKey() + &quot;: &quot; + TimeEstimate.getTimeToCrackFormatted(result, guessType.getKey()));</span>
+<span class="nc" id="L229">        }</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        for (Match match : result.getMatches())</span>
+        {
+<span class="nc" id="L232">            System.out.println(&quot;-----------------------------------&quot;);</span>
+<span class="nc" id="L233">            System.out.println(match.getDetails());</span>
+<span class="nc" id="L234">        }</span>
+<span class="nc" id="L235">        System.out.println(&quot;----------------------------------------------------------&quot;);</span>
+<span class="nc" id="L236">    }</span>
+
+    /**
+     * Calculates the minimum entropy for a given password and returns that as a Result.
+     * &lt;br&gt;&lt;br&gt;
+     * This method attempts to find the minimum entropy at each position of the password, and then does
+     * a backwards pass to remove overlapping matches.  The end result is a list of matches that when
+     * their tokens are added up, should equal the original password.
+     * &lt;br&gt;&lt;br&gt;
+     * The result object is guaranteed to match the original password, or throw an exception if it doesn't.
+     *
+     * @param configuration the configuration file used to estimate entropy.
+     * @param password      the password you are guessing entropy for.
+     * @return the {@code Result} of this estimate.
+     */
+    private Result guessEntropy(final Configuration configuration, final String password)
+    {
+<span class="fc" id="L253">        final String truncated_password = getTruncatedPassword(configuration, password);</span>
+<span class="nc" id="L254">        return new Result(configuration, truncated_password, password, getBestCombination(configuration, truncated_password));</span>
+    }
+
+    /**
+     * Returns the best combination of matches based on multiple methods.  We run the password through the
+     * {@code findGoodEnoughCombination} method test to see if is considered &quot;random&quot;.  If it isn't, we
+     * run it through the {@code findBestCombination} method, which is much more expensive for large
+     * passwords.
+     *
+     * @param configuration the configuration
+     * @param password      the password
+     * @return the best list of matches, sorted by start index.
+     */
+    private List&lt;Match&gt; getBestCombination(final Configuration configuration, final String password)
+    {
+<span class="nc" id="L269">        final List&lt;Match&gt; all_matches = getAllMatches(configuration, password);</span>
+<span class="nc" id="L270">        final Map&lt;Integer, Match&gt; brute_force_matches = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">        for (int i = 0; i &lt; password.length(); i++)</span>
+        {
+<span class="nc" id="L273">            brute_force_matches.put(i, createBruteForceMatch(configuration, password, i));</span>
+        }
+
+<span class="nc" id="L276">        final List&lt;Match&gt; good_enough_matches = findGoodEnoughCombination(password, all_matches, brute_force_matches);</span>
+
+<span class="nc bnc" id="L278" title="All 6 branches missed.">        if (all_matches == null || all_matches.size() == 0 || isRandom(password, good_enough_matches))</span>
+        {
+<span class="nc" id="L280">            List&lt;Match&gt; matches = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L281">            backfillBruteForce(password, brute_force_matches, matches);</span>
+<span class="nc" id="L282">            Collections.sort(matches, comparator);</span>
+<span class="nc" id="L283">            return matches;</span>
+        }
+<span class="nc" id="L285">        Collections.sort(all_matches, comparator);</span>
+
+        try
+        {
+<span class="nc" id="L289">            return findBestCombination(password, all_matches, brute_force_matches);</span>
+        }
+<span class="nc" id="L291">        catch (TimeoutException e)</span>
+        {
+<span class="nc" id="L293">            return good_enough_matches;</span>
+        }
+    }
+
+    /**
+     * This is the original algorithm for finding the best matches.  It was much faster, but had the possibility of returning
+     * non-optimal lists of matches.  I kept it around to run preliminarily to pass the results to {@code isRandom} so we can
+     * see if the password is random and short circuit the more expensive calculations
+     *
+     * @param password            the password
+     * @param all_matches         all matches which have been found for this password
+     * @param brute_force_matches map of index and brute force match to fit that index
+     * @return a list of matches which is good enough for most uses
+     */
+    private List&lt;Match&gt; findGoodEnoughCombination(final String password, final List&lt;Match&gt; all_matches, final Map&lt;Integer, Match&gt; brute_force_matches)
+    {
+<span class="nc" id="L309">        int length = password.length();</span>
+<span class="nc" id="L310">        Match[] match_at_index = new Match[length];</span>
+<span class="nc" id="L311">        List&lt;Match&gt; match_list = new ArrayList&lt;&gt;();</span>
+
+        // First pass through the password forward.
+        // Set the match to be the lowest average entropy for the length the part of the password takes.
+<span class="nc bnc" id="L315" title="All 2 branches missed.">        for (int k = 0; k &lt; length; k++)</span>
+        {
+<span class="nc bnc" id="L317" title="All 2 branches missed.">            for (Match match : all_matches)</span>
+            {
+<span class="nc bnc" id="L319" title="All 2 branches missed.">                if (match.getEndIndex() == k)</span>
+                {
+<span class="nc bnc" id="L321" title="All 4 branches missed.">                    if (match_at_index[k] == null || match_at_index[k].calculateEntropy() / match_at_index[k].getLength() &gt; match.calculateEntropy() / match.getLength())</span>
+                    {
+<span class="nc" id="L323">                        match_at_index[k] = match;</span>
+                    }
+                }
+<span class="nc" id="L326">            }</span>
+        }
+
+
+        // Now go backwards through the password.
+        // Fill in any empty matches with brute force matches, add all matches to the match_list in reverse order.
+<span class="nc" id="L332">        int k = length - 1;</span>
+<span class="nc bnc" id="L333" title="All 2 branches missed.">        while (k &gt;= 0)</span>
+        {
+<span class="nc" id="L335">            Match match = match_at_index[k];</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">            if (match == null)</span>
+            {
+<span class="nc" id="L338">                match_list.add(brute_force_matches.get(k));</span>
+<span class="nc" id="L339">                k--;</span>
+<span class="nc" id="L340">                continue;</span>
+            }
+<span class="nc" id="L342">            match_list.add(match);</span>
+<span class="nc" id="L343">            k = match.getStartIndex() - 1;</span>
+<span class="nc" id="L344">        }</span>
+
+        // Reverse the order of the list so it's now first to last.
+<span class="nc" id="L347">        Collections.reverse(match_list);</span>
+<span class="nc" id="L348">        return match_list;</span>
+    }
+
+    /**
+     * Finds the most optimal matches by recursively building out every combination possible and returning the best.
+     *
+     * @param password            the password
+     * @param all_matches         all matches which have been found for this password
+     * @param brute_force_matches map of index and brute force match to fit that index
+     * @return the best possible combination of matches for this password
+     */
+    private List&lt;Match&gt; findBestCombination(final String password, final List&lt;Match&gt; all_matches, final Map&lt;Integer, Match&gt; brute_force_matches) throws TimeoutException
+    {
+<span class="nc bnc" id="L361" title="All 2 branches missed.">        if (configuration.getCombinationAlgorithmTimeout() &lt;= 0)</span>
+        {
+<span class="nc" id="L363">            throw new TimeoutException(&quot;findBestCombination algorithm disabled.&quot;);</span>
+        }
+
+        //  The start time of this algorithm, if we take too long, we must throw an exception
+<span class="nc" id="L367">        long start_time = System.currentTimeMillis();</span>
+
+<span class="nc" id="L369">        final Map&lt;Match, List&lt;Match&gt;&gt; non_intersecting_matches = new HashMap&lt;&gt;();</span>
+
+        // Build lists of non-intersecting matches for each match which start at a higher index than the current match.
+<span class="nc bnc" id="L372" title="All 2 branches missed.">        for (int i = 0; i &lt; all_matches.size(); i++)</span>
+        {
+<span class="nc" id="L374">            Match match = all_matches.get(i);</span>
+<span class="nc" id="L375">            List&lt;Match&gt; forward_non_intersecting_matches = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L377" title="All 2 branches missed.">            for (int n = i + 1; n &lt; all_matches.size(); n++)</span>
+            {
+<span class="nc" id="L379">                Match next_match = all_matches.get(n);</span>
+<span class="nc bnc" id="L380" title="All 6 branches missed.">                if (next_match.getStartIndex() &gt; match.getEndIndex() &amp;&amp; !(next_match.getStartIndex() &lt; match.getEndIndex() &amp;&amp; match.getStartIndex() &lt; next_match.getEndIndex()))</span>
+                {
+<span class="nc" id="L382">                    boolean to_add = true;</span>
+<span class="nc bnc" id="L383" title="All 2 branches missed.">                    for (Match non_intersecting_match : forward_non_intersecting_matches)</span>
+                    {
+<span class="nc bnc" id="L385" title="All 2 branches missed.">                        if (next_match.getStartIndex() &gt; non_intersecting_match.getEndIndex())</span>
+                        {
+<span class="nc" id="L387">                            to_add = false;</span>
+<span class="nc" id="L388">                            break;</span>
+                        }
+<span class="nc" id="L390">                    }</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">                    if (to_add)</span>
+                    {
+<span class="nc" id="L393">                        forward_non_intersecting_matches.add(next_match);</span>
+                    }
+                }
+            }
+<span class="nc" id="L397">            Collections.sort(forward_non_intersecting_matches, comparator);</span>
+<span class="nc" id="L398">            non_intersecting_matches.put(match, forward_non_intersecting_matches);</span>
+        }
+
+        // Find all matches we should consider as a seed for the recursive function.
+        // There is no need to start the function with a match that is half way through the password.
+<span class="nc" id="L403">        List&lt;Match&gt; seed_matches = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L404" title="All 2 branches missed.">        for (Match match : all_matches)</span>
+        {
+<span class="nc" id="L406">            boolean seed = true;</span>
+<span class="nc bnc" id="L407" title="All 2 branches missed.">            for (List&lt;Match&gt; match_list : non_intersecting_matches.values())</span>
+            {
+<span class="nc bnc" id="L409" title="All 2 branches missed.">                for (Match m : match_list)</span>
+                {
+<span class="nc bnc" id="L411" title="All 2 branches missed.">                    if (m.equals(match))</span>
+                    {
+<span class="nc" id="L413">                        seed = false;</span>
+                    }
+<span class="nc" id="L415">                }</span>
+<span class="nc" id="L416">            }</span>
+<span class="nc bnc" id="L417" title="All 2 branches missed.">            if (seed)</span>
+            {
+<span class="nc" id="L419">                seed_matches.add(match);</span>
+            }
+<span class="nc" id="L421">        }</span>
+<span class="nc" id="L422">        Collections.sort(seed_matches, comparator);</span>
+
+        // Run the recursive function for each seed, and the lowest entropy matches will be set with the best combination.
+<span class="nc" id="L425">        BestMatches best_matches = new BestMatches();</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">        for (Match match : seed_matches)</span>
+        {
+<span class="nc" id="L428">            generateMatches(start_time, password, match, non_intersecting_matches, brute_force_matches, new ArrayList&lt;Match&gt;(), 0, best_matches);</span>
+<span class="nc" id="L429">        }</span>
+<span class="nc" id="L430">        best_matches.sortMatches(comparator);</span>
+
+<span class="nc" id="L432">        return best_matches.getBestMatches();</span>
+    }
+
+    /**
+     * Recursive function to generate match combinations to get an optimal match.
+     *
+     * @param start_time               the time the function started to allow timeout
+     * @param password                 the password
+     * @param match                    a match to start with (or the next match in line)
+     * @param non_intersecting_matches map of all non-intersecting matches
+     * @param brute_force_matches      map of index and brute force match to fit that index
+     * @param matches                  the list of matches being built
+     * @param matches_length           the length of the password the matches  take up
+     * @param best_matches             wrapper for the best matches list and length
+     */
+    private void generateMatches(final long start_time, final String password, final Match match, final Map&lt;Match, List&lt;Match&gt;&gt; non_intersecting_matches, final Map&lt;Integer, Match&gt; brute_force_matches, final List&lt;Match&gt; matches, int matches_length, BestMatches best_matches) throws TimeoutException
+    {
+<span class="nc bnc" id="L449" title="All 2 branches missed.">        if (System.currentTimeMillis() - start_time &gt; configuration.getCombinationAlgorithmTimeout())</span>
+        {
+<span class="nc" id="L451">            throw new TimeoutException(&quot;Took too long to get best matches&quot;);</span>
+        }
+
+<span class="nc" id="L454">        int index = matches.size();</span>
+<span class="nc" id="L455">        matches.add(match);</span>
+<span class="nc" id="L456">        matches_length += match.getLength();</span>
+
+<span class="nc" id="L458">        boolean found_next = false;</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">        for (Match next_match : non_intersecting_matches.get(match))</span>
+        {
+<span class="nc bnc" id="L461" title="All 2 branches missed.">            if (matches.size() &gt; 1)</span>
+            {
+<span class="nc" id="L463">                Match last_match = matches.get(matches.size() - 2);</span>
+<span class="nc bnc" id="L464" title="All 4 branches missed.">                if (next_match.getStartIndex() &lt; last_match.getEndIndex() &amp;&amp; last_match.getStartIndex() &lt; next_match.getEndIndex())</span>
+                {
+<span class="nc" id="L466">                    continue;</span>
+                }
+            }
+<span class="nc" id="L469">            generateMatches(start_time, password, next_match, non_intersecting_matches, brute_force_matches, matches, matches_length, best_matches);</span>
+<span class="nc" id="L470">            found_next = true;</span>
+<span class="nc" id="L471">        }</span>
+
+<span class="nc bnc" id="L473" title="All 2 branches missed.">        if (!found_next)</span>
+        {
+<span class="nc" id="L475">            List&lt;Match&gt; best_matches_list = best_matches.getBestMatches();</span>
+            // We always look for the most complete match, even if it's not the lowest entropy.
+<span class="nc bnc" id="L477" title="All 2 branches missed.">            if (best_matches_list.isEmpty() ||</span>
+<span class="nc bnc" id="L478" title="All 2 branches missed.">                    (matches_length &gt;= best_matches.getMatchLength()</span>
+<span class="nc bnc" id="L479" title="All 2 branches missed.">                            &amp;&amp; (calcEntropy(matches, false) / matches_length) &lt; (calcEntropy(best_matches_list, false) / best_matches.getMatchLength())))</span>
+            {
+<span class="nc" id="L481">                best_matches_list.clear();</span>
+<span class="nc" id="L482">                best_matches_list.addAll(matches);</span>
+<span class="nc" id="L483">                best_matches.setMatchLength(matches_length);</span>
+<span class="nc" id="L484">                backfillBruteForce(password, brute_force_matches, best_matches_list);</span>
+<span class="nc" id="L485">                best_matches.setBestMatches(best_matches_list);</span>
+            }
+        }
+        // Leave the array in the same state we found it in at the start.
+<span class="nc" id="L489">        matches.remove(index);</span>
+<span class="nc" id="L490">    }</span>
+
+    /**
+     * Method to determine if the password should be considered random, and to just use brute force matches.
+     * &lt;p&gt;
+     * We determine a password to be random if the matches cover less than 50% of the password, or if they cover less than 80%
+     * but the max length for a match is no more than 25% of the total length of the password.
+     *
+     * @param password the password
+     * @param matches  the final list of matches
+     * @return true if determined to be random
+     */
+    private boolean isRandom(final String password, final List&lt;Match&gt; matches)
+    {
+<span class="nc" id="L504">        int matched_length = 0;</span>
+<span class="nc" id="L505">        int max_matched_length = 0;</span>
+<span class="nc bnc" id="L506" title="All 2 branches missed.">        for (Match match : matches)</span>
+        {
+<span class="nc bnc" id="L508" title="All 2 branches missed.">            if (!(match instanceof BruteForceMatch))</span>
+            {
+<span class="nc" id="L510">                matched_length += match.getLength();</span>
+<span class="nc bnc" id="L511" title="All 2 branches missed.">                if (match.getLength() &gt; max_matched_length)</span>
+                {
+<span class="nc" id="L513">                    max_matched_length = match.getLength();</span>
+                }
+            }
+<span class="nc" id="L516">        }</span>
+
+<span class="nc bnc" id="L518" title="All 2 branches missed.">        if (matched_length &lt; (password.length() * 0.5))</span>
+        {
+<span class="nc" id="L520">            return true;</span>
+        }
+<span class="nc bnc" id="L522" title="All 4 branches missed.">        else if (matched_length &lt; (password.length() * 0.8) &amp;&amp; password.length() * 0.25 &gt; max_matched_length)</span>
+        {
+<span class="nc" id="L524">            return true;</span>
+        }
+        else
+        {
+<span class="nc" id="L528">            return false;</span>
+        }
+    }
+
+    /**
+     * Helper method to calculate entropy from a list of matches.
+     *
+     * @param matches the list of matches
+     * @return the sum of the entropy in the list passed in
+     */
+    private double calcEntropy(final List&lt;Match&gt; matches, final boolean include_brute_force)
+    {
+<span class="nc" id="L540">        double entropy = 0;</span>
+<span class="nc bnc" id="L541" title="All 2 branches missed.">        for (Match match : matches)</span>
+        {
+<span class="nc bnc" id="L543" title="All 4 branches missed.">            if (include_brute_force || !(match instanceof BruteForceMatch))</span>
+            {
+<span class="nc" id="L545">                entropy += match.calculateEntropy();</span>
+            }
+<span class="nc" id="L547">        }</span>
+<span class="nc" id="L548">        return entropy;</span>
+    }
+
+    /**
+     * Fills in the matches array passed in with {@link BruteForceMatch} in every missing spot.
+     * Returns them unsorted.
+     *
+     * @param password            the password
+     * @param brute_force_matches map of index and brute force match to fit that index
+     * @param matches             the list of matches to fill in
+     */
+    private void backfillBruteForce(final String password, final Map&lt;Integer, Match&gt; brute_force_matches, final List&lt;Match&gt; matches)
+    {
+<span class="nc" id="L561">        Set&lt;Match&gt; bf_matches = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L562">        int index = 0;</span>
+<span class="nc bnc" id="L563" title="All 2 branches missed.">        while (index &lt; password.length())</span>
+        {
+<span class="nc" id="L565">            boolean has_match = false;</span>
+<span class="nc bnc" id="L566" title="All 2 branches missed.">            for (Match match : matches)</span>
+            {
+<span class="nc bnc" id="L568" title="All 4 branches missed.">                if (index &gt;= match.getStartIndex() &amp;&amp; index &lt;= match.getEndIndex())</span>
+                {
+<span class="nc" id="L570">                    has_match = true;</span>
+                }
+<span class="nc" id="L572">            }</span>
+<span class="nc bnc" id="L573" title="All 2 branches missed.">            if (!has_match)</span>
+            {
+<span class="nc" id="L575">                bf_matches.add(brute_force_matches.get(index));</span>
+            }
+<span class="nc" id="L577">            index++;</span>
+<span class="nc" id="L578">        }</span>
+<span class="nc" id="L579">        matches.addAll(bf_matches);</span>
+<span class="nc" id="L580">    }</span>
+
+    /**
+     * Gets all matches for a given password.
+     *
+     * @param configuration the configuration file used to estimate entropy.
+     * @param password      the password to get matches for.
+     * @return a {@code List} of {@code Match} objects for the supplied password.
+     */
+    private List&lt;Match&gt; getAllMatches(final Configuration configuration, final String password)
+    {
+<span class="fc" id="L591">        List&lt;Match&gt; matches = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L593" title="1 of 2 branches missed.">        for (PasswordMatcher passwordMatcher : configuration.getPasswordMatchers())</span>
+        {
+<span class="fc" id="L595">            matches.addAll(passwordMatcher.match(configuration, password));</span>
+<span class="fc" id="L596">        }</span>
+<span class="nc" id="L597">        keepLowestMatches(matches);</span>
+<span class="nc" id="L598">        return matches;</span>
+    }
+
+    /**
+     * Keeps the lowest entropy matches for the specific start / end index
+     *
+     * @param matches List of matches to remove duplicate higher entropy matches from.
+     */
+    private void keepLowestMatches(final List&lt;Match&gt; matches)
+    {
+<span class="nc" id="L608">        Set&lt;Match&gt; to_remove = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L609" title="All 2 branches missed.">        for (Match match : matches)</span>
+        {
+<span class="nc bnc" id="L611" title="All 2 branches missed.">            for (Match to_compare : matches)</span>
+            {
+<span class="nc bnc" id="L613" title="All 4 branches missed.">                if (match.getStartIndex() == to_compare.getStartIndex() &amp;&amp; match.getEndIndex() == to_compare.getEndIndex())</span>
+                {
+<span class="nc bnc" id="L615" title="All 2 branches missed.">                    if (match.getAverageEntropy() &gt; to_compare.getAverageEntropy())</span>
+                    {
+<span class="nc" id="L617">                        to_remove.add(match);</span>
+<span class="nc" id="L618">                        break;</span>
+                    }
+                }
+<span class="nc" id="L621">            }</span>
+<span class="nc" id="L622">        }</span>
+<span class="nc" id="L623">        matches.removeAll(to_remove);</span>
+<span class="nc" id="L624">    }</span>
+
+    /**
+     * Gets the current configuration.
+     *
+     * @return returns {@code Configuration}
+     */
+    public Configuration getConfiguration()
+    {
+<span class="fc" id="L633">        return configuration;</span>
+    }
+
+    /**
+     * Sets the configuration.
+     *
+     * @param configuration a {@code Configuration} to be used in all estimates.
+     */
+    public void setConfiguration(Configuration configuration)
+    {
+<span class="fc" id="L643">        this.configuration = configuration;</span>
+<span class="fc" id="L644">    }</span>
+
+    /**
+     * Guess the entropy of a password with the configuration provided.
+     *
+     * @param password The password you would like to attempt to estimate on.
+     * @return Result object that contains info about the password.
+     */
+    public Result estimate(final String password)
+    {
+<span class="nc" id="L654">        return guessEntropy(this.configuration, password);</span>
+    }
+
+    /**
+     * Sorts matches by starting index, and length
+     */
+    private static class StartIndexComparator implements Comparator&lt;Match&gt;
+    {
+        public int compare(Match match_1, Match match_2)
+        {
+<span class="nc bnc" id="L664" title="All 2 branches missed.">            if (match_1.getStartIndex() &lt; match_2.getStartIndex())</span>
+            {
+<span class="nc" id="L666">                return -1;</span>
+            }
+<span class="nc bnc" id="L668" title="All 2 branches missed.">            else if (match_1.getStartIndex() &gt; match_2.getStartIndex())</span>
+            {
+<span class="nc" id="L670">                return 1;</span>
+            }
+<span class="nc bnc" id="L672" title="All 2 branches missed.">            else if (match_1.getStartIndex() == match_2.getStartIndex())</span>
+            {
+<span class="nc bnc" id="L674" title="All 2 branches missed.">                if (match_1.getToken().length() &lt; match_2.getToken().length())</span>
+                {
+<span class="nc" id="L676">                    return -1;</span>
+                }
+<span class="nc bnc" id="L678" title="All 2 branches missed.">                else if (match_1.getToken().length() &gt; match_2.getToken().length())</span>
+                {
+<span class="nc" id="L680">                    return 1;</span>
+                }
+            }
+<span class="nc" id="L683">            return 0;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

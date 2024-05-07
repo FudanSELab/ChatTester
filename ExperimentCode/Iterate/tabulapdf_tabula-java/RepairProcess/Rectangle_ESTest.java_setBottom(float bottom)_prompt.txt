@@ -1,0 +1,27 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public void setLeft(float left) {
+    float deltaWidth = left - this.x;
+    this.setRect(left, this.y, this.width - deltaWidth, this.height);
+}
+
+# Method Intention
+The setLeft(float left) method in the Rectangle class is intended to update the position of the left edge of the rectangle while adjusting the width accordingly to maintain the overall shape and dimensions of the rectangle.
+
+# Test Method
+    @Test
+    public void testSetBottom() {
+        Rectangle rectangle = new Rectangle(0, 0, 10, 10);
+        float newBottom = 15;
+        rectangle.setBottom(newBottom);
+        assertEquals(newBottom, rectangle.getBottom(), 0.001);
+              [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

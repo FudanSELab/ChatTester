@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DictionaryMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.matching</a> &gt; <span class="el_source">DictionaryMatcher.java</span></div><h1>DictionaryMatcher.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.matching;
+
+import me.gosimple.nbvcxz.matching.match.DictionaryMatch;
+import me.gosimple.nbvcxz.matching.match.Match;
+import me.gosimple.nbvcxz.resources.Configuration;
+import me.gosimple.nbvcxz.resources.Dictionary;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TreeMap;
+
+/**
+ * Look for every part of the password that match an entry in our dictionaries
+ *
+ * @author Adam Brusselback
+ */
+<span class="fc" id="L18">public final class DictionaryMatcher implements PasswordMatcher</span>
+{
+    /**
+     * Removes all leet substitutions from the password and returns a list of plain text versions.
+     *
+     * @param configuration the configuration file used to estimate entropy.
+     * @param password      the password to translate from leet.
+     * @return a list of all combinations of possible leet translations for the password with all leet removed.
+     */
+    private static List&lt;String&gt; translateLeet(final Configuration configuration, final String password)
+    {
+<span class="fc" id="L29">        final List&lt;String&gt; translations = new ArrayList();</span>
+<span class="fc" id="L30">        final TreeMap&lt;Integer, Character[]&gt; replacements = new TreeMap&lt;&gt;();</span>
+
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        for (int i = 0; i &lt; password.length(); i++)</span>
+        {
+<span class="fc" id="L34">            final Character[] replacement = configuration.getLeetTable().get(password.charAt(i));</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">            if (replacement != null)</span>
+            {
+<span class="nc" id="L37">                replacements.put(i, replacement);</span>
+            }
+        }
+
+        // Do not bother continuing if we're going to replace every single character
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if(replacements.keySet().size() == password.length())</span>
+<span class="nc" id="L43">            return translations;</span>
+
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        if (replacements.size() &gt; 0)</span>
+        {
+<span class="nc" id="L47">            final char[] password_char = new char[password.length()];</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            for (int i = 0; i &lt; password.length(); i++)</span>
+            {
+<span class="nc" id="L50">                password_char[i] = password.charAt(i);</span>
+            }
+<span class="nc" id="L52">            replaceAtIndex(replacements, replacements.firstKey(), password_char, translations);</span>
+        }
+
+<span class="fc" id="L55">        return translations;</span>
+    }
+
+    /**
+     * Internal function to recursively build the list of un-leet possibilities.
+     *
+     * @param replacements    TreeMap of replacement index, and the possible characters at that index to be replaced
+     * @param current_index   internal use for the function
+     * @param password        a Character array of the original password
+     * @param final_passwords List of the final passwords to be filled
+     */
+    private static void replaceAtIndex(final TreeMap&lt;Integer, Character[]&gt; replacements, Integer current_index, final char[] password, final List&lt;String&gt; final_passwords)
+    {
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        for (final char replacement : replacements.get(current_index))</span>
+        {
+<span class="nc" id="L70">            password[current_index] = replacement;</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            if (current_index.equals(replacements.lastKey()))</span>
+            {
+<span class="nc" id="L73">                final_passwords.add(new String(password));</span>
+            }
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            else if (final_passwords.size() &gt; 100)</span>
+            {
+                // Give up if we've already made 100 replacements
+<span class="nc" id="L78">                return;</span>
+            }
+            else
+            {
+<span class="nc" id="L82">                replaceAtIndex(replacements, replacements.higherKey(current_index), password, final_passwords);</span>
+            }
+        }
+<span class="nc" id="L85">    }</span>
+
+
+    /**
+     * Gets the substitutions for the password.
+     *
+     * @param password        the password to get leet substitutions for.
+     * @param unleet_password the password to get leet substitutions for.
+     * @return a {@code List} of {@code Character[]} that are the leet substitutions for the password.
+     */
+    private static List&lt;Character[]&gt; getLeetSub(final String password, final String unleet_password)
+    {
+<span class="nc" id="L97">        List&lt;Character[]&gt; leet_subs = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        for (int i = 0; i &lt; unleet_password.length(); i++)</span>
+        {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (password.charAt(i) != unleet_password.charAt(i))</span>
+            {
+<span class="nc" id="L102">                leet_subs.add(new Character[]{password.charAt(i), unleet_password.charAt(i)});</span>
+            }
+        }
+<span class="nc" id="L105">        return leet_subs;</span>
+    }
+
+    private static int distance(CharSequence left, CharSequence right, int threshold)
+    {
+<span class="pc bpc" id="L110" title="2 of 4 branches missed.">        if (left == null || right == null)</span>
+        {
+<span class="nc" id="L112">            throw new IllegalArgumentException(&quot;Strings must not be null&quot;);</span>
+        }
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (threshold &lt; 0)</span>
+        {
+<span class="nc" id="L116">            throw new IllegalArgumentException(&quot;Threshold must not be negative&quot;);</span>
+        }
+
+        /*
+         * This implementation only computes the distance if it's less than or
+         * equal to the threshold value, returning -1 if it's greater. The
+         * advantage is performance: unbounded distance is O(nm), but a bound of
+         * k allows us to reduce it to O(km) time by only computing a diagonal
+         * stripe of width 2k + 1 of the cost table. It is also possible to use
+         * this to compute the unbounded Levenshtein distance by starting the
+         * threshold at 1 and doubling each time until the distance is found;
+         * this is O(dm), where d is the distance.
+         *
+         * One subtlety comes from needing to ignore entries on the border of
+         * our stripe eg. p[] = |#|#|#|* d[] = *|#|#|#| We must ignore the entry
+         * to the left of the leftmost member We must ignore the entry above the
+         * rightmost member
+         *
+         * Another subtlety comes from our stripe running off the matrix if the
+         * strings aren't of the same size. Since string s is always swapped to
+         * be the shorter of the two, the stripe will always run off to the
+         * upper right instead of the lower left of the matrix.
+         *
+         * As a concrete example, suppose s is of length 5, t is of length 7,
+         * and our threshold is 1. In this case we're going to walk a stripe of
+         * length 3. The matrix would look like so:
+         *
+         * &lt;pre&gt;
+         *    1 2 3 4 5
+         * 1 |#|#| | | |
+         * 2 |#|#|#| | |
+         * 3 | |#|#|#| |
+         * 4 | | |#|#|#|
+         * 5 | | | |#|#|
+         * 6 | | | | |#|
+         * 7 | | | | | |
+         * &lt;/pre&gt;
+         *
+         * Note how the stripe leads off the table as there is no possible way
+         * to turn a string of length 5 into one of length 7 in edit distance of
+         * 1.
+         *
+         * Additionally, this implementation decreases memory usage by using two
+         * single-dimensional arrays and swapping them back and forth instead of
+         * allocating an entire n by m matrix. This requires a few minor
+         * changes, such as immediately returning when it's detected that the
+         * stripe has run off the matrix and initially filling the arrays with
+         * large values so that entries we don't compute are ignored.
+         *
+         * See Algorithms on Strings, Trees and Sequences by Dan Gusfield for
+         * some discussion.
+         */
+
+<span class="fc" id="L169">        int n = left.length(); // length of left</span>
+<span class="fc" id="L170">        int m = right.length(); // length of right</span>
+
+        // if one string is empty, the edit distance is necessarily the length
+        // of the other
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        if (n == 0)</span>
+        {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">            return m &lt;= threshold ? m : -1;</span>
+        }
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">        else if (m == 0)</span>
+        {
+<span class="nc bnc" id="L180" title="All 2 branches missed.">            return n &lt;= threshold ? n : -1;</span>
+        }
+
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (n &gt; m)</span>
+        {
+            // swap the two strings to consume less memory
+<span class="fc" id="L186">            final CharSequence tmp = left;</span>
+<span class="fc" id="L187">            left = right;</span>
+<span class="fc" id="L188">            right = tmp;</span>
+<span class="fc" id="L189">            n = m;</span>
+<span class="fc" id="L190">            m = right.length();</span>
+        }
+
+<span class="fc" id="L193">        int[] p = new int[n + 1]; // 'previous' cost array, horizontally</span>
+<span class="fc" id="L194">        int[] d = new int[n + 1]; // cost array, horizontally</span>
+        int[] tempD; // placeholder to assist in swapping p and d
+
+        // fill in starting table values
+<span class="fc" id="L198">        final int boundary = Math.min(n, threshold) + 1;</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">        for (int i = 0; i &lt; boundary; i++)</span>
+        {
+<span class="fc" id="L201">            p[i] = i;</span>
+        }
+        // these fills ensure that the value above the rightmost entry of our
+        // stripe will be ignored in following loop iterations
+<span class="fc" id="L205">        Arrays.fill(p, boundary, p.length, Integer.MAX_VALUE);</span>
+<span class="fc" id="L206">        Arrays.fill(d, Integer.MAX_VALUE);</span>
+
+        // iterates through t
+<span class="fc bfc" id="L209" title="All 2 branches covered.">        for (int j = 1; j &lt;= m; j++)</span>
+        {
+<span class="fc" id="L211">            final char rightJ = right.charAt(j - 1); // jth character of right</span>
+<span class="fc" id="L212">            d[0] = j;</span>
+
+            // compute stripe indices, constrain to array size
+<span class="fc" id="L215">            final int min = Math.max(1, j - threshold);</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            final int max = j &gt; Integer.MAX_VALUE - threshold ? n : Math.min(</span>
+                    n, j + threshold);
+
+            // the stripe may lead off of the table if s and t are of different
+            // sizes
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">            if (min &gt; max)</span>
+            {
+<span class="nc" id="L223">                return -1;</span>
+            }
+
+            // ignore entry left of leftmost
+<span class="fc bfc" id="L227" title="All 2 branches covered.">            if (min &gt; 1)</span>
+            {
+<span class="fc" id="L229">                d[min - 1] = Integer.MAX_VALUE;</span>
+            }
+
+            // iterates through [min, max] in s
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            for (int i = min; i &lt;= max; i++)</span>
+            {
+<span class="fc bfc" id="L235" title="All 2 branches covered.">                if (left.charAt(i - 1) == rightJ)</span>
+                {
+                    // diagonally left and up
+<span class="fc" id="L238">                    d[i] = p[i - 1];</span>
+                }
+                else
+                {
+                    // 1 + minimum of cell to the left, to the top, diagonally
+                    // left and up
+<span class="fc" id="L244">                    d[i] = 1 + Math.min(Math.min(d[i - 1], p[i]), p[i - 1]);</span>
+                }
+            }
+
+            // copy current distance counts to 'previous row' distance counts
+<span class="fc" id="L249">            tempD = p;</span>
+<span class="fc" id="L250">            p = d;</span>
+<span class="fc" id="L251">            d = tempD;</span>
+        }
+
+        // if p[n] is greater than the threshold, there's no guarantee on it
+        // being the correct
+        // distance
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">        if (p[n] &lt;= threshold)</span>
+        {
+<span class="nc" id="L259">            return p[n];</span>
+        }
+<span class="fc" id="L261">        return -1;</span>
+    }
+
+    public List&lt;Match&gt; match(final Configuration configuration, final String password)
+    {
+<span class="fc" id="L266">        final List&lt;Match&gt; matches = new ArrayList&lt;&gt;();</span>
+
+        // Create all possible sub-sequences of the password
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        for (int start = 0; start &lt; password.length(); start++)</span>
+        {
+<span class="fc bfc" id="L271" title="All 2 branches covered.">            for (int end = start + 1; end &lt;= password.length(); end++)</span>
+            {
+<span class="fc" id="L273">                final String split_password = password.substring(start, end);</span>
+
+                // Iterate through all our dictionaries
+<span class="fc bfc" id="L276" title="All 2 branches covered.">                for (final Dictionary dictionary : configuration.getDictionaries())</span>
+                {
+                    // Match on lower
+<span class="fc" id="L279">                    final String lower_part = split_password.toLowerCase();</span>
+                    {
+<span class="fc" id="L281">                        final Integer lower_rank = dictionary.getDictonary().get(lower_part);</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">                        if (lower_rank != null)</span>
+                        {
+<span class="fc" id="L284">                            matches.add(new DictionaryMatch(split_password, configuration, start, end - 1, lower_part, lower_rank, new ArrayList&lt;Character[]&gt;(), dictionary.isExclusion(), false, dictionary.getDictionaryName(), 0));</span>
+<span class="fc" id="L285">                            continue;</span>
+                        }
+                    }
+
+                    // Only do reversed if it's different than the regular lower.
+<span class="fc" id="L290">                    final String reversed_part = new StringBuilder(lower_part).reverse().toString();</span>
+                    {
+<span class="fc" id="L292">                        final Integer reversed_rank = dictionary.getDictonary().get(reversed_part);</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">                        if (reversed_rank != null)</span>
+                        {
+<span class="nc" id="L295">                            matches.add(new DictionaryMatch(split_password, configuration, start, end - 1, reversed_part, reversed_rank, new ArrayList&lt;Character[]&gt;(), dictionary.isExclusion(), true, dictionary.getDictionaryName(), 0));</span>
+<span class="nc" id="L296">                            continue;</span>
+                        }
+                    }
+
+                    // Only do unleet if it's different than the regular lower.
+<span class="fc bfc" id="L301" title="All 2 branches covered.">                    if (dictionary.getMaxLength() &gt; split_password.length())</span>
+                    {
+<span class="fc" id="L303">                        final List&lt;String&gt; unleet_list = translateLeet(configuration, lower_part);</span>
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">                        for (final String unleet_part : unleet_list)</span>
+                        {
+<span class="nc" id="L306">                            final Integer unleet_rank = dictionary.getDictonary().get(unleet_part);</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">                            if (unleet_rank != null)</span>
+                            {
+<span class="nc" id="L309">                                final List&lt;Character[]&gt; subs = getLeetSub(lower_part, unleet_part);</span>
+<span class="nc" id="L310">                                matches.add(new DictionaryMatch(split_password, configuration, start, end - 1, unleet_part, unleet_rank, subs, dictionary.isExclusion(), false, dictionary.getDictionaryName(), 0));</span>
+<span class="nc" id="L311">                                continue;</span>
+                            }
+
+                            // Only do reversed if it's different than unleet.
+<span class="nc" id="L315">                            final String reversed_unleet_part = new StringBuilder(unleet_part).reverse().toString();</span>
+                            {
+<span class="nc" id="L317">                                final Integer reversed_unleet_rank = dictionary.getDictonary().get(reversed_unleet_part);</span>
+<span class="nc bnc" id="L318" title="All 2 branches missed.">                                if (reversed_unleet_rank != null)</span>
+                                {
+<span class="nc" id="L320">                                    final List&lt;Character[]&gt; subs = getLeetSub(reversed_part, reversed_unleet_part);</span>
+<span class="nc" id="L321">                                    matches.add(new DictionaryMatch(split_password, configuration, start, end - 1, reversed_unleet_part, reversed_unleet_rank, subs, dictionary.isExclusion(), true, dictionary.getDictionaryName(), 0));</span>
+                                }
+                            }
+<span class="nc" id="L324">                        }</span>
+                    }
+
+                    // Run distance match
+                    // Only if we haven't found a match yet
+                    {
+<span class="pc bpc" id="L330" title="1 of 2 branches missed.">                        if (!configuration.isDistanceCalc())</span>
+                        {
+<span class="nc" id="L332">                            continue;</span>
+                        }
+
+                        // Do not continue unless matching the whole password
+<span class="fc bfc" id="L336" title="All 4 branches covered.">                        if (!(start == 0 &amp;&amp; end == password.length()))</span>
+                        {
+<span class="fc" id="L338">                            continue;</span>
+                        }
+
+                        // Weed out false positives for very short values
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">                        if (password.length() &lt; 3)</span>
+                        {
+<span class="nc" id="L344">                            continue;</span>
+                        }
+
+
+                        // How far off the distance is allowed to be
+<span class="fc" id="L349">                        final int threshold = password.length() / 4;</span>
+
+                        // Indexes to iterate over only a portion of the dictionary
+                        final int start_index;
+<span class="fc bfc" id="L353" title="All 2 branches covered.">                        if (dictionary.getSortedDictionaryLengthLookup().containsKey(password.length() - threshold))</span>
+                        {
+<span class="fc" id="L355">                            start_index = dictionary.getSortedDictionaryLengthLookup().get(password.length() - threshold);</span>
+                        }
+                        else
+                        {
+<span class="fc" id="L359">                            start_index = dictionary.getSortedDictionary().size();</span>
+                        }
+                        final int end_index;
+<span class="fc bfc" id="L362" title="All 2 branches covered.">                        if (dictionary.getSortedDictionaryLengthLookup().containsKey(password.length() + threshold + 1))</span>
+                        {
+<span class="fc" id="L364">                            end_index = dictionary.getSortedDictionaryLengthLookup().get(password.length() + threshold + 1);</span>
+                        }
+                        else
+                        {
+<span class="fc" id="L368">                            end_index = dictionary.getSortedDictionary().size();</span>
+                        }
+
+                        // Values for the matches found
+<span class="fc" id="L372">                        int dist_min = Integer.MAX_VALUE;</span>
+<span class="fc" id="L373">                        String dist_val = null;</span>
+<span class="fc" id="L374">                        Integer dist_rank = null;</span>
+
+                        // Iterate over the subset of the dictionary (based on length) which could
+                        // possibly contain matches for the password
+<span class="fc bfc" id="L378" title="All 2 branches covered.">                        for (final String key : dictionary.getSortedDictionary().subList(start_index, end_index))</span>
+                        {
+<span class="fc" id="L380">                            int dist_curr = distance(password, key, threshold);</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">                            if (dist_curr != -1)</span>
+                            {
+<span class="nc" id="L383">                                final Integer dist_curr_rank = dictionary.getDictonary().get(key);</span>
+                                // If true, set the vars which contain the lowest values found so far
+<span class="nc bnc" id="L385" title="All 6 branches missed.">                                if (dist_curr &lt;= dist_min &amp;&amp; (dist_rank == null || dist_curr_rank &lt;= dist_rank))</span>
+                                {
+<span class="nc" id="L387">                                    dist_min = dist_curr;</span>
+<span class="nc" id="L388">                                    dist_val = key;</span>
+<span class="nc" id="L389">                                    dist_rank = dist_curr_rank;</span>
+                                }
+                            }
+<span class="fc" id="L392">                        }</span>
+
+                        // Add the match if one was found
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">                        if (dist_rank != null)</span>
+                        {
+<span class="nc" id="L397">                            matches.add(new DictionaryMatch(split_password, configuration, start, end - 1, dist_val, dist_rank, new ArrayList&lt;Character[]&gt;(), dictionary.isExclusion(), false, dictionary.getDictionaryName(), dist_min));</span>
+<span class="nc" id="L398">                            continue;</span>
+                        }
+                    }
+
+<span class="fc" id="L402">                }</span>
+            }
+        }
+        // Return all the matches
+<span class="fc" id="L406">        return matches;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

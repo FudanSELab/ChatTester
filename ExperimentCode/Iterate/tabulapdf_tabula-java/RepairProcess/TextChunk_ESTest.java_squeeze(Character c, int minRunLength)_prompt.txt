@@ -1,0 +1,338 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSqueeze() {
+
+              <Buggy Line>: no suitable constructor found for TextElement(int,int,int,int,java.lang.String)
+        TextElement textElement1 = new TextElement(0, 0, 10, 10, "AAA");
+
+        TextElement textElement2 = new TextElement(0, 0, 10, 10, "BBB");
+        TextElement textElement3 = new TextElement(0, 0, 10, 10, "CCC");
+        List<TextElement> textElements = new ArrayList<>();
+        textElements.add(textElement1);
+        textElements.add(textElement2);
+        textElements.add(textElement3);
+        TextChunk textChunk = new TextChunk(textElements);
+        List<TextChunk> squeezedChunks = textChunk.squeeze('A', 2);
+        assertEquals(2, squeezedChunks.size());
+        assertEquals("AAA", squeezedChunks.get(0).getText());
+        assertEquals("BBBCCC", squeezedChunks.get(1).getText());
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+@Test
+public void testSqueeze() {
+
+          <Buggy Line>: no suitable constructor found for TextElement(int,int,int,int,java.lang.String)
+    TextElement textElement1 = new TextElement(0, 0, 10, 10, "AAA");
+
+    TextElement textElement2 = new TextElement(0, 0, 10, 10, "BBB");
+    TextElement textElement3 = new TextElement(0, 0, 10, 10, "CCC");
+    List<TextElement> textElements = new ArrayList<>();
+    textElements.add(textElement1);
+    textElements.add(textElement2);
+    textElements.add(textElement3);
+    TextChunk textChunk = new TextChunk(textElements);
+    List<TextChunk> squeezedChunks = textChunk.squeeze('A', 2);
+    assertEquals(2, squeezedChunks.size());
+    assertEquals("AAA", squeezedChunks.get(0).getText());
+    assertEquals("BBBCCC", squeezedChunks.get(1).getText());
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public class TextChunk {
+public TextChunk(float top, float left, float width, float height) {
+    super(top, left, width, height);
+}public TextChunk(TextElement textElement) {
+    super(textElement.y, textElement.x, textElement.width, textElement.height);
+    this.add(textElement);
+}public TextChunk(List<TextElement> textElements) {
+    this(textElements.get(0));
+    for (int i = 1; i < textElements.size(); i++) {
+        this.add(textElements.get(i));
+    }
+}
+# Focal method
+public List<TextChunk> squeeze(Character c, int minRunLength) {
+    Character currentChar, lastChar = null;
+    int subSequenceLength = 0, subSequenceStart = 0;
+    TextChunk[] t;
+    List<TextChunk> rv = new ArrayList<>();
+    for (int i = 0; i < this.getTextElements().size(); i++) {
+        TextElement textElement = this.getTextElements().get(i);
+        String text = textElement.getText();
+        if (text.length() > 1) {
+            currentChar = text.trim().charAt(0);
+        } else {
+            currentChar = text.charAt(0);
+        }
+        if (lastChar != null && currentChar.equals(c) && lastChar.equals(currentChar)) {
+            subSequenceLength++;
+        } else {
+            if (((lastChar != null && !lastChar.equals(currentChar)) || i + 1 == this.getTextElements().size()) && subSequenceLength >= minRunLength) {
+                if (subSequenceStart == 0 && subSequenceLength <= this.getTextElements().size() - 1) {
+                    t = this.splitAt(subSequenceLength);
+                } else {
+                    t = this.splitAt(subSequenceStart);
+                    rv.add(t[0]);
+                }
+                rv.addAll(t[1].squeeze(c, minRunLength));
+                break;
+            }
+            subSequenceLength = 1;
+            subSequenceStart = i;
+        }
+        lastChar = currentChar;
+    }
+    if (rv.isEmpty()) {
+        if (subSequenceLength >= minRunLength && subSequenceLength < this.textElements.size()) {
+            TextChunk[] chunks = this.splitAt(subSequenceStart);
+            rv.add(chunks[0]);
+        } else {
+            rv.add(this);
+        }
+    }
+    return rv;
+}
+}
+
+# Method Intention
+The squeeze method in the TextChunk class is designed to identify and extract consecutive sequences of a specified character (c) that meet a minimum length requirement (minRunLength) from the text elements contained within the TextChunk object, recursively splitting and creating new TextChunk objects as needed to represent the segmented text.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+public class TextChunk {
+public TextChunk(float top, float left, float width, float height) {
+    super(top, left, width, height);
+}public TextChunk(TextElement textElement) {
+    super(textElement.y, textElement.x, textElement.width, textElement.height);
+    this.add(textElement);
+}public TextChunk(List<TextElement> textElements) {
+    this(textElements.get(0));
+    for (int i = 1; i < textElements.size(); i++) {
+        this.add(textElements.get(i));
+    }
+}
+# Focal method
+public List<TextChunk> squeeze(Character c, int minRunLength) {
+    Character currentChar, lastChar = null;
+    int subSequenceLength = 0, subSequenceStart = 0;
+    TextChunk[] t;
+    List<TextChunk> rv = new ArrayList<>();
+    for (int i = 0; i < this.getTextElements().size(); i++) {
+        TextElement textElement = this.getTextElements().get(i);
+        String text = textElement.getText();
+        if (text.length() > 1) {
+            currentChar = text.trim().charAt(0);
+        } else {
+            currentChar = text.charAt(0);
+        }
+        if (lastChar != null && currentChar.equals(c) && lastChar.equals(currentChar)) {
+            subSequenceLength++;
+        } else {
+            if (((lastChar != null && !lastChar.equals(currentChar)) || i + 1 == this.getTextElements().size()) && subSequenceLength >= minRunLength) {
+                if (subSequenceStart == 0 && subSequenceLength <= this.getTextElements().size() - 1) {
+                    t = this.splitAt(subSequenceLength);
+                } else {
+                    t = this.splitAt(subSequenceStart);
+                    rv.add(t[0]);
+                }
+                rv.addAll(t[1].squeeze(c, minRunLength));
+                break;
+            }
+            subSequenceLength = 1;
+            subSequenceStart = i;
+        }
+        lastChar = currentChar;
+    }
+    if (rv.isEmpty()) {
+        if (subSequenceLength >= minRunLength && subSequenceLength < this.textElements.size()) {
+            TextChunk[] chunks = this.splitAt(subSequenceStart);
+            rv.add(chunks[0]);
+        } else {
+            rv.add(this);
+        }
+    }
+    return rv;
+}
+}
+
+# Method Intention
+The squeeze method in the TextChunk class is designed to identify and extract consecutive sequences of a specified character (c) in the text elements, with a minimum required length (minRunLength), by splitting and recursively processing the text chunks accordingly.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+
+# Focal Method
+public class TextChunk {
+public TextChunk(float top, float left, float width, float height) {
+    super(top, left, width, height);
+}public TextChunk(TextElement textElement) {
+    super(textElement.y, textElement.x, textElement.width, textElement.height);
+    this.add(textElement);
+}public TextChunk(List<TextElement> textElements) {
+    this(textElements.get(0));
+    for (int i = 1; i < textElements.size(); i++) {
+        this.add(textElements.get(i));
+    }
+}
+# Focal method
+public List<TextChunk> squeeze(Character c, int minRunLength) {
+    Character currentChar, lastChar = null;
+    int subSequenceLength = 0, subSequenceStart = 0;
+    TextChunk[] t;
+    List<TextChunk> rv = new ArrayList<>();
+    for (int i = 0; i < this.getTextElements().size(); i++) {
+        TextElement textElement = this.getTextElements().get(i);
+        String text = textElement.getText();
+        if (text.length() > 1) {
+            currentChar = text.trim().charAt(0);
+        } else {
+            currentChar = text.charAt(0);
+        }
+        if (lastChar != null && currentChar.equals(c) && lastChar.equals(currentChar)) {
+            subSequenceLength++;
+        } else {
+            if (((lastChar != null && !lastChar.equals(currentChar)) || i + 1 == this.getTextElements().size()) && subSequenceLength >= minRunLength) {
+                if (subSequenceStart == 0 && subSequenceLength <= this.getTextElements().size() - 1) {
+                    t = this.splitAt(subSequenceLength);
+                } else {
+                    t = this.splitAt(subSequenceStart);
+                    rv.add(t[0]);
+                }
+                rv.addAll(t[1].squeeze(c, minRunLength));
+                break;
+            }
+            subSequenceLength = 1;
+            subSequenceStart = i;
+        }
+        lastChar = currentChar;
+    }
+    if (rv.isEmpty()) {
+        if (subSequenceLength >= minRunLength && subSequenceLength < this.textElements.size()) {
+            TextChunk[] chunks = this.splitAt(subSequenceStart);
+            rv.add(chunks[0]);
+        } else {
+            rv.add(this);
+        }
+    }
+    return rv;
+}
+}
+
+# Method Intention
+The squeeze method in the TextChunk class is designed to identify and extract consecutive sequences of a specified character (c) in the text elements, with a minimum required length (minRunLength), by splitting and recursively squeezing the text chunks based on the defined criteria.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+5-->6-->3-->compileRepair
+
+
+# Focal Method
+public class TextChunk {
+public TextChunk(float top, float left, float width, float height) {
+    super(top, left, width, height);
+}public TextChunk(TextElement textElement) {
+    super(textElement.y, textElement.x, textElement.width, textElement.height);
+    this.add(textElement);
+}public TextChunk(List<TextElement> textElements) {
+    this(textElements.get(0));
+    for (int i = 1; i < textElements.size(); i++) {
+        this.add(textElements.get(i));
+    }
+}
+# Focal method
+public List<TextChunk> squeeze(Character c, int minRunLength) {
+    Character currentChar, lastChar = null;
+    int subSequenceLength = 0, subSequenceStart = 0;
+    TextChunk[] t;
+    List<TextChunk> rv = new ArrayList<>();
+    for (int i = 0; i < this.getTextElements().size(); i++) {
+        TextElement textElement = this.getTextElements().get(i);
+        String text = textElement.getText();
+        if (text.length() > 1) {
+            currentChar = text.trim().charAt(0);
+        } else {
+            currentChar = text.charAt(0);
+        }
+        if (lastChar != null && currentChar.equals(c) && lastChar.equals(currentChar)) {
+            subSequenceLength++;
+        } else {
+            if (((lastChar != null && !lastChar.equals(currentChar)) || i + 1 == this.getTextElements().size()) && subSequenceLength >= minRunLength) {
+                if (subSequenceStart == 0 && subSequenceLength <= this.getTextElements().size() - 1) {
+                    t = this.splitAt(subSequenceLength);
+                } else {
+                    t = this.splitAt(subSequenceStart);
+                    rv.add(t[0]);
+                }
+                rv.addAll(t[1].squeeze(c, minRunLength));
+                break;
+            }
+            subSequenceLength = 1;
+            subSequenceStart = i;
+        }
+        lastChar = currentChar;
+    }
+    if (rv.isEmpty()) {
+        if (subSequenceLength >= minRunLength && subSequenceLength < this.textElements.size()) {
+            TextChunk[] chunks = this.splitAt(subSequenceStart);
+            rv.add(chunks[0]);
+        } else {
+            rv.add(this);
+        }
+    }
+    return rv;
+}
+}
+
+# Method Intention
+The squeeze method in the TextChunk class is designed to identify and extract consecutive sequences of a specified character (c) within the text elements, with a minimum required length (minRunLength), by recursively splitting and grouping the text chunks based on the character sequence.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

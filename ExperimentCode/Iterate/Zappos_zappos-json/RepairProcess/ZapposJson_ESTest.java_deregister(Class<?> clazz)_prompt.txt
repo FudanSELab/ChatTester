@@ -1,0 +1,72 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public void deregister(Class<?> clazz) {
+    writerCodeGenerator.deregister(clazz);
+    readerCodeGenerator.deregister(clazz);
+}
+
+# Method Intention
+The deregister(Class<?> clazz) method in the ZapposJson class is intended to remove the registration of a specific class from both the writer and reader code generators, allowing for the exclusion of that class from the JSON serialization and deserialization processes.
+
+# Test Method
+    @Test
+    public void testDeregister() {
+        ZapposJson zapposJson = ZapposJson.getInstance();
+      [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " com.zappos.json.JsonException org.evosuite.runtime.mock.java.lang.MockThrowable: [source error] ; is missing " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+
+# ZapposJson class
+package com.zappos.json;
+public class ZapposJson {
+public static ZapposJson getInstance();
+public static synchronized ZapposJson getInstance(String name);
+public void register(Class<?>... classes);
+public void register(Class<?> clazz);
+public void deregister(Class<?> clazz);
+public void deregisterAll();
+public void addValueFormatter(Class<?> objectType, ValueFormatter<?> valueFormatter);
+public void removeValueFormatter(Class<?> objectType);
+public ValueFormatter<Object> getValueFormatter(Class<?> objectType);
+public synchronized void configure(ReaderConfig config, boolean value);
+public synchronized boolean is(ReaderConfig config);
+public synchronized void configure(WriterConfig config, boolean value);
+public synchronized boolean is(WriterConfig config);
+public String format(Object value);
+public String toJson(Object object);
+public void toJson(Object object, Writer writer);
+public T fromJson(String json, Class<T> targetClass);
+public T fromJson(Reader reader, Class<T> targetClass);
+}
+
+
+# Test Method
+    @Test
+    public void testDeregister() {
+        ZapposJson zapposJson = ZapposJson.getInstance();
+        zapposJson.register(Date.class);
+        assertNotNull(zapposJson.getValueFormatter(Date.class));
+
+      <Buggy Line>: cannot find symbol method "isRegistered(java.lang.Class<java.lang.String>)" in ZapposJson
+        zapposJson.deregister(Date.class);
+
+        assertNull(zapposJson.getValueFormatter(Date.class));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "ZapposJson" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "ZapposJson" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

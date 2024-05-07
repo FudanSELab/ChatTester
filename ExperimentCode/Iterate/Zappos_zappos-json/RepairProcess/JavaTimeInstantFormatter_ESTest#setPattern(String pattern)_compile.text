@@ -1,0 +1,65 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java
+[GENERATED PATH] JavaTimeInstantFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[37,32] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[38,102] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java
+[GENERATED PATH] JavaTimeInstantFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[40,28] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[42,98] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java
+[GENERATED PATH] JavaTimeInstantFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[42,28] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[44,98] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java
+[GENERATED PATH] JavaTimeInstantFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[44,28] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[46,98] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java
+[GENERATED PATH] JavaTimeInstantFormatter_ESTest#setPattern(String pattern).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[46,28] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/JavaTimeInstantFormatter_ESTest.java:[48,98] cannot find symbol
+  symbol:   method getFormatter()
+  location: variable formatter of type com.zappos.json.format.JavaTimeInstantFormatter
+[INFO] 2 errors 
+####################
+

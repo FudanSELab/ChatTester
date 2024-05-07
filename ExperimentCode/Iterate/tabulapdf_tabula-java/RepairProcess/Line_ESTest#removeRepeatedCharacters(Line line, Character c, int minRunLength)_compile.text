@@ -1,0 +1,85 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java
+[GENERATED PATH] Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[28,32] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[29,32] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java
+[GENERATED PATH] Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[32,28] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[34,28] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java
+[GENERATED PATH] Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[34,28] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[35,28] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java
+[GENERATED PATH] Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[36,27] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[37,27] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java
+[GENERATED PATH] Line_ESTest#removeRepeatedCharacters(Line line, Character c, int minRunLength).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[37,27] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/tabulapdf_tabula-java/src/test/java/technology/tabula/Line_ESTest.java:[38,27] no suitable constructor found for TextChunk(java.lang.String)
+    constructor technology.tabula.TextChunk.TextChunk(technology.tabula.TextElement) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to technology.tabula.TextElement)
+    constructor technology.tabula.TextChunk.TextChunk(java.util.List<technology.tabula.TextElement>) is not applicable
+      (argument mismatch; java.lang.String cannot be converted to java.util.List<technology.tabula.TextElement>)
+[INFO] 2 errors 
+####################
+

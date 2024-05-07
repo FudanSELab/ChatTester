@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Request.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.http</a> &gt; <span class="el_source">Request.java</span></div><h1>Request.java</h1><pre class="source lang-java linenums">package org.jinstagram.http;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import org.jinstagram.auth.exceptions.OAuthException;
+
+/**
+ * Represents an HTTP Request object
+ */
+public class Request {
+	private static final String CONTENT_LENGTH = &quot;Content-Length&quot;;
+
+<span class="fc" id="L22">	private String payload = null;</span>
+
+<span class="fc" id="L24">	private boolean connectionKeepAlive = false;</span>
+
+	private Map&lt;String, String&gt; bodyParams;
+
+	private String charset;
+
+	private HttpURLConnection connection;
+
+	private Map&lt;String, String&gt; headers;
+
+	private Map&lt;String, String&gt; querystringParams;
+
+	private String url;
+
+	private Verbs verb;
+
+	private int connectTimeout;
+
+	private int readTimeout;
+
+	private Proxy proxy;
+
+	/**
+	 * Creates a new Http Request
+	 *
+	 * @param verb Http Verb (GET, POST, etc)
+	 * @param url url with optional querystring parameters.
+	 */
+<span class="fc" id="L52">	public Request(Verbs verb, String url) {</span>
+<span class="fc" id="L53">		this.verb = verb;</span>
+<span class="fc" id="L54">		this.url = url;</span>
+<span class="fc" id="L55">		this.querystringParams = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L56">		this.bodyParams = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L57">		this.headers = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L58">	}</span>
+
+	/**
+	 * Execute the request and return a {@link Response}
+	 *
+	 * @return Http Response
+	 * @throws RuntimeException if the connection cannot be created.
+	 */
+	public Response send() throws IOException {
+<span class="nc" id="L67">		createConnection();</span>
+
+<span class="nc" id="L69">		return doSend();</span>
+	}
+
+	private void createConnection() throws IOException {
+<span class="nc" id="L73">		String effectiveUrl = URLUtils.appendParametersToQueryString(url, querystringParams);</span>
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (connection == null) {</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">			System.setProperty(&quot;http.keepAlive&quot;, connectionKeepAlive ? &quot;true&quot; : &quot;false&quot;);</span>
+
+<span class="nc" id="L78">			URL url = new URL(effectiveUrl);</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">			connection = (HttpURLConnection) (proxy == null ?</span>
+<span class="nc" id="L80">					url.openConnection() : url.openConnection(proxy));</span>
+
+<span class="nc" id="L82">			connection.setConnectTimeout(connectTimeout);</span>
+<span class="nc" id="L83">			connection.setReadTimeout(readTimeout);</span>
+		}
+<span class="nc" id="L85">	}</span>
+
+	Response doSend() throws IOException {
+<span class="nc" id="L88">		connection.setRequestMethod(this.verb.name());</span>
+<span class="nc" id="L89">		addHeaders(connection);</span>
+
+<span class="nc bnc" id="L91" title="All 4 branches missed.">		if (verb.equals(Verbs.PUT) || verb.equals(Verbs.POST)) {</span>
+<span class="nc" id="L92">			addBody(connection, getByteBodyContents());</span>
+		}
+
+<span class="nc" id="L95">		return new Response(connection);</span>
+	}
+
+	void addHeaders(HttpURLConnection conn) {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">		for (Map.Entry&lt;String, String&gt; entry : headers.entrySet()) {</span>
+<span class="nc" id="L100">			conn.setRequestProperty(entry.getKey(), entry.getValue());</span>
+<span class="nc" id="L101">		}</span>
+<span class="nc" id="L102">	}</span>
+
+	void addBody(HttpURLConnection conn, byte[] content) throws IOException {
+<span class="fc" id="L105">		conn.setRequestProperty(CONTENT_LENGTH, String.valueOf(content.length));</span>
+<span class="fc" id="L106">		conn.setDoOutput(true);</span>
+<span class="fc" id="L107">		conn.getOutputStream().write(content);</span>
+<span class="fc" id="L108">	}</span>
+
+	/**
+	 * Add an HTTP Header to the Request
+	 *
+	 * @param key the header name
+	 * @param value the header value
+	 */
+	public void addHeader(String key, String value) {
+<span class="fc" id="L117">		this.headers.put(key, value);</span>
+<span class="fc" id="L118">	}</span>
+
+	/**
+	 * Add a body Parameter (for POST/ PUT Requests)
+	 *
+	 * @param key the parameter name
+	 * @param value the parameter value
+	 */
+	public void addBodyParameter(String key, String value) {
+<span class="fc" id="L127">		this.bodyParams.put(key, value);</span>
+<span class="fc" id="L128">	}</span>
+
+	/**
+	 * Add a QueryString parameter
+	 *
+	 * @param key the parameter name
+	 * @param value the parameter value
+	 */
+	public void addQuerystringParameter(String key, String value) {
+<span class="fc" id="L137">		this.querystringParams.put(key, value);</span>
+<span class="fc" id="L138">	}</span>
+
+	/**
+	 * Add body payload.
+	 *
+	 * This method is used when the HTTP body is not a form-url-encoded string,
+	 * but another thing. Like for example XML.
+	 *
+	 * Note: The contents are not part of the OAuth signature
+	 *
+	 * @param payload the body of the request
+	 */
+	public void addPayload(String payload) {
+<span class="fc" id="L151">		this.payload = payload;</span>
+<span class="fc" id="L152">	}</span>
+
+	/**
+	 * Get a {@link Map} of the query string parameters.
+	 *
+	 * @return a map containing the query string parameters
+	 * @throws OAuthException if the URL is not valid
+	 */
+	public Map&lt;String, String&gt; getQueryStringParams() {
+		try {
+<span class="fc" id="L162">			Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L163">			String queryString = new URL(url).getQuery();</span>
+
+<span class="nc" id="L165">			params.putAll(URLUtils.queryStringToMap(queryString));</span>
+<span class="nc" id="L166">			params.putAll(this.querystringParams);</span>
+
+<span class="nc" id="L168">			return params;</span>
+<span class="fc" id="L169">		} catch (MalformedURLException mue) {</span>
+<span class="fc" id="L170">			throw new OAuthException(&quot;Malformed URL&quot;, mue);</span>
+		}
+	}
+
+	/**
+	 * Obtains a {@link Map} of the body parameters.
+	 *
+	 * @return a map containing the body parameters.
+	 */
+	public Map&lt;String, String&gt; getBodyParams() {
+<span class="fc" id="L180">		return bodyParams;</span>
+	}
+
+	/**
+	 * Obtains the URL of the HTTP Request.
+	 *
+	 * @return the original URL of the HTTP Request
+	 */
+	public String getUrl() {
+<span class="fc" id="L189">		return url;</span>
+	}
+
+	/**
+	 * Returns the URL without the port and the query string part.
+	 *
+	 * @return the OAuth-sanitized URL
+	 */
+	public String getSanitizedUrl() {
+<span class="fc" id="L198">		return url.replaceAll(&quot;\\?.*&quot;, &quot;&quot;).replace(&quot;\\:\\d{4}&quot;, &quot;&quot;);</span>
+	}
+
+	/**
+	 * Returns the body of the request
+	 *
+	 * @return form encoded string
+	 * @throws OAuthException if the charset chosen is not supported
+	 */
+	public String getBodyContents() {
+		try {
+<span class="fc" id="L209">			return new String(getByteBodyContents(), getCharset());</span>
+<span class="nc" id="L210">		} catch (UnsupportedEncodingException uee) {</span>
+<span class="nc" id="L211">			throw new OAuthException(&quot;Unsupported Charset: &quot; + charset, uee);</span>
+		}
+	}
+
+	byte[] getByteBodyContents() {
+
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">		String body = (payload != null) ? payload : URLUtils.formURLEncodeMap(bodyParams);</span>
+
+		try {
+<span class="fc" id="L220">			return body.getBytes(getCharset());</span>
+<span class="nc" id="L221">		} catch (UnsupportedEncodingException uee) {</span>
+<span class="nc" id="L222">			throw new OAuthException(&quot;Unsupported Charset: &quot; + getCharset(), uee);</span>
+		}
+	}
+
+	/**
+	 * Returns the HTTP Verb
+	 *
+	 * @return the verb
+	 */
+	public Verbs getVerb() {
+<span class="fc" id="L232">		return verb;</span>
+	}
+
+	/**
+	 * Returns the connection headers as a {@link Map}
+	 *
+	 * @return map of headers
+	 */
+	public Map&lt;String, String&gt; getHeaders() {
+<span class="fc" id="L241">		return headers;</span>
+	}
+
+	/**
+	 * Returns the connection charset. Defaults to {@link Charset}
+	 * defaultCharset if not set
+	 *
+	 * @return charset
+	 */
+	public String getCharset() {
+<span class="fc bfc" id="L251" title="All 2 branches covered.">		return (charset == null) ? Charset.defaultCharset().name() : charset;</span>
+	}
+
+	/**
+	 * Sets the connect timeout for the underlying {@link HttpURLConnection}
+	 *
+	 * @param duration duration of the timeout
+	 *
+	 * @param unit unit of time (milliseconds, seconds, etc)
+	 */
+	public void setConnectTimeout(int duration, TimeUnit unit) {
+<span class="fc" id="L262">		this.connectTimeout = (int) unit.toMillis(duration);</span>
+<span class="fc" id="L263">	}</span>
+	
+	/**
+	 * Gets the connect timeout in millisecond units
+	 */
+	public int getConnectTimeoutInMillis() {
+<span class="fc" id="L269">	    return connectTimeout;</span>
+	}
+
+	/**
+	 * Sets the read timeout for the underlying {@link HttpURLConnection}
+	 *
+	 * @param duration duration of the timeout
+	 *
+	 * @param unit unit of time (milliseconds, seconds, etc)
+	 */
+	public void setReadTimeout(int duration, TimeUnit unit) {
+<span class="fc" id="L280">		this.readTimeout = (int) unit.toMillis(duration);</span>
+<span class="fc" id="L281">	}</span>
+	
+	/**
+	 * Gets the read timeout in millisecond units
+	 */
+	public int getReadTimeoutInMillis() {
+<span class="fc" id="L287">	    return readTimeout;</span>
+	}
+
+	/**
+	 * Set the charset of the body of the request
+	 *
+	 * @param charsetName name of the charset of the request
+	 */
+	public void setCharset(String charsetName) {
+<span class="fc" id="L296">		this.charset = charsetName;</span>
+<span class="fc" id="L297">	}</span>
+	
+	
+	/**
+	 * Sets wether the underlying Http Connection is persistent or not.
+	 *
+	 * @see http://download.oracle.com/javase/1.5.0/docs/guide/net/http-keepalive.html
+	 * @param connectionKeepAlive
+	 */
+	public void setConnectionKeepAlive(boolean connectionKeepAlive) {
+<span class="nc" id="L307">		this.connectionKeepAlive = connectionKeepAlive;</span>
+<span class="nc" id="L308">	}</span>
+	
+	/**
+	 * Returns the connection keepalive setting
+	 */
+	public boolean getConnectionKeepAlive() {
+<span class="fc" id="L314">	    return connectionKeepAlive;</span>
+	}
+
+	/*
+	 * We need this in order to stub the connection object for test cases
+	 */
+	void setConnection(HttpURLConnection connection) {
+<span class="nc" id="L321">		this.connection = connection;</span>
+<span class="nc" id="L322">	}</span>
+
+	/**
+	 * Set the proxy that will be used for the rquest
+	 * @param proxy proxy to be used
+	 */
+	public void setProxy(Proxy proxy) {
+<span class="fc" id="L329">		this.proxy = proxy;</span>
+<span class="fc" id="L330">	}</span>
+	
+	/**
+	 * Return the request proxy
+	 */
+	public Proxy getProxy() {
+<span class="fc" id="L336">	    return proxy;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="fc" id="L341">		return String.format(&quot;@Request(%s %s)&quot;, getVerb(), getUrl());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

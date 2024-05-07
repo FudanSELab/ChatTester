@@ -1,0 +1,99 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getIterableImpl(Class<?> iterClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[29,34] cannot find symbol
+  symbol:   class AbstractClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[30,35] cannot find symbol
+  symbol:   class InterfaceClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[31,31] cannot find symbol
+  symbol:   class OtherClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getIterableImpl(Class<?> iterClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[33,34] cannot find symbol
+  symbol:   class AbstractClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[35,35] cannot find symbol
+  symbol:   class InterfaceClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[36,31] cannot find symbol
+  symbol:   class OtherClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getIterableImpl(Class<?> iterClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[35,30] cannot find symbol
+  symbol:   class AbstractClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[37,31] cannot find symbol
+  symbol:   class InterfaceClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[38,27] cannot find symbol
+  symbol:   class OtherClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getIterableImpl(Class<?> iterClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[35,46] infClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[36,51] implClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[40,58] infClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[41,57] implClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[45,54] infClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[46,55] implClass has private access in com.zappos.json.util.TypeImpl
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[50,38] cannot find symbol
+  symbol:   class AbstractClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[58,38] cannot find symbol
+  symbol:   class InterfaceClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 8 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getIterableImpl(Class<?> iterClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[48,34] cannot find symbol
+  symbol:   class AbstractClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[54,34] cannot find symbol
+  symbol:   class InterfaceClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 2 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java
+[GENERATED PATH] TypeImpl_ESTest#getIterableImpl(Class<?> iterClass).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[47,66] cannot find symbol
+  symbol:   class AbstractClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[54,67] cannot find symbol
+  symbol:   class InterfaceClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[60,60] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/util/TypeImpl_ESTest.java:[61,22] cannot find symbol
+  symbol:   class CustomClass
+  location: class com.zappos.json.util.TypeImpl_ESTest
+[INFO] 4 errors 
+####################
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstagramObject.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram</a> &gt; <span class="el_source">InstagramObject.java</span></div><h1>InstagramObject.java</h1><pre class="source lang-java linenums">package org.jinstagram;
+
+import java.util.Map;
+
+import org.jinstagram.http.APILimitUtils;
+
+/**
+ * InstagramObject is a super abstract class that contains the HTTP headers from Response instance
+ * when we create an entity via Instagram.createInstagramObject.
+ * 
+ * @author Arinto Murdopo
+ * @since 1.0.10
+ */
+<span class="fc" id="L14">public abstract class InstagramObject implements InstagramResponse{</span>
+
+    private Map&lt;String, String&gt; headers;
+
+    /**
+     * Package-private method so that Instagram can set HTTP headers 
+     * when creating the entity.
+     * 
+     * @param headers
+     */
+    void setHeaders(Map&lt;String, String&gt; headers){
+<span class="nc" id="L25">        this.headers = headers;</span>
+<span class="nc" id="L26">    }</span>
+
+    /**
+     * Get the HTTP headers
+     * @return HTTP headers from the respective Response instance
+     */
+    public Map&lt;String, String&gt; getHeaders(){
+<span class="nc" id="L33">        return this.headers;</span>
+    }
+
+    /**
+     * Get the available API limit. It correspond to the value of 
+     * X-Ratelimit-Limit key in HTTP response headers. For Instagram 
+     * v1 API, this method should return 5000.
+     * @return Available API limit
+     */
+    public int getAPILimitStatus(){
+<span class="nc" id="L43">        return APILimitUtils.getAPILimitStatus(this.headers);</span>
+    }
+
+    /**
+     * Get the remaining API limit. It correspond to the value of 
+     * X-Ratelimit-Remaining key in HTTP response headers.
+     * @return Remaining API limit
+     */
+    public int getRemainingLimitStatus(){
+<span class="nc" id="L52">        return APILimitUtils.getRemainingLimitStatus(this.headers);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

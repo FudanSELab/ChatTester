@@ -1,0 +1,145 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetAPILimitStatus() {
+
+           <Buggy Line>: diamond operator is not supported in -source 1.6
+        Map<String, String> headers = new HashMap<>();
+
+        headers.put("X-Rate-Limit-Limit", "500");
+        headers.put("X-Rate-Limit-Remaining", "100");
+        InstagramObject instagramObject = new InstagramObject() {
+            @Override
+            void setHeaders(Map<String, String> headers) {
+            }
+            @Override
+            public Map<String, String> getHeaders() {
+                return headers;
+            }
+            @Override
+            public int getAPILimitStatus() {
+                return APILimitUtils.getAPILimitStatus(this.getHeaders());
+            }
+            @Override
+            public int getRemainingLimitStatus() {
+                return 0;
+            }
+        };
+        int apiLimitStatus = instagramObject.getAPILimitStatus();
+        assertEquals(500, apiLimitStatus);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetAPILimitStatus() {
+
+           <Buggy Line>: diamond operator is not supported in -source 1.6
+        Map<String, String> headers = new HashMap<>();
+
+        headers.put("X-Rate-Limit-Limit", "500");
+        headers.put("X-Rate-Limit-Remaining", "100");
+        InstagramObject instagramObject = new InstagramObject() {
+            @Override
+            void setHeaders(Map<String, String> headers) {
+            }
+            @Override
+            public Map<String, String> getHeaders() {
+                return headers;
+            }
+            @Override
+            public int getAPILimitStatus() {
+                return APILimitUtils.getAPILimitStatus(this.getHeaders());
+            }
+            @Override
+            public int getRemainingLimitStatus() {
+                return 0;
+            }
+        };
+        int apiLimitStatus = instagramObject.getAPILimitStatus();
+        assertEquals(500, apiLimitStatus);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+
+# Focal Method
+public  abstract class InstagramObject {
+private Map<String, String> headers;
+# Focal method
+public int getAPILimitStatus() {
+    return APILimitUtils.getAPILimitStatus(this.headers);
+}
+}
+
+# Method Intention
+The getAPILimitStatus() method in the InstagramObject class is intended to retrieve and return the API limit status by utilizing the APILimitUtils class and passing the headers of the InstagramObject instance as a parameter.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+3-->4-->2-->compileRepair
+
+
+# Focal Method
+public  abstract class InstagramObject {
+private Map<String, String> headers;
+# Focal method
+public int getAPILimitStatus() {
+    return APILimitUtils.getAPILimitStatus(this.headers);
+}
+}
+
+# Method Intention
+The getAPILimitStatus() method in the InstagramObject class is intended to retrieve and return the current API limit status based on the headers stored within the InstagramObject instance.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->3-->compileRepair
+
+
+# Focal Method
+public  abstract class InstagramObject {
+private Map<String, String> headers;
+# Focal method
+public int getAPILimitStatus() {
+    return APILimitUtils.getAPILimitStatus(this.headers);
+}
+}
+
+# Method Intention
+The getAPILimitStatus() method in the InstagramObject class is intended to retrieve and return the current API limit status based on the headers associated with the InstagramObject instance.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention` and Class Information. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```.
+
+########
+

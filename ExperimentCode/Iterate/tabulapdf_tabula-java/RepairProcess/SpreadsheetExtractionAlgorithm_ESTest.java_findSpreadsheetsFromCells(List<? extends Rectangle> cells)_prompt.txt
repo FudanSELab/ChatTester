@@ -1,0 +1,362 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public static List<Rectangle> findSpreadsheetsFromCells(List<? extends Rectangle> cells) {
+    List<Rectangle> rectangles = new ArrayList<>();
+    Set<Point2D> pointSet = new HashSet<>();
+    Map<Point2D, Point2D> edgesH = new HashMap<>();
+    Map<Point2D, Point2D> edgesV = new HashMap<>();
+    int i = 0;
+    cells = new ArrayList<>(new HashSet<>(cells));
+    Utils.sort(cells, Rectangle.ILL_DEFINED_ORDER);
+    for (Rectangle cell : cells) {
+        for (Point2D pt : cell.getPoints()) {
+            if (pointSet.contains(pt)) {
+                pointSet.remove(pt);
+            } else {
+                pointSet.add(pt);
+            }
+        }
+    }
+    List<Point2D> pointsSortX = new ArrayList<>(pointSet);
+    pointsSortX.sort(X_FIRST_POINT_COMPARATOR);
+    List<Point2D> pointsSortY = new ArrayList<>(pointSet);
+    pointsSortY.sort(Y_FIRST_POINT_COMPARATOR);
+    while (i < pointSet.size()) {
+        float currY = (float) pointsSortY.get(i).getY();
+        while (i < pointSet.size() && Utils.feq(pointsSortY.get(i).getY(), currY)) {
+            edgesH.put(pointsSortY.get(i), pointsSortY.get(i + 1));
+            edgesH.put(pointsSortY.get(i + 1), pointsSortY.get(i));
+            i += 2;
+        }
+    }
+    i = 0;
+    while (i < pointSet.size()) {
+        float currX = (float) pointsSortX.get(i).getX();
+        while (i < pointSet.size() && Utils.feq(pointsSortX.get(i).getX(), currX)) {
+            edgesV.put(pointsSortX.get(i), pointsSortX.get(i + 1));
+            edgesV.put(pointsSortX.get(i + 1), pointsSortX.get(i));
+            i += 2;
+        }
+    }
+    List<List<PolygonVertex>> polygons = new ArrayList<>();
+    Point2D nextVertex;
+    while (!edgesH.isEmpty()) {
+        ArrayList<PolygonVertex> polygon = new ArrayList<>();
+        Point2D first = edgesH.keySet().iterator().next();
+        polygon.add(new PolygonVertex(first, Direction.HORIZONTAL));
+        edgesH.remove(first);
+        while (true) {
+            PolygonVertex curr = polygon.get(polygon.size() - 1);
+            PolygonVertex lastAddedVertex;
+            if (curr.direction == Direction.HORIZONTAL) {
+                nextVertex = edgesV.get(curr.point);
+                edgesV.remove(curr.point);
+                lastAddedVertex = new PolygonVertex(nextVertex, Direction.VERTICAL);
+            } else {
+                nextVertex = edgesH.get(curr.point);
+                edgesH.remove(curr.point);
+                lastAddedVertex = new PolygonVertex(nextVertex, Direction.HORIZONTAL);
+            }
+            polygon.add(lastAddedVertex);
+            if (lastAddedVertex.equals(polygon.get(0))) {
+                polygon.remove(polygon.size() - 1);
+                break;
+            }
+        }
+        for (PolygonVertex vertex : polygon) {
+            edgesH.remove(vertex.point);
+            edgesV.remove(vertex.point);
+        }
+        polygons.add(polygon);
+    }
+    for (List<PolygonVertex> poly : polygons) {
+        float top = java.lang.Float.MAX_VALUE;
+        float left = java.lang.Float.MAX_VALUE;
+        float bottom = java.lang.Float.MIN_VALUE;
+        float right = java.lang.Float.MIN_VALUE;
+        for (PolygonVertex pt : poly) {
+            top = (float) Math.min(top, pt.point.getY());
+            left = (float) Math.min(left, pt.point.getX());
+            bottom = (float) Math.max(bottom, pt.point.getY());
+            right = (float) Math.max(right, pt.point.getX());
+        }
+        rectangles.add(new Rectangle(top, left, right - left, bottom - top));
+    }
+    return rectangles;
+}
+
+# Method Intention
+The findSpreadsheetsFromCells method aims to identify and extract the boundaries of distinct spreadsheet areas represented by a collection of rectangles by analyzing the points of the rectangles and determining the enclosing rectangles for each distinct spreadsheet area.
+
+# Test Method
+    @Test
+    public void testFindSpreadsheetsFromCells() {
+        List<Rectangle> cells = new ArrayList<>();
+        cells.add(new Rectangle(0, 0, 10, 10));
+        cells.add(new Rectangle(15, 15, 25, 25));
+        List<Rectangle> result = SpreadsheetExtractionAlgorithm.findSpreadsheetsFromCells(cells);
+        assertEquals(2, result.size());
+        Rectangle firstRectangle = result.get(0);
+        assertEquals(0, firstRectangle.getTop(), 0.001);
+        assertEquals(0, firstRectangle.getLeft(), 0.001);
+        assertEquals(10, firstRectangle.getWidth(), 0.001);
+        assertEquals(10, firstRectangle.getHeight(), 0.001);
+        Rectangle secondRectangle = result.get(1);
+        assertEquals(15, secondRectangle.getTop(), 0.001);
+        assertEquals(15, secondRectangle.getLeft(), 0.001);
+        [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal Method
+public static List<Rectangle> findSpreadsheetsFromCells(List<? extends Rectangle> cells) {
+    List<Rectangle> rectangles = new ArrayList<>();
+    Set<Point2D> pointSet = new HashSet<>();
+    Map<Point2D, Point2D> edgesH = new HashMap<>();
+    Map<Point2D, Point2D> edgesV = new HashMap<>();
+    int i = 0;
+    cells = new ArrayList<>(new HashSet<>(cells));
+    Utils.sort(cells, Rectangle.ILL_DEFINED_ORDER);
+    for (Rectangle cell : cells) {
+        for (Point2D pt : cell.getPoints()) {
+            if (pointSet.contains(pt)) {
+                pointSet.remove(pt);
+            } else {
+                pointSet.add(pt);
+            }
+        }
+    }
+    List<Point2D> pointsSortX = new ArrayList<>(pointSet);
+    pointsSortX.sort(X_FIRST_POINT_COMPARATOR);
+    List<Point2D> pointsSortY = new ArrayList<>(pointSet);
+    pointsSortY.sort(Y_FIRST_POINT_COMPARATOR);
+    while (i < pointSet.size()) {
+        float currY = (float) pointsSortY.get(i).getY();
+        while (i < pointSet.size() && Utils.feq(pointsSortY.get(i).getY(), currY)) {
+            edgesH.put(pointsSortY.get(i), pointsSortY.get(i + 1));
+            edgesH.put(pointsSortY.get(i + 1), pointsSortY.get(i));
+            i += 2;
+        }
+    }
+    i = 0;
+    while (i < pointSet.size()) {
+        float currX = (float) pointsSortX.get(i).getX();
+        while (i < pointSet.size() && Utils.feq(pointsSortX.get(i).getX(), currX)) {
+            edgesV.put(pointsSortX.get(i), pointsSortX.get(i + 1));
+            edgesV.put(pointsSortX.get(i + 1), pointsSortX.get(i));
+            i += 2;
+        }
+    }
+    List<List<PolygonVertex>> polygons = new ArrayList<>();
+    Point2D nextVertex;
+    while (!edgesH.isEmpty()) {
+        ArrayList<PolygonVertex> polygon = new ArrayList<>();
+        Point2D first = edgesH.keySet().iterator().next();
+        polygon.add(new PolygonVertex(first, Direction.HORIZONTAL));
+        edgesH.remove(first);
+        while (true) {
+            PolygonVertex curr = polygon.get(polygon.size() - 1);
+            PolygonVertex lastAddedVertex;
+            if (curr.direction == Direction.HORIZONTAL) {
+                nextVertex = edgesV.get(curr.point);
+                edgesV.remove(curr.point);
+                lastAddedVertex = new PolygonVertex(nextVertex, Direction.VERTICAL);
+            } else {
+                nextVertex = edgesH.get(curr.point);
+                edgesH.remove(curr.point);
+                lastAddedVertex = new PolygonVertex(nextVertex, Direction.HORIZONTAL);
+            }
+            polygon.add(lastAddedVertex);
+            if (lastAddedVertex.equals(polygon.get(0))) {
+                polygon.remove(polygon.size() - 1);
+                break;
+            }
+        }
+        for (PolygonVertex vertex : polygon) {
+            edgesH.remove(vertex.point);
+            edgesV.remove(vertex.point);
+        }
+        polygons.add(polygon);
+    }
+    for (List<PolygonVertex> poly : polygons) {
+        float top = java.lang.Float.MAX_VALUE;
+        float left = java.lang.Float.MAX_VALUE;
+        float bottom = java.lang.Float.MIN_VALUE;
+        float right = java.lang.Float.MIN_VALUE;
+        for (PolygonVertex pt : poly) {
+            top = (float) Math.min(top, pt.point.getY());
+            left = (float) Math.min(left, pt.point.getX());
+            bottom = (float) Math.max(bottom, pt.point.getY());
+            right = (float) Math.max(right, pt.point.getX());
+        }
+        rectangles.add(new Rectangle(top, left, right - left, bottom - top));
+    }
+    return rectangles;
+}
+
+# Method Intention
+The findSpreadsheetsFromCells method aims to identify and extract the boundaries of distinct spreadsheet areas represented by a collection of rectangles by analyzing the points forming the rectangles and determining the enclosing rectangles for each identified spreadsheet area.
+
+# Instruction
+Please generate a complete and compilable test method for the `Focal Method` based on the `Method Intention`. 
+The generated test method coverage for the focal method is as comprehensive as possible, and the generated code should be enclosed within ``` ```
+
+########
+
+2-->3-->0-->testRepair
+
+
+# Test Method
+    @Test
+    public void testFindSpreadsheetsFromCells() {
+        List<Rectangle> cells = new ArrayList<>();
+        cells.add(new Rectangle(0, 0, 10, 10));
+        cells.add(new Rectangle(15, 15, 25, 25));
+
+           <Buggy Line>: class, interface, or enum expected
+        List<Rectangle> result = SpreadsheetExtractionAlgorithm.findSpreadsheetsFromCells(cells);
+
+        assertEquals(2, result.size());
+        Rectangle firstRectangle = result.get(0);
+        assertEquals(0, firstRectangle.getTop(), 0.001);
+        assertEquals(0, firstRectangle.getLeft(), 0.001);
+        assertEquals(10, firstRectangle.getWidth(), 0.001);
+        assertEquals(10, firstRectangle.getHeight(), 0.001);
+        Rectangle secondRectangle = result.get(1);
+        assertEquals(15, secondRectangle.getTop(), 0.001);
+        assertEquals(15, secondRectangle.getLeft(), 0.001);
+        assertEquals(10, secondRectangle.getWidth(), 0.001);
+        assertEquals(10, secondRectangle.getHeight(), 0.001);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public static List<Rectangle> findSpreadsheetsFromCells(List<? extends Rectangle> cells) {
+    List<Rectangle> rectangles = new ArrayList<>();
+    Set<Point2D> pointSet = new HashSet<>();
+    Map<Point2D, Point2D> edgesH = new HashMap<>();
+    Map<Point2D, Point2D> edgesV = new HashMap<>();
+    int i = 0;
+    cells = new ArrayList<>(new HashSet<>(cells));
+    Utils.sort(cells, Rectangle.ILL_DEFINED_ORDER);
+    for (Rectangle cell : cells) {
+        for (Point2D pt : cell.getPoints()) {
+            if (pointSet.contains(pt)) {
+                pointSet.remove(pt);
+            } else {
+                pointSet.add(pt);
+            }
+        }
+    }
+    List<Point2D> pointsSortX = new ArrayList<>(pointSet);
+    pointsSortX.sort(X_FIRST_POINT_COMPARATOR);
+    List<Point2D> pointsSortY = new ArrayList<>(pointSet);
+    pointsSortY.sort(Y_FIRST_POINT_COMPARATOR);
+    while (i < pointSet.size()) {
+        float currY = (float) pointsSortY.get(i).getY();
+        while (i < pointSet.size() && Utils.feq(pointsSortY.get(i).getY(), currY)) {
+            edgesH.put(pointsSortY.get(i), pointsSortY.get(i + 1));
+            edgesH.put(pointsSortY.get(i + 1), pointsSortY.get(i));
+            i += 2;
+        }
+    }
+    i = 0;
+    while (i < pointSet.size()) {
+        float currX = (float) pointsSortX.get(i).getX();
+        while (i < pointSet.size() && Utils.feq(pointsSortX.get(i).getX(), currX)) {
+            edgesV.put(pointsSortX.get(i), pointsSortX.get(i + 1));
+            edgesV.put(pointsSortX.get(i + 1), pointsSortX.get(i));
+            i += 2;
+        }
+    }
+    List<List<PolygonVertex>> polygons = new ArrayList<>();
+    Point2D nextVertex;
+    while (!edgesH.isEmpty()) {
+        ArrayList<PolygonVertex> polygon = new ArrayList<>();
+        Point2D first = edgesH.keySet().iterator().next();
+        polygon.add(new PolygonVertex(first, Direction.HORIZONTAL));
+        edgesH.remove(first);
+        while (true) {
+            PolygonVertex curr = polygon.get(polygon.size() - 1);
+            PolygonVertex lastAddedVertex;
+            if (curr.direction == Direction.HORIZONTAL) {
+                nextVertex = edgesV.get(curr.point);
+                edgesV.remove(curr.point);
+                lastAddedVertex = new PolygonVertex(nextVertex, Direction.VERTICAL);
+            } else {
+                nextVertex = edgesH.get(curr.point);
+                edgesH.remove(curr.point);
+                lastAddedVertex = new PolygonVertex(nextVertex, Direction.HORIZONTAL);
+            }
+            polygon.add(lastAddedVertex);
+            if (lastAddedVertex.equals(polygon.get(0))) {
+                polygon.remove(polygon.size() - 1);
+                break;
+            }
+        }
+        for (PolygonVertex vertex : polygon) {
+            edgesH.remove(vertex.point);
+            edgesV.remove(vertex.point);
+        }
+        polygons.add(polygon);
+    }
+    for (List<PolygonVertex> poly : polygons) {
+        float top = java.lang.Float.MAX_VALUE;
+        float left = java.lang.Float.MAX_VALUE;
+        float bottom = java.lang.Float.MIN_VALUE;
+        float right = java.lang.Float.MIN_VALUE;
+        for (PolygonVertex pt : poly) {
+            top = (float) Math.min(top, pt.point.getY());
+            left = (float) Math.min(left, pt.point.getX());
+            bottom = (float) Math.max(bottom, pt.point.getY());
+            right = (float) Math.max(right, pt.point.getX());
+        }
+        rectangles.add(new Rectangle(top, left, right - left, bottom - top));
+    }
+    return rectangles;
+}
+
+# Method Intention
+The findSpreadsheetsFromCells method aims to identify and extract the boundaries of distinct spreadsheet areas represented by a collection of rectangles by analyzing the points of the rectangles and determining the enclosing rectangles for each distinct spreadsheet area.
+
+# Test Method
+@Test
+public void testFindSpreadsheetsFromCells() {
+    List<Rectangle> cells = new ArrayList<>();
+    cells.add(new Rectangle(0, 0, 10, 10));
+    cells.add(new Rectangle(15, 15, 25, 25));
+    List<Rectangle> result = SpreadsheetExtractionAlgorithm.findSpreadsheetsFromCells(cells);
+    assertEquals(2, result.size());
+    Rectangle firstRectangle = result.get(0);
+    assertEquals(0, firstRectangle.getTop(), 0.001);
+    assertEquals(0, firstRectangle.getLeft(), 0.001);
+    assertEquals(10, firstRectangle.getWidth(), 0.001);
+    assertEquals(10, firstRectangle.getHeight(), 0.001);
+    Rectangle secondRectangle = result.get(1);
+    assertEquals(15, secondRectangle.getTop(), 0.001);
+    assertEquals(15, secondRectangle.getLeft(), 0.001);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

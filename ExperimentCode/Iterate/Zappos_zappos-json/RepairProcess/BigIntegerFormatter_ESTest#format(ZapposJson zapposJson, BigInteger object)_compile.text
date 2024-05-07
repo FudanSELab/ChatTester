@@ -1,0 +1,14 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/BigIntegerFormatter_ESTest.java
+[GENERATED PATH] BigIntegerFormatter_ESTest#format(ZapposJson zapposJson, BigInteger object).java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/BigIntegerFormatter_ESTest.java:[28,33] constructor ZapposJson in class com.zappos.json.ZapposJson cannot be applied to given types;
+  required: boolean
+  found: no arguments
+  reason: actual and formal argument lists differ in length
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/Zappos_zappos-json/src/test/java/com/zappos/json/format/BigIntegerFormatter_ESTest.java:[32,19] cannot find symbol
+  symbol:   method setPattern(java.lang.String)
+  location: variable zapposJson of type com.zappos.json.ZapposJson
+[INFO] 2 errors 
+####################
+

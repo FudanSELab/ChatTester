@@ -1,0 +1,156 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public float horizontalOverlap(Rectangle other) {
+    return Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+}
+
+# Method Intention
+The horizontalOverlap(Rectangle other) method in the Rectangle class is intended to calculate the horizontal overlap between the current rectangle and another specified rectangle by determining the shared horizontal distance between their rightmost and leftmost edges, ensuring a non-negative result.
+
+# Test Method
+    @Test
+    public void testHorizontalOverlap() {
+        Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+        Rectangle rectangle2 = new Rectangle(3, 2, 6, 4);
+        float expectedOverlap = 2; 
+        float actualOverlap = rectangle1.horizontalOverlap(rectangle2);
+                     [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public float horizontalOverlap(Rectangle other) {
+    return Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+}
+
+# Method Intention
+The horizontalOverlap(Rectangle other) method calculates the horizontal overlap between the current Rectangle object and another Rectangle object by determining the distance between the rightmost edge of the leftmost rectangle and the leftmost edge of the rightmost rectangle, ensuring a non-negative value is returned.
+
+# Test Method
+    @Test
+    public void testHorizontalOverlap() {
+        Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+        Rectangle rectangle2 = new Rectangle(3, 2, 6, 4);
+        float expectedOverlap = 2; 
+        float actualOverlap = rectangle1.horizontalOverlap(rectangle2);
+           [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public float horizontalOverlap(Rectangle other) {
+    return Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+}
+
+# Method Intention
+The horizontalOverlap(Rectangle other) method in the Rectangle class is intended to calculate the horizontal overlap between the current rectangle and another specified rectangle by determining the distance of overlap between their right and left boundaries.
+
+# Test Method
+    @Test
+    public void testHorizontalOverlap() {
+        Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+        Rectangle rectangle2 = new Rectangle(3, 2, 6, 4);
+        float expectedOverlap = 2; 
+        float actualOverlap = rectangle1.horizontalOverlap(rectangle2);
+        [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public float horizontalOverlap(Rectangle other) {
+    return Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+}
+
+# Method Intention
+The horizontalOverlap(Rectangle other) method calculates the horizontal overlap between the current Rectangle object and another Rectangle object by determining the distance between the rightmost edge of the leftmost rectangle and the leftmost edge of the rightmost rectangle, ensuring a non-negative value representing the shared horizontal space between the two rectangles.
+
+# Test Method
+    @Test
+    public void testHorizontalOverlap() {
+        Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+        Rectangle rectangle2 = new Rectangle(3, 2, 6, 4);
+        float expectedOverlap = 2; 
+        float actualOverlap = rectangle1.horizontalOverlap(rectangle2);
+        [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public float horizontalOverlap(Rectangle other) {
+    return Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+}
+
+# Method Intention
+The horizontalOverlap(Rectangle other) method in the Rectangle class is intended to calculate the horizontal overlap between the current rectangle and another specified rectangle by determining the shared horizontal distance between their rightmost and leftmost edges, ensuring a non-negative result by taking the maximum of zero and the difference between the minimum right edge and maximum left edge.
+
+# Test Method
+@Test
+public void testHorizontalOverlap() {
+    Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+    Rectangle rectangle2 = new Rectangle(3, 2, 6, 4);
+    float expectedOverlap = 2;
+    float actualOverlap = rectangle1.horizontalOverlap(rectangle2);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+5-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public float horizontalOverlap(Rectangle other) {
+    return Math.max(0, Math.min(this.getRight(), other.getRight()) - Math.max(this.getLeft(), other.getLeft()));
+}
+
+# Method Intention
+The horizontalOverlap(Rectangle other) method in the Rectangle class is intended to calculate the horizontal overlap between the current rectangle and another specified rectangle by determining the distance of overlap between their rightmost and leftmost edges, ensuring a non-negative result.
+
+# Test Method
+@Test
+public void testHorizontalOverlap() {
+    Rectangle rectangle1 = new Rectangle(0, 0, 5, 5);
+    Rectangle rectangle2 = new Rectangle(3, 2, 6, 4);
+    float expectedOverlap = 2;
+    float actualOverlap = rectangle1.horizontalOverlap(rectangle2);
+    [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

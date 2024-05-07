@@ -1,0 +1,23 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testGetVersion() {
+
+             <Buggy Line>: no suitable constructor found for OAuthConfig(no arguments)
+        InstagramService instagramService = new InstagramService(new InstagramApi(), new OAuthConfig());
+
+        String expectedVersion = "1.0";
+        String actualVersion = instagramService.getVersion();
+        assertEquals(expectedVersion, actualVersion);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InstagramApi.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.auth</a> &gt; <span class="el_source">InstagramApi.java</span></div><h1>InstagramApi.java</h1><pre class="source lang-java linenums">package org.jinstagram.auth;
+
+import static org.jinstagram.http.URLUtils.formURLEncode;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jinstagram.auth.exceptions.OAuthException;
+import org.jinstagram.auth.model.Constants;
+import org.jinstagram.auth.model.OAuthConfig;
+import org.jinstagram.auth.model.Token;
+import org.jinstagram.auth.oauth.InstagramService;
+import org.jinstagram.http.Verbs;
+import org.jinstagram.utils.Preconditions;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonParser;
+
+<span class="nc" id="L18">public class InstagramApi {</span>
+	public String getAccessTokenEndpoint() {
+<span class="nc" id="L20">		return Constants.ACCESS_TOKEN_ENDPOINT;</span>
+	}
+
+	public Verbs getAccessTokenVerb() {
+<span class="nc" id="L24">		return Verbs.POST;</span>
+	}
+
+	public String getAuthorizationUrl(OAuthConfig config) {
+<span class="nc" id="L28">		Preconditions.checkValidUrl(config.getCallback(),</span>
+				&quot;Must provide a valid url as callback. Instagram does not support OOB&quot;);
+
+		// Append scope if present
+<span class="nc bnc" id="L32" title="All 2 branches missed.">		if (config.hasScope()) {</span>
+<span class="nc" id="L33">			return String.format(Constants.SCOPED_AUTHORIZE_URL, config.getApiKey(),</span>
+<span class="nc" id="L34">					formURLEncode(config.getCallback()), config.getScope());</span>
+		} else {
+<span class="nc" id="L36">			return String.format(Constants.AUTHORIZE_URL, config.getApiKey(), formURLEncode(config.getCallback()));</span>
+		}
+	}
+
+	public AccessTokenExtractor getAccessTokenExtractor() {
+<span class="nc" id="L41">		return new AccessTokenExtractor() {</span>
+			@Override
+			public Token extract(String response) {
+<span class="nc" id="L44">				Preconditions.checkEmptyString(response, &quot;Cannot extract a token from a null or empty String&quot;);</span>
+
+				try {
+<span class="nc" id="L47">					JsonParser parser = new JsonParser();</span>
+<span class="nc" id="L48">					JsonObject obj = parser.parse(response).getAsJsonObject();</span>
+<span class="nc" id="L49">					String token = null;</span>
+
+<span class="nc bnc" id="L51" title="All 2 branches missed.">					if(obj.has(&quot;access_token&quot;)) {</span>
+<span class="nc" id="L52">						token = obj.get(&quot;access_token&quot;).getAsString();</span>
+					}
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">					if(StringUtils.isEmpty(token)) {</span>
+<span class="nc" id="L56">						throw new OAuthException(&quot;Cannot extract an access token. Response was: &quot; + response);</span>
+					}
+<span class="nc" id="L58">					return new Token(token, &quot;&quot;, response);</span>
+<span class="nc" id="L59">				} catch(JsonParseException e) {</span>
+<span class="nc" id="L60">					throw new OAuthException(&quot;Cannot extract an access token. Response was: &quot; + response);</span>
+				}
+			}
+		};
+	}
+
+	public InstagramService createService(OAuthConfig config) {
+<span class="nc" id="L67">		return new InstagramService(this, config);</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

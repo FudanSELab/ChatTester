@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Strings.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json.util</a> &gt; <span class="el_source">Strings.java</span></div><h1>Strings.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json.util;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Random;
+
+import com.zappos.json.JsonWriter;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+<span class="nc" id="L29">public class Strings {</span>
+  
+  private static final char PLACEHOLDER = '@';
+
+<span class="fc" id="L33">  private static final char BIG_LETTERS[] = new char[26];</span>
+<span class="fc" id="L34">  private static final char SMALL_LETTERS[] = new char[26];</span>
+<span class="fc" id="L35">  private static final char NUMBERS[] = new char[10];</span>
+
+<span class="fc" id="L37">  private static final Random RANDOM = new Random();</span>
+
+  static {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">    for (int i = 0; i &lt; 26; i++) {</span>
+<span class="fc" id="L41">      BIG_LETTERS[i] = (char) (65 + i);</span>
+<span class="fc" id="L42">      SMALL_LETTERS[i] = (char) (97 + i);</span>
+    }
+<span class="fc bfc" id="L44" title="All 2 branches covered.">    for (int i = 0; i &lt; 10; i++) {</span>
+<span class="fc" id="L45">      NUMBERS[i] = (char) (48 + i);</span>
+    }
+<span class="fc" id="L47">  }</span>
+
+  /**
+   * Simplest formatter. It does not support escaping or any kinds of fancy
+   * feature. It just fill the placeholder '@' with supplied argument values.
+   * 
+   * @param pattern the pattern being used by formatter
+   * @param args the arguments for the formatter
+   * @return formatted value as a string
+   */
+  public static String format(String pattern, Object... args) {
+
+<span class="nc bnc" id="L59" title="All 2 branches missed.">    if (args == null)</span>
+<span class="nc" id="L60">      return pattern;</span>
+
+<span class="nc" id="L62">    StringBuilder str = new StringBuilder(pattern.length() + 50);</span>
+<span class="nc" id="L63">    int idx = -1;</span>
+<span class="nc" id="L64">    int i = 0;</span>
+<span class="nc" id="L65">    int p = 0;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">    while ((idx = pattern.indexOf(PLACEHOLDER, p)) != -1) {</span>
+<span class="nc" id="L67">      str.append(pattern.substring(p, idx));</span>
+<span class="nc" id="L68">      Object arg = args[i];</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">      if (arg == null) {</span>
+<span class="nc" id="L70">        str.append(JsonWriter.CONST_NULL);</span>
+      } else {
+<span class="nc" id="L72">        str.append(args[i].toString());</span>
+      }
+<span class="nc" id="L74">      i++;</span>
+<span class="nc" id="L75">      p = idx + 1;</span>
+<span class="nc" id="L76">    }</span>
+<span class="nc" id="L77">    str.append(pattern.substring(p));</span>
+<span class="nc" id="L78">    return str.toString();</span>
+  }
+
+  public static String randomNumber(int n) {
+<span class="nc" id="L82">    char c[] = new char[n];</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L84">      c[i] = NUMBERS[RANDOM.nextInt(10)];</span>
+    }
+<span class="nc" id="L86">    return new String(c);</span>
+  }
+
+  public static String randomAlphabetic(int n) {
+<span class="nc" id="L90">    char c[] = new char[n];</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L92">      int j = RANDOM.nextInt(26);</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">      c[i] = RANDOM.nextBoolean() ? BIG_LETTERS[j] : SMALL_LETTERS[j];</span>
+    }
+<span class="nc" id="L95">    return new String(c);</span>
+  }
+
+  public static String random(int n, char chars[]) {
+<span class="nc" id="L99">    char c[] = new char[n];</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">    for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L101">      c[i] = chars[RANDOM.nextInt(chars.length)];</span>
+    }
+<span class="nc" id="L103">    return new String(c);</span>
+  }
+
+  /**
+   * 
+   * @param s the string object
+   * @return boolean indicating whether specified string is number
+   */
+  public static boolean isNumber(String s){
+<span class="nc bnc" id="L112" title="All 4 branches missed.">    if(s == null || s.length() == 0) return false;</span>
+<span class="nc bnc" id="L113" title="All 4 branches missed.">    if(!Character.isDigit(s.charAt(0)) &amp;&amp; s.charAt(0) != '-') return false;</span>
+    
+<span class="nc" id="L115">    int decimal = 0; </span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">    for(int i = 1; i &lt; s.length(); i++){</span>
+<span class="nc" id="L117">      char c = s.charAt(i);</span>
+<span class="nc bnc" id="L118" title="All 2 branches missed.">      if(Character.isDigit(c)) continue;</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">      if(c == '.') {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        if(decimal == 1) return false;</span>
+<span class="nc" id="L121">        decimal++;</span>
+<span class="nc" id="L122">        continue;</span>
+      }
+<span class="nc" id="L124">      return false;</span>
+    }
+<span class="nc" id="L126">    return true;</span>
+  }
+  
+  public static String fromReader(Reader reader) throws IOException {
+<span class="nc" id="L130">    return fromReader(reader, 1024);</span>
+  }
+  
+  public static String fromReader(Reader reader, int bufferSize) throws IOException {
+<span class="nc" id="L134">    char[] arr = new char[bufferSize];</span>
+<span class="nc" id="L135">    StringBuilder buffer = new StringBuilder();</span>
+    int numCharsRead;
+<span class="nc bnc" id="L137" title="All 2 branches missed.">    while ((numCharsRead = reader.read(arr, 0, arr.length)) != -1) {</span>
+<span class="nc" id="L138">        buffer.append(arr, 0, numCharsRead);</span>
+    }
+<span class="nc" id="L140">    reader.close();</span>
+<span class="nc" id="L141">    return buffer.toString();</span>
+  }
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

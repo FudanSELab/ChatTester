@@ -1,0 +1,234 @@
+0-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Class<?>[] getGenericParameterTypes(Method method) {
+    Type[] argTypes = method.getGenericParameterTypes();
+    for (Type argType : argTypes) {
+        if (argType instanceof ParameterizedType) {
+            Type[] typeArgs = ((ParameterizedType) argType).getActualTypeArguments();
+            if (typeArgs.length > 0) {
+                List<Class<?>> genericTypes = new ArrayList<>();
+                for (Type typeArg : typeArgs) {
+                    if (typeArg instanceof Class<?>) {
+                        genericTypes.add((Class<?>) typeArg);
+                    }
+                }
+                return genericTypes.toArray(new Class[0]);
+            }
+        }
+    }
+    return null;
+}
+
+# Method Intention
+The overall intention of the getGenericParameterTypes(Method method) method is to extract and return the generic parameter types of a given Method object, specifically focusing on identifying and returning any actual type arguments within parameterized types.
+
+# Test Method
+    @Test
+    public void testGetGenericParameterTypes() throws NoSuchMethodException {
+        Method method = Reflections.class.getMethod("getGenericParameterTypes", Method.class);
+        Class<?>[] genericParameterTypes = Reflections.getGenericParameterTypes(method);
+      [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->1-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Class<?>[] getGenericParameterTypes(Method method) {
+    Type[] argTypes = method.getGenericParameterTypes();
+    for (Type argType : argTypes) {
+        if (argType instanceof ParameterizedType) {
+            Type[] typeArgs = ((ParameterizedType) argType).getActualTypeArguments();
+            if (typeArgs.length > 0) {
+                List<Class<?>> genericTypes = new ArrayList<>();
+                for (Type typeArg : typeArgs) {
+                    if (typeArg instanceof Class<?>) {
+                        genericTypes.add((Class<?>) typeArg);
+                    }
+                }
+                return genericTypes.toArray(new Class[0]);
+            }
+        }
+    }
+    return null;
+}
+
+# Method Intention
+The getGenericParameterTypes(Method method) method in the Reflections class is intended to extract and return the generic parameter types of a given Method object, specifically focusing on identifying and returning any parameterized types with actual type arguments as an array of Class objects.
+
+# Test Method
+    @Test
+    public void testGetGenericParameterTypes() throws NoSuchMethodException {
+        Method method = Reflections.class.getMethod("getGenericParameterTypes", Method.class);
+        Class<?>[] genericParameterTypes = Reflections.getGenericParameterTypes(method);
+      [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Class<?>[] getGenericParameterTypes(Method method) {
+    Type[] argTypes = method.getGenericParameterTypes();
+    for (Type argType : argTypes) {
+        if (argType instanceof ParameterizedType) {
+            Type[] typeArgs = ((ParameterizedType) argType).getActualTypeArguments();
+            if (typeArgs.length > 0) {
+                List<Class<?>> genericTypes = new ArrayList<>();
+                for (Type typeArg : typeArgs) {
+                    if (typeArg instanceof Class<?>) {
+                        genericTypes.add((Class<?>) typeArg);
+                    }
+                }
+                return genericTypes.toArray(new Class[0]);
+            }
+        }
+    }
+    return null;
+}
+
+# Method Intention
+The overall intention of the getGenericParameterTypes(Method method) method is to extract and return the generic parameter types of a given method, specifically focusing on identifying and returning any parameterized types with actual type arguments as an array of Class objects.
+
+# Test Method
+@Test
+public void testGetGenericParameterTypes() throws NoSuchMethodException {
+    Method method = Reflections.class.getMethod("getGenericParameterTypes", Method.class);
+    Class<?>[] genericParameterTypes = Reflections.getGenericParameterTypes(method);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+3-->3-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Class<?>[] getGenericParameterTypes(Method method) {
+    Type[] argTypes = method.getGenericParameterTypes();
+    for (Type argType : argTypes) {
+        if (argType instanceof ParameterizedType) {
+            Type[] typeArgs = ((ParameterizedType) argType).getActualTypeArguments();
+            if (typeArgs.length > 0) {
+                List<Class<?>> genericTypes = new ArrayList<>();
+                for (Type typeArg : typeArgs) {
+                    if (typeArg instanceof Class<?>) {
+                        genericTypes.add((Class<?>) typeArg);
+                    }
+                }
+                return genericTypes.toArray(new Class[0]);
+            }
+        }
+    }
+    return null;
+}
+
+# Method Intention
+The overall intention of the getGenericParameterTypes(Method method) method is to extract and return the generic parameter types of a given Method object, specifically focusing on identifying and returning any parameterized types with actual type arguments as an array of Class objects.
+
+# Test Method
+@Test
+public void testGetGenericParameterTypes() throws NoSuchMethodException {
+    Method method = Reflections.class.getMethod("getGenericParameterTypes", Method.class);
+    Class<?>[] genericParameterTypes = Reflections.getGenericParameterTypes(method);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+4-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Class<?>[] getGenericParameterTypes(Method method) {
+    Type[] argTypes = method.getGenericParameterTypes();
+    for (Type argType : argTypes) {
+        if (argType instanceof ParameterizedType) {
+            Type[] typeArgs = ((ParameterizedType) argType).getActualTypeArguments();
+            if (typeArgs.length > 0) {
+                List<Class<?>> genericTypes = new ArrayList<>();
+                for (Type typeArg : typeArgs) {
+                    if (typeArg instanceof Class<?>) {
+                        genericTypes.add((Class<?>) typeArg);
+                    }
+                }
+                return genericTypes.toArray(new Class[0]);
+            }
+        }
+    }
+    return null;
+}
+
+# Method Intention
+The overall intention of the getGenericParameterTypes(Method method) method is to extract and return the generic parameter types of a given Method object, specifically focusing on identifying and returning any parameterized types with actual type arguments as an array of Class objects.
+
+# Test Method
+@Test
+public void testGetGenericParameterTypes() throws NoSuchMethodException {
+    Method method = Reflections.class.getMethod("getGenericParameterTypes", Method.class);
+    Class<?>[] genericParameterTypes = Reflections.getGenericParameterTypes(method);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+
+5-->5-->0-->testRepair
+# Focal method (Cannot be modified)
+public static Class<?>[] getGenericParameterTypes(Method method) {
+    Type[] argTypes = method.getGenericParameterTypes();
+    for (Type argType : argTypes) {
+        if (argType instanceof ParameterizedType) {
+            Type[] typeArgs = ((ParameterizedType) argType).getActualTypeArguments();
+            if (typeArgs.length > 0) {
+                List<Class<?>> genericTypes = new ArrayList<>();
+                for (Type typeArg : typeArgs) {
+                    if (typeArg instanceof Class<?>) {
+                        genericTypes.add((Class<?>) typeArg);
+                    }
+                }
+                return genericTypes.toArray(new Class[0]);
+            }
+        }
+    }
+    return null;
+}
+
+# Method Intention
+The overall intention of the getGenericParameterTypes(Method method) method is to extract and return the generic parameter types of a given Method object, specifically focusing on identifying and returning any parameterized types with actual type arguments as an array of Class objects.
+
+# Test Method
+@Test
+public void testGetGenericParameterTypes() throws NoSuchMethodException {
+    Method method = Reflections.class.getMethod("getGenericParameterTypes", Method.class);
+    Class<?>[] genericParameterTypes = Reflections.getGenericParameterTypes(method);
+  [Generate an assertion statement here]
+
+
+# Instruction
+The test method throw an error " java.lang.AssertionError " in "  ". 
+Please analyze the code logic and method intention of the Focal method, then generate a correct assertion statement in the test method. Return the complete and compilable test method for the Focal method.
+The generated code should be enclosed within ``` ```.
+
+########
+

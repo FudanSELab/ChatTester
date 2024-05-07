@@ -1,0 +1,134 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        Comments comments = new Comments();
+        comments.setCount(5);
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<CommentData> commentList = new LinkedList<>();
+
+        commentList.add(new CommentData("User1", "Great post!"));
+        commentList.add(new CommentData("User2", "Nice photo!"));
+        comments.setComments(commentList);
+        String expected = "Comments [comments=[CommentData{username='User1', text='Great post!'}, CommentData{username='User2', text='Nice photo!'}], count=5]";
+        String actual = comments.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# CommentData class
+package org.jinstagram.entity.comments;
+public class CommentData {
+public String getCreatedTime();
+public void setCreatedTime(String createdTime);
+public String getText();
+public void setText(String text);
+public FromTagData getCommentFrom();
+public void setCommentFrom(FromTagData commentFrom);
+public String getId();
+public void setId(String id);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testToString() {
+    Comments comments = new Comments();
+    comments.setCount(5);
+    List<CommentData> commentList = new LinkedList<CommentData>();
+
+     <Buggy Line>: constructor CommentData in class org.jinstagram.entity.comments.CommentData cannot be applied to given types;
+    commentList.add(new CommentData("User1", "Great post!"));
+
+    commentList.add(new CommentData("User2", "Nice photo!"));
+    comments.setComments(commentList);
+    String expected = "Comments [comments=[CommentData{username='User1', text='Great post!'}, CommentData{username='User2', text='Nice photo!'}], count=5]";
+    String actual = comments.toString();
+    assertEquals(expected, actual);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "CommentData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "CommentData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
+2-->3-->1-->compileRepair
+
+# CommentData class
+package org.jinstagram.entity.comments;
+public class CommentData {
+public String getCreatedTime();
+public void setCreatedTime(String createdTime);
+public String getText();
+public void setText(String text);
+public FromTagData getCommentFrom();
+public void setCommentFrom(FromTagData commentFrom);
+public String getId();
+public void setId(String id);
+public String toString();
+}
+
+# FromTagData class
+package org.jinstagram.entity.common;
+public class FromTagData {
+public String getUsername();
+public void setUsername(String username);
+public String getId();
+public void setId(String id);
+public String getProfilePicture();
+public void setProfilePicture(String profilePicture);
+public String getFullName();
+public void setFullName(String fullName);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testToString() {
+    Comments comments = new Comments();
+    comments.setCount(5);
+    List<CommentData> commentList = new LinkedList<CommentData>();
+    CommentData comment1 = new CommentData();
+
+   <Buggy Line>: constructor FromTagData in class org.jinstagram.entity.common.FromTagData cannot be applied to given types;
+    comment1.setCommentFrom(new FromTagData("User1"));
+
+    comment1.setText("Great post!");
+    commentList.add(comment1);
+    CommentData comment2 = new CommentData();
+    comment2.setCommentFrom(new FromTagData("User2"));
+    comment2.setText("Nice photo!");
+    commentList.add(comment2);
+    comments.setComments(commentList);
+    String expected = "Comments [comments=[CommentData{username='User1', text='Great post!'}, CommentData{username='User2', text='Nice photo!'}], count=5]";
+    String actual = comments.toString();
+    assertEquals(expected, actual);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "FromTagData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "FromTagData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

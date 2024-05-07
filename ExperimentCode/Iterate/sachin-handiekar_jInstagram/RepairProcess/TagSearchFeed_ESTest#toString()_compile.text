@@ -1,0 +1,38 @@
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java
+[GENERATED PATH] TagSearchFeed_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java:[35,51] diamond operator is not supported in -source 1.6
+  (use -source 7 or higher to enable diamond operator)
+[INFO] 1 error
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java
+[GENERATED PATH] TagSearchFeed_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java:[29,9] cannot find symbol
+  symbol:   method setSomeValue(java.lang.String)
+  location: variable meta of type org.jinstagram.entity.common.Meta
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java:[31,17] cannot find symbol
+  symbol:   method setName(java.lang.String)
+  location: variable tagInfoData1 of type org.jinstagram.entity.tags.TagInfoData
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java:[33,17] cannot find symbol
+  symbol:   method setName(java.lang.String)
+  location: variable tagInfoData2 of type org.jinstagram.entity.tags.TagInfoData
+[INFO] 3 errors 
+####################
+
+original test path: /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java
+[GENERATED PATH] TagSearchFeed_ESTest#toString().java
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java:[36,17] cannot find symbol
+  symbol:   method setName(java.lang.String)
+  location: variable tagInfoData1 of type org.jinstagram.entity.tags.TagInfoData
+[ERROR] /Users/zhi/Documents/PH.D/Project/Testing/ChatTESTER/CodePackage/Prompt2Testing/repo_get/Four_project/sachin-handiekar_jInstagram/src/test/java/org/jinstagram/entity/tags/TagSearchFeed_ESTest.java:[38,17] cannot find symbol
+  symbol:   method setName(java.lang.String)
+  location: variable tagInfoData2 of type org.jinstagram.entity.tags.TagInfoData
+[INFO] 2 errors 
+####################
+

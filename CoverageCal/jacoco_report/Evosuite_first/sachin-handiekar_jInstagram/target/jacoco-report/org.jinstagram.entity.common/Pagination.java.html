@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pagination.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.common</a> &gt; <span class="el_source">Pagination.java</span></div><h1>Pagination.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.common;
+
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.StringUtils;
+
+<span class="fc" id="L6">public class Pagination {</span>
+	@SerializedName(&quot;deprecation_warning&quot;)
+	private String depreciationWarning;
+
+	@SerializedName(&quot;min_tag_id&quot;)
+	private String minTagId;
+
+	@SerializedName(&quot;next_max_id&quot;)
+	private String nextMaxId;
+
+	@SerializedName(&quot;next_max_tag_id&quot;)
+	private String nextMaxTagId;
+
+	@SerializedName(&quot;next_min_id&quot;)
+	private String nextMinId;
+
+	@SerializedName(&quot;next_url&quot;)
+	private String nextUrl;
+	
+	@SerializedName(&quot;next_cursor&quot;)
+	private String nextCursor;
+
+	/**
+	 * @return the nextUrl
+	 */
+	public String getNextUrl() {
+<span class="fc" id="L32">		return nextUrl;</span>
+	}
+
+	/**
+	 * @param nextUrl the nextUrl to set
+	 */
+	public void setNextUrl(String nextUrl) {
+<span class="fc" id="L39">		this.nextUrl = nextUrl;</span>
+<span class="fc" id="L40">	}</span>
+
+	/**
+	 * @return the nextMaxId
+	 */
+	public String getNextMaxId() {
+<span class="fc" id="L46">		return nextMaxId;</span>
+	}
+
+	/**
+	 * @param nextMaxId the nextMaxId to set
+	 */
+	public void setNextMaxId(String nextMaxId) {
+<span class="fc" id="L53">		this.nextMaxId = nextMaxId;</span>
+<span class="fc" id="L54">	}</span>
+
+	/**
+	 * @return the nextMinId
+	 */
+	public String getNextMinId() {
+<span class="nc" id="L60">		return nextMinId;</span>
+	}
+
+	/**
+	 * @param nextMinId the nextMinId to set
+	 */
+	public void setNextMinId(String nextMinId) {
+<span class="fc" id="L67">		this.nextMinId = nextMinId;</span>
+<span class="fc" id="L68">	}</span>
+
+	/**
+	 * @return the minTagId
+	 */
+	public String getMinTagId() {
+<span class="fc" id="L74">		return minTagId;</span>
+	}
+
+	/**
+	 * @param minTagId the minTagId to set
+	 */
+	public void setMinTagId(String minTagId) {
+<span class="fc" id="L81">		this.minTagId = minTagId;</span>
+<span class="fc" id="L82">	}</span>
+
+	/**
+	 * @return the nextMaxTagId
+	 */
+	public String getNextMaxTagId() {
+<span class="fc" id="L88">		return nextMaxTagId;</span>
+	}
+
+	/**
+	 * @param nextMaxTagId the nextMaxTagId to set
+	 */
+	public void setNextMaxTagId(String nextMaxTagId) {
+<span class="fc" id="L95">		this.nextMaxTagId = nextMaxTagId;</span>
+<span class="fc" id="L96">	}</span>
+    
+    /**
+     * @return the next cursor
+     */
+    public String getNextCursor() {
+<span class="fc" id="L102">        return nextCursor;</span>
+    }
+
+    /**
+     * @param nextCursor The next cursor to set
+     */
+    public void setNextCursor(String nextCursor) {
+<span class="fc" id="L109">        this.nextCursor = nextCursor;</span>
+<span class="fc" id="L110">    }</span>
+
+	/**
+	 * @return the depreciationWarning
+	 */
+	public String getDepreciationWarning() {
+<span class="fc" id="L116">		return depreciationWarning;</span>
+	}
+
+	/**
+	 * @param depreciationWarning the depreciationWarning to set
+	 */
+	public void setDepreciationWarning(String depreciationWarning) {
+<span class="fc" id="L123">		this.depreciationWarning = depreciationWarning;</span>
+<span class="fc" id="L124">	}</span>
+
+    public boolean hasNextPage() {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">        return !StringUtils.isBlank(nextUrl);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L132">        return String.format(&quot;Pagination [depreciationWarning=%s, minTagId=%s, nextMaxId=%s, nextMaxTagId=%s, nextMinId=%s, nextUrl=%s]&quot;,</span>
+                        depreciationWarning, minTagId, nextMaxId, nextMaxTagId, nextMinId, nextUrl);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

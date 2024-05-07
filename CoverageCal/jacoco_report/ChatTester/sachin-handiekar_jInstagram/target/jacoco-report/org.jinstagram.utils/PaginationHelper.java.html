@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaginationHelper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.utils</a> &gt; <span class="el_source">PaginationHelper.java</span></div><h1>PaginationHelper.java</h1><pre class="source lang-java linenums">package org.jinstagram.utils;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jinstagram.auth.exceptions.OAuthException;
+import org.jinstagram.entity.common.Pagination;
+import org.jinstagram.http.URLUtils;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Map;
+
+/**
+ * Created by rdouglas on 6/2/16.
+ */
+<span class="nc" id="L15">public class PaginationHelper {</span>
+
+    public static Page parseNextUrl(Pagination pagination, String apiUrl) {
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        if(StringUtils.isNotBlank(pagination.getNextUrl())) {</span>
+            try {
+<span class="nc" id="L20">                String nextUrl = pagination.getNextUrl();</span>
+<span class="nc" id="L21">                URL url = new URL(nextUrl);</span>
+
+<span class="nc" id="L23">                Map&lt;String,String&gt; params = URLUtils.queryStringToMap(url.getQuery());</span>
+
+<span class="nc" id="L25">                String methodName = StringUtils.substringBetween(nextUrl,apiUrl,&quot;?&quot;);</span>
+
+<span class="nc" id="L27">                return new Page(methodName,params);</span>
+<span class="nc" id="L28">            } catch (MalformedURLException mue) {</span>
+<span class="nc" id="L29">                throw new OAuthException(&quot;Malformed URL&quot;, mue);</span>
+            }
+        }
+
+<span class="nc" id="L33">        throw new OAuthException(&quot;No nextUrl&quot;);</span>
+    }
+
+    public static class Page {
+        private String methodName;
+        private Map&lt;String,String&gt; queryStringParams;
+
+<span class="fc" id="L40">        public Page(String methodName, Map&lt;String,String&gt; params) {</span>
+<span class="fc" id="L41">            this.methodName = methodName;</span>
+<span class="fc" id="L42">            this.queryStringParams = params;</span>
+<span class="fc" id="L43">        }</span>
+
+        public String getMethodName() {
+<span class="nc" id="L46">            return methodName;</span>
+        }
+
+        public String getRawMethodName() {
+<span class="fc" id="L50">            return URLUtils.decodeURIComponent(methodName);</span>
+        }
+        public Map&lt;String, String&gt; getQueryStringParams() {
+<span class="nc" id="L53">            return queryStringParams;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

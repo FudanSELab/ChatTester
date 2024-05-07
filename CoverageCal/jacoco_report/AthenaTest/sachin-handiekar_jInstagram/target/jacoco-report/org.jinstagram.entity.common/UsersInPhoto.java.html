@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsersInPhoto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.entity.common</a> &gt; <span class="el_source">UsersInPhoto.java</span></div><h1>UsersInPhoto.java</h1><pre class="source lang-java linenums">package org.jinstagram.entity.common;
+
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * A class to denote users_in_photo json data.
+ * 
+ e.x. 
+ 
+ &quot;users_in_photo&quot;: [{
+            &quot;user&quot;: {
+                &quot;username&quot;: &quot;kevin&quot;,
+                &quot;full_name&quot;: &quot;Kevin S&quot;,
+                &quot;id&quot;: &quot;3&quot;,
+                &quot;profile_picture&quot;: &quot;...&quot;
+            },
+            &quot;position&quot;: {
+                &quot;x&quot;: 0.315,
+                &quot;y&quot;: 0.9111
+            }
+        }],
+        
+        
+ * @author Sachin Handiekar
+ * @since 1.1.10
+ */
+<span class="fc" id="L27">public class UsersInPhoto {</span>
+
+	@SerializedName(&quot;user&quot;)
+	private User user;
+
+	@SerializedName(&quot;position&quot;)
+	private GridPosition position;
+
+	public User getUser() {
+<span class="fc" id="L36">		return user;</span>
+	}
+
+	public void setUser(User user) {
+<span class="nc" id="L40">		this.user = user;</span>
+<span class="nc" id="L41">	}</span>
+
+	public GridPosition getPosition() {
+<span class="nc" id="L44">		return position;</span>
+	}
+
+	public void setPosition(GridPosition position) {
+<span class="nc" id="L48">		this.position = position;</span>
+<span class="nc" id="L49">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

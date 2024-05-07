@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cell.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">Cell.java</span></div><h1>Cell.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.awt.geom.Point2D;
+import java.util.Collections;
+
+@SuppressWarnings(&quot;serial&quot;)
+public class Cell extends RectangularTextContainer&lt;TextChunk&gt; {
+
+	public Cell(float top, float left, float width, float height) {
+<span class="fc" id="L10">		super(top, left, width, height);</span>
+<span class="fc" id="L11">		this.setPlaceholder(false);</span>
+<span class="fc" id="L12">		this.setSpanning(false);</span>
+<span class="fc" id="L13">	}</span>
+
+	public Cell(Point2D topLeft, Point2D bottomRight) {
+<span class="fc" id="L16">		super((float) topLeft.getY(), (float) topLeft.getX(), (float) (bottomRight.getX() - topLeft.getX()), (float) (bottomRight.getY() - topLeft.getY()));</span>
+<span class="fc" id="L17">		this.setPlaceholder(false);</span>
+<span class="fc" id="L18">		this.setSpanning(false);</span>
+<span class="fc" id="L19">	}</span>
+
+	private boolean spanning;
+	private boolean placeholder;
+
+	@Override
+	public String getText(boolean useLineReturns) {
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		if (this.textElements.size() == 0) {</span>
+<span class="nc" id="L27">			return &quot;&quot;;</span>
+		}
+<span class="fc" id="L29">		StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L30">		this.textElements.sort(Rectangle.ILL_DEFINED_ORDER);</span>
+<span class="fc" id="L31">		double curTop = this.textElements.get(0).getTop();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		for (TextChunk tc : this.textElements) {</span>
+<span class="pc bpc" id="L33" title="1 of 4 branches missed.">			if (useLineReturns &amp;&amp; tc.getTop() &gt; curTop) {</span>
+<span class="fc" id="L34">				sb.append('\r');</span>
+			}
+<span class="fc" id="L36">			sb.append(tc.getText());</span>
+<span class="fc" id="L37">			curTop = tc.getTop();</span>
+<span class="fc" id="L38">		}</span>
+<span class="fc" id="L39">		return sb.toString().trim();</span>
+	}
+
+	@Override
+	public String getText() {
+<span class="nc" id="L44">		return getText(true);</span>
+	}
+
+	public boolean isSpanning() {
+<span class="fc" id="L48">		return spanning;</span>
+	}
+
+	public void setSpanning(boolean spanning) {
+<span class="fc" id="L52">		this.spanning = spanning;</span>
+<span class="fc" id="L53">	}</span>
+
+	public boolean isPlaceholder() {
+<span class="fc" id="L56">		return placeholder;</span>
+	}
+
+	public void setPlaceholder(boolean placeholder) {
+<span class="fc" id="L60">		this.placeholder = placeholder;</span>
+<span class="fc" id="L61">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

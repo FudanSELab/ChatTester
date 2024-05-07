@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ObjectExtractor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">ObjectExtractor.java</span></div><h1>ObjectExtractor.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.io.IOException;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+
+public class ObjectExtractor implements java.io.Closeable {
+
+    private final PDDocument pdfDocument;
+
+<span class="nc" id="L12">    public ObjectExtractor(PDDocument pdfDocument) {</span>
+<span class="nc" id="L13">        this.pdfDocument = pdfDocument;</span>
+<span class="nc" id="L14">    }</span>
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    protected Page extractPage(Integer pageNumber) throws IOException {
+<span class="nc bnc" id="L18" title="All 4 branches missed.">        if (pageNumber &gt; pdfDocument.getNumberOfPages() || pageNumber &lt; 1) {</span>
+<span class="nc" id="L19">            throw new java.lang.IndexOutOfBoundsException(&quot;Page number does not exist.&quot;);</span>
+        }
+<span class="nc" id="L21">        PDPage page = pdfDocument.getPage(pageNumber - 1);</span>
+
+<span class="nc" id="L23">        ObjectExtractorStreamEngine streamEngine = new ObjectExtractorStreamEngine(page);</span>
+<span class="nc" id="L24">        streamEngine.processPage(page);</span>
+
+<span class="nc" id="L26">        TextStripper textStripper = new TextStripper(pdfDocument, pageNumber);</span>
+<span class="nc" id="L27">        textStripper.process();</span>
+
+<span class="nc" id="L29">        Utils.sort(textStripper.getTextElements(), Rectangle.ILL_DEFINED_ORDER);</span>
+
+        float width, height;
+<span class="nc" id="L32">        int rotation = page.getRotation();</span>
+<span class="nc bnc" id="L33" title="All 4 branches missed.">        if (Math.abs(rotation) == 90 || Math.abs(rotation) == 270) {</span>
+<span class="nc" id="L34">            width = page.getCropBox().getHeight();</span>
+<span class="nc" id="L35">            height = page.getCropBox().getWidth();</span>
+        } else {
+<span class="nc" id="L37">            width = page.getCropBox().getWidth();</span>
+<span class="nc" id="L38">            height = page.getCropBox().getHeight();</span>
+        }
+
+<span class="nc" id="L41">        return Page.Builder.newInstance()</span>
+<span class="nc" id="L42">                .withPageDims(PageDims.of(0, 0, width, height))</span>
+<span class="nc" id="L43">                .withRotation(rotation)</span>
+<span class="nc" id="L44">                .withNumber(pageNumber)</span>
+<span class="nc" id="L45">                .withPdPage(page)</span>
+<span class="nc" id="L46">                .withPdDocument(pdfDocument)</span>
+<span class="nc" id="L47">                .withRulings(streamEngine.rulings)</span>
+<span class="nc" id="L48">                .withTextElements(textStripper.getTextElements())</span>
+<span class="nc" id="L49">                .withMinCharWidth(textStripper.getMinCharWidth())</span>
+<span class="nc" id="L50">                .withMinCharHeight(textStripper.getMinCharHeight())</span>
+<span class="nc" id="L51">                .withIndex(textStripper.getSpatialIndex())</span>
+<span class="nc" id="L52">                .build();</span>
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    public PageIterator extract(Iterable&lt;Integer&gt; pages) {
+<span class="nc" id="L57">        return new PageIterator(this, pages);</span>
+    }
+
+    public PageIterator extract() {
+<span class="nc" id="L61">        return extract(Utils.range(1, pdfDocument.getNumberOfPages() + 1));</span>
+    }
+
+    public Page extract(int pageNumber) {
+<span class="nc" id="L65">        return extract(Utils.range(pageNumber, pageNumber + 1)).next();</span>
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
+    public void close() throws IOException {
+<span class="nc" id="L70">        pdfDocument.close();</span>
+<span class="nc" id="L71">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

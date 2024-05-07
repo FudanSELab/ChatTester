@@ -1,0 +1,51 @@
+0-->1-->0-->compileRepair
+
+# Reflections class
+package com.zappos.json.util;
+public  final class Reflections {
+public static boolean classPresent(String className);
+public static Field getField(Class<?> clazz, String fieldName) throws NoSuchFieldException;
+public static boolean hasAnnotation(Field field, Class<? extends Annotation> annotationClass);
+public static boolean hasAnnotation(Method method, Class<? extends Annotation> annotationClass);
+public static boolean hasAnnotation(Method method, Field field, Class<? extends Annotation> annotationClass);
+public static T getAnnotation(Method method, Field field, Class<T> annotationClass);
+public static Class<?> getFirstGenericParameterType(Method method);
+public static Class<?> getSecondGenericParameterType(Method method);
+public static Class<?>[] getGenericParameterTypes(Method method);
+public static Class<?> getFirstGenericType(Field field);
+public static Class<?> getSecondGenericType(Field field);
+public static Class<?>[] getGenericTypes(Field field);
+}
+
+
+# Test Method
+    @Test
+    public void testGetSecondGenericType() {
+        Field field = null; 
+        Class<?>[] genericTypes = new Class[]{String.class, Integer.class}; 
+        Reflections reflection = new Reflections();
+
+       <Buggy Line>: cannot find symbol method "setGenericTypes(java.lang.reflect.Field,java.lang.Class<?>[])" in Reflections
+        reflection.setGenericTypes(field, genericTypes);
+
+        Class<?> secondGenericType = reflection.getSecondGenericType(field);
+        assertEquals(Integer.class, secondGenericType);
+        genericTypes = new Class[]{String.class}; 
+        reflection.setGenericTypes(field, genericTypes);
+        secondGenericType = reflection.getSecondGenericType(field);
+        assertNull(secondGenericType);
+        genericTypes = null;
+        reflection.setGenericTypes(field, genericTypes);
+        secondGenericType = reflection.getSecondGenericType(field);
+        assertNull(secondGenericType);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "Reflections" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "Reflections" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpreadsheetDetectionAlgorithm.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula.detectors</a> &gt; <span class="el_source">SpreadsheetDetectionAlgorithm.java</span></div><h1>SpreadsheetDetectionAlgorithm.java</h1><pre class="source lang-java linenums">package technology.tabula.detectors;
+
+import technology.tabula.Cell;
+import technology.tabula.Page;
+import technology.tabula.Rectangle;
+import technology.tabula.extractors.SpreadsheetExtractionAlgorithm;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Created by matt on 2015-12-14.
+ *
+ * This is the basic spreadsheet table detection algorithm currently implemented in tabula (web).
+ *
+ * It uses intersecting ruling lines to find tables.
+ */
+<span class="nc" id="L18">public class SpreadsheetDetectionAlgorithm implements DetectionAlgorithm {</span>
+    @Override
+    public List&lt;Rectangle&gt; detect(Page page) {
+<span class="nc" id="L21">        List&lt;Cell&gt; cells = SpreadsheetExtractionAlgorithm.findCells(page.getHorizontalRulings(), page.getVerticalRulings());</span>
+
+<span class="nc" id="L23">        SpreadsheetExtractionAlgorithm sea = new SpreadsheetExtractionAlgorithm();</span>
+
+<span class="nc" id="L25">        List&lt;Rectangle&gt; tables = SpreadsheetExtractionAlgorithm.findSpreadsheetsFromCells(cells);</span>
+
+        // we want tables to be returned from top to bottom on the page
+<span class="nc" id="L28">        Collections.sort(tables, Rectangle.ILL_DEFINED_ORDER);</span>
+
+<span class="nc" id="L30">        return tables;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

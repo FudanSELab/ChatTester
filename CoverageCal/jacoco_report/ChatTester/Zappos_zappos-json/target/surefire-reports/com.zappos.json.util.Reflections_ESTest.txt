@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.zappos.json.util.Reflections_ESTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s - in com.zappos.json.util.Reflections_ESTest

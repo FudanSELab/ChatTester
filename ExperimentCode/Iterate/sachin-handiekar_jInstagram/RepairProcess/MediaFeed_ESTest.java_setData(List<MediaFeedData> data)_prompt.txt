@@ -1,0 +1,96 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testSetData() {
+        MediaFeed mediaFeed = new MediaFeed();
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<MediaFeedData> testData = new LinkedList<>();
+
+        testData.add(new MediaFeedData("Test1"));
+        testData.add(new MediaFeedData("Test2"));
+        testData.add(new MediaFeedData("Test3"));
+        mediaFeed.setData(testData);
+        List<MediaFeedData> retrievedData = mediaFeed.getData();
+        assertEquals(testData, retrievedData);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+
+1-->2-->0-->compileRepair
+
+# MediaFeedData class
+package org.jinstagram.entity.users.feed;
+public class MediaFeedData {
+public static final String TYPE_IMAGE = "image";
+public static final String TYPE_VIDEO = "video";
+public static final String TYPE_CAROUSEL = "carousel";
+public Location getLocation();
+public void setLocation(Location location);
+public Comments getComments();
+public void setComments(Comments comments);
+public Caption getCaption();
+public void setCaption(Caption caption);
+public String getLink();
+public void setLink(String link);
+public Likes getLikes();
+public void setLikes(Likes likes);
+public String getCreatedTime();
+public void setCreatedTime(String createdTime);
+public Images getImages();
+public void setImages(Images images);
+public String getImageFilter();
+public void setImageFilter(String imageFilter);
+public String getId();
+public void setId(String id);
+public User getUser();
+public void setUser(User user);
+public boolean isUserHasLiked();
+public void setUserHasLiked(boolean userHasLiked);
+public List<String> getTags();
+public void setTags(List<String> tags);
+public String getType();
+public void setType(String type);
+public Videos getVideos();
+public void setVideos(Videos videos);
+public List<UsersInPhoto> getUsersInPhotoList();
+public void setUsersInPhotoList(List<UsersInPhoto> usersInPhotoList);
+public List<CarouselMedia> getCarouselMedia();
+public void setCarouselMedia(List<CarouselMedia> carouselMedia);
+public String toString();
+}
+
+
+# Test Method
+@Test
+public void testSetData() {
+    MediaFeed mediaFeed = new MediaFeed();
+    List<MediaFeedData> testData = new LinkedList<MediaFeedData>();
+
+   <Buggy Line>: constructor MediaFeedData in class org.jinstagram.entity.users.feed.MediaFeedData cannot be applied to given types;
+    testData.add(new MediaFeedData("Test1"));
+
+    testData.add(new MediaFeedData("Test2"));
+    testData.add(new MediaFeedData("Test3"));
+    mediaFeed.setData(testData);
+    List<MediaFeedData> retrievedData = mediaFeed.getData();
+    assertEquals(testData, retrievedData);
+}
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "MediaFeedData" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "MediaFeedData" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+

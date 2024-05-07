@@ -1,0 +1,30 @@
+0-->1-->0-->compileRepair
+
+
+# Test Method
+    @Test
+    public void testToString() {
+        CarouselMedia carouselMedia = new CarouselMedia();
+        carouselMedia.setType("photo");
+        Images images = new Images();
+        carouselMedia.setImages(images);
+        Videos videos = new Videos();
+        carouselMedia.setVideos(videos);
+
+          <Buggy Line>: diamond operator is not supported in -source 1.6
+        List<UsersInPhoto> usersInPhotoList = new ArrayList<>();
+
+        carouselMedia.setUsersInPhotoList(usersInPhotoList);
+        String expected = "CarouselMedia [type=photo, images=" + images + ", videos=" + videos + ", usersInPhotoList=" + usersInPhotoList + "]";
+        String actual = carouselMedia.toString();
+        assertEquals(expected, actual);
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+ Please repair the buggy code line and return the complete and compilable test method after repair. 
+The generated code should be enclosed within ``` ```.
+
+########
+

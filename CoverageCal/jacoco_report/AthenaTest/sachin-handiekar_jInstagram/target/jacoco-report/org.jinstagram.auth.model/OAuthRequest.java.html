@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OAuthRequest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jInstagram</a> &gt; <a href="index.source.html" class="el_package">org.jinstagram.auth.model</a> &gt; <span class="el_source">OAuthRequest.java</span></div><h1>OAuthRequest.java</h1><pre class="source lang-java linenums">package org.jinstagram.auth.model;
+
+import org.jinstagram.http.Request;
+import org.jinstagram.http.Verbs;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * The representation of an OAuth HttpRequest.
+ * 
+ * Adds OAuth-related functionality to the {@link Request}
+ */
+public class OAuthRequest extends Request {
+	private static final String OAUTH_PREFIX = &quot;oauth_&quot;;
+
+	private Map&lt;String, String&gt; oauthParameters;
+
+	/**
+	 * Default constructor.
+	 * 
+	 * @param verb Http verb/method
+	 * @param url resource URL
+	 */
+	public OAuthRequest(Verbs verb, String url) {
+<span class="nc" id="L26">		super(verb, url);</span>
+
+<span class="nc" id="L28">		this.oauthParameters = new HashMap&lt;String, String&gt;();</span>
+<span class="nc" id="L29">	}</span>
+
+	/**
+	 * Adds an OAuth parameter.
+	 * 
+	 * @param key name of the parameter
+	 * @param value value of the parameter
+	 * 
+	 * @throws IllegalArgumentException if the parameter is not an OAuth
+	 * parameter
+	 */
+	public void addOAuthParameter(String key, String value) {
+<span class="nc" id="L41">		oauthParameters.put(checkKey(key), value);</span>
+<span class="nc" id="L42">	}</span>
+
+	private static String checkKey(String key) {
+<span class="nc bnc" id="L45" title="All 4 branches missed.">		if (key.startsWith(OAUTH_PREFIX) || key.equals(OAuthConstants.SCOPE)) {</span>
+<span class="nc" id="L46">			return key;</span>
+		}
+		else {
+<span class="nc" id="L49">			throw new IllegalArgumentException(String.format(</span>
+					&quot;OAuth parameters must either be '%s' or start with '%s'&quot;,
+					OAuthConstants.SCOPE, OAUTH_PREFIX));
+		}
+	}
+
+	/**
+	 * Returns the {@link Map} containing the key-value pair of parameters.
+	 * 
+	 * @return parameters as map
+	 */
+	public Map&lt;String, String&gt; getOauthParameters() {
+<span class="nc" id="L61">		return oauthParameters;</span>
+	}
+
+	@Override
+	public String toString() {
+<span class="nc" id="L66">		return String.format(&quot;@OAuthRequest(%s, %s)&quot;, getVerb(), getUrl());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

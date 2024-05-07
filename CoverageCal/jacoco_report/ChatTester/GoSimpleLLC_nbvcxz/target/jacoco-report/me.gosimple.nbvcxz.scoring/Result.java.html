@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Result.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">nbvcxz</a> &gt; <a href="index.source.html" class="el_package">me.gosimple.nbvcxz.scoring</a> &gt; <span class="el_source">Result.java</span></div><h1>Result.java</h1><pre class="source lang-java linenums">package me.gosimple.nbvcxz.scoring;
+
+import me.gosimple.nbvcxz.matching.match.BruteForceMatch;
+import me.gosimple.nbvcxz.matching.match.Match;
+import me.gosimple.nbvcxz.resources.Configuration;
+import me.gosimple.nbvcxz.resources.Feedback;
+import me.gosimple.nbvcxz.resources.FeedbackUtil;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+
+/**
+ * This class contains all info about the entropy calculation.
+ *
+ * @author Adam Brusselback
+ */
+public class Result
+{
+    final Configuration configuration;
+    final String password;
+    final String full_password;
+    final List&lt;Match&gt; matches;
+
+    /**
+     * @param configuration the {@link Configuration} object.
+     * @param password      the password this result was generated for
+     * @param matches       list of matches which when combined make up the original password
+     * @throws IllegalStateException if the matches do not equal the original password, this will be thrown.
+     */
+    public Result(final Configuration configuration, final String password, final String full_password, final List&lt;Match&gt; matches) throws IllegalStateException
+<span class="fc" id="L32">    {</span>
+<span class="fc" id="L33">        this.configuration = configuration;</span>
+<span class="fc" id="L34">        this.password = password;</span>
+<span class="fc" id="L35">        this.full_password = full_password;</span>
+<span class="fc" id="L36">        this.matches = matches;</span>
+
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (!this.isValid())</span>
+        {
+<span class="nc" id="L40">            throw new IllegalStateException(&quot;There was an unexpected error and all of the matches put together do not equal the original password.&quot;);</span>
+        }
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Checks if the sum of the matches equals the original password.
+     *
+     * @return {@code true} if valid; {@code false} if invalid.
+     */
+    private boolean isValid()
+    {
+<span class="fc" id="L51">        StringBuilder builder = new StringBuilder();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        for (Match match : matches)</span>
+        {
+<span class="fc" id="L54">            builder.append(match.getToken());</span>
+<span class="fc" id="L55">        }</span>
+
+<span class="fc" id="L57">        return password.equals(builder.toString());</span>
+    }
+
+    /**
+     * Returns the entropy for this {@code Result}.
+     *
+     * @return the estimated entropy as a {@code double}.
+     */
+    public Double getEntropy()
+    {
+<span class="fc" id="L67">        double entropy = 0;</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        for (Match match : matches)</span>
+        {
+<span class="fc" id="L70">            entropy += match.calculateEntropy();</span>
+<span class="fc" id="L71">        }</span>
+<span class="fc" id="L72">        return entropy;</span>
+    }
+
+    /**
+     * The estimated number of tries required to crack this password
+     *
+     * @return the estimated number of guesses as a {@code BigDecimal}
+     */
+    public BigDecimal getGuesses()
+    {
+<span class="fc" id="L82">        final Double guesses_tmp = Math.pow(2, getEntropy());</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        return BigDecimal.valueOf(guesses_tmp.isInfinite() ? Double.MAX_VALUE : guesses_tmp).setScale(0, RoundingMode.HALF_UP);</span>
+    }
+
+    /**
+     * The matches that comprise this result.
+     *
+     * @return a {@code List} of {@code Match} that were used in this result estimation.
+     */
+    public List&lt;Match&gt; getMatches()
+    {
+<span class="fc" id="L93">        return this.matches;</span>
+    }
+
+    /**
+     * The password passed in truncated to maxLength.
+     *
+     * @return {@code String} of the truncated password.
+     */
+    public String getPassword()
+    {
+<span class="fc" id="L103">        return this.password;</span>
+    }
+
+    /**
+     * The original password passed in.
+     *
+     * @return {@code String} of the original password.
+     */
+    public String getFullPassword() {
+<span class="fc" id="L112">        return full_password;</span>
+    }
+
+    /**
+     * Returns whether the password was truncated for estimation because it was longer than maxLength.
+     *
+     * @return {@code true} if the password was truncated; {@code false} if not.
+     */
+    public boolean isTruncated()
+    {
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        return !password.equals(full_password);</span>
+    }
+
+    /**
+     * Returns whether the minimum entropy specified in the config was met.
+     *
+     * @return {@code true} if minimum entropy is met; {@code false} if not.
+     */
+    public boolean isMinimumEntropyMet()
+    {
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        return this.getEntropy().compareTo(configuration.getMinimumEntropy()) &gt;= 0;</span>
+    }
+
+    /**
+     * Returns whether the password is considered to be random.
+     *
+     * @return true if the password is considered random, false otherwise.
+     */
+    public boolean isRandom()
+    {
+<span class="fc" id="L142">        boolean is_random = true;</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        for (Match match : matches)</span>
+        {
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">            if (!(match instanceof BruteForceMatch))</span>
+            {
+<span class="fc" id="L147">                is_random = false;</span>
+<span class="fc" id="L148">                break;</span>
+            }
+<span class="nc" id="L150">        }</span>
+<span class="fc" id="L151">        return is_random;</span>
+    }
+
+    /**
+     * Returns the configuration used to generate this result.
+     *
+     * @return {@code Configuration} that was used to generate this {@code Result}.
+     */
+    public Configuration getConfiguration()
+    {
+<span class="fc" id="L161">        return configuration;</span>
+    }
+
+    /**
+     * Returns feedback to the user to suggest ways to improve their password.
+     *
+     * @return a {@code Feedback} object with suggestions for the user.
+     */
+    public Feedback getFeedback()
+    {
+<span class="nc" id="L171">        return FeedbackUtil.getFeedback(this);</span>
+    }
+
+    /**
+     * This scoring function returns an int from 0-4 to indicate the score of this password
+     * using the same semantics as zxcvbn.
+     *
+     * @return Score
+     * &lt;br&gt;0: risky password: &quot;too guessable&quot;
+     * &lt;br&gt;1: modest protection from throttled online attacks: &quot;very guessable&quot;
+     * &lt;br&gt;2: modest protection from unthrottled online attacks: &quot;somewhat guessable&quot;
+     * &lt;br&gt;3: modest protection from offline attacks: &quot;safely unguessable&quot; (assuming a salted, slow hash function)
+     * &lt;br&gt;4: strong protection from offline attacks: &quot;very unguessable&quot; (assuming a salted, slow hash function)
+     */
+    public int getBasicScore()
+    {
+<span class="nc" id="L187">        final BigDecimal guesses = getGuesses();</span>
+<span class="nc bnc" id="L188" title="All 2 branches missed.">        if (guesses.compareTo(BigDecimal.valueOf( 1e3)) == -1)</span>
+<span class="nc" id="L189">            return 0;</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        else if (guesses.compareTo(BigDecimal.valueOf( 1e6)) == -1)</span>
+<span class="nc" id="L191">            return 1;</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        else if (guesses.compareTo(BigDecimal.valueOf(1e8)) == -1)</span>
+<span class="nc" id="L193">            return 2;</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">        else if (guesses.compareTo(BigDecimal.valueOf(1e10)) == -1)</span>
+<span class="nc" id="L195">            return 3;</span>
+        else
+<span class="nc" id="L197">            return 4;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

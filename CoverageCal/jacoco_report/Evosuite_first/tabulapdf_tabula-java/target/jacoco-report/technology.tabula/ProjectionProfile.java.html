@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProjectionProfile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Tabula</a> &gt; <a href="index.source.html" class="el_package">technology.tabula</a> &gt; <span class="el_source">ProjectionProfile.java</span></div><h1>ProjectionProfile.java</h1><pre class="source lang-java linenums">package technology.tabula;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+// NOTE: this class is currently not used by the extraction algorithms
+// keeping it for potential use.
+public class ProjectionProfile {
+
+    public static final int DECIMAL_PLACES = 1; // fixed &lt;-&gt; float conversion precision
+    private final Page area;
+    private final Rectangle textBounds;
+    private float[] verticalProjection;
+    private float[] horizontalProjection;
+    private final double areaWidth, areaHeight, areaTop, areaLeft;
+<span class="nc" id="L18">    private float minCharWidth = Float.MAX_VALUE, minCharHeight = Float.MAX_VALUE, horizontalKernelSize, verticalKernelSize;</span>
+<span class="nc" id="L19">    private float maxHorizontalProjection = 0, maxVerticalProjection = 0;</span>
+    
+<span class="nc" id="L21">    public ProjectionProfile(Page area, List&lt;? extends Rectangle&gt; elements, float horizontalKernelSize, float verticalKernelSize) {</span>
+<span class="nc" id="L22">        this.area = area;</span>
+<span class="nc" id="L23">        this.areaWidth = area.getWidth();</span>
+<span class="nc" id="L24">        this.areaHeight = area.getHeight();</span>
+<span class="nc" id="L25">        this.areaTop = area.getTop();</span>
+<span class="nc" id="L26">        this.areaLeft = area.getLeft();</span>
+<span class="nc" id="L27">        this.verticalProjection = new float[toFixed(areaHeight)];</span>
+<span class="nc" id="L28">        this.horizontalProjection = new float[toFixed(areaWidth)];</span>
+<span class="nc" id="L29">        this.horizontalKernelSize = horizontalKernelSize;</span>
+<span class="nc" id="L30">        this.verticalKernelSize = verticalKernelSize;</span>
+<span class="nc" id="L31">        this.textBounds = area.getTextBounds();</span>
+        
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        for (Rectangle element: elements) {</span>
+            // exclude elements that take more than 80% of the width
+            // of the area. They won't contribute to determining columns
+<span class="nc bnc" id="L36" title="All 2 branches missed.">            if (element.getWidth() / this.textBounds.getWidth() &gt; 0.8) {</span>
+<span class="nc" id="L37">                continue;</span>
+            }
+<span class="nc" id="L39">            this.addRectangle(element);</span>
+<span class="nc" id="L40">        }</span>
+        
+<span class="nc" id="L42">        this.verticalProjection = smooth(this.verticalProjection, toFixed(verticalKernelSize));</span>
+<span class="nc" id="L43">        this.horizontalProjection = smooth(this.horizontalProjection, toFixed(horizontalKernelSize));</span>
+<span class="nc" id="L44">    }</span>
+    
+    private void addRectangle(Rectangle element) {
+        // calculate horizontal and vertical projection profiles
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if (!area.contains(element)) {</span>
+<span class="nc" id="L49">            return;</span>
+        }
+        
+<span class="nc" id="L52">        this.minCharHeight = (float) Math.min(this.minCharHeight, element.getHeight());</span>
+<span class="nc" id="L53">        this.minCharWidth = (float) Math.min(this.minCharWidth, element.getWidth());</span>
+        
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        for (int k = toFixed(element.getLeft()); k &lt; toFixed(element.getRight()); k++) {</span>
+<span class="nc" id="L56">            this.horizontalProjection[k - toFixed(areaLeft)] += element.getHeight();</span>
+<span class="nc" id="L57">            this.maxHorizontalProjection = Math.max(this.maxHorizontalProjection, this.horizontalProjection[k - toFixed(areaLeft)]);</span>
+        }
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        for(int k = toFixed(element.getTop()); k &lt; toFixed(element.getBottom()); k++) {</span>
+<span class="nc" id="L60">            this.verticalProjection[k - toFixed(areaTop)] += element.getWidth();</span>
+<span class="nc" id="L61">            this.maxVerticalProjection = Math.max(this.maxVerticalProjection, this.verticalProjection[k - toFixed(areaTop)]);</span>
+        }
+<span class="nc" id="L63">    }</span>
+    
+    public float[] getVerticalProjection() {
+<span class="nc" id="L66">        return verticalProjection;</span>
+    }
+
+    public float[] getHorizontalProjection() {
+<span class="nc" id="L70">        return horizontalProjection;</span>
+    }
+    
+    public float[] findVerticalSeparators(float minColumnWidth) {
+<span class="nc" id="L74">        boolean foundNarrower = false;</span>
+
+<span class="nc" id="L76">        List&lt;Integer&gt; verticalSeparators = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        for (Ruling r: area.getVerticalRulings()) {</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            if (r.length() / this.textBounds.getHeight() &gt;= 0.95) {</span>
+<span class="nc" id="L79">                verticalSeparators.add(toFixed(r.getPosition() - this.areaLeft));</span>
+            }
+<span class="nc" id="L81">        }</span>
+        
+<span class="nc" id="L83">        List&lt;Integer&gt; seps = findSeparatorsFromProjection(filter(getFirstDeriv(this.horizontalProjection), 0.1f));</span>
+        
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        for (Integer foundSep: seps) {</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            for (Integer explicitSep: verticalSeparators) {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">                if (Math.abs(toDouble(foundSep - explicitSep)) &lt;= minColumnWidth) {</span>
+<span class="nc" id="L88">                    foundNarrower = true;</span>
+<span class="nc" id="L89">                    break;</span>
+                } 
+<span class="nc" id="L91">            }</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            if (!foundNarrower) {</span>
+<span class="nc" id="L93">                verticalSeparators.add(foundSep);</span>
+            }
+<span class="nc" id="L95">            foundNarrower = false;</span>
+<span class="nc" id="L96">        }</span>
+<span class="nc" id="L97">        Collections.sort(verticalSeparators);</span>
+<span class="nc" id="L98">        float[] rv = new float[verticalSeparators.size()];</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        for (int i = 0; i &lt; rv.length; i++) {</span>
+<span class="nc" id="L100">            rv[i] = (float) toDouble(verticalSeparators.get(i));</span>
+        }
+<span class="nc" id="L102">        return rv;</span>
+    }
+    
+    public float[] findHorizontalSeparators(float minRowHeight) {
+<span class="nc" id="L106">        boolean foundShorter = false;</span>
+
+<span class="nc" id="L108">        List&lt;Integer&gt; horizontalSeparators = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">        for (Ruling r: area.getHorizontalRulings()) {</span>
+<span class="nc" id="L110">            System.out.println(r.length() / this.textBounds.getWidth());</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">            if (r.length() / this.textBounds.getWidth() &gt;= 0.95) {</span>
+<span class="nc" id="L112">                horizontalSeparators.add(toFixed(r.getPosition() - this.areaTop));</span>
+            }
+<span class="nc" id="L114">        }</span>
+        
+<span class="nc" id="L116">        List&lt;Integer&gt; seps = findSeparatorsFromProjection(filter(getFirstDeriv(this.verticalProjection), 0.1f));</span>
+        
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        for (Integer foundSep: seps) {</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            for (Integer explicitSep: horizontalSeparators) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">                if (Math.abs(toDouble(foundSep - explicitSep)) &lt;= minRowHeight) {</span>
+<span class="nc" id="L121">                    foundShorter = true;</span>
+<span class="nc" id="L122">                    break;</span>
+                } 
+<span class="nc" id="L124">            }</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if (!foundShorter) {</span>
+<span class="nc" id="L126">                horizontalSeparators.add(foundSep);</span>
+            }
+<span class="nc" id="L128">            foundShorter = false;</span>
+<span class="nc" id="L129">        }</span>
+<span class="nc" id="L130">        Collections.sort(horizontalSeparators);</span>
+<span class="nc" id="L131">        float[] rv = new float[horizontalSeparators.size()];</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        for (int i = 0; i &lt; rv.length; i++) {</span>
+<span class="nc" id="L133">            rv[i] = (float) toDouble(horizontalSeparators.get(i));</span>
+        }
+<span class="nc" id="L135">        return rv;</span>
+    }
+    
+    private static List&lt;Integer&gt; findSeparatorsFromProjection(float[] derivative) {
+<span class="nc" id="L139">        List&lt;Integer&gt; separators = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L140">        Integer lastNeg = null;</span>
+        float s;
+<span class="nc" id="L142">        boolean positiveSlope = false;</span>
+        
+        // find separators based on histogram
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        for (int i = 0; i &lt; derivative.length; i++) {</span>
+<span class="nc" id="L146">            s = derivative[i];</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">            if (s &gt; 0 &amp;&amp; !positiveSlope) {</span>
+<span class="nc" id="L148">                positiveSlope = true;</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">                separators.add(lastNeg != null ? lastNeg : i);</span>
+            }
+<span class="nc bnc" id="L151" title="All 2 branches missed.">            else if (s &lt; 0) {</span>
+<span class="nc" id="L152">                lastNeg = i;</span>
+<span class="nc" id="L153">                positiveSlope = false;</span>
+            }
+        }
+<span class="nc" id="L156">        return separators;</span>
+    }
+    
+    public static float[] smooth(float[] data, int kernelSize) {
+<span class="nc" id="L160">        float[] rv = new float[data.length];</span>
+        float s;
+        
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        for (int pass = 0; pass &lt; 1; pass++) {</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">            for (int i = 0; i &lt; data.length; i++) {</span>
+<span class="nc" id="L165">                s = 0;</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">                for (int j = Math.max(0, i - kernelSize / 2); j &lt; Math.min(i</span>
+<span class="nc" id="L167">                        + kernelSize / 2, data.length); j++) {</span>
+<span class="nc" id="L168">                    s += data[j];</span>
+                }
+<span class="nc" id="L170">                rv[i] = (float) Math.floor(s / kernelSize);</span>
+            }
+        }
+<span class="nc" id="L173">        return rv;</span>
+    }
+    
+    
+    /** 
+     * Simple Low pass filter
+     */
+    public static float[] filter(float[] data, float alpha) {
+
+<span class="fc" id="L182">        float[] rv = new float[data.length];</span>
+<span class="fc" id="L183">        rv[0] = data[0];</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        for (int i = 1; i &lt; data.length; i++) {</span>
+<span class="fc" id="L185">            rv[i] = rv[i-1] + alpha * (data[i] - rv[i-1]);</span>
+        }
+
+<span class="fc" id="L188">        return rv;</span>
+    }
+    
+    public static float[] getAutocorrelation(float[] projection) {
+<span class="nc" id="L192">        float[] rv = new float[projection.length-1];</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">        for (int i = 1; i &lt; projection.length - 1; i++) {</span>
+<span class="nc" id="L194">            rv[i] = (projection[i] * projection[i-1]) / 100f;</span>
+        }
+<span class="nc" id="L196">        return rv;</span>
+        
+    }
+    
+    public static float[] getFirstDeriv(float[] projection) {
+<span class="nc" id="L201">        float[] rv = new float[projection.length];</span>
+<span class="nc" id="L202">        rv[0] = projection[1] - projection[0];</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        for (int i = 1; i &lt; projection.length - 1; i++) {</span>
+<span class="nc" id="L204">            rv[i] = projection[i+1] - projection[i-1];</span>
+        }
+<span class="nc" id="L206">        rv[projection.length - 1] = projection[projection.length - 1] - projection[projection.length - 2];</span>
+<span class="nc" id="L207">        return rv;</span>
+    }
+
+    // pretty lame fixed precision math here
+    private static int toFixed(double value) {
+<span class="nc" id="L212">        return (int) Math.round(value * (Math.pow(10, DECIMAL_PLACES)));</span>
+    }
+    
+    private static double toDouble(int value) {
+<span class="nc" id="L216">        return value / Math.pow(10, DECIMAL_PLACES);</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

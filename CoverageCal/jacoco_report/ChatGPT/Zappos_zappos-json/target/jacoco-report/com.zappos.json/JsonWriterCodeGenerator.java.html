@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonWriterCodeGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">zappos-json</a> &gt; <a href="index.source.html" class="el_package">com.zappos.json</a> &gt; <span class="el_source">JsonWriterCodeGenerator.java</span></div><h1>JsonWriterCodeGenerator.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2015 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * A copy of the License is located at
+ *
+ *     http://aws.amazon.com/apache2.0/
+ *
+ * or in the &quot;license&quot; file accompanying this file. This file is
+ * distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
+ */
+
+package com.zappos.json;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import com.zappos.json.annot.JsonEnum.EnumValue;
+import com.zappos.json.format.ValueFormatter;
+import com.zappos.json.util.Reflections;
+import com.zappos.json.util.Strings;
+
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtField;
+import javassist.CtNewMethod;
+
+/**
+ * 
+ * @author Hussachai Puripunpinyo
+ *
+ */
+public class JsonWriterCodeGenerator {
+  
+<span class="fc" id="L41">  private final Map&lt;Class&lt;?&gt;, JsonWriterInvoker&gt; JSON_WRITER_INVOKERS = new ConcurrentHashMap&lt;&gt;();</span>
+  
+  private ZapposJson zapposJson;
+  
+  private JsonBeanIntrospector beanIntrospector;
+  
+<span class="fc" id="L47">  public JsonWriterCodeGenerator(ZapposJson zapposJson, JsonBeanIntrospector beanIntrospector){</span>
+<span class="fc" id="L48">    this.zapposJson = zapposJson;</span>
+<span class="fc" id="L49">    this.beanIntrospector = beanIntrospector;</span>
+<span class="fc" id="L50">  }</span>
+  
+  protected JsonWriterInvoker getWriter(Class&lt;?&gt; clazz){
+<span class="nc" id="L53">    return JSON_WRITER_INVOKERS.get(clazz);</span>
+  }
+  
+  protected synchronized void deregisterAll(){
+<span class="nc" id="L57">    JSON_WRITER_INVOKERS.clear();</span>
+<span class="nc" id="L58">  }</span>
+  
+  protected void deregister(Class&lt;?&gt; clazz){
+<span class="nc" id="L61">    synchronized(clazz){</span>
+<span class="nc" id="L62">      JSON_WRITER_INVOKERS.remove(clazz);</span>
+<span class="nc" id="L63">    }</span>
+<span class="nc" id="L64">  }</span>
+  
+  protected JsonWriterInvoker registerWriter(Class&lt;?&gt; clazz)
+      throws Exception {
+<span class="nc" id="L68">    synchronized(clazz){</span>
+<span class="nc" id="L69">      JsonWriterInvoker writerInvoker = JSON_WRITER_INVOKERS.get(clazz);</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">      if (writerInvoker != null) {</span>
+<span class="nc" id="L71">        return writerInvoker;</span>
+      }
+<span class="nc" id="L73">      ClassPool classPool = ClassPool.getDefault();</span>
+<span class="nc" id="L74">      classPool.importPackage(&quot;java.util&quot;);</span>
+<span class="nc" id="L75">      classPool.importPackage(&quot;java.math&quot;);</span>
+<span class="nc" id="L76">      CtClass jsonCtClass = classPool.get(JsonWriter.class.getName());</span>
+<span class="nc" id="L77">      String randomName = Strings.randomAlphabetic(16);</span>
+<span class="nc" id="L78">      jsonCtClass.setName(&quot;com.zappos.json.&quot;+randomName + &quot;_JSON_Writer&quot;);</span>
+  
+<span class="nc" id="L80">      Map&lt;String, String&gt; fieldVars = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L81">      StringBuilder methodBody = new StringBuilder();</span>
+<span class="nc" id="L82">      methodBody.append(&quot;public void writeJson (&quot;).append(clazz.getName())</span>
+<span class="nc" id="L83">          .append(&quot; __o, java.io.Writer writer) throws Exception {\n&quot;)</span>
+<span class="nc" id="L84">          .append(&quot;if(__o == null) return;\n&quot;);</span>
+      
+<span class="nc" id="L86">      generateJsonWriterBody(clazz, methodBody, fieldVars);</span>
+      
+<span class="nc" id="L88">      methodBody.append(&quot;}&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">      for (Map.Entry&lt;String, String&gt; fieldEntry : fieldVars.entrySet()) {</span>
+<span class="nc" id="L90">        jsonCtClass.addField(</span>
+<span class="nc" id="L91">            CtField.make(&quot;public static final String &quot; + fieldEntry.getKey()</span>
+<span class="nc" id="L92">                + &quot; = &quot; + fieldEntry.getValue() + &quot;;&quot;, jsonCtClass));</span>
+<span class="nc" id="L93">      }</span>
+  
+<span class="nc" id="L95">      zapposJson.debug(&quot;\nWriter code for \&quot;@\&quot;\n=========\n@\n=========\n&quot;, clazz, methodBody);</span>
+<span class="nc" id="L96">      jsonCtClass.addMethod(CtNewMethod.make(methodBody.toString(), jsonCtClass));</span>
+<span class="nc" id="L97">      Class&lt;?&gt; jsonClass = jsonCtClass.toClass();</span>
+<span class="nc" id="L98">      Object jsonWriter = jsonClass.getDeclaredConstructor(ZapposJson.class).newInstance(zapposJson);</span>
+<span class="nc" id="L99">      writerInvoker = new JsonWriterInvoker(clazz, jsonWriter);</span>
+<span class="nc" id="L100">      JSON_WRITER_INVOKERS.put(clazz, writerInvoker);</span>
+      
+<span class="nc" id="L102">      return writerInvoker;</span>
+    }
+  }
+  
+  private void generateJsonWriterBody(Class&lt;?&gt; clazz, StringBuilder methodBody,
+      Map&lt;String, String&gt; fieldVars) throws Exception {
+    
+<span class="nc" id="L109">    methodBody.append(&quot;writer.write(CONST_OPEN_OBJECT);&quot;);</span>
+
+<span class="nc" id="L111">    List&lt;JsonBeanAttribute&gt; beanAttrs = beanIntrospector.getAccessors(clazz);</span>
+    
+<span class="nc" id="L113">    int j = beanAttrs.size() - 1;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">    for (int i = 0; i &lt;= j; i++) {</span>
+
+<span class="nc" id="L116">      JsonBeanAttribute beanAttr = beanAttrs.get(i);</span>
+<span class="nc" id="L117">      Method method = beanAttr.getMethod();</span>
+<span class="nc" id="L118">      String methodName = method.getName();</span>
+<span class="nc" id="L119">      String jsonKey = beanAttr.getJsonKey();</span>
+      
+<span class="nc" id="L121">      String jsonKeyField = &quot;KEY_&quot; + jsonKey;</span>
+<span class="nc" id="L122">      fieldVars.put(jsonKeyField, &quot;\&quot;\\\&quot;&quot; + jsonKey + &quot;\\\&quot;:\&quot;&quot;);</span>
+      /* we serialize from bean, no need to escape json key */
+<span class="nc" id="L124">      methodBody.append(&quot;\nwriter.write(&quot;).append(jsonKeyField).append(&quot;);\n&quot;);</span>
+      
+<span class="nc" id="L126">      Class&lt;?&gt; returnType = method.getReturnType();</span>
+      
+<span class="nc" id="L128">      String varName = &quot;__&quot; + methodName;</span>
+      
+<span class="nc bnc" id="L130" title="All 2 branches missed.">      if(returnType.isArray()){</span>
+<span class="nc" id="L131">        methodBody.append(returnType.getComponentType().getName()).append(&quot; &quot;)</span>
+<span class="nc" id="L132">          .append(varName).append(&quot;[]&quot;);</span>
+      }else{
+<span class="nc" id="L134">        methodBody.append(returnType.getName()).append(&quot; &quot;).append(varName);</span>
+      }
+      
+<span class="nc" id="L137">      methodBody.append(&quot; = &quot;).append(&quot;__o.&quot;).append(methodName).append(&quot;();\n&quot;);</span>
+      
+<span class="nc bnc" id="L139" title="All 2 branches missed.">      if(!returnType.isPrimitive()){</span>
+<span class="nc" id="L140">        methodBody.append(&quot;if(&quot;).append(varName).append(&quot; != null){\n&quot;);</span>
+      }
+      
+<span class="nc" id="L143">      generateWriterCode(beanAttr, methodBody, returnType, varName);</span>
+      
+<span class="nc bnc" id="L145" title="All 2 branches missed.">      if(!returnType.isPrimitive()){</span>
+<span class="nc" id="L146">        methodBody.append(&quot;} else {\n&quot;);</span>
+<span class="nc" id="L147">        methodBody.append(&quot;writer.write(CONST_NULL);\n&quot;);</span>
+<span class="nc" id="L148">        methodBody.append(&quot;}\n&quot;);</span>
+      }
+      
+<span class="nc bnc" id="L151" title="All 2 branches missed.">      if (i != j) methodBody.append(&quot;writer.write(CONST_COMMA);\n&quot;);</span>
+      
+    }
+
+<span class="nc" id="L155">    methodBody.append(&quot;writer.write(CONST_CLOSE_OBJECT);\n&quot;);</span>
+
+<span class="nc" id="L157">  }</span>
+  
+  private void generateWriterCode(JsonBeanAttribute beanAttr, StringBuilder methodBody, Class&lt;?&gt; attrType, String varName){
+    
+<span class="nc bnc" id="L161" title="All 2 branches missed.">    if(beanAttr.getFormatterClass() != null){</span>
+      
+<span class="nc" id="L163">      String formatterClassName = beanAttr.getFormatterClass().getName();</span>
+<span class="nc" id="L164">      String formatterVar = Strings.randomAlphabetic(6)+&quot;_fmt&quot;;</span>
+      
+<span class="nc" id="L166">      methodBody.append(formatterClassName).append(&quot; &quot;).append(formatterVar).append(&quot; = new &quot;)</span>
+<span class="nc" id="L167">        .append(formatterClassName).append(&quot;();\n&quot;);</span>
+      
+<span class="nc bnc" id="L169" title="All 2 branches missed.">      if(beanAttr.getFormatterPattern() != null){</span>
+<span class="nc" id="L170">        methodBody.append(formatterVar).append(&quot;.setPattern(\&quot;&quot;)</span>
+<span class="nc" id="L171">          .append(beanAttr.getFormatterPattern()).append(&quot;\&quot;);\n&quot;);</span>
+      }
+      
+<span class="nc" id="L174">      methodBody.append(&quot;writer.write(&quot;).append(formatterVar).append(&quot;.format(zapposJson, (&quot;)</span>
+<span class="nc" id="L175">        .append(attrType.getName()).append(&quot;)&quot;).append(varName).append(&quot;));\n&quot;);</span>
+    
+<span class="nc bnc" id="L177" title="All 2 branches missed.">    } else if(zapposJson.getValueFormatter(attrType) != null){</span>
+      
+<span class="nc" id="L179">      String formatterVar = Strings.randomAlphabetic(6)+&quot;_fmt&quot;;</span>
+<span class="nc" id="L180">      methodBody.append(ValueFormatter.class.getName()).append(&quot; &quot;).append(formatterVar).append(&quot; = zapposJson.getValueFormatter(&quot;)</span>
+<span class="nc" id="L181">        .append(attrType.getName()).append(&quot;.class);\n&quot;);</span>
+<span class="nc" id="L182">      methodBody.append(&quot;writer.write(&quot;).append(formatterVar).append(&quot;.format(zapposJson, (&quot;)</span>
+<span class="nc" id="L183">        .append(attrType.getName()).append(&quot;)&quot;).append(varName).append(&quot;));\n&quot;);</span>
+      
+<span class="nc bnc" id="L185" title="All 2 branches missed.">    } else if (attrType == String.class) {</span>
+      
+<span class="nc" id="L187">      methodBody.append(&quot;writeString(zapposJson, &quot;).append(varName).append(&quot;, writer);\n&quot;);</span>
+    
+<span class="nc bnc" id="L189" title="All 4 branches missed.">    } else if (attrType == Character.class || attrType == char.class){</span>
+      
+<span class="nc" id="L191">      methodBody.append(&quot;writeString(zapposJson, new String(&quot;).append(varName).append(&quot;), writer);\n&quot;);</span>
+      
+<span class="nc bnc" id="L193" title="All 6 branches missed.">    } else if (attrType.isPrimitive() || Number.class.isAssignableFrom(attrType) || attrType == Boolean.class){</span>
+      
+<span class="nc" id="L195">      methodBody.append(&quot;writer.write(String.valueOf(&quot;).append(varName).append(&quot;));\n&quot;);</span>
+      
+<span class="nc bnc" id="L197" title="All 2 branches missed.">    } else if (attrType.isArray()) {</span>
+      
+<span class="nc bnc" id="L199" title="All 2 branches missed.">      if(attrType.getComponentType() == char.class){</span>
+<span class="nc" id="L200">        methodBody.append(&quot;writeString(zapposJson, new String(&quot;).append(varName).append(&quot;), writer);\n&quot;);</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">      }else if(attrType.getComponentType() == byte.class){</span>
+<span class="nc" id="L202">        methodBody.append(&quot;writeBase64String(zapposJson, &quot;).append(varName).append(&quot;, writer);\n&quot;);</span>
+      }else{
+<span class="nc" id="L204">        generateArrayCode(beanAttr, methodBody, attrType.getComponentType(), varName);</span>
+      }
+<span class="nc bnc" id="L206" title="All 2 branches missed.">    } else if (Map.class.isAssignableFrom(attrType)){</span>
+      
+<span class="nc" id="L208">      Class&lt;?&gt; valueType = Reflections.getSecondGenericType(beanAttr.getField());</span>
+      
+<span class="nc bnc" id="L210" title="All 2 branches missed.">      if(valueType == null){</span>
+<span class="nc" id="L211">        throw new JsonException(&quot;Unknown map value type&quot;);</span>
+      }
+      
+<span class="nc" id="L214">      generateMapCode(beanAttr, methodBody, valueType, varName);</span>
+    
+<span class="nc bnc" id="L216" title="All 2 branches missed.">    } else if (Iterable.class.isAssignableFrom(attrType)){</span>
+      
+<span class="nc" id="L218">      Class&lt;?&gt; valueType = Reflections.getFirstGenericType(beanAttr.getField());</span>
+      
+<span class="nc bnc" id="L220" title="All 2 branches missed.">      if(List.class.isAssignableFrom(attrType)){</span>
+<span class="nc" id="L221">          generateListCode(beanAttr, methodBody, valueType, varName);</span>
+        }else{
+<span class="nc" id="L223">          generateIterableCode(beanAttr, methodBody, valueType, varName);</span>
+        }
+<span class="nc bnc" id="L225" title="All 2 branches missed.">    } else if(attrType.isEnum()){</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">      if(beanAttr.getEnumValue() != null){</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        if(beanAttr.getEnumValue() == EnumValue.ORDINAL){</span>
+<span class="nc" id="L228">          methodBody.append(&quot;writer.write(String.valueOf(&quot;).append(varName).append(&quot;.ordinal()));\n&quot;);</span>
+<span class="nc" id="L229">          return;</span>
+        }
+      }
+<span class="nc" id="L232">      methodBody.append(&quot;writer.write(CONST_DOUBLE_QUOTE);\n&quot;);</span>
+<span class="nc" id="L233">      methodBody.append(&quot;writer.write(&quot;).append(varName).append(&quot;.name());\n&quot;);</span>
+<span class="nc" id="L234">      methodBody.append(&quot;writer.write(CONST_DOUBLE_QUOTE);\n&quot;);</span>
+    } else {
+      
+<span class="nc" id="L237">      methodBody.append(&quot;zapposJson.toJson(&quot;).append(varName).append(&quot;, writer);\n&quot;);</span>
+      
+    }
+<span class="nc" id="L240">  }</span>
+  
+  private void generateIterableCode(JsonBeanAttribute beanAttr, StringBuilder methodBody, Class&lt;?&gt; valueType, String varName){
+    
+<span class="nc" id="L244">    String iterVarName = Strings.randomAlphabetic(4) + &quot;_iter&quot;;</span>
+    
+<span class="nc" id="L246">    methodBody.append(&quot;writer.write(CONST_OPEN_ARRAY);\n&quot;);</span>
+<span class="nc" id="L247">    methodBody.append(&quot;Iterator &quot;).append(iterVarName).append(&quot; = &quot;).append(varName).append(&quot;.iterator();\n&quot;);</span>
+<span class="nc" id="L248">    methodBody.append(&quot;if(&quot;).append(iterVarName).append(&quot;.hasNext()){\n&quot;);</span>
+<span class="nc" id="L249">    methodBody.append(&quot;  boolean __hasLast = false;\n&quot;);</span>
+<span class="nc" id="L250">    methodBody.append(&quot;  &quot;).append(valueType.getName()).append(&quot; __value = (&quot;).append(valueType.getName())</span>
+<span class="nc" id="L251">      .append(&quot;)&quot;).append(iterVarName).append(&quot;.next();\n&quot;);</span>
+<span class="nc" id="L252">    methodBody.append(&quot;  do{\n&quot;);</span>
+<span class="nc" id="L253">    generateWriterCode(beanAttr, methodBody, valueType, &quot;__value&quot;);</span>
+<span class="nc" id="L254">    methodBody.append(&quot;    if(__hasLast = &quot;).append(iterVarName).append(&quot;.hasNext()){\n&quot;);</span>
+<span class="nc" id="L255">    methodBody.append(&quot;      __value = (&quot;).append(valueType.getName()).append(&quot;)&quot;).append(iterVarName).append(&quot;.next();\n&quot;);</span>
+<span class="nc" id="L256">    methodBody.append(&quot;      writer.write(CONST_COMMA);\n&quot;);</span>
+<span class="nc" id="L257">    methodBody.append(&quot;    }\n&quot;);</span>
+<span class="nc" id="L258">    methodBody.append(&quot;  }while(&quot;).append(iterVarName).append(&quot;.hasNext());\n&quot;);</span>
+<span class="nc" id="L259">    methodBody.append(&quot;  if(__hasLast) {&quot;);</span>
+<span class="nc" id="L260">    generateWriterCode(beanAttr, methodBody, valueType, &quot;__value&quot;);</span>
+<span class="nc" id="L261">    methodBody.append(&quot;  }\n&quot;);</span>
+<span class="nc" id="L262">    methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L263">    methodBody.append(&quot;writer.write(CONST_CLOSE_ARRAY);\n&quot;);</span>
+    
+<span class="nc" id="L265">  }</span>
+  
+  private void generateListCode(JsonBeanAttribute beanAttr, StringBuilder methodBody, Class&lt;?&gt; valueType, String varName){
+    
+<span class="nc" id="L269">    String jVarName = Strings.randomAlphabetic(4) + &quot;_j&quot;;</span>
+<span class="nc" id="L270">    String valueVarName = Strings.randomAlphabetic(4) + &quot;_val&quot;;</span>
+    
+<span class="nc" id="L272">    methodBody.append(&quot;writer.write(CONST_OPEN_ARRAY);\n&quot;);</span>
+<span class="nc" id="L273">    methodBody.append(&quot;int &quot;).append(jVarName).append(&quot; = &quot;).append(varName).append(&quot;.size() - 1;\n&quot;);</span>
+<span class="nc" id="L274">    methodBody.append(valueType.getName()).append(&quot; &quot;).append(valueVarName).append(&quot; = null;\n&quot;);</span>
+<span class="nc" id="L275">    methodBody.append(&quot;for(int __i = 0; __i &lt; &quot;).append(jVarName).append(&quot;; __i++){\n&quot;);</span>
+<span class="nc" id="L276">    methodBody.append(&quot;  &quot;).append(valueVarName).append(&quot; = (&quot;)</span>
+<span class="nc" id="L277">      .append(valueType.getName()).append(&quot;)&quot;).append(varName).append(&quot;.get(__i);\n&quot;);</span>
+<span class="nc" id="L278">    generateWriterCode(beanAttr, methodBody, valueType, valueVarName);</span>
+<span class="nc" id="L279">    methodBody.append(&quot;writer.write(CONST_COMMA);\n&quot;);</span>
+<span class="nc" id="L280">    methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L281">    methodBody.append(&quot;if(&quot;).append(jVarName).append(&quot; &gt; -1){\n&quot;);</span>
+<span class="nc" id="L282">    methodBody.append(&quot;  &quot;).append(valueVarName).append(&quot; = (&quot;)</span>
+<span class="nc" id="L283">      .append(valueType.getName()).append(&quot;)&quot;).append(varName).append(&quot;.get(&quot;).append(jVarName).append(&quot;);\n&quot;);</span>
+<span class="nc" id="L284">    generateWriterCode(beanAttr, methodBody, valueType, valueVarName);</span>
+<span class="nc" id="L285">    methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L286">    methodBody.append(&quot;writer.write(CONST_CLOSE_ARRAY);\n&quot;);</span>
+<span class="nc" id="L287">  }</span>
+  
+  private void generateMapCode(JsonBeanAttribute beanAttr, StringBuilder methodBody, Class&lt;?&gt; valueType, String varName) {
+    
+<span class="nc" id="L291">    String iterVarName = Strings.randomAlphabetic(4) + &quot;_iter&quot;;</span>
+<span class="nc" id="L292">    methodBody.append(&quot;writer.write(CONST_OPEN_OBJECT);\n&quot;);</span>
+    
+<span class="nc" id="L294">    methodBody.append(&quot;Iterator &quot;).append(iterVarName).append(&quot; = &quot;).append(varName)</span>
+<span class="nc" id="L295">      .append(&quot;.entrySet().iterator();\n&quot;);</span>
+<span class="nc" id="L296">    methodBody.append(&quot;if(&quot;).append(iterVarName).append(&quot;.hasNext()){\n&quot;);</span>
+<span class="nc" id="L297">    methodBody.append(&quot;String __mapKey = null;\n&quot;);</span>
+<span class="nc" id="L298">    methodBody.append(&quot;boolean __hasLast = false;\n&quot;);</span>
+<span class="nc" id="L299">    methodBody.append(&quot;java.util.Map.Entry __entry = (java.util.Map.Entry)&quot;).append(iterVarName).append(&quot;.next();\n&quot;);</span>
+<span class="nc" id="L300">    methodBody.append(&quot;do{\n&quot;);</span>
+<span class="nc" id="L301">    methodBody.append(&quot;__mapKey = (String)__entry.getKey();\n&quot;);</span>
+    
+<span class="nc bnc" id="L303" title="All 2 branches missed.">    if(valueType.isArray()){</span>
+<span class="nc" id="L304">      methodBody.append(valueType.getComponentType().getName()).append(&quot; __mapValue[] = (&quot;)</span>
+<span class="nc" id="L305">        .append(valueType.getComponentType().getName()).append(&quot;[])__entry.getValue();\n&quot;);</span>
+    }else{
+<span class="nc" id="L307">      methodBody.append(valueType.getName()).append(&quot; __mapValue = (&quot;)</span>
+<span class="nc" id="L308">        .append(valueType.getName()).append(&quot;)__entry.getValue();\n&quot;);</span>
+    }
+<span class="nc" id="L310">    methodBody.append(&quot;writeString(zapposJson, __mapKey, writer);\n&quot;);</span>
+<span class="nc" id="L311">    methodBody.append(&quot;writer.write(CONST_COLON);\n&quot;);</span>
+<span class="nc" id="L312">    generateWriterCode(beanAttr, methodBody, valueType, &quot;__mapValue&quot;);</span>
+<span class="nc" id="L313">    methodBody.append(&quot;if(__hasLast = &quot;).append(iterVarName).append(&quot;.hasNext()){\n&quot;);</span>
+<span class="nc" id="L314">    methodBody.append(&quot;__entry = (java.util.Map.Entry)&quot;).append(iterVarName).append(&quot;.next();\n&quot;);</span>
+<span class="nc" id="L315">    methodBody.append(&quot;writer.write(CONST_COMMA);\n&quot;);</span>
+<span class="nc" id="L316">    methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L317">    methodBody.append(&quot;}while(&quot;).append(iterVarName).append(&quot;.hasNext());\n&quot;);</span>
+<span class="nc" id="L318">    methodBody.append(&quot;if(__hasLast) {\n&quot;);</span>
+<span class="nc" id="L319">    methodBody.append(&quot;__mapKey = (String)__entry.getKey();\n&quot;);</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">    if(valueType.isArray()){</span>
+<span class="nc" id="L321">      methodBody.append(valueType.getComponentType().getName()).append(&quot; __mapValue[] = (&quot;)</span>
+<span class="nc" id="L322">        .append(valueType.getComponentType().getName()).append(&quot;[])__entry.getValue();\n&quot;);</span>
+    }else{
+<span class="nc" id="L324">      methodBody.append(valueType.getName()).append(&quot; __mapValue = (&quot;)</span>
+<span class="nc" id="L325">        .append(valueType.getName()).append(&quot;)__entry.getValue();\n&quot;);</span>
+    }
+<span class="nc" id="L327">    methodBody.append(&quot;writeString(zapposJson, __mapKey, writer);\n&quot;);</span>
+<span class="nc" id="L328">    methodBody.append(&quot;writer.write(CONST_COLON);\n&quot;);</span>
+<span class="nc" id="L329">    generateWriterCode(beanAttr, methodBody, valueType, &quot;__mapValue&quot;);</span>
+<span class="nc" id="L330">    methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L331">    methodBody.append(&quot;}\n&quot;);</span>
+    
+<span class="nc" id="L333">    methodBody.append(&quot;writer.write(CONST_CLOSE_OBJECT);\n&quot;);</span>
+<span class="nc" id="L334">  }</span>
+  
+  private void generateArrayCode(JsonBeanAttribute beanAttr,  StringBuilder methodBody, Class&lt;?&gt; componentType, String varName) {
+    
+<span class="nc" id="L338">    methodBody.append(&quot;writer.write(CONST_OPEN_ARRAY);\n&quot;);</span>
+<span class="nc" id="L339">    String jVarName = Strings.randomAlphabetic(4) + &quot;_j&quot;;</span>
+<span class="nc" id="L340">    String valueVarName = Strings.randomAlphabetic(4) + &quot;_val&quot;;</span>
+    
+<span class="nc" id="L342">    methodBody.append(&quot;int &quot;).append(jVarName).append(&quot; = &quot;).append(varName).append(&quot;.length - 1;\n&quot;);</span>
+<span class="nc" id="L343">    methodBody.append(&quot;for (int __i = 0; __i &lt; &quot;).append(jVarName).append(&quot;; __i++) {\n&quot;);</span>
+<span class="nc" id="L344">    methodBody.append(&quot;  &quot;).append(componentType.getName()).append(&quot; &quot;).append(valueVarName).append(&quot; = (&quot;)</span>
+<span class="nc" id="L345">      .append(componentType.getName()).append(&quot;)&quot;).append(varName).append(&quot;[__i];\n&quot;);</span>
+<span class="nc" id="L346">    generateWriterCode(beanAttr, methodBody, componentType, valueVarName);</span>
+<span class="nc" id="L347">    methodBody.append(&quot;  writer.write(CONST_COMMA);\n&quot;);</span>
+<span class="nc" id="L348">    methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L349">    methodBody.append(&quot;if (&quot;).append(jVarName).append(&quot; &gt; -1) { \n&quot;);</span>
+<span class="nc" id="L350">    methodBody.append(&quot;  &quot;).append(componentType.getName()).append(&quot; &quot;).append(valueVarName).append(&quot; = (&quot;)</span>
+<span class="nc" id="L351">      .append(componentType.getName()).append(&quot;)&quot;).append(varName).append(&quot;[&quot;).append(jVarName).append(&quot;];\n&quot;);</span>
+<span class="nc" id="L352">    generateWriterCode(beanAttr, methodBody, componentType, valueVarName);</span>
+<span class="nc" id="L353">    methodBody.append(&quot;}\n&quot;);</span>
+<span class="nc" id="L354">    methodBody.append(&quot;writer.write(CONST_CLOSE_ARRAY);\n&quot;);</span>
+    
+<span class="nc" id="L356">  }</span>
+  
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

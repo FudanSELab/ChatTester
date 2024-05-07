@@ -1,0 +1,46 @@
+0-->1-->0-->compileRepair
+
+# InstagramSubscription class
+package org.jinstagram.realtime;
+public class InstagramSubscription {
+public InstagramSubscription();
+public InstagramSubscription callback(String callback);
+public InstagramSubscription clientId(String clientId);
+public InstagramSubscription clientSecret(String clientSecret);
+public InstagramSubscription object(SubscriptionType type);
+public InstagramSubscription objectId(String objectId);
+public InstagramSubscription verifyToken(String verifyToken);
+public InstagramSubscription aspect(String aspect);
+public InstagramSubscription latitute(String latitude);
+public InstagramSubscription longitude(String longitude);
+public InstagramSubscription radius(String radius);
+public InstagramSubscription requestConfiguration(final InstagramConfig config);
+public SubscriptionResponse createSubscription() throws InstagramException;
+public SubscriptionResponse deleteSubscription(String id) throws InstagramException;
+public SubscriptionResponse deleteAllSubscription() throws InstagramException;
+public SubscriptionsListResponse getSubscriptionList() throws InstagramException;
+public String toString();
+}
+
+
+# Test Method
+    @Test
+    public void testLatitude() {
+        InstagramSubscription subscription = new InstagramSubscription();
+        String latitude = "40.7128"; 
+
+      <Buggy Line>: cannot find symbol method "latitude(java.lang.String)" in InstagramSubscription
+        subscription.latitude(latitude);
+
+        assertEquals(latitude, subscription.getParams().get(Constants.LATITUDE));
+    }
+
+
+# Instruction
+The test method has a bug error (marked <Buggy Line>). 
+Please fix the buggy line based on the given "InstagramSubscription" class information (it is crucial) and return the complete and compilable test method after fix. 
+Note that the contents in  "InstagramSubscription" class  cannot be modified.
+The generated code should be enclosed within ``` ```.
+
+########
+
