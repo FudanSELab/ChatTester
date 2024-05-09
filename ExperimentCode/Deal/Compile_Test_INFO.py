@@ -7,13 +7,10 @@ import xml.etree.ElementTree as ET
 import subprocess
 import os
 from tqdm import tqdm
-current_dir = os.path.dirname(__file__) #./PipLine/Deal
-Experiment_PATH = os.path.dirname(current_dir) # ./InitialPharse_Experiment
+current_dir = os.path.dirname(__file__) #./Deal
+Experiment_PATH = os.path.dirname(current_dir)
 
-
-Promt2Testing_PATH = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir, os.pardir, os.pardir))
-PipLine_PATH = os.path.join(Promt2Testing_PATH, "chatGPT_experiment_for_javaProject",'PipLine')
-
+ChatTester_PATH = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir))
 
 
 
@@ -129,9 +126,6 @@ class CompileInfo:
 
         # "Error_INFO":str, "Error_Line":str, "ERROR_Type":str,"Location":str,"TEST_PATH":str, Gene_PATH:str
         errorInfoBlock = self.divFileIntoBlocks()
-        # i = 0
-        # for errorInfoBlock in tqdm(errorInfoBlocks):
-        #     print("i: ", i)
         Error_list = self.CompileInfo_Deal(errorInfoBlock)
         Out_list = []
         for error in Error_list:
@@ -198,13 +192,13 @@ class CompileInfo:
             elif "does not override or implement" in error['Error_INFO']:
 
                 # windows指令使用 .;  Linux系统使用 .:
-                JarPath = os.path.join(Promt2Testing_PATH, 'Java_Analyzer', 'src', 'main', 'jarPackage',
+                JarPath = os.path.join(ChatTester_PATH, 'Java_Analyzer', 'src', 'main', 'jarPackage',
                                        'javaparser-core-3.24.7.jar')
                 classpath = '.:' + JarPath
                 arg1 = self.gen_test_PATH  #由chatGPT生成的 java file
                 arg2 = error['ERROR_LINE']  # 错误的行号
 
-                ExcuteJava = os.path.join(Promt2Testing_PATH, 'Java_Analyzer','src','main','java')
+                ExcuteJava = os.path.join(ChatTester_PATH, 'Java_Analyzer','src','main','java')
                 os.chdir(ExcuteJava)
                 result = subprocess.run(["java", '-cp', classpath, 'ExtractClassFromOverride', arg1, arg2], stdout=subprocess.PIPE, check=True)
                 os.chdir(current_dir)
@@ -368,18 +362,7 @@ class TestINFO:
             if len(ERROR_LINE) == 0: continue
             TEST_INFO_list.append(TEST_INFO_dict)
 
-            # write_cont = "[FILE NAME]: " + os.path.basename(xml_file_path) + "\n" + \
-            #              "[CLASS NAME]: " + classname + "\n" + \
-            #              "[METHOD NAME]: " + name + "\n" + \
-            #              "[ERROR MESSAGE]: " + str(message) + "\n" + \
-            #              "[ERROR TYPE]: " + error_type + "\n" + \
-            #              "[ERROR LINE]: " + " ".join(error_line).strip()
-
         return TEST_INFO_list
 
 if __name__ == "__main__":
-    
-    # PATH = "D:\Python\Test_Completion\Promt2Testing\chatGPT_experiment\PipLine\LogINFO\TokenTest_testGenerate.java"
-    # PP = CompileInfo(PATH, None)
-    # errorInfoWrapperList = PP.Call_errorDeal()
     pass

@@ -10,9 +10,10 @@ import glob
 from tqdm import tqdm
 # import Compile_Test_INFO
 
-current_dir = os.path.dirname(__file__)  # ./PipLine/Deal
-Promt2Testing_PATH = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir, os.pardir, os.pardir))
-Involved_repo_PATH = os.path.join(Promt2Testing_PATH, 'repo_get', "Four_project")
+current_dir = os.path.dirname(__file__)  # ./Deal
+ChatTester_PATH = os.path.abspath(os.path.join(current_dir, os.pardir, os.pardir))
+
+Involved_repo_PATH = os.path.join(ChatTester_PATH, "Repos")
 
 
 
@@ -68,11 +69,11 @@ class CompilePrompt:
             PublicINFO = ""
             if len(Class_Java_Path)>0: # 可能找不到
                 # windows指令使用 .;  Linux系统使用 .:
-                JarPath = os.path.join(Promt2Testing_PATH, 'Java_Analyzer','src','main','jarPackage','javaparser-core-3.24.7.jar')
+                JarPath = os.path.join(ChatTester_PATH, 'Java_Analyzer','src','main','jarPackage','javaparser-core-3.24.7.jar')
                 classpath = '.:' + JarPath
                 arg1 = Class_Java_Path[0]  # 项目里面原本的java文件
                 arg2 = Class_Name
-                ExcuteJava = os.path.join(Promt2Testing_PATH, 'Java_Analyzer','src','main','java')
+                ExcuteJava = os.path.join(ChatTester_PATH, 'Java_Analyzer','src','main','java')
                 os.chdir(ExcuteJava)
                 result = subprocess.run(["java", '-cp', classpath, 'PublicInfo_collection', arg1, arg2],
                                         stdout=subprocess.PIPE, check=True)
@@ -270,15 +271,3 @@ def commentDelete(code):
 
 if __name__ == "__main__":
     pass
-    # compile_logInfo_path = "D:\Python\Test_Completion\Promt2Testing\chatGPT_experiment\PipLine\InitialPharse_Experiment\Iterate\LogINFO\TokenTest_testGenerate.java"
-    # compile_instance = Compile_Test_INFO.CompileInfo(compile_logInfo_path)
-    # proc_compile_list_INFO = compile_instance.Call_errorDeal()
-    # generated_path = "D:\Python\Test_Completion\Promt2Testing\chatGPT_experiment\PipLine\InitialPharse_Experiment\Iterate\GeneratedTest\TokenTest_testGenerate.java"
-    # ori_test_Path = "l0s_fernet-java8###l0s_fernet-java8/fernet-java8/src/test/java/com/macasaet/fernet/TokenTest###testGenerate"
-    # class_instance = CompilePrompt(proc_compile_list_INFO[0], generated_path,
-    #                                               ori_test_Path.split("###")[0])
-    # Composit_prompt = class_instance.Compile_deal()
-
-    # Error_INFO_dict, Gen_Java_File = "", ""
-    # pp = feedBackPrompt(Error_INFO_dict, Gen_Java_File)
-    # pp.Compile_deal()
